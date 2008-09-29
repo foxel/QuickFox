@@ -1,0 +1,74 @@
+<<+ 'GLOBAL_SETUPPAGE'>>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <META http-equiv="Content-Type" content="text/html; charset={L_ENCODING}" >
+  <title>{L_QF_SETUP_CAPTION}</title>
+  <META http-equiv="Content-Style-Type" content="text/css">
+  {C_META}
+
+  <link rel="shortcut icon" href="imgs/qfl_sm.ico" />
+
+  <style type="text/css">
+  {C_CSS}
+  </style>
+</head>
+<body>
+{C_JAVA}
+<table width="100%" class="qf_mainframe">
+  <tr>
+  <td valign="center" align="center" width="250" class="qf_rborder">
+  <img src="imgs/qfl.png" alt="QuickFox Logo" />
+  </td>
+<td valign="top" align="center">
+<br />
+<h1>{L_QF_SETUP_CAPTION}</h1>
+<h2>{C_step_info}</h2>
+<table class="border" width="350">
+<tr><td align="center">
+<form action="setup.php" method="post" name="mainform">
+    <input type="hidden" name="step" value="{C_step}" />
+    <input type="hidden" name="action" value="{C_action}" />
+    {C_form_cont}
+    <hr />
+    <input type="submit" name="OK" value="{L_BTN_GO}" />
+</form>
+</td></tr>
+</table>
+<br /><br />
+</td></tr>
+</table>
+<table align="right" border="0"><tr><td align="right">
+{C_FOOTSTAT}
+</td></tr></table>
+<!-PageStats-!>
+</body>
+</html>
+<<- 'GLOBAL_SETUPPAGE'>>
+
+<<+ 'SETUP_STEP_DATA_ACC'>>
+{L_SETUP_STEP_DATA_ACC_REQ} <br />
+{L_SETUP_STEP_DATA_ACC_DBLOC}: <input type="text" name="dblocation" value="{C_db_loc}" /><br />
+{L_SETUP_STEP_DATA_ACC_DBNAME}: <input type="text" name="dbname" value="{C_db_name}" /><br />
+{L_SETUP_STEP_DATA_ACC_DBUSER}: <input type="text" name="dbuser" value="{C_db_user}" /><br />
+{L_SETUP_STEP_DATA_ACC_DBPASS}: <input type="password" name="dbpasswd" value="{C_db_pass}" /><br />
+{L_SETUP_STEP_DATA_ACC_DBKEY}: <input type="text" name="dbkey" value="{C_db_key}" /><br />
+{IF_db_loaded}{L_SETUP_STEP_DATA_ACC_LOADED}{ENDIF}
+<<- 'SETUP_STEP_DATA_ACC'>>
+
+<<+ 'SETUP_STEP_DATA_IMP'>>
+{L_SETUP_STEP_DATA_IMP_REQ} <br />
+<select name="imp_mode">
+<option value="upd">{L_SETUP_STEP_DATA_IMP_UPD}</option>
+<option value="new">{L_SETUP_STEP_DATA_IMP_NEW}</option>
+</select>
+<<- 'SETUP_STEP_DATA_IMP'>>
+
+<<+ 'SETUP_STEP_ADMIN_SET'>>
+{L_SETUP_STEP_ADMIN_SET_REQ} <br />
+{L_SETUP_STEP_ADMIN_NAME}: <input type="text" name="admin_nick"  /><br />
+{L_SETUP_STEP_ADMIN_PASS}: <input type="text" name="admin_pass"  /><br />
+{L_SETUP_STEP_ADMIN_PASSD}: <input type="text" name="admin_passd"  /><br />
+{L_SETUP_STEP_ADMIN_EMAIL}: <input type="text" name="admin_email"  /><br />
+<<- 'SETUP_STEP_ADMIN_SET'>>
+

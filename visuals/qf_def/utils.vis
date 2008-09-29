@@ -1,0 +1,148 @@
+Utils visual data. Please do not edit
+
+<<+ 'IPB_CONV_MAINPAGE'>>
+<table class="border fullwidth">
+<tr><td>
+<b>{L_UTILS_IPBC_SQL_VER}:</b> {C_SQL_version}<br />
+<b>{L_UTILS_IPBC_SELD_BASE}:</b> {C_base_selected}<br />
+<hr />
+{C_selsrc_form}
+<hr />
+{C_mainframe}
+</td></tr>
+</table>
+<<- 'IPB_CONV_MAINPAGE'>>
+
+<<+ 'DIRECT_SQL_MAINPAGE'>>
+<table class="border fullwidth">
+<tr><td>
+<b>{L_UTILS_DSQL_SQL_VER}:</b> {C_SQL_version}<br />
+<b>{L_UTILS_DSQL_SELD_BASE}:</b> {C_base_selected}<br />
+<b>{L_UTILS_DSQL_QUER_COUNT}:</b> {C_queries_count}<br />
+<b>{L_UTILS_DSQL_QUER_TIME}:</b> {C_quers_time}<br />
+<b>{L_UTILS_DSQL_EXEC_TIME}:</b> {C_exec_time}<br />
+<hr />
+{C_queries}
+</td></tr>
+<tr><td>
+{C_do_form}
+</td></tr>
+</table>
+<<- 'DIRECT_SQL_MAINPAGE'>>
+
+<<+ 'DIRECT_SQL_QUERY'>>
+<b>{L_UTILS_DSQL_QUER_NO}{C_query_num}:</b> {C_query_str}<br />
+<b>{L_UTILS_DSQL_QUER_RESULT}:</b> {C_query_res}<br />
+<b>{L_UTILS_DSQL_QUER_ROWS}:</b> {C_query_rows}<br />
+{IF_data_tbl}
+<div class="autoscroll centered" style="border-style: solid; border-width: 2px 1px 5px 1px;">
+{C_data_tbl}
+</div>
+{ENDIF}
+<hr />
+<<- 'DIRECT_SQL_QUERY'>>
+
+Forms For Admin Pages. PLEASE DO NOT MODIFY !!!
+
+<<+ 'IPB_CONV_CONFIG_FORM'>>
+<h2>{L_UTILS_IPBC_CFG_SETS}</h2>
+<form action="index.php" method="post" name="conv_config_form">
+<input type="hidden" name="script" value="IPB_convert" />
+<input type="hidden" name="action" value="convert" />
+<input type="hidden" name="database" value="{C_database}" />
+<input type="hidden" name="prefix" value="{C_prefix}" />
+<b>{L_UTILS_IPBC_CFG_USERS}:</b>
+<select name='users_mode' >
+<option value="2">{L_UTILS_IPBC_UMODE_IMPORT}</option>
+<option value="1" SELECTED>{L_UTILS_IPBC_UMODE_FINDDO}</option>
+<option value="0">{L_UTILS_IPBC_UMODE_GUESTS}</option>
+</select><br />
+<b>{L_UTILS_IPBC_CFG_FORUMS}:</b><br />
+<table class="qf_grid fullwidth">
+<tr class="tblline genmed">
+<th style="width: 30px">--</th>
+<th>{L_UTILS_IPBC_FORUMS_NAME}</th>
+<th>{L_UTILS_IPBC_FORUMS_PASS}</th>
+<th>{L_UTILS_IPBC_FORUMS_READ}</th>
+<th>{L_UTILS_IPBC_FORUMS_WRITE}</th>
+<th>{L_UTILS_IPBC_FORUMS_POST}</th>
+<th>{L_UTILS_IPBC_FORUMS_ACC_GR}</th>
+</tr>
+{C_forums}
+</table>
+<b>{L_UTILS_IPBC_CFG_ROOT}:</b>
+<select name="set_parent">
+{C_par_options}
+</select>
+<br />
+<b>{L_UTILS_IPBC_CFG_ATTS}:</b>
+<input name="append_attaches" type="checkbox" value="ON" CHECKED /> <br />
+<input type="submit" class="post" value="{L_BTN_GO}" />
+</form>
+<<- 'IPB_CONV_CONFIG_FORM'>>
+
+<<+ 'IPB_CONV_CONFIG_FORUM_ROW'>>
+<tr>
+<td>{C_id}</td>
+<td>{C_name}</td>
+<td>
+<input type="checkbox" name="f_pass[{C_id}]" value="ON" CHECKED />
+</td>
+<td>
+<select name="f_read[{C_id}]">
+<option value="0">{L_FOR_ALL}</option>
+{C_read_options}
+</select>
+</td>
+<td>
+<select name="f_write[{C_id}]">
+<option value="0">{L_FOR_ALL}</option>
+{C_write_options}
+</select>
+</td>
+<td>
+<select name="f_post[{C_id}]">
+<option value="0">{L_FOR_ALL}</option>
+{C_post_options}
+</select>
+</td>
+<td>
+<input type="checkbox" name="f_acc_gr[{C_id}]" value="ON" CHECKED />
+</td>
+</tr>
+<<- 'IPB_CONV_CONFIG_FORUM_ROW'>>
+
+<<+ 'IPB_CONV_SELSRC_FORM'>>
+<b>{L_UTILS_IPBC_SRC_SETS}:</b><br />
+<form action="index.php?st=IPB_convert" method="post" name="selsrc_form">
+<b>{L_UTILS_IPBC_SEL_BASE}:</b>
+<select name='sel_db' onchange="document.selsrc_form.submit()">
+{C_dbs_options}
+</select><br />
+<b>{L_UTILS_IPBC_SEL_PREFIX}:</b>
+<select name='sel_prefix' onchange="document.selsrc_form.submit()">
+{C_pfx_options}
+</select><br />
+<input type="submit" class="post" value="{L_BTN_ACCEPT}" />
+</form>
+<<- 'IPB_CONV_SELSRC_FORM'>>
+
+<<+ 'DIRECT_SQL_QFORM'>>
+<form action="index.php?st=directSQL" method="post" name="sqlform">
+<b>{L_UTILS_DSQL_SEL_BASE}:</b>
+<select name='sel_db' onchange="document.sqlform.do_query.value='SHOW TABLES'; document.sqlform.submit()">
+{C_dbs_options}
+</select><br />
+<b>{L_UTILS_DSQL_SEL_TABLE}:</b>
+<select name="sel_table" onchange="document.sqlform.do_query.value+=document.sqlform.sel_table.value; this.selectedIndex=0;">
+<option value=" ">{L_UTILS_DSQL_SEL_TABLE_R}</option>
+{C_tbls_options}
+</select><br />
+<textarea cols="70" class="post" rows="8" name="do_query">{C_curquery}</textarea> <br />
+<input name="show_full" type="checkbox" value="ON" {IF_show_full} CHECKED {ENDIF}/>
+{L_UTILS_DSQL_SHOW_FULLTEXT}<br />
+<input type="submit" class="post" value="{L_BTN_GO}" />
+</form>
+<<- 'DIRECT_SQL_QFORM'>>
+
+

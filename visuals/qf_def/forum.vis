@@ -1,0 +1,356 @@
+Visul templates for forum use only.
+Separated to reduce dataload in common procedures
+
+<<+ 'FOR_CROSS'>>
+<img src="{CSS_IMGS}/cross.gif" alt=" + ">
+<<- 'FOR_CROSS'>>
+
+<<+ 'FOR_ARROW'>>
+<img src="{CSS_IMGS}/arrow.gif" alt=" -> ">
+<<- 'FOR_ARROW'>>
+
+<<+ 'IMG_SECT'>>
+<img src="{VIS_IMGS}/section-o.gif" alt="[]">
+<<- 'IMG_SECT'>>
+
+<<+ 'IMG_SECT_NEW'>>
+<img src="{VIS_IMGS}/section.gif" alt="[]">
+<<- 'IMG_SECT_NEW'>>
+
+<<+ 'IMG_BRANCH_LOCK'>>
+<img src="{VIS_IMGS}/branch_lock.gif" alt="LOCK" title="{L_FOR_THEME_CLOSED}">
+<<- 'IMG_BRANCH_LOCK'>>
+
+<<+ 'IMG_BRANCH_NEW'>>
+<img src="{VIS_IMGS}/branch_new.gif" alt="NEW!" title="{L_FOR_GOT_NEW}">
+<<- 'IMG_BRANCH_NEW'>>
+
+<<+ 'IMG_BRANCH'>>
+<img src="{VIS_IMGS}/branch.gif" alt="[->>]">
+<<- 'IMG_BRANCH'>>
+
+<<+ 'IMG_FOR_PINNED'>>
+<img src="{VIS_IMGS}/pin.gif" alt="[*]" title="{L_FOR_PINNED}">
+<<- 'IMG_FOR_PINNED'>>
+
+<<+ 'FORUM_WINDOW'>>
+{C_fastjumper}<br />
+{C_window}
+<<- 'FORUM_WINDOW'>>
+
+<<+ 'BRANCH_MAIN'>>
+<h2>{C_caption}</h2>
+<div class="qf_forumer">
+{C_forumer}
+</div>
+<div >
+{C_theme}
+</div>
+<table class="qf_pages" ><tr>
+    <td class="qf_pages_tl"> </td>
+    <td class="qf_pages_t" >
+    <b>-{C_pages}-</b>
+    </td>
+    <td class="qf_pages_tr"> </td>
+</tr></table>
+{C_content}
+<table class="qf_pages" ><tr>
+    <td class="qf_pages_bl"> </td>
+    <td class="qf_pages_b" >
+    <b>-{C_pages}-</b>
+    </td>
+    <td class="qf_pages_br"> </td>
+</tr></table>
+<div class="qf_forumer">
+{C_forumer}<br />
+{C_footcontr}
+</div>
+{C_newpost}
+<<- 'BRANCH_MAIN'>>
+
+<<+ 'SECT_MAIN'>>
+<h2>{C_caption}</h2>
+{IF_Sub_Line}<h3>{C_Sub_Line}</h3>{ENDIF}
+{C_head}
+<div class="qf_forumer">
+{C_forumer}
+</div>
+{C_sections}
+<br />
+<br />
+{C_themes}
+<div class="qf_forumer">
+{C_forumer}<br />
+{C_footcontr}
+</div>
+{C_newtheme}
+<<- 'SECT_MAIN'>>
+
+<<+ 'FSEARCH_MAIN'>>
+<h2>{L_FOR_SEARCH_CAPT}</h2>
+<h3>{C_caption}</h3>
+<br />
+{C_themes}
+<<- 'FSEARCH_MAIN'>>
+
+<<+ 'TREE_MAIN'>>
+<h1>{IF_tree_capt}{C_tree_capt}{ELSE}{L_GUEST_TREE_CAPT}{ENDIF}</h1>
+<div class="centered">
+<img src="imgs/tree.gif" alt="guest_tree">
+</div>
+<table class="border fullwidth" style="background-image: url({VIS_IMGS}/msback.gif);">
+<tr><td>
+{C_content}
+</td></tr>
+</table>
+<<- 'TREE_MAIN'>>
+
+<<+ 'FOR_SECTIONS'>>
+<table class="qf_grid fullwidth">
+<tr class="tblline">
+<th style="width: 30px;"> </th>
+<th style="width: 60%;"><b>{L_FOR_SECT_NAME}</b></th>
+<th><b>{L_LEVEL}</b></th>
+<th><b>{L_FOR_SECT_STAT}</b></th>
+<th><b>{L_FOR_SECT_LAST}</b></th>
+</tr>
+{C_content}
+</table>
+<<- 'FOR_SECTIONS'>>
+
+<<+ 'FOR_THEMES'>>
+<table class="qf_grid fullwidth">
+<tr class="tblline">
+<th style="width: 30px;"> </th>
+<th style="width: 55%;" ><b>{L_FOR_THEME_CAPT}</b></th>
+<th><b>{L_LEVEL}</b></th>
+<th><b>{L_AUTHOR}</b></th>
+<th><b>{L_FOR_SECT_POSTS}</b></th>
+<th><b>{L_FOR_SECT_LAST}</b></th>
+</tr>
+{C_content}
+</table>
+<<- 'FOR_THEMES'>>
+
+<<+ 'FOR_SECTION_ROW'>>
+<tr {IF_deleted}class="deleted"{ENDIF}>
+<td class="centered">{C_labels}{C_img}</td>
+<td >{C_flags} <a href="{C_url}">{C_caption}</a><br />
+<span class="genmed">{C_descr}</span></td>
+<td class="centered">{C_rights}</td>
+<td >
+{L_FOR_SECT_SECTS}: {C_sects}<br />
+{L_FOR_SECT_THEMES}: {C_themes}
+{IF_unreads}<span style="font-weight: bold;" title="{L_FOR_SECT_UNREADS}" >({C_unreads})</span>{ENDIF}
+<br />
+{L_FOR_SECT_POSTS}: {C_posts}</td>
+<td class="centered genmed nowrap">{IF_lastt}{C_lastth}<br />{C_lastt} <br /><b>{C_lastu}</b>{ELSE} -- {ENDIF}</td>
+</tr>
+<<- 'FOR_SECTION_ROW'>>
+
+<<+ 'FOR_THEME_ROW'>>
+<tr {IF_deleted}class="deleted"{ENDIF}>
+<td class="centered">{C_labels}{C_img}</td>
+<td >{C_flags} <a href="{C_url}">{C_caption}</a><br />
+<span class="genmed">{C_descr}</span></td>
+<td class="centered">{C_rights}</td>
+<td class="centered"><b>{C_author}</b></td>
+<td class="centered">{C_posts}</td>
+<td class="centered genmed nowrap">{C_lastt} <br /><b>{C_lastu}</b></td>
+</tr>
+<<- 'FOR_THEME_ROW'>>
+
+<<+ 'THEME_BODY'>>
+{C_labels}
+{C_formstart}
+<table class="post fullwidth">
+<tr><td rowspan="2" class="qf_rborder centered"  style="width: 80px;">{C_image}</td>
+<td style="padding: 0; vertical-align: top;">
+<table class="invisible fullwidth"><tr><td style="padding: 0;">
+<table class="invisible"><tr><td class="tblline" >
+{C_header}
+</td><td class="tblliner"></td></tr></table>
+</td><td rowspan="2" class="qf_lborder centered genmed" style="width: 80px;">
+{C_avatar}<br />
+<b>{C_user}</b><br />
+{C_u_rights}
+</td></tr><tr><td>
+{C_body}
+</td></tr></table>
+</td></tr>
+{IF_modblock}
+<tr><td style="padding: 0;">{C_modblock}</td></tr>
+{ENDIF}
+</table>
+{C_formend}
+<<- 'THEME_BODY'>>
+
+<<+ 'THEME_READ_BODY'>>
+{C_descr}
+<hr />
+{C_subscribe}<br />
+{L_READL}: {C_minrights}. {L_ANSWL}: {C_postrights}.<br />
+{L_FOR_SECT_POSTS}: {C_posts}.<br />
+{L_PAGE_NO} {C_curpage} / {C_totalpages}.<br />
+{L_FOR_SECT_LAST} {C_lasttime}.
+<<- 'THEME_READ_BODY'>>
+
+<<+ 'THEME_MOD_BLOCK'>>
+<table class="invisible fullwidth"><tr><td style="padding: 0;">
+&nbsp;{C_editorbutts}
+</td><td class="modbuttsl"></td><td class="modbutts">
+{C_content}
+</td></tr></table>
+<<- 'THEME_MOD_BLOCK'>>
+
+<<+ 'POST_ATTACH'>>
+<table class="atttbl"><tr><td class="centered">
+<a href="{C_url}" title="{C_descr}"><img class="attach" src="{C_src}" alt="{C_capt}" /></a>
+<br />
+{C_capt}<br />
+{C_size}<br />
+{L_ATT_DLOADS} {C_dloads}<br />
+{IF_text}
+ <b>{C_text}</b>
+{ENDIF}
+</td></tr></table>
+<<- 'POST_ATTACH'>>
+
+Forms for forum pages. MODIFY CAREFULLY !!!
+
+<<+ 'FOR_EDIT_BUTTS'>>
+ <input type="button" accesskey="p" name="preview" value="{L_BTN_PREVIEW}" onClick="for_preview('{C_formname}')" title="{L_BTN_EDITOR}" />
+ <input type="button" accesskey="e" name="geteditor" value="{L_BTN_EDITOR}" onClick="window.open('index.php?sr=qfeditor&amp;senderform={C_formname}', '_qfeditor', 'HEIGHT=450, resizable=yes, scrollbars=yes, WIDTH=520');return false;" title="{L_BTN_EDITOR}" />
+ <input type="submit" class="post" value="{L_BTN_SAVE}" title="{L_BTN_SAVE}" />
+ <input type="button" name="canc" value="{L_BTN_CANCEL}" onClick="window.location.href = '{C_cancel_url}'" title="{L_BTN_CANCEL}" />
+<<- 'FOR_EDIT_BUTTS'>>
+
+<<+ 'THEME_EDIT_FORM'>>
+ <input type="hidden" name="script" value="forum" />
+ <input type="hidden" name="action" value="editbranch" />
+ <input type="hidden" name="st" value="{C_st}" />
+ <input type="hidden" name="page" value="{C_page}" />
+ <input type="hidden" name="t_id" value="{C_id}" />
+ <input type="hidden" name="qfuser" value="{C_user}" />
+ {L_FOR_THEME_CAPT}: <input type="text" name="t_caption" maxlength="255" size="50" value="{C_caption}" /><br />
+ {L_FOR_THEME_DESC}:
+ <br />
+ <div id='{C_formname}_preview' class="post_body" onclick="for_hidepreview('{C_formname}')" style="display: none; border-width: 1px; border-style: solid; cursor: text;">
+ </div>
+ <textarea cols="40" class="post" rows="4" name="t_descr" onchange="for_hidepreview('{C_formname}')" style="width:99%" >{C_descr}</textarea>
+ {L_READL}: <SELECT NAME="t_minrights">
+ {C_mrights_options}
+ </select>
+ {L_ANSWL}: <SELECT NAME="t_postrights">
+ {C_prights_options}
+ </select>{C_rights_hint}
+ <br />
+ <input name="t_pin" type="checkbox" value="1" {C_pintheme} />{L_FOR_PIN_THEME}<br />
+ <input name="t_lock" type="checkbox" value="1" {C_locktheme} />{L_FOR_CLOSE_THEME}<br />
+ <input name="t_del" type="checkbox" value="1" {C_deltheme} />{L_FOR_DEL_THEME}<br />
+ {L_FOR_SECT_PAR}: <select name="s_id" style="width: 50%;">
+ {C_psect_options}
+ </select>
+<<- 'THEME_EDIT_FORM'>>
+
+<<+ 'THEME_NEW_FORM'>>
+ <input type="hidden" name="script" value="forum" />
+ <input type="hidden" name="action" value="newbranch" />
+ <input type="hidden" name="st" value="{C_st}" />
+ <input type="hidden" name="page" value="{C_page}" />
+ <input type="hidden" name="s_id" value="{C_sid}" />
+{IF_user} <input type="hidden" name="qfuser" value="{C_user}" />{ELSE}
+ {L_AUTHOR}: <input type="text" name="qfuser" value="{C_guser}" /><br />
+ {SPAMFIELD}{ENDIF}
+ {L_FOR_THEME_CAPT}: <input type="text" name="t_caption" maxlength="255" size="50" value="{C_caption}" /><br />
+ {L_FOR_THEME_DESC}:
+ <br /><textarea cols="40" class="post" rows="2" name="t_descr" style="width:99%" >{C_descr}</textarea><br />
+ {L_FOR_THEME_FIRSTMSG}:
+ <br />
+ <div id='{C_formname}_preview' class="post_body" onclick="for_hidepreview('{C_formname}')" style="display: none; border-width: 1px; border-style: solid; cursor: text;">
+ </div>
+ <textarea cols="40" class="post" onchange="for_hidepreview('{C_formname}')" style="width:99%" rows="8" name="message">{C_text}</textarea>
+ {L_READL}: <SELECT NAME="t_minrights">
+ {C_mrights_options}
+ </select>
+ {L_ANSWL}: <SELECT NAME="t_postrights">
+ {C_prights_options}
+ </select>{C_rights_hint}
+ <br />
+ <input type="button" accesskey="p" name="preview" value="{L_BTN_PREVIEW}" onClick="for_preview('{C_formname}')" title="{L_BTN_EDITOR}" />
+ <input type="button" accesskey="e" name="geteditor" value="{L_BTN_EDITOR}" onClick="window.open('index.php?sr=qfeditor&amp;senderform={C_formname}', '_qfeditor', 'HEIGHT=450, resizable=yes, scrollbars=yes, WIDTH=520');return false;" title="{L_BTN_EDITOR}" />
+ <input type="submit" class="post" value="{L_BTN_ADD}" title="{L_BTN_ADD}" />
+<<- 'THEME_NEW_FORM'>>
+
+<<+ 'POST_EDIT_FORM'>>
+ <input type="hidden" name="script" value="forum" />
+ <input type="hidden" name="action" value="editpost" />
+ <input type="hidden" name="p_id" value="{C_id}" />
+ <input type="hidden" name="qfuser" value="{C_user}" />
+ <div id='{C_formname}_preview' class="post_body" onclick="for_hidepreview('{C_formname}')" style="display: none; border-width: 1px; border-style: solid; cursor: text;">
+ </div>
+ <textarea cols="50" class="post" style="width:99%" onchange="for_hidepreview('{C_formname}')" rows="8" name="message">{C_text}</textarea>
+ <input name="p_del" type="checkbox" value="1" {C_delmessage} />{L_FOR_DEL_POST}<br />
+ {IF_canhide}<input name="p_hedit" type="checkbox" value="1" />{L_FOR_HIDE_EDIT}<br />{ENDIF}
+ {IF_unattach}
+ {L_FOR_POST_UNATTACH}:<br />
+ <div style="margin-left: 20px;">
+ {C_unattach}
+ </div>
+ {ENDIF}
+ {C_files}
+ {C_history}
+<<- 'POST_EDIT_FORM'>>
+
+<<+ 'POST_EDIT_UNATTACH'>>
+<input type="checkbox" name="unattach[]" value="{C_fid}"  />{C_capt}<br />
+<<- 'POST_EDIT_UNATTACH'>>
+
+<<+ 'POST_NEW_FORM'>>
+ <input type="hidden" name="script" value="forum" />
+ <input type="hidden" name="action" value="newpost" />
+ <input type="hidden" name="t_id" value="{C_tid}" />
+{IF_fixuser} <input type="hidden" name="qfuser" value="{C_user}" />
+{ELSE}{L_AUTHOR}: <input type="text" name="qfuser" value="{C_user}" /><br />
+{SPAMFIELD}{ENDIF}
+ <div id='{C_formname}_preview' class="post_body" onclick="for_hidepreview('{C_formname}')" style="display: none; border-width: 1px; border-style: solid; cursor: text;">
+ </div>
+ <textarea cols="50" class="post" style="width:99%" onchange="for_hidepreview('{C_formname}')" rows="8" name="message">{C_text}</textarea>
+ {IF_subscribe}
+ <input name="tsubscribe" type="checkbox" value="1" /> {L_FOR_SUBSCRIBE}<br />
+ {ENDIF}
+ {C_files}
+ <input type="button" accesskey="p" name="preview" value="{L_BTN_PREVIEW}" onClick="for_preview('{C_formname}')" title="{L_BTN_EDITOR}" />
+ <input type="button" accesskey="e" name="geteditor" value="{L_BTN_EDITOR}" onClick="window.open('index.php?sr=qfeditor&amp;senderform={C_formname}', '_qfeditor', 'HEIGHT=450, resizable=yes, scrollbars=yes, WIDTH=520');return false;" title="{L_BTN_EDITOR}" />
+ <input type="submit" class="post" value="{L_BTN_ADD}" title="{L_BTN_ADD}" />
+<<- 'POST_NEW_FORM'>>
+
+<<+ 'FILE_ROW'>>
+<tr class="hlight"><td>{L_FILE} {C_id}: <input type="file" name="file{C_id}"> - <input name="file{C_id}capt" value="" title="{L_FOR_POST_FILE_HINT}"></td></tr>
+<<- 'FILE_ROW'>>
+
+<<+ 'FORUM_JUMPER'>>
+<table class="invisible fullwidth"><tr>
+<td style="text-align: left;">
+
+<form action="index.php" method="get">
+<input type="hidden" name="st" value="fsearch" />
+<input type="hidden" name="mode" value="2" />
+{L_FOR_SEARCH_REQ_STR} <input type="text" name="string" value="" />
+<input type="submit" value="{L_BTN_GO}" />
+</form><br />
+{L_FOR_SEARCH_REQ_UNR}:
+[<a href="index.php?st=fsearch&amp;mode=1" >{L_FOR_SEARCH_REQ_UNR_ALL}</a> | <a href="index.php?st=fsearch&amp;mode=1&amp;by_subscr=1" >{L_FOR_SEARCH_REQ_UNR_SUBSCR}</a>]
+</td>
+<td style="text-align: right;">
+
+<form onsubmit="if(document.jumpmenu.f.value == -1){return false;}" action="index.php" method="get" name="jumpmenu">
+<input type="hidden" name="st" value="section" />
+<select name="section" onchange="if(this.options[this.selectedIndex].value != -1){ document.jumpmenu.submit() }">
+{C_jumper_options}
+</select>
+<input type="submit" value="GO!" />
+</form>
+</td>
+</tr></table>
+<<- 'FORUM_JUMPER'>>

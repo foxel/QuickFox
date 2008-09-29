@@ -1,0 +1,539 @@
+{VARS}
+
+{page_bg}=#495f46
+{base_color}=#cbe2cc
+
+{base1}=#accaae
+{baseerr}=#F9B9C1
+{basedel}=#bfc9c0
+
+{base2}=#7ca77f
+{base3}=#bfe1c1
+{base4}=#91c593
+
+{controls}=#e6f7e7
+
+{base_brd}=#e6f7e7
+{brdr1}=#538509
+{brdrerr}=#FF1010
+{brdrdel}=#445246
+
+{text}=#063300
+
+{link1}=#036109
+{link1h}=#229104
+{link2}=#FFFFFF
+{linkmh}=#FFFFFF
+
+{/VARS}
+
+body {
+	background-color: {page_bg};
+	scrollbar-face-color: {controls};
+	scrollbar-highlight-color: {base_color};
+	scrollbar-shadow-color: {controls};
+	scrollbar-3dlight-color: {base1};
+	scrollbar-arrow-color:  #092484;
+	scrollbar-track-color: #9FAED5;
+	scrollbar-darkshadow-color: #180984;
+	font-size : 14px;
+	color : {text};
+}
+
+A:link,A:active,A:visited  {
+	color: {link1};
+	text-decoration: none;
+	font-weight: bold;
+}
+A:hover {
+	color: {link1h};
+	text-decoration: underline;
+	font-weight: bold;
+}
+A.ml:hover {
+	color: {linkmh};
+}
+
+A.pglink {
+
+}
+
+/* Global Styles */
+TABLE {
+	border-color: {base_brd};
+	font-size   : 14px;
+}
+
+DIV {
+	border-color: {base_brd};
+}
+
+TD, TH {
+	border-color: {base_brd};
+	border-style: solid;
+	border-width: 0;
+	padding: 3px 2px 3px 2px;
+}
+
+HR {
+	border-style: solid;
+	border-color: {base_brd};
+	margin: 7px;
+	width: 90%;
+}
+
+H1, H2, H3 {
+    text-align: center;
+}
+
+FORM{
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+IMG{
+	border: 0;
+	vertical-align: middle;
+}
+
+FONT {
+	font-size : 14px;
+}
+
+/* Global Page */
+
+TABLE.qf_mainframe {
+	border-style: solid;
+	border-width: 6px 2px 4px 2px;
+	width: 100%;
+	-moz-border-radius: 15px;
+	background-color: {base_color};
+}
+
+TD.qf_pageframe {
+	vertical-align: top;
+	padding: 2px 0 30px 0;
+}
+
+TD.qf_panels {
+	border-left: {base_brd} solid 2px;
+	width: 200px;
+	vertical-align: top;
+	padding: 2px;
+	margin: 0px;
+}
+
+TD.qf_bott_adv {
+	border-top: {base_brd} solid 1px;
+    text-align: center;
+	background-color: {base3};
+}
+
+DIV.qf_advblock {
+    text-align: center;
+}
+
+TABLE.qf_footstat {
+    border: none;
+	width: 100%;
+}
+TD#qf_genstats {
+    vertical-align: top;
+    text-align: left;
+}
+TD#qf_staticons {
+    vertical-align: top;
+    text-align: right;
+}
+
+DIV.qf_centermess {
+    width: 500px;
+    margin: auto;
+
+}
+
+/* Upper menu */
+
+TABLE.qf_menutable {
+	border-collapse: collapse;
+	width: 100%;
+	margin: 1px 1px 20px 1px;
+}
+TD.qf_menubutt {
+	background: {base2} url({CSS_IMGS}/menubtnm.gif);
+	height: 30px;
+	text-align: center;
+	padding: 5px 10px 5px 10px;
+}
+TD.qf_menubutt A:hover {
+	color: {linkmh};
+}
+TD.qf_menubutt:hover {
+	background: {base_color} url({CSS_IMGS}/menubtnma.gif);
+}
+
+TD.qf_menuleft, TD.qf_menuright {
+	width: 15px;
+	height: 30px;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+TD.qf_menuleft {
+	background: {base2} url({CSS_IMGS}/menubtnl.gif);
+}
+TD.qf_menuright {
+	background: {base2} url({CSS_IMGS}/menubtnr.gif);
+}
+
+/* qfeditor style */
+TABLE.qf_editor_butts {
+    text-align: center;
+    width: 100%;
+}
+
+/* MyCabinet Styling */
+TD.qf_mycabmenu {
+    vertical-align: top;
+    width: 200px;
+}
+DIV.qf_mycabmdata {
+	background: {base4} url({CSS_IMGS}/mycabmcapt.gif);
+    background-repeat: repeat-x;
+    vertical-align: top;
+    padding: 10px 7px 20px 7px;
+    width: 200px;
+}
+DIV.qf_mycabmtail {
+    background: url({CSS_IMGS}/mycabmtail.gif);
+    background-repeat: repeat-x;
+    padding: 10px 7px 20px 7px;
+    width: 200px;
+}
+TD.qf_mycabpage {
+    padding: 10px 15px 20px 15px;
+    vertical-align: top;
+}
+
+/*Flipers caption */
+DIV.qf_flpcapt {
+    border-style: solid;
+	border-width: 2px 1px 2px 1px;
+	-moz-border-radius: 7px;
+	margin: 7px 25px 7px 25px;
+	white-space: nowrap;
+	background-color: {controls};
+	cursor: default;
+	padding: 3px 10px 3px 10px;
+	width: 170px;
+	text-align: center;
+}
+
+/* Panels Styling */
+DIV.qf_panel {
+	margin: 5px 0 10px 0;
+	padding: 0;
+}
+DIV.qf_pancapt {
+	background: {base2} url({CSS_IMGS}/mid.gif);
+	border-width: 0;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+DIV.qf_pancont {
+	border-style: solid;
+	border-color: {base2};
+	border-width: 0 1px 2px 1px;
+	-moz-border-radius: 0 0 10px 10px;
+    padding: 0 !important;
+    margin: 0 !important;
+	background-color: {base1};
+}
+DIV.qf_pancont TABLE {
+	margin: 0 !important;
+}
+
+/* forum specials */
+DIV.qf_forumer {
+    width: 85%;
+    margin: auto;
+}
+TABLE.qf_pages {
+    width: auto;
+    margin: auto;
+    border-collapse: collapse;
+}
+TD.qf_pages_tl, TD.qf_pages_tr, TD.qf_pages_bl, TD.qf_pages_br {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+TD.qf_pages_tl {
+	background: url({CSS_IMGS}/in.gif);
+	width: 50px;
+}
+TD.qf_pages_tr {
+	background: url({CSS_IMGS}/out.gif);
+	width: 50px;
+}
+TD.qf_pages_t {
+	background: {base2} url({CSS_IMGS}/mid.gif);
+	white-space: nowrap;
+	margin: 0 !important;
+}
+TD.qf_pages_bl {
+	background: url({CSS_IMGS}/in1.gif);
+	width: 40px;
+}
+TD.qf_pages_br {
+	background: url({CSS_IMGS}/out1.gif);
+	width: 40px;
+}
+TD.qf_pages_b {
+	background: {base2};
+	white-space: nowrap;
+	margin: 0 !important;
+}
+
+TABLE.quote {
+    margin: 10px 25px 7px 25px;
+}
+TD.quote_body {
+	font-size: 14px;
+	color: {text};
+	line-height: 125%;
+	background-color: {controls};
+	border-color: {brdr1};
+	border-style: solid;
+	border-width: 1px;
+	padding: 3px 5px 10px 5px;
+}
+
+
+/* Table Caption line style */
+TR.tblline, TD.tblline {
+	background-color: {base2};
+	white-space: nowrap;
+	margin: 0 !important;
+}
+
+TD.tblliner, TD.tbllinel {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+TD.tblliner {
+	background: url({CSS_IMGS}/out1.gif);
+	width: 40px;
+}
+
+TD.tbllinel {
+	background: url({CSS_IMGS}/in1.gif);
+	width: 40px;
+}
+
+/* Table caption style + Modbutts block style */
+TD.tblcapt, TD.modbutts {
+	background: {base2} url({CSS_IMGS}/mid.gif);
+	white-space: nowrap;
+	margin: 0 !important;
+}
+
+TD.tblcaptr, TD.tblcaptl, TD.modbuttsr, TD.modbuttsl {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+TD.tblcapt {
+	padding: 1px;
+}
+TD.modbutts {
+	padding: 5px;
+	width: 70px;
+}
+
+TD.tblline A:hover, TD.tblcapt A:hover, TD.modbutts A:hover {
+	color: {linkmh};
+}
+
+TD.tblcaptr, TD.modbuttsr {
+	background: url({CSS_IMGS}/out.gif);
+	width: 50px;
+}
+
+TD.tblcaptl, TD.modbuttsl {
+	background: url({CSS_IMGS}/in.gif);
+	width: 50px;
+}
+
+
+/* common clases */
+
+/* posts styling */
+TABLE.post  {
+	border-style: solid;
+	border-width: 2px 1px;
+	-moz-border-radius: 5px;
+	margin: 5px 0px 5px 0px;
+	background-color: {base1};
+}
+
+DIV.post_body, DIV.post_atts {
+	overflow: auto;
+	width: 100%;
+	max-height: 350px;
+}
+
+
+TABLE.qf_grid {
+	border-style: solid;
+	border-width: 1px 1px 2px 1px;
+	margin: 5px 0px 5px 0px;
+	-moz-border-radius: 5px;
+	background-color: {base1};
+    border-collapse: collapse;
+}
+
+TABLE.qf_grid TD, TH{
+	border-style: solid;
+	border-width: 1px;
+}
+
+TD.qf_lborder {
+	border-left: {base_brd} solid 1px;
+	background-color: {base3};
+}
+TD.qf_rborder {
+	border-right: {base_brd} solid 1px;
+	background-color: {base3};
+}
+
+TABLE.border, DIV.border {
+	border-style: solid;
+	border-width: 2px 1px;
+	margin: 5px 0px 5px 0px;
+	-moz-border-radius: 5px;
+	background-color: {base1};
+}
+TABLE.overlay {
+	border-style: solid;
+	border-width: 2px 1px;
+	-moz-border-radius: 5px;
+	z-index: 100;
+	background-color: {base3};
+    border-collapse: collapse;
+}
+
+TR.hlight:hover {
+	background-color: {base_color};
+}
+
+TR.deleted, TD.deleted, TABLE.deleted {
+    opacity: 0.5;
+	background-color: {basedel};
+	border-color: {brdrdel};
+}
+
+TR.error, TD.error, TABLE.error {
+	background-color: {baseerr};
+	border-color: {brdrerr};
+}
+
+TABLE.error * {
+	border-color: {brdrerr};
+}
+
+TR.selected {
+	background-color: {base4};
+}
+
+
+
+/* General text */
+.gen { font-size : 14px; }
+.genmed { font-size : 12px; }
+.gensmall { font-size : 10px; }
+.posttext { font-size : 14px; line-height: 16px}
+.gen,.genmed,.gensmall { color : {text}; }
+
+.error { color : #CC1010; font-weight: bold; }
+.red { color : darkred; font-weight: bold; }
+
+.code {
+	font-family: Courier, 'Courier New', sans-serif;
+	font-size: 12px;
+	color: #0000ff;
+}
+
+/* attaches table */
+TABLE.atttbl {
+  	display: inline;
+	margin: 10px 20px 0 0;
+}
+
+TABLE.atttbl TD {
+	text-align: center;
+}
+
+IMG.attach {
+	background: {base3} ;
+	border-style: solid;
+	border-color: {base3};
+	border-width: 12px 3px 3px 3px;
+	margin: 5px 0 0 0;
+}
+
+DIV.autoscroll {
+	overflow: auto;
+	width: 100%;
+	max-height: 350px;
+}
+
+
+
+
+/* Inputs Styling */
+INPUT, TEXTAREA, SELECT {
+	background-color : {controls};
+	border-style: solid;
+	border-color: {base_brd};
+	border-width: 2px 1px;
+	font-weight: normal;
+	margin: 2px 1px 2px 1px;
+}
+
+INPUT {
+	text-indent : 2px;
+}
+
+INPUT.plain {
+	background-color : inherit !important;
+}
+
+
+/* global styles - please go not change */
+
+.centered {
+    text-align: center !important;
+}
+.fullwidth {
+    width: 100% !important;
+}
+.nowrap {
+    white-space: nowrap !important;
+}
+TABLE.invisible {
+    border: none !important;
+    border-collapse: collapse;
+}
+TABLE.noborder {
+    border: none !important;
+}
+.toptext {
+    vertical-align: top;
+}
+
+
+DIV.minichater {
+    width: 195px;
+}

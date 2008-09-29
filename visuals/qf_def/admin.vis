@@ -1,0 +1,356 @@
+Visul templates for admin use only.
+Separated to reduce dataload in common procedures
+Please Edit very carefully And think "Am i need this?"
+
+<<+ 'VSTAT_VSESS_TABLE'>>
+<table class="border fullwidth noborder">
+<tr class="tblline genmed">
+<th>{L_ADMCAB_VSESS_USER}</th>
+<th>{L_ADMCAB_VISSTAT_LASTIP}</th>
+<th>{L_ADMCAB_VSESS_START}</th>
+<th>{L_ADMCAB_VSESS_LAST}</th>
+<th>{L_ADMCAB_VSESS_CLICKS}</th>
+</tr>
+{C_rows}
+</table>
+<<- 'VSTAT_VSESS_TABLE'>>
+
+<<+ 'VSTAT_VSESS_TBLROW'>>
+<tr class="hlight">
+<td class="nowrap">{IF_sess_user}{C_sess_user}{ELSE}{L_GUEST}{ENDIF}</td>
+<td class="genmed nowrap">{C_sess_ip}</td>
+<td class="genmed nowrap">{C_sess_starttime}</td>
+<td class="genmed nowrap">{C_sess_lastused}</td>
+<td class="genmed">{C_sess_clicks}</td>
+</tr>
+<<- 'VSTAT_VSESS_TBLROW'>>
+
+<<+ 'VSTAT_VGUESTS_TABLE'>>
+<table class="border fullwidth noborder">
+<tr class="tblline genmed">
+<th>{L_ADMCAB_VGUESTS_GID}</th>
+<th>{L_ADMCAB_VISSTAT_LASTIP}</th>
+<th>{L_ADMCAB_VGUESTS_VISIT}</th>
+<th>{L_ADMCAB_VGUESTS_STATUS}</th>
+<th>{L_ADMCAB_VGUESTS_VIEWS}</th>
+</tr>
+{C_rows}
+</table>
+<<- 'VSTAT_VGUESTS_TABLE'>>
+
+<<+ 'VSTAT_VGUESTS_TBLROW'>>
+<tr class="hlight" onmousemove="qf_show_div_id('gst{COUNTER}')" onmouseout="qf_hide_div_id('gst{COUNTER}')">
+<td >
+<span class="genmed nowrap">
+{IF_g_nick}<b>{C_g_nick}</b><br />{ENDIF}
+{C_g_gid}
+</span>
+<div style="position: relative" >
+<div id="gst{COUNTER}" style="position: absolute; left: 25px; display: none;" align="center">
+<table class="overlay" cellspacing="0" cellpadding="1" width="250">
+<tr><td align="center">
+<span class="genmed" >
+{C_g_uagent}
+</span>
+</td></tr>
+</table></div>
+</div>
+</td>
+<td class="genmed nowrap">{C_g_lastip}</td>
+<td class="genmed nowrap"><a href="{C_g_lasturl}#" title="{C_g_lasturl}">{C_g_lastseen}</a></td>
+<td class="genmed nowrap">{IF_g_isguest}{L_GUEST}{ELSE}IP{ENDIF}</td>
+<td class="genmed">{C_g_views}</td>
+</tr>
+<<- 'VSTAT_VGUESTS_TBLROW'>>
+
+<<+ 'VSTAT_VSPIDERS_TABLE'>>
+<table class="border fullwidth noborder">
+<tr class="tblline genmed">
+<th>{L_ADMCAB_VSPIDERS_NAME}</th>
+<th>{L_ADMCAB_VSPIDERS_MASK}</th>
+<th>{L_ADMCAB_VSPIDERS_LASTTIME}</th>
+<th>{L_ADMCAB_VSPIDERS_VISITS}</th>
+</tr>
+{C_rows}
+</table>
+<<- 'VSTAT_VSPIDERS_TABLE'>>
+
+<<+ 'VSTAT_VSPIDERS_TBLROW'>>
+<tr class="hlight">
+<td class="genmed nowrap">{C_spd_name}</td>
+<td class="genmed nowrap">&quot;{C_spd_mask}&quot;</td>
+<td class="genmed nowrap">{C_spd_lastseen}</td>
+<td class="genmed">{C_spd_visits}</td>
+</tr>
+<<- 'VSTAT_VSPIDERS_TBLROW'>>
+
+<<+ 'VSTAT_VUSERS_TABLE'>>
+<table class="border fullwidth noborder">
+<tr class="tblline genmed">
+<th>{L_ADMCAB_VUSERS_ID}</th>
+<th>{L_ADMCAB_VUSERS_NICK}</th>
+<th>{L_ADMCAB_VISSTAT_LASTIP}</th>
+<th>{L_ADMCAB_VUSERS_VISIT}</th>
+</tr>
+{C_rows}
+</table>
+<<- 'VSTAT_VUSERS_TABLE'>>
+
+<<+ 'VSTAT_VUSERS_TBLROW'>>
+<tr class="hlight" onmousemove="qf_show_div_id('uvst{COUNTER}')" onmouseout="qf_hide_div_id('uvst{COUNTER}')">
+<td >
+<span class="genmed nowrap">
+{C_u_id}
+</span>
+<div style="position: relative" >
+<div id="uvst{COUNTER}" style="position: absolute; left: 25px; display: none;" align="center">
+<table class="quote" cellspacing="0" cellpadding="1">
+<tr><td class="genmed nowrap" align="center" valign="middle">
+{C_u_avatar}
+</td></tr>
+</table></div>
+</div>
+</td>
+<td class="genmed nowrap"><b>{C_u_nick}</b></td>
+<td class="genmed nowrap">{C_u_lastip}</td>
+<td class="genmed nowrap"><a href="{C_u_lasturl}#" title="{C_u_lasturl}">{C_u_lastseen}</a></td>
+</tr>
+<<- 'VSTAT_VUSERS_TBLROW'>>
+
+<<+ 'FOR_ADM_SECT_TBL'>>
+{L_ADMCAB_SECTIONS_HEADER}
+<table class="border fullwidth">
+{C_rows}
+</table>
+<div align="right">
+{V_FOR_ADM_NEWSECT}
+</div>
+<<- 'FOR_ADM_SECT_TBL'>>
+
+<<+ 'FOR_ADM_SECT_ROW'>>
+<tr class="hlight">
+<td {IF_deleted} class="deleted"{ENDIF} >{C_labels}
+<table width="100%"><tr><td class="nowrap" valign="top">{C_imgs}</td>
+<td width="100%"><b>{C_caption}</b> {C_rights}<br />
+{IF_acc_group}[{L_ACCESS_BY} <a href="{C_acc_gr_lk}"><b>{C_acc_group}</b></a>]<br />{ENDIF}
+<span class="genmed"><i>{C_descr}</i></span></td></tr></table></td>
+<td title="{L_FOR_SECT_SECTS}" width="15" align="center">{C_sects}</td>
+<td title="{L_FOR_SECT_THEMES}" width="15" align="center">{C_themes}</td>
+<td title="{L_FOR_SECT_POSTS}" width="15" align="center">{C_posts}</td>
+<td>{C_edit}</td>
+</tr>
+<<- 'FOR_ADM_SECT_ROW'>>
+
+<<+ 'ACCESS_GROUPS_PAGE'>>
+{L_ADMCAB_ACCGRP_REQUEST}<br />
+{C_grp_request}
+{C_groups_list}
+<br />
+{C_group_users}
+{C_group_add_users}
+<br />
+<br />
+<<- 'ACCESS_GROUPS_PAGE'>>
+
+<<+ 'ACCESS_GROUPS_TABLE'>>
+{C_formstart}
+<table class="qf_grid fullwidth">
+<tr class="tblline genmed">
+<th>{L_ADMCAB_ACCGRP_NAME}</th>
+<th>{L_ADMCAB_ACCGRP_DESCR}</th>
+<th>{L_ADMCAB_ACCGRP_NUMUSERS}</th>
+<th>{L_ADMCAB_ACCGRP_EDIT}</th>
+</tr>
+{C_rows}
+</table>
+{C_formend}
+<<- 'ACCESS_GROUPS_TABLE'>>
+
+<<+ 'ACCESS_GROUPS_TBLROW'>>
+<tr class="hlight" >
+<td class="nowrap"><a href="{C_link}"><b>{C_name}</b></a></td>
+<td class="genmed">{C_descr}</td>
+<td class="nowrap">{C_users}</td>
+<td class="nowrap">{C_controls}</td>
+</tr>
+<<- 'ACCESS_GROUPS_TBLROW'>>
+
+<<+ 'ACCESS_GROUPS_TBLROW_NEW'>>
+<tr class="hlight" >
+<td class="nowrap" colspan="4" align="right">
+<a href="{C_link}">{L_ADMCAB_ACCGRP_CR_NEW}</a>
+</td>
+</tr>
+<<- 'ACCESS_GROUPS_TBLROW_NEW'>>
+
+<<+ 'ACCESS_GROUP_USLIST'>>
+{L_ADMCAB_ACCGRP_USLIST} <b>&quot;{C_gr_name}&quot;</b>:
+{C_formstart}
+<table class="qf_grid fullwidth">
+<tr class="tblline genmed">
+<th style="width: 30px">--</th>
+<th>{L_ADMCAB_ACCGRP_US_NAME}</th>
+<th>{L_ADMCAB_ACCGRP_T_GIVEN}</th>
+<th>{L_ADMCAB_ACCGRP_T_DROP}</th>
+</tr>
+{IF_rows}
+{C_rows}
+<tr><td colspan="4" align="right">
+{C_controls}
+</td></tr>
+{ELSE}
+<tr><td colspan="4" align="center">
+<b>{L_ADMCAB_ACCGRP_USL_EMPTY}</b>
+</td></tr>
+{ENDIF}
+</table>
+{C_formend}
+<<- 'ACCESS_GROUP_USLIST'>>
+
+<<+ 'ACCESS_GROUP_USLIST_ROW'>>
+<tr class="hlight" >
+<td > {C_control} </td>
+<td class="nowrap"><a href="{C_link}"><b>{C_name}</b></a></td>
+<td class="nowrap">{C_t_given}</td>
+<td class="nowrap">{C_t_drop}</td>
+</tr>
+<<- 'ACCESS_GROUP_USLIST_ROW'>>
+
+
+Forms For Admin Pages. MODIFY CAREFULLY !!!
+
+<<+ 'ACCESS_GROUP_ADDUSERS_FORM'>>
+{L_ADMCAB_ACCGRP_US_ADD_TO} <b>&quot;{C_gr_name}&quot;</b>:
+{C_formstart}
+<table class="qf_grid fullwidth">
+<tr><td>
+<input type="hidden" name="script" value="acc_gr_edit" />
+<input type="hidden" name="action" value="us_add" />
+<input type="hidden" name="gr_id" value="{C_gr_id}" />
+{L_ADMCAB_ACCGRP_US_ADD_REQUEST}<br />
+<input type="text" name="add_users" style="width: 97%;" /><br />
+</td></tr>
+<tr><td align="right">
+{L_ADMCAB_ACCGRP_US_ADD_WITHDO}:
+<select name="todo">
+<option value="set_month">{L_ADMCAB_ACCGRP_US_SETMONTH}</option>
+<option value="set_perm">{L_ADMCAB_ACCGRP_US_SETPERM}</option>
+</select>
+<input type="submit" value="{L_BTN_GO}" />
+</td></tr>
+</table>
+{C_formend}
+<<- 'ACCESS_GROUP_ADDUSERS_FORM'>>
+
+<<+ 'ACCESS_GROUP_USERS_CTRL'>>
+<input type="hidden" name="script" value="acc_gr_edit" />
+<input type="hidden" name="action" value="us_edit" />
+<input type="hidden" name="gr_id" value="{C_gr_id}" />
+{L_ADMCAB_ACCGRP_US_SELDO}:
+<select name="todo">
+<option value="drop">{L_ADMCAB_ACCGRP_US_DROP}</option>
+<option value="set_month">{L_ADMCAB_ACCGRP_US_SETMONTH}</option>
+<option value="set_perm">{L_ADMCAB_ACCGRP_US_SETPERM}</option>
+</select>
+<input type="submit" value="{L_BTN_GO}" />
+<<- 'ACCESS_GROUP_USERS_CTRL'>>
+
+<<+ 'ACCESS_GROUPS_TBLROW_CHFORM'>>
+<tr class="selected" >
+<td class="nowrap"><input type="text" name="gr_name" value="{C_name}" maxlength="32" /></td>
+<td class="genmed"><input type="text" name="gr_descr" value="{C_descr}" maxlength="255" /></td>
+<td class="nowrap" colspan="2" align="right">
+<input type="hidden" name="script" value="acc_gr_edit" />
+<input type="hidden" name="action" value="gr_edit" />
+<input type="hidden" name="gr_id" value="{C_id}" />
+<input type="submit" value="{L_BTN_SAVE}" />
+{C_controls}</td>
+</tr>
+<<- 'ACCESS_GROUPS_TBLROW_CHFORM'>>
+
+<<+ 'ADM_LOGIN_MESS'>>
+<table class="invisible fullwidth">
+<tr><td class="centered">
+<form action="index.php" method="post">
+{L_UCAB_MADMIN_NEEDPASS}
+<input type="hidden" name="script" value="admcheck" />
+<input name="userpass" type="password" maxlength="32" />
+<input type=submit value="{L_BTN_ENTER}" />
+</form>
+</td></tr>
+</table>
+<<- 'ADM_LOGIN_MESS'>>
+
+<<+ 'FOR_ADM_NEWSECT'>>
+<form action="index.php" method="get">
+<input type="hidden" name="st" value="mycabinet" />
+<input type="hidden" name="job" value="sections" />
+<input type="hidden" name="section" value="new" />
+<input type="submit" value="{L_ADMCAB_SECTION_NEW_BTN}" />
+</form>
+<<- 'FOR_ADM_NEWSECT'>>
+
+<<+ 'FOR_ADM_SYNC'>>
+{L_ADMCAB_FORUMSYNC_REQUEST}
+<form action="index.php" method="post">
+<input type="hidden" name="script" value="forumsync" />
+<input type="hidden" name="action" value="sync" />
+<input type="submit" value="{L_BTN_SYNC}" />
+</form>
+<<- 'FOR_ADM_SYNC'>>
+
+<<+ 'FOR_ADM_EDIT_SECT'>>
+{IF_sect_new}
+{L_ADMCAB_SECTION_NEW}
+{ELSE}
+{L_ADMCAB_SECTION_EDIT}
+{ENDIF}
+<form action="index.php" method="post">
+<input type="hidden" name="script" value="forumedit" />
+<input type="hidden" name="action" value="edit" />
+<input type="hidden" name="section" value="{C_sect}" />
+
+<table class="border fullwidth"><tr>
+<td valign="top" width="90%">
+	{L_FOR_SECT_NAME}: <input type="text" name="name" size="36" size="40" value="{C_capt}"><br />
+	{L_FOR_SECT_DESC}: <br />
+	<textarea cols="30" class="post" rows="4" name="descript" style="width: 98%;">{C_descr}</textarea>
+	{L_READL}:
+	<select name="minrights">
+	<option value="0">{L_FOR_ALL}</option>
+	{C_rr_options}
+	</select>
+
+	{L_WRITEL}:
+	<select name="postrights">
+	<option value="0">{L_FOR_ALL}</option>
+	{C_pr_options}
+	</select>
+
+	{C_par_hint}
+
+    <br />
+	{L_DATA_ACC_GROUP}:
+	<select name="acc_group">
+    <option value="0">{L_DATA_ACC_NO_GROUP}</option>
+	{C_acc_g_options}
+	</select>
+
+    <br />
+    <input name="delsect" value="1" type="checkbox"{IF_deleted} checked="checked" {ENDIF}>
+    {L_FOR_DEL_SECT}
+
+    <br />
+	{L_FOR_SECT_PAR}: <select name="parent">
+	{C_par_options}
+	</select>
+</td>
+</tr><tr>
+<td align="center">
+     <input type="submit" class="post" value="{L_BTN_SAVE}" title="{L_BTN_SAVE}">
+</td>
+</tr></table>
+</form>
+
+<<- 'FOR_ADM_EDIT_SECT'>>
+

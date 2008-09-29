@@ -1,0 +1,1157 @@
+<<+ 'LEVEL_POINT'>>
+<img src="{CSS_IMGS}/point.gif" alt="+" title="{L_RIGHTS_LEVEL}">
+<<- 'LEVEL_POINT'>>
+
+<<+ 'BTN_EDIT'>>
+<img src="{VIS_IMGS}/b_edit.png" alt="edit" title="{L_BTN_EDIT}">
+<<- 'BTN_EDIT'>>
+
+<<+ 'BTN_DROP'>>
+<img src="{VIS_IMGS}/b_drop.png" alt="delete" title="{L_BTN_DELETE}">
+<<- 'BTN_DROP'>>
+
+<<+ 'SUBSCR_FLAG'>>
+<span class="red">[{L_SUBSCRIBED}]</span>
+<<- 'SUBSCR_FLAG'>>
+
+<<+ 'NEW_FLAG'>>
+<span class="red">[New!]</span>
+<<- 'NEW_FLAG'>>
+
+<<+ 'UNR_FLAG'>>
+<span class="red">[Unread!]</span>
+<<- 'UNR_FLAG'>>
+
+<<+ 'NEWPM_FLAG'>>
+<span class="red">[{L_NEW_PM}]</span>
+<<- 'NEWPM_FLAG'>>
+
+<<+ 'NEWSUBS_FLAG'>>
+<span class="red">[{L_NEW_SUBS}]</span>
+<<- 'NEWSUBS_FLAG'>>
+
+<<+ 'NO_AVATAR'>>
+<b>{L_NO_AVATAR}</b>
+<<- 'NO_AVATAR'>>
+
+<<+ 'GZIP_FLAG'>>
+<img src="imgs/gzip.gif" alt="GZip" title="GZip compressed">
+<<- 'GZIP_FLAG'>>
+
+<<+ 'IMG_HINT'>>
+<img src="{VIS_IMGS}/hint.gif" alt="hint">
+<<- 'IMG_HINT'>>
+
+<<+ 'ERR_STRING'>>
+<h3><span class="error">[{C_message}]</span></h3>
+<<- 'ERR_STRING'>>
+
+<<+ 'GLOBAL_HTMLPAGE'>>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <META http-equiv="Content-Type" content="text/html; charset={L_ENCODING}" >
+  <title>{C_PAGE_TITLE}</title>
+  <META http-equiv="Content-Style-Type" content="text/css" >
+  {C_META}
+
+  <link href="imgs/qfl_sm.ico" rel="shortcut icon" >
+  <link href="png_fix.css" rel="styleSheet" type="text/css" media="screen">
+
+  <style type="text/css">
+  {C_CSS}
+  </style>
+</head>
+<body>
+{C_JAVA}
+<table class="qf_mainframe">
+<tr>
+    <td class="qf_pageframe">
+        <div id="page_menu" class="qf_menu_div">
+        {C_MENU}
+        </div>
+        <div id="page_top" class="qf_cont_div">
+        {C_included}
+        </div>
+    </td>
+    <td class="qf_panels">
+	<div align="center">
+	{IF_site_logo}
+	<img src="{C_site_logo}" alt="SITE LOGO" >
+	{ELSE}
+	<img src="imgs/logo.png" alt="LOGO" >
+    {ENDIF}
+	</div>
+        <hr />
+        {C_enter}
+        {C_stats}
+        <hr />
+        <div id="adv_block" class="qf_advblock" >
+            <a href="index.php?st=about"><img src="imgs/qfl_sm.png" border=0 alt="QuickFox"></a><br />
+            {V_COPYRIGHT}
+            <hr />
+            {C_adv}
+        </div>
+    </td>
+</tr>
+{IF_bottom_adv}
+<tr><td class="qf_bott_adv" colspan="2">
+{C_bottom_adv}
+</td></tr>
+{ENDIF}
+</table>
+<table id="page_foot" class="qf_footstat">
+<tr>
+    <td id="qf_genstats">
+    <!-PageStats-!>
+    </td>
+    <td id="qf_staticons">
+    {C_FOOTSTAT}
+    <a href="http://validator.w3.org/check?uri=referer">
+    <img src="http://www.w3.org/Icons/valid-html401.png" alt="Valid HTML 4.01 Transitional" height="31" width="88">
+    </a>
+    </td>
+</tr>
+</table>
+</body>
+</html>
+<!--[if gte IE 5.5000]><![if lt IE 7.0000]>
+<script type="text/javascript" src="jscripts/pngfix.js"></script>
+<![endif]><![endif]-->
+<<- 'GLOBAL_HTMLPAGE'>>
+
+<<+ 'GLOBAL_NODATAPAGE'>>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <META http-equiv="Content-Type" content="text/html; charset={L_ENCODING}" >
+  <title>{C_caption}</title>
+  <META http-equiv="Content-Style-Type" content="text/css" >
+  {C_META}
+
+  <link rel="shortcut icon" href="imgs/qfl_sm.ico" >
+
+  <style type="text/css">
+  {C_CSS}
+  </style>
+</head>
+<body>
+{C_JAVA}
+<div class="qf_centermess">
+<table class="qf_mainframe">
+<tr>
+    <td class="centered">
+        <img border="0" src="{VIS_IMGS}/exclaim.gif" alt="!!"><br />
+        <h2>{C_caption}</h2>
+        {C_content}
+        <hr />
+        <img src="imgs/qfl_sm.png" alt="QuickFox"><br />
+        {V_COPYRIGHT}
+    </td>
+</tr>
+</table>
+<table id="page_foot" class="qf_footstat">
+<tr>
+    <td id="qf_genstats">
+    <!-PageStats-!>
+    </td>
+    <td id="qf_staticons">
+    {C_FOOTSTAT}
+    <a href="http://validator.w3.org/check?uri=referer">
+    <img src="http://www.w3.org/Icons/valid-html401.png" alt="Valid HTML 4.01 Transitional" height="31" width="88">
+    </a>
+    </td>
+</tr>
+</table>
+</div>
+</body>
+</html>
+<<- 'GLOBAL_NODATAPAGE'>>
+
+<<+ 'NODATA_LOCKEDMESS'>>
+{L_SITE_LOCKED_MESS}<br />
+<i>{L_SITE_LOCKED_FOR} <b>{C_locked_for}</b></i><br />
+<<- 'NODATA_LOCKEDMESS'>>
+
+<<+ 'NODATA_BANNEDMESS'>>
+{L_BANNED_MESS}<br />
+{L_BANNED_IPS}: {C_ips}<br />
+{IF_reason}{L_BANNED_REASON}: {C_reason}<br />{ENDIF}
+<<- 'NODATA_BANNEDMESS'>>
+
+<<+ 'NODATA_SPIDER_RESTRICTED'>>
+<hr width="90%" />
+{L_SHOW_SPIDER_NAME} <b>{C_spider_name}</b><br />
+{L_SHOW_SPIDER_VISITS} <b>{C_spider_visits}</b>
+<<- 'NODATA_SPIDER_RESTRICTED'>>
+
+<<+ 'MAIN_MENU'>>
+<table class="qf_menutable">
+<tr>
+    <td class="qf_menuleft"> </td>
+    {C_buttons}
+    <td class="qf_menuright"> </td>
+</tr></table>
+<<- 'MAIN_MENU'>>
+
+<<+ 'MAIN_MENU_BTN'>>
+<td class="qf_menubutt"><a href="{C_url}">{C_caption}</a></td>
+<<- 'MAIN_MENU_BTN'>>
+
+<<+ 'MAIN_PAGE'>>
+<h1>{C_caption}</h1>
+<table width="95%"><tr><td align="justify">
+{C_content}
+</td></tr></table>
+<<- 'MAIN_PAGE'>>
+
+<<+ 'QFEDITOR'>>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <META http-equiv="Content-Type" content="text/html; charset={L_ENCODING}" >
+  <title>{C_PAGE_TITLE}</title>
+  <META http-equiv="Content-Style-Type" content="text/css" >
+  {C_META}
+
+  <link rel="shortcut icon" href="imgs/qfl_sm.ico" >
+
+  <style type="text/css">
+  {C_CSS}
+  </style>
+</head>
+<body>
+{C_JAVA}
+<form name="post" onsubmit="return checkForm(this)">
+<table class="qf_mainframe">
+<tr>
+<td><table width="100%" align="center"><tr align="center">
+<td>
+  <input type="button" accesskey="b" name="addbbcode0" value=" B " style="font-weight:bold;" onClick="qfstyle(0)" onMouseOver="helpline('b')" />
+  </td>
+<td>
+  <input type="button" accesskey="i" name="addqfcode2" value=" i " style="font-style:italic;" onClick="qfstyle(2)" onMouseOver="helpline('i')" />
+  </td>
+<td>
+  <input type="button" accesskey="u" name="addqfcode4" value=" u " style="text-decoration: underline;" onClick="qfstyle(4)" onMouseOver="helpline('u')" />
+  </td>
+<td>
+  <input type="button" accesskey="q" name="addqfcode6" value="Quote"  onClick="qfstyle(6)" onMouseOver="helpline('q')" />
+  </td>
+<td>
+  <input type="button" accesskey="c" name="addqfcode8" value="Code"  onClick="qfstyle(8)" onMouseOver="helpline('c')" />
+  </td>
+<td>
+  <input type="button" accesskey="h" name="addqfcode12" value="Hide"  onClick="qfstyle(12)" onMouseOver="helpline('h')" />
+  </td>
+<td>
+  <input type="button" accesskey="p" name="addqfcode14" value="Img"   onClick="qfstyle(14)" onMouseOver="helpline('p')" />
+  </td>
+<td>
+  <input type="button" accesskey="w" name="addqfcode16" value="URL" style="text-decoration: underline;" onClick="qfstyle(16)" onMouseOver="helpline('w')" />
+  </td>
+</tr></table></td>
+<td rowspan="4" class="qf_lborder" width="200" align="center" valign="top">
+<b>{L_EDITOR_SMILES_LIST}</b><br />
+<div style="overflow: auto; height:350px;">
+{C_SMILES}
+</div></td></tr>
+<tr>
+<td><table width="100%"><tr>
+<td>
+&nbsp;{L_EDITOR_FONTCOLOR}
+      <select name="addqfcode18" onChange="qffontstyle('[color=' + this.form.addqfcode18.options[this.form.addqfcode18.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onMouseOver="helpline('s')">
+        <option style="color:black" value="black">{L_EDITOR_COLOR_NONE}</option>
+        <option style="color:darkred" value="darkred">{L_EDITOR_COLOR_DARKRED}</option>
+        <option style="color:red" value="red">{L_EDITOR_COLOR_RED}</option>
+        <option style="color:orange" value="orange">{L_EDITOR_COLOR_ORANGE}</option>
+        <option style="color:brown" value="brown">{L_EDITOR_COLOR_BROWN}</option>
+        <option style="color:yellow" value="yellow">{L_EDITOR_COLOR_YELLOW}</option>
+        <option style="color:green" value="green">{L_EDITOR_COLOR_GREEN}</option>
+        <option style="color:olive" value="olive">{L_EDITOR_COLOR_OLIVE}</option>
+        <option style="color:cyan" value="cyan">{L_EDITOR_COLOR_CYAN}</option>
+        <option style="color:blue" value="blue">{L_EDITOR_COLOR_BLUE}</option>
+        <option style="color:darkblue" value="darkblue">{L_EDITOR_COLOR_DARKBLUE}</option>
+        <option style="color:indigo" value="indigo">{L_EDITOR_COLOR_INDIGO}</option>
+        <option style="color:violet" value="violet">{L_EDITOR_COLOR_VIOLET}</option>
+        <option style="color:white" value="white">{L_EDITOR_COLOR_WHITE}</option>
+        <option style="color:black" value="black">{L_EDITOR_COLOR_BLACK}</option>
+      </select><br />
+&nbsp;{L_EDITOR_FONTSIZE}
+      <select name="addqfcode20" onChange="qffontstyle('[size=' + this.form.addqfcode20.options[this.form.addqfcode20.selectedIndex].value + ']', '[/size]')" onMouseOver="helpline('f')">
+        <option value="7">{L_EDITOR_FONTSZ_VSMALL}</option>
+        <option value="9">{L_EDITOR_FONTSZ_SMALL}</option>
+        <option value="12" selected>{L_EDITOR_FONTSZ_NORM}</option>
+        <option value="18">{L_EDITOR_FONTSZ_BIG}</option>
+        <option value="24">{L_EDITOR_FONTSZ_VBIG}</option>
+      </select>
+</td>
+<td nowrap="nowrap" align="right"><a href="javascript:qfstyle(-1)" onMouseOver="helpline('a')">{L_EDITOR_CLOSEALL}</a></td>
+</tr></table><hr></td>
+</tr>
+<tr>
+      <td nowrap="nowrap">
+         <input class="plain" type="text" name="helpbox" size="45" maxlength="100" style="width:100%; font-size:10px; border-style: none;" value="{L_EDITOR_TAGHINT_DEF}" />
+      </td>
+</tr>
+<tr>
+      <td>
+         <textarea name="message" rows="15" cols="35" wrap="virtual" style="width:100%" tabindex="3" class="post" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);"></textarea>
+      </td>
+</tr>
+<tr>
+      <td colspan="2" align="center" height="28">
+         <input type="submit" accesskey="s" tabindex="6" name="post" value="{L_BTN_CLOSE}" />
+      </td>
+</tr>
+</table>
+</form>
+<table id="page_foot" class="qf_footstat">
+<tr>
+    <td id="qf_genstats">
+    <!-PageStats-!>
+    </td>
+</tr>
+</table>
+
+<script language="Javascript" type="text/javascript">
+<!--
+var parmess=null;
+if (opener!=null) {
+    parmess = opener.document.forms['{C_SENDERFORM}'].message;
+    if (parmess==null) parmess = opener.document.forms['{C_SENDERFORM}'].t_descr;
+    if (parmess!=null) {
+        document.post.message.value = parmess.value ;
+    }
+}
+//-->
+</script>
+</body>
+</html>
+<<- 'QFEDITOR'>>
+
+<<+ 'QFEDITOR_SMILE'>>
+<td align="center">
+<a href="javascript:emoticon('{C_SM_TEXT}')">
+<img src="imgs/smiles/{C_SM_ICON}" border="0" alt="{C_SM_CAPT}" title="{C_SM_CAPT}" />
+</a>
+</td>
+<<- 'QFEDITOR_SMILE'>>
+
+<<+ 'MYCABINET_MAIN'>>
+<table class="invisible fullwidth">
+<tr><td class="qf_mycabmenu" >
+    <div class="qf_mycabmdata" >
+    {C_MENU}
+    <hr />
+    {C_ADMIN_MENU}
+    </div>
+    <div class="qf_mycabmtail" >
+    &nbsp;
+    </div>
+</td><td class="qf_mycabpage">
+<h2>{C_CAPTION}</h2>
+<!- Main Window -!>
+{C_WINDOW}
+</td></tr>
+</table>
+<<- 'MYCABINET_MAIN'>>
+
+<<+ 'MYCABINET_OVERVIEW'>>
+<table class="fullwidth">
+<tr class="hlight"><td align="center" style="border-bottom-width: 1px;"><a href="{C_link}">{L_UCAB_OVERVIEW}</a></td></tr>
+<tr><td>
+<div style="float: left; margin-right: 5px;">{C_avatar}</div>
+{C_nick}
+<span style="white-space: nowrap;">{C_rights}</span><br />
+{C_descr}<br />
+{C_email}<br />
+</td></tr></table>
+<<- 'MYCABINET_OVERVIEW'>>
+
+<<+ 'MYCABINET_MTABLE'>>
+<table class="fullwidth">
+{C_rows}
+</table>
+<<- 'MYCABINET_MTABLE'>>
+
+<<+ 'MYCABINET_MROW'>>
+<tr {IF_selected}class="selected"{ENDIF} ><td>
+<a href="{C_link}">{C_capt}</a>
+</td></tr>
+<<- 'MYCABINET_MROW'>>
+
+<<+ 'MYCABINET_MSEP'>>
+<tr ><td class="centered">
+<b>.: {C_capt} :.</b>
+</td></tr>
+<<- 'MYCABINET_MSEP'>>
+
+<<+ 'MYCABINET_OVIEW_MAIN'>>
+<table class="invisible fullwidth">
+<tr class="hlight"><td width="50%">
+{L_UCAB_PROFILE_LOGIN}
+</td><td width="50%">
+{C_unick}
+</td></tr>
+
+<tr class="hlight"><td width="50%">
+{L_UCAB_PROFILE_EMAIL}
+</td><td width="50%">
+{C_uemail}
+</td></tr>
+
+<tr class="hlight"><td width="50%">
+{L_UCAB_PROFILE_TIME}
+</td><td width="50%">
+{C_utime} {IF_utimezone}[{C_utimezone}]{ENDIF}
+</td></tr>
+
+<tr class="hlight"><td width="50%">
+{L_UCAB_PROFILE_REGISTERED}
+</td><td width="50%">
+{C_uregtime}
+</td></tr>
+
+<tr class="hlight"><td width="50%">
+{L_UCAB_PROFILE_RIGHTS}
+</td><td width="50%">
+{C_urights}
+</td></tr>
+
+<tr class="hlight"><td width="50%">
+{L_UCAB_PROFILE_CURIP}
+</td><td width="50%">
+{C_ulastip} [{C_ulastdns}]
+</td></tr>
+</table>
+<<- 'MYCABINET_OVIEW_MAIN'>>
+
+<<+ 'MYCABINET_OVIEW_STATS'>>
+<table class="invisible fullwidth">
+<tr class="hlight"><td width="50%">
+{L_UCAB_STATS_POSTS}
+</td><td width="50%">
+{C_uposts}
+</td></tr>
+
+<tr class="hlight"><td width="50%">
+{L_UCAB_STATS_THEMES}
+</td><td width="50%">
+{C_uthemes}
+</td></tr>
+
+<tr class="hlight"><td width="50%">
+{L_UCAB_STATS_FILES}
+</td><td width="50%">
+{C_ufiles}
+</td></tr>
+
+<tr class="hlight"><td width="50%">
+{L_UCAB_STATS_LASTPOSTTIME}
+</td><td width="50%">
+{C_ulposttime}
+</td></tr>
+
+<tr class="hlight"><td width="50%">
+{L_UCAB_STATS_LASTTHEME}
+</td><td width="50%">
+{C_ultheme}
+</td></tr>
+</table>
+<<- 'MYCABINET_OVIEW_STATS'>>
+
+<<+ 'MYCABINET_OVIEW_PMS'>>
+<table class="invisible fullwidth">
+<tr class="hlight"><td width="50%">
+{L_UCAB_PMS_INC}
+</td><td width="50%">
+{C_uinpms} {IF_uinunr}( <b>{C_uinunr}</b> ){ENDIF}
+</td></tr>
+
+<tr class="hlight"><td width="50%">
+{L_UCAB_PMS_OUT}
+</td><td width="50%">
+{C_uoutpms} {IF_uoutunr}( <b>{C_uoutunr}</b> ){ENDIF}
+</td></tr>
+</table>
+<<- 'MYCABINET_OVIEW_PMS'>>
+
+<<+ 'MYCABINET_PMS_LINE'>>
+PM #{C_pmsno} (<b>{C_from}</b> {L_UCAB_PMS_WRITESTO} <b>{C_to}</b>)<br />
+<<- 'MYCABINET_PMS_LINE'>>
+
+<<+ 'MYCABINET_PMS_TABLE'>>
+{C_showpm}
+<br />
+{C_writepm}
+<hr />
+<table class="invisible fullwidth"><tr><td width="50%" valign="top">
+{C_inpms}
+</td><td>&nbsp;</td><td width="50%" valign="top">
+{C_outpms}
+</td></tr></table>
+<<- 'MYCABINET_PMS_TABLE'>>
+
+<<+ 'PM_READ_CONTENT'>>
+<div class="centered">
+<b><i>{C_caption}</i></b>
+<hr />
+</div>
+<div class="post_body">
+{C_content}
+</div>
+<<- 'PM_READ_CONTENT'>>
+
+<<+ 'PM_LIST_BORDER'>>
+<div class="autoscroll"><table class="invisible fullwidth">
+{C_rows}
+<tr><td>
+&nbsp;&nbsp;
+</td></tr>
+</table></div>
+<<- 'PM_LIST_BORDER'>>
+
+<<+ 'PM_LIST_ROW'>>
+<tr><td style="border-bottom-width: 1px;" onmouseover="qf_show_div_id('pm{COUNTER}')" onmouseout="qf_hide_div_id('pm{COUNTER}')">
+{C_caption}
+<div style="position: relative" >
+<div id="pm{COUNTER}" style="position: absolute; left: 25px; display: none;" align="center">
+<table class="overlay fullwidth" ><tr><td class="genmed nowrap">
+{C_date}
+{IF_inpm}{L_UCAB_PMS_FROM}{ELSE}{L_UCAB_PMS_TO}{ENDIF}
+<b>{C_user}</b>
+</td></tr></table></div></div>
+</td></tr>
+<<- 'PM_LIST_ROW'>>
+
+<<+ 'ENTER_PANEL'>>
+<table class="invisible fullwidth">
+<tr><td colspan="2">{C_greet}</td></tr>
+<tr><td colspan="2">{C_flags}</td></tr>
+{C_form_row}
+</table>
+<<- 'ENTER_PANEL'>>
+
+<<+ 'USERINFO_MAIN'>>
+<h2>{L_INFORMATION}</h2>
+{C_UINFO}
+
+<<- 'USERINFO_MAIN'>>
+
+<<+ 'USERINFO_TABLE'>>
+<table class="invisible fullwidth">
+<tr><td >
+<table class="invisible fullwidth">
+<tr><td align="left" valign="top" height="64">
+<b>{C_unick}</b>{IF_udescr} - {C_udescr}{ENDIF}<br />
+{L_UCAB_PROFILE_CITY} {C_ucity}<br />
+{L_UCAB_PROFILE_RIGHTS} {C_urights}<br />
+{L_UCAB_PROFILE_REGISTERED} {C_uregtime}<br />
+{L_UCAB_PROFILE_TIME} {C_utime} {IF_utimezone}[{C_utimezone}]{ENDIF}
+</td>
+<td valign="top" align="right">
+{C_uavatar}
+</td></tr></table>
+{IF_uabout}
+<table class="invisible fullwidth">
+<tr><td width="50%"><hr /></td>
+<td class="centered nowrap">{L_INFO_UABOUT}</td>
+<td width="50%"><hr /></td></tr></table>
+<b>{C_unick}:</b> <i>
+{C_uabout}
+</i>
+{ENDIF}
+<table class="invisible fullwidth">
+<tr><td width="50%"><hr /></td>
+<td class="centered nowrap">{L_INFO_CONTACT}</td>
+<td width="50%"><hr /></td></tr></table>
+{L_UCAB_PROFILE_EMAIL} {C_uemail}<br />
+{L_UCAB_PROFILE_HOMEPAGE} {C_uhomepage}<br />
+{L_UCAB_PROFILE_ICQ} {C_uicq}<br />
+<table class="invisible fullwidth">
+<tr><td width="50%"><hr /></td>
+<td class="centered nowrap">{L_UCAB_STATS_INFO}</td>
+<td width="50%"><hr /></td></tr></table>
+{IF_userstats}
+{L_UCAB_STATS_POSTS} {C_usposts}<br />
+{L_UCAB_STATS_THEMES} {C_usthemes}<br />
+{L_UCAB_STATS_FILES} {C_usfiles}<br />
+{L_UCAB_STATS_LASTPOSTTIME} {C_uslposttime}<br />
+{L_UCAB_STATS_LASTTHEME} {C_usltheme}<br />
+{ENDIF}
+{L_INFO_LAST_VISIT} {C_ulastvisit}<br />
+{IF_adminshow}
+{L_INFO_LAST_URL} <a href="{C_ulasturl}">{C_ulasturl}</a><br />
+{L_INFO_LAST_IP} {C_ulastip} [{C_ulastdns}]
+{ENDIF}
+<table class="invisible fullwidth">
+<tr><td width="50%"><hr /></td></tr></table>
+{C_pmform}
+{C_chform}
+</td></tr>
+</table>
+<<- 'USERINFO_TABLE'>>
+
+<<+ 'USERINFO_USERS'>>
+<h2>{L_INFO_ULIST}</h2>
+{C_ulist}
+
+<<- 'USERINFO_USERS'>>
+
+<<+ 'USERINFO_USERS_TABLE'>>
+<table class="qf_grid" style="width: 600px; margin: auto;">
+<tr class="tblline">
+<th style="width: 30px;"><a href="index.php?st=info&amp;sortby=id">{L_INFO_ULIST_ID}</a></th>
+<th><a href="index.php?st=info&amp;sortby=nick">{L_INFO_ULIST_NICK}</a></th>
+<th><a href="index.php?st=info&amp;sortby=level">{L_INFO_ULIST_LEVEL}</a></th>
+<th><a href="index.php?st=info&amp;sortby=time">{L_INFO_ULIST_LSEEN}</a></th>
+<th><a href="index.php?st=info&amp;sortby=posts">{L_INFO_ULIST_POSTS}</a></th>
+<th><a href="index.php?st=info&amp;sortby=themes">{L_INFO_ULIST_THEMES}</a></th>
+<th><a href="index.php?st=info&amp;sortby=files">{L_INFO_ULIST_FILES}</a></th>
+{C_content}
+</table>
+<<- 'USERINFO_USERS_TABLE'>>
+
+<<+ 'USERINFO_USER_ROW'>>
+<tr class="hlight" onmouseover="qf_show_div_id('ulst{COUNTER}')" onmouseout="qf_hide_div_id('ulst{COUNTER}')">
+<td class="centered">{C_labels}{C_u_id}
+<div style="position: relative" >
+<div id="ulst{COUNTER}" style="position: absolute; left: -1px; display: none;">
+<table class="overlay" ><tr><td class="centered genmed nowrap" valign="middle">
+{C_u_avatar}
+</td></tr></table></div></div></td>
+<td class="centered"><b>{C_u_nick}</b></td>
+<td class="centered">{C_u_level}</td>
+<td class="centered">{C_u_lseen}</td>
+<td class="centered">{C_u_posts}</td>
+<td class="centered">{C_u_themes}</td>
+<td class="centered">{C_u_files}</td>
+</tr>
+<<- 'USERINFO_USER_ROW'>>
+
+<<+ 'HINT'>>
+<span onmousemove="qf_show_div_mouse('hint{COUNTER}', event)" onmouseout="qf_hide_div_id('hint{COUNTER}')">
+{C_object}
+<div id="hint{COUNTER}" style="position: absolute; left: 5px; top: 5px; display: none; width: 400px; opacity: 0.87; z-index: 100" align="center">
+<table class="border fullwidth"><tr><td valign="top" class="qf_rborder" width="60" align="center">
+<img border="0" align="left" src="{VIS_IMGS}/exclaim.gif" alt="!!"></td><td>
+{C_text}</td></tr></table>
+</div></span>
+<<- 'HINT'>>
+
+<<+ 'TABLE_CAPT'>>
+<table class="invisible"><tr><td class="tblline" >
+{C_title}
+</td><td class="tblliner"></td></tr></table>
+<<- 'TABLE_CAPT'>>
+
+<<+ 'FLIPER_BODY'>>
+<div style="margin: auto; width: {C_width};">
+<div class="qf_flpcapt" onclick="toggleview('Fl{COUNTER}');" title="{L_FLIP_CAPT}" >
+<b>{C_title}</b>
+</div>
+{C_labels}<div id="Fl{COUNTER}">
+{C_content}
+</div>
+{IF_hidden}
+<script language="Javascript" type="text/javascript">
+toggleview('Fl{COUNTER}');
+</script>
+{ENDIF}
+</div>
+<<- 'FLIPER_BODY'>>
+
+<<+ 'PANEL_BODY'>>
+<div class="qf_panel" {IF_width} style="width: {C_width}"{ENDIF}>
+<div class="qf_pancapt">
+    <a href="javascript:toggleview('Pan{COUNTER}');"><b>{C_title}</b></a>
+</div>
+{C_labels}
+<div class="qf_pancont" id="Pan{COUNTER}">
+    {C_content}
+</div>
+{IF_hidden}
+<script language="Javascript" type="text/javascript">
+toggleview('Pan{COUNTER}');
+</script>
+{ENDIF}
+</div>
+<<- 'PANEL_BODY'>>
+
+<<+ 'POST_BODY'>>
+{C_formstart}
+<table class="{C_class} post fullwidth" >
+<tr align="right"><td style="padding: 0;">
+{C_labels}
+<table cellspacing="0"><tr><td class="tbllinel">&nbsp;</td><td class="tblline" >
+{C_flags} {C_time} {IF_post_link} - [{C_post_link}]{ENDIF}
+</td></tr></table>
+</td></tr><tr><td style="padding: 0;">
+<table class="invisible fullwidth" ><tr><td class="toptext">
+{IF_formbody}
+{C_formbody}
+{ELSE}
+<div class="post_body">
+{C_postbody}
+</div>
+<div class="post_atts">
+{C_attaches}
+</div>
+<span class="gensmall">
+<br />{C_postedited}
+</span>
+{ENDIF}
+</td><td class="qf_lborder centered genmed toptext" style="width: 80px;">
+{C_avatar}<br />
+{C_user}<br />
+{C_u_descr}<br />
+{C_u_rights}<br />
+<span class="red"><i>{C_u_status}</i></span>
+</td></tr></table>
+</td></tr>
+{IF_modblock}
+<tr><td style="padding: 0;">
+{C_modblock}
+</td></tr>
+{ENDIF}
+</table>
+{C_formend}
+<<- 'POST_BODY'>>
+
+<<+ 'DEL_POST_MINIINFO'>>
+<table class="{C_class} post deleted fullwidth" >
+<tr align="right"><td style="padding: 0;">
+{C_labels}
+<table class="invisible"><tr>
+<td align="right">
+<a href="{C_showlink}" title="{L_DO_SHOW}">{C_postedited}</a>
+</td>
+<td class="tbllinel">&nbsp;</td><td class="tblline" >
+{C_flags} {C_time} - {C_user}
+</td></tr></table>
+</td></tr>
+</table>
+<<- 'DEL_POST_MINIINFO'>>
+
+<<+ 'DEL_POST_BODY'>>
+{V_POST_BODY}
+<<- 'DEL_POST_BODY'>>
+
+<<+ 'POST_MOD_BLOCK'>>
+<table class="invisible fullwidth"><tr><td>
+&nbsp;{C_editorbutts}
+</td><td class="modbuttsl"></td><td class="modbutts" style="width: 70px;">
+{C_content}
+</td></tr></table>
+<<- 'POST_MOD_BLOCK'>>
+
+<<+ 'FORUMSTAT_TABLE'>>
+<table class="invisible fullwidth">
+{C_rows}
+</table>
+<<- 'FORUMSTAT_TABLE'>>
+
+<<+ 'FORUMSTAT_ROW'>>
+<tr class="hlight" ><td style="border-bottom-width: 1px;" onmouseover="qf_show_div_id('sub{C_id}')" onmouseout="qf_hide_div_id('sub{C_id}')" >
+<a href="index.php?st=branch&amp;branch={C_id}&amp;shownew=1#unread">{C_caption}</a><br />
+<div style="position: relative" >
+<div id="sub{C_id}" style="position: absolute; left: 25px; display: none;">
+<table class="overlay fullwidth"><tr><td class="nowrap genmed">
+<a href="index.php?st=branch&amp;branch={C_id}&amp;page=last#last">{C_time}</a>
+<b>{C_user}</b>
+</td></tr></table></div></div>
+</td></tr>
+<<- 'FORUMSTAT_ROW'>>
+
+<<+ 'USERSTAT_TABLE'>>
+<table class="fullwidth">
+<tr><td>
+{L_USTATS_NOW}:<br />
+{C_seen_now}
+</td></tr>
+<tr><td>
+{C_seen_guests}
+</td></tr>
+<tr><td>
+{C_seen_spiders}
+</td></tr>
+<tr><td style="border-top-width: 1px;">
+{L_USTATS_TODAY}:<br />
+{C_seen_today}
+</td></tr>
+<tr><td style="border-top-width: 1px;">
+{L_USTATS_MONTH}:<br />
+</td></tr>
+{C_seen_last}
+</table>
+<<- 'USERSTAT_TABLE'>>
+
+<<+ 'USERSTAT_SPIDER_MESS'>>
+<table class="fullwidth">
+<tr><td class="centered">
+<img border="0" src="{VIS_IMGS}/exclaim.gif" alt="!!"><br />
+{L_USERSTAT_SPIDER_MESS}<br />
+<hr />
+{L_SHOW_SPIDER_NAME} <b>{C_spider_name}</b><br />
+{L_SHOW_SPIDER_VISITS} <b>{C_spider_visits}</b>
+</td></tr>
+</table>
+<<- 'USERSTAT_SPIDER_MESS'>>
+
+<<+ 'SEENNOW_ROW'>>
+{C_separator} <div id="ust{COUNTER}" style="position: absolute; display: none;" align="center">
+<table class="overlay" ><tr><td class="centered nowrap genmed" valign="middle">
+{C_avatar}
+</td></tr></table></div>
+<span onmousemove="qf_show_div_mouse('ust{COUNTER}', event)" onmouseout="qf_hide_div_id('ust{COUNTER}')">
+<a href="index.php?st=info&amp;infouser={C_id}">{C_user}</a></span>
+<<- 'SEENNOW_ROW'>>
+
+<<+ 'SEENTODAY_ROW'>>
+{V_SEENNOW_ROW}
+<<- 'SEENTODAY_ROW'>>
+
+<<+ 'SEENLAST_ROW'>>
+<tr class="hlight"><td onmouseover="qf_show_div_id('ust{COUNTER}')" onmouseout="qf_hide_div_id('ust{COUNTER}')">
+<a href="index.php?st=info&amp;infouser={C_id}">{C_user} - {C_time}</a><br />
+<div style="position: relative" >
+<div id="ust{COUNTER}" style="position: absolute; left: 45px; display: none;" align="center">
+<table class="overlay"  ><tr><td class="centered nowrap genmed" valign="middle">
+{C_avatar}
+</td></tr></table></div></div>
+</td></tr>
+<<- 'SEENLAST_ROW'>>
+
+<<+ 'CODE_TABLE'>>
+<table class="quote">
+<tr><td class="genmed"><b>{L_FOR_CODE_HADER} {C_caption}</b></td></tr>
+<tr><td class="quote_body code">{C_content}</td></tr></table>
+<<- 'CODE_TABLE'>>
+
+<<+ 'QUOTE_TABLE'>>
+<table class="quote">
+<tr><td class="genmed"><b>{L_FOR_QUOTE_HADER} {C_caption}</b></td></tr>
+<tr><td class="quote_body">{C_content}</td></tr></table>
+<<- 'QUOTE_TABLE'>>
+
+<<+ 'GETFILE_PAGE'>>
+<h2>{L_GETFILE_CAPT}</h2>
+{C_FILETABLE}
+<<- 'GETFILE_PAGE'>>
+
+<<+ 'GETFILE_TABLE'>>
+<table class="invisible fullwidth"><tr><td align="left" valign="top" height="64">
+<b>{C_FILECAPTION}</b><br />
+{IF_FILEDESCR}<i>{C_FILEDESCR}</i><br />{ENDIF}
+</td><td valign="top" align="right">
+{IF_thumb}<img src="{C_thumb}" />{ENDIF}
+</td></tr></table>
+
+<table border="0" width="100%">
+<tr class="hlight"><td width="50%">
+{L_GETFILE_FILEULDD}:
+</td><td width="50%">
+<b>{C_USER}</b> [{C_TIME}]
+</td></tr>
+<tr class="hlight"><td width="50%">
+{L_GETFILE_FILENAME}:
+</td><td width="50%">
+{C_FILENAME}
+</td></tr>
+<tr class="hlight"><td width="50%">
+{L_GETFILE_LEVEL}:
+</td><td width="50%">
+{C_FILELEVEL}
+</td></tr>
+<tr class="hlight"><td width="50%">
+{L_GETFILE_FILESIZE}:
+</td><td width="50%">
+{C_FILESIZE} {L_KB}
+</td></tr>
+<tr class="hlight"><td width="50%">
+{L_GETFILE_FILECODE}:
+</td><td width="50%">
+{C_FILEID}
+</td></tr>
+<tr class="hlight"><td width="50%">
+{L_GETFILE_DOWNLOADS}:
+</td><td width="50%">
+{C_DOWNCOUNT}
+</td></tr>
+<tr class="hlight"><td width="50%">
+--->>
+</td><td width="50%">
+<a class="fbutt" href="?sr=download&amp;file={C_FILEID}&amp;fcode={C_FCODE}">{L_GETFILE_DOWNLOAD}</a>
+</td></tr>
+</table>
+<i><span class="genmed">{L_GETFILE_HINT}</span></i>
+<<- 'GETFILE_TABLE'>>
+
+Forms For Common Pages. MODIFY CAREFULLY !!!
+
+<<+ 'QUICKSETS_PANEL'>>
+<form action="index.php" method="post" name="qsetsform">
+<input type="hidden" name="script" value="quicksets" />
+<table class="invisible fullwidth">
+<tr><td align="left">{L_TIMEZONE}:</td></tr>
+<tr><td align="right">
+<select name="new_tz">
+{C_tz_options}
+</select>
+</td></tr>
+<tr><td align="left">{L_STYLE}:</td></tr>
+<tr><td align="right">
+<select name="new_style">
+<option value=" ">{L_DEFAULT}</option>
+{C_st_options}
+</select>
+</td></tr>
+<tr><td align="right"><input type="submit" value="{L_BTN_SAVE}" />
+</td></tr>
+</table>
+</form>
+<<- 'QUICKSETS_PANEL'>>
+
+<<+ 'MYCABINET_CAVATAR'>>
+{IF_uavatar}
+<table style="float: right; margin-left: 5px; width: 130px;" class="border">
+<tr><td valign="top" colspan="2">{L_UCAB_AVATAR_CURRENT}</td></tr>
+<tr><td valign="bottom">
+<form action="index.php" name="delavatar" method="post">
+<input type="hidden" name="script" value="mycabinet">
+<input type="hidden" name="action" value="delavatar">
+<input type="hidden" name="qfuser" value="{C_unick}">
+<input type="submit" name="DelAva" value="{L_BTN_DELETE}">
+</form>
+</td>
+<td>{C_uavatar}</td>
+</tr></table>
+{ENDIF}
+{L_UCAB_AVATAR_REQUEST}<br /><hr />
+{IF_noavatar}{L_UCAB_AVATAR_NOAVATAR}<br />{ENDIF}
+{L_UCAB_AVATAR_UPLOAD}<br />
+<form action="index.php" name="uplavatar" method="post" enctype="multipart/form-data">
+<input type="hidden" name="script" value="mycabinet">
+<input type="hidden" name="action" value="newavatar">
+<input type="hidden" name="qfuser" value="{C_unick}">
+<input type="file" name="newavatar">
+<input type="submit" name="Upl" value="{L_BTN_UPLOAD}">
+</form>
+<<- 'MYCABINET_CAVATAR'>>
+
+<<+ 'MYCABINET_CEMAIL_NEW'>>
+<script language="JavaScript" type="text/javascript">
+errnoemail = "{L_ERR_NO_EMAIL}";
+
+function checkForm(form) {
+    formErrors = "";
+
+    if (!form.newmail.value.match( /{C_mail_mask}/i ))
+    {
+            formErrors += errnoemail + "\n";
+    }
+
+    if (formErrors) {
+        alert(formErrors);
+        return false;
+    } else {
+        formObj.submit.disabled = true;
+        return true;
+    }
+}
+</script>
+{L_UCAB_EMAIL_REQUEST}<br />
+{L_UCAB_EMAIL_CURRENT} <b>{C_uemail}</b><br />
+<form action="index.php" name="newmail" method="post" onsubmit="return checkForm(this)">
+<input type="hidden" name="script" value="mycabinet">
+<input type="hidden" name="action" value="newmail">
+<input type="hidden" name="qfuser" value="{C_unick}">
+<input type="text" name="newmail" maxlength="36">
+<input type="submit" name="set" value="{L_BTN_ACCEPT}">
+</form>
+<<- 'MYCABINET_CEMAIL_NEW'>>
+
+<<+ 'MYCABINET_CEMAIL_ACT'>>
+{L_UCAB_ACODE_REQUEST}<br />
+<form action="index.php" name="actmail" method="post">
+<input type="hidden" name="script" value="mycabinet">
+<input type="hidden" name="action" value="actmail">
+<input type="hidden" name="qfuser" value="{C_unick}">
+<input type="text" name="nacode" maxlength="32" value="{C_uacode}" style="width: 300px;"><br />
+{L_UCAB_ACODE_PASSREQUEST}<br />
+<input type="password" name="userpass" >
+<input type="submit" name="act" value="{L_BTN_ACCEPT}">
+</form>
+<<- 'MYCABINET_CEMAIL_ACT'>>
+
+<<+ 'SPAM_FIELD'>>
+{L_SPAM_CODE}: <input type="text" name="spamcode" style="width: 100px;" value="" /> {SPAMIMG}<br />
+<<- 'SPAM_FIELD'>>
+
+<<+ 'PM_NEW_FORM'>>
+ <input type="hidden" name="script" value="newpm" />
+ <input type="hidden" name="action" value="post" />
+{IF_fixrecip}<input type="hidden" name="qfrec" value="{C_recip}" />
+{ELSE}{L_RECIPIENT}: <input type="text" name="qfrec" value="{C_recip}" /><br />{ENDIF}
+{IF_fixuser} <input type="hidden" name="qfuser" value="{C_user}" />
+{ELSE}{L_AUTHOR}: <input type="text" name="qfuser" value="{C_user}" /><br />
+{SPAMFIELD}{ENDIF}
+ {L_THEME}: <input type="text" name="qftheme" value="{C_theme}" /><br />
+ <textarea cols="50" class="post" style="width:98%" rows="8" name="message">{C_text}</textarea><br />
+ <input type="button" accesskey="e" name="geteditor" value="{L_BTN_EDITOR}" onClick="window.open('index.php?sr=qfeditor&amp;senderform={C_formname}', '_qfeditor', 'HEIGHT=450, resizable=yes, scrollbars=yes, WIDTH=520');return false;" title="{L_BTN_EDITOR}" />
+ <input type="submit" class="post" value="{L_BTN_SEND}" title="{L_BTN_SEND}" />
+<<- 'PM_NEW_FORM'>>
+
+<<+ 'USER_GREET_ROW'>>
+<tr><td>
+<form action="index.php" name="logoutbtn" method="get">
+<input type="hidden" name="logout" value="1">
+<input type="submit" value="{L_BTN_EXIT}" title="{L_BTN_EXIT}">
+</form>
+</td><td>
+<form action="index.php" name="profilebtn" method="get">
+<input type="hidden" name="st" value="mycabinet">
+<input type="submit" value="{L_BTN_PROFILE}" title="{L_BTN_PROFILE}">
+</form>
+</td></tr>
+<<- 'USER_GREET_ROW'>>
+
+<<+ 'USER_LOGIN_ROW'>>
+<tr><td>
+<form action="index.php" method="post">
+<input type="hidden" name="script" value="check" />
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td>{L_REG_LOGIN_SHORT}</td></tr>
+<tr><td align="right">
+<input name="userlogin" type="text" maxlength="15" />
+</td></tr>
+<tr><td >{L_REG_PASS_SHORT}</td></tr>
+<tr><td align="right">
+<input name="userpass" type="password" maxlength="32" />
+</td></tr>
+<tr><td>
+<input name="autologin" type="checkbox" value="ON" /> {L_AUTOLOGIN}
+</td></tr>
+<tr><td align="right">
+<input type=submit value="{L_BTN_ENTER}" />
+</td></tr>
+</table>
+</form>
+</td></tr>
+<tr><td >
+<a href="index.php?st=register&amp;job=drop_pass">{L_DROP_PASS}</a><br />
+<a href="index.php?st=register">{L_REGISTRATION}</a><br />
+<a href="index.php?st=register&amp;job=activate">{L_ACTIVATION}</a>
+</td></tr>
+<<- 'USER_LOGIN_ROW'>>
+
+Universal form parts.
+
+<<+ 'UNIFORM_TABLE'>>
+<div style="margin: auto; width: {C_width};">
+<table class="border fullwidth {C_tblclass}" >
+<tr><td>
+{IF_caption}
+<table cellspacing="0"><tr><td class="tblline">
+{C_caption}
+</td><td class="tblliner"></td></tr></table>
+{ENDIF}
+</td></tr>
+<tr><td>
+<form method="post" action="{C_action}" name="{C_name}" {C_additional}>
+{C_hid_fields}
+{C_text}
+<table class="qf_grid fullwidth">
+{C_fields}
+</table>
+</form>
+</td></tr>
+</table>
+</div>
+<<- 'UNIFORM_TABLE'>>
+
+<<+ 'UNIFORM_TEXTAREA'>>
+<tr><td class="qf_rborder toptext">{C_capt}<br /><span class="genmed">{C_descr}</span><br />
+<div style="position: relative; left: 75px;">
+<table class="overlay fullwidth"><tr><td class="centered">
+<textarea name="{C_name}" style="width: 98%; z-index: -100;" cols="50" rows="6" {C_params}>{C_value}</textarea>
+</td></tr></table>
+</div><br />
+</td><td width="150" style="border-bottom-width: 1px;" align="center">&nbsp;
+</td></tr>
+<<- 'UNIFORM_TEXTAREA'>>
+
+<<+ 'UNIFORM_SELECT'>>
+<tr><td class="qf_rborder toptext">{C_capt}<br /><span class="genmed">{C_descr}</span></td>
+<td width="150" style="border-bottom-width: 1px;" align="center">
+{C_capt} <br /><select name="{C_name}" {C_params}>
+{C_subs}
+</select>
+</td></tr>
+<<- 'UNIFORM_SELECT'>>
+
+<<+ 'UNIFORM_MULTISELECT'>>
+<tr><td class="qf_rborder toptext">{C_capt}<br /><span class="genmed">{C_descr}</span></td>
+<td width="150" style="border-bottom-width: 1px;" align="center">
+{C_capt} <br />
+<div style="overflow: auto; width: 120px; max-height: 150px; border: solid 1px; white-space: nowrap;" align="left">
+{C_subs}
+</div>
+</td></tr>
+<<- 'UNIFORM_MULTISELECT'>>
+
+<<+ 'UNIFORM_MULTISELECT_ROW'>>
+<input name="{C_name}" type="checkbox" value="{C_value}" {C_checked} {C_params}> {C_capt}<br />
+<<- 'UNIFORM_MULTISELECT_ROW'>>
+
+<<+ 'UNIFORM_CHECKBOX'>>
+<tr><td class="qf_rborder toptext">{C_capt}<br /><span class="genmed">{C_descr}</span></td>
+<td width="150" style="border-bottom-width: 1px;" align="center">
+{C_capt} <br /><input name="{C_name}" type="checkbox" value="{C_value}" {C_checked} {C_params}>
+</td></tr>
+<<- 'UNIFORM_CHECKBOX'>>
+
+<<+ 'UNIFORM_DOUBLEDPASS'>>
+<tr><td class="qf_rborder toptext">{C_capt}<br /><span class="genmed">{C_descr}</span></td>
+<td width="150" style="border-bottom-width: 1px;" align="center">
+{C_capt} <br /><input name="{C_name}1" type="password" value="{C_value}" {C_params}>
+{C_capt2} <br /><input name="{C_name}2" type="password" value="{C_value}" {C_params}>
+</td></tr>
+<<- 'UNIFORM_DOUBLEDPASS'>>
+
+<<+ 'UNIFORM_SEPARATOR'>>
+<tr><td colspan="2" class="tblcapt">
+<a name="sp{C_name}"></a>{C_capt}
+</td></tr>
+<<- 'UNIFORM_SEPARATOR'>>
+
+<<+ 'UNIFORM_SEPARATOR1'>>
+<tr><td class="qf_rborder toptext">
+<table cellspacing="0"><tr><td class="tblline" >
+<a name="sp{C_name}"></a>{C_capt}
+</td>
+<td class="tblliner"></td></tr></table>
+</td><td width="150" align="center">&nbsp;</td></tr>
+<<- 'UNIFORM_SEPARATOR1'>>
+
+<<+ 'UNIFORM_SUBMIT'>>
+<tr><td class="qf_rborder toptext">{C_descr}</td>
+<td width="150" style="border-bottom-width: 1px;" align="center">
+<input name="{C_name}" type="submit" value="{C_value}" {C_params}>
+</td></tr>
+<<- 'UNIFORM_SUBMIT'>>
+
+<<+ 'UNIFORM_DEFAULT'>>
+<tr><td class="qf_rborder toptext">{C_capt}<br /><span class="genmed">{C_descr}</span></td>
+<td width="150" style="border-bottom-width: 1px;" align="center">
+{C_capt} <br /><input name="{C_name}" type="{C_type}" value="{C_value}" {C_params}>
+</td></tr>
+<<- 'UNIFORM_DEFAULT'>>
+
+<<+ 'CMS_NOINDEXPAGE'>>
+<div style="text-align: center; margin: 100px 0;">
+<a href="index.php?st=section"><img src="imgs/logo.png" alt="LOGO" ></a>
+<h2>{L_QF_GREET}</h2>
+</div>
+<<- 'CMS_NOINDEXPAGE'>>

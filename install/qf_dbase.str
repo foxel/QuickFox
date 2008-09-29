@@ -1,0 +1,1932 @@
+Array (
+    '{DBKEY}acc_groups' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'tinyint(5) unsigned' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => 'auto_increment'
+            )  ,
+            'name' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'descr' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'manager' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 1 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            )  ,
+            'name' => Array (
+                'type' => 'UNIQUE' ,
+                'cols' => Array (
+                    0 => 'name'
+                ) 
+            )  ,
+            'manager' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'manager'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}acc_groups'
+    )  ,
+    '{DBKEY}acc_links' => Array (
+        'fields' => Array (
+            'user_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'group_id' => Array (
+                'type' => 'tinyint(5) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'time_given' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'drop_after' => Array (
+                'type' => 'int(11)' ,
+                'null' => true ,
+                'def' => '' ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'user_id' ,
+                    1 => 'group_id'
+                ) 
+            )  ,
+            'drop_after' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'drop_after'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}acc_links'
+    )  ,
+    '{DBKEY}bans' => Array (
+        'fields' => Array (
+            'ban_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => 'auto_increment'
+            )  ,
+            'first_ip' => Array (
+                'type' => 'varchar(8)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'last_ip' => Array (
+                'type' => 'varchar(8)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'reason' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'used' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'lastused' => Array (
+                'type' => 'int(11)' ,
+                'null' => true ,
+                'def' => '' ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'ban_id'
+                ) 
+            )  ,
+            'ips' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'first_ip' ,
+                    1 => 'last_ip'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}bans'
+    )  ,
+    '{DBKEY}config' => Array (
+        'fields' => Array (
+            'parent' => Array (
+                'type' => 'varchar(10)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'name' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'value' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'parent' ,
+                    1 => 'name'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}config'
+    )  ,
+    '{DBKEY}dloads' => Array (
+        'fields' => Array (
+            'fileid' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'filecode' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'user' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'session' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'ip' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'time' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'used' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'filecode'
+                ) 
+            )  ,
+            'fileid' => Array (
+                'type' => 'UNIQUE' ,
+                'cols' => Array (
+                    0 => 'fileid' ,
+                    1 => 'filecode'
+                ) 
+            )  ,
+            'user' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'user'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}dloads'
+    )  ,
+    '{DBKEY}files' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'folder' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'att_to' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'user' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'user_id' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'time' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'file' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'filename' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'ext' => Array (
+                'type' => 'varchar(10)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'size' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'caption' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'descr' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'rights' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 1 ,
+                'extra' => ''
+            )  ,
+            'dloads' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            )  ,
+            'folder' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'folder'
+                ) 
+            )  ,
+            'att_to' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'att_to'
+                ) 
+            )  ,
+            'user_id' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'user_id'
+                ) 
+            )  ,
+            'rights' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'rights'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}files'
+    )  ,
+    '{DBKEY}guests' => Array (
+        'fields' => Array (
+            'gid' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'gnick' => Array (
+                'type' => 'varchar(15)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'gtimezone' => Array (
+                'type' => 'decimal(5,2)' ,
+                'null' => true ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'gstyle' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'sessid' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'lastseen' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'lasturl' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'lastip' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'guser_agent' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'gcode' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'views' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'gid'
+                ) 
+            )  ,
+            'lastseen' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastseen'
+                ) 
+            )  ,
+            'gcode' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'gcode'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}guests'
+    )  ,
+    '{DBKEY}mime' => Array (
+        'fields' => Array (
+            'ext' => Array (
+                'type' => 'varchar(10)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'type' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'descr' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'preview' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'icon' => Array (
+                'type' => 'varchar(50)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'ext'
+                ) 
+            )  ,
+            'preview' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'preview'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}mime'
+    )  ,
+    '{DBKEY}minichats' => Array (
+        'fields' => Array (
+            'msg_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => 'auto_increment'
+            )  ,
+            'author' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'author_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'text' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'time' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'acc_lv' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'msg_id'
+                ) 
+            )  ,
+            'time' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'time'
+                ) 
+            )  ,
+            'author_id' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'author_id'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}minichats'
+    )  ,
+    '{DBKEY}parchive' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'content' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}parchive'
+    )  ,
+    '{DBKEY}pms' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => 'auto_increment'
+            )  ,
+            'time' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'author' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'author_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'recipient' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'recipient_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'theme' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'text' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'readed' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'deleted' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            )  ,
+            'author_id' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'author_id'
+                ) 
+            )  ,
+            'recipient_id' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'recipient_id'
+                ) 
+            )  ,
+            'state' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'readed' ,
+                    1 => 'deleted'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}pms'
+    )  ,
+    '{DBKEY}posts' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => 'auto_increment'
+            )  ,
+            'theme' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'author' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'author_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'text' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'hash' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'time' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'ctime' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'changer' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'locked' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'deleted' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            )  ,
+            'author_id' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'author_id'
+                ) 
+            )  ,
+            'theme' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'theme'
+                ) 
+            )  ,
+            'hash' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'hash'
+                ) 
+            )  ,
+            'deleted' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'deleted'
+                ) 
+            )  ,
+            'text' => Array (
+                'type' => 'FULLTEXT' ,
+                'cols' => Array (
+                    0 => 'text'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}posts'
+    )  ,
+    '{DBKEY}posts_cache' => Array (
+        'fields' => Array (
+            'ch_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'ch_text' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'ch_stored' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'ch_id'
+                ) 
+            )  ,
+            'ch_stored' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'ch_stored'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}posts_cache'
+    )  ,
+    '{DBKEY}reads' => Array (
+        'fields' => Array (
+            'user_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'theme' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'lastread' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'active' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'subscribe' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'notified' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'lastmail' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'user_id' ,
+                    1 => 'theme'
+                ) 
+            )  ,
+            'state' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'active' ,
+                    1 => 'subscribe' ,
+                    2 => 'notified'
+                ) 
+            )  ,
+            'lastmail' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastmail'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}reads'
+    )  ,
+    '{DBKEY}regs' => Array (
+        'fields' => Array (
+            'nick' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'time' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'pass' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'email' => Array (
+                'type' => 'varchar(36)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'descr' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'acode' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'echecked' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'nick'
+                ) 
+            )  ,
+            'echecked' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'echecked'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}regs'
+    )  ,
+    '{DBKEY}results' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'time' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'error' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'result' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'redirect' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}results'
+    )  ,
+    '{DBKEY}sections' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => 'auto_increment'
+            )  ,
+            'parent' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'name' => Array (
+                'type' => 'varchar(128)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'descr' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'minrights' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'postrights' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 1 ,
+                'extra' => ''
+            )  ,
+            'acc_group' => Array (
+                'type' => 'tinyint(5) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'order_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'locked' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'deleted' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            )  ,
+            'parent' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'parent'
+                ) 
+            )  ,
+            'rights' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'minrights' ,
+                    1 => 'postrights'
+                ) 
+            )  ,
+            'state' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'locked' ,
+                    1 => 'deleted'
+                ) 
+            )  ,
+            'acc_group' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'acc_group'
+                ) 
+            )  ,
+            'order_id' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'order_id'
+                ) 
+            )  ,
+            'text' => Array (
+                'type' => 'FULLTEXT' ,
+                'cols' => Array (
+                    0 => 'name' ,
+                    1 => 'descr'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}sections'
+    )  ,
+    '{DBKEY}sess_cache' => Array (
+        'fields' => Array (
+            'sid' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'ch_name' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'ch_data' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'ch_stored' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'sid' ,
+                    1 => 'ch_name'
+                ) 
+            )  ,
+            'ch_stored' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'ch_stored'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}sess_cache'
+    )  ,
+    '{DBKEY}sessions' => Array (
+        'fields' => Array (
+            'sid' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'ip' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'vars' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'starttime' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'lastused' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'clicks' => Array (
+                'type' => 'int(5) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'spamcode' => Array (
+                'type' => 'varchar(10)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'spctime' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'sid'
+                ) 
+            )  ,
+            'ip' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'ip'
+                ) 
+            )  ,
+            'lastused' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastused'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}sessions'
+    )  ,
+    '{DBKEY}smiles' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => 'auto_increment'
+            )  ,
+            'sm_text' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'sm_icon' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'sm_capt' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            )  ,
+            'sm_text' => Array (
+                'type' => 'UNIQUE' ,
+                'cols' => Array (
+                    0 => 'sm_text'
+                ) 
+            )  ,
+            'sm_icon' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'sm_icon'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}smiles'
+    )  ,
+    '{DBKEY}spiders' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => 'auto_increment'
+            )  ,
+            'agent_mask' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'name' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            )  ,
+            'agent_mask' => Array (
+                'type' => 'UNIQUE' ,
+                'cols' => Array (
+                    0 => 'agent_mask'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}spiders'
+    )  ,
+    '{DBKEY}spiders_log' => Array (
+        'fields' => Array (
+            'log_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => 'auto_increment'
+            )  ,
+            'name' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'time' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'query' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'user_agent' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'ip' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'log_id'
+                ) 
+            )  ,
+            'name' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'name'
+                ) 
+            )  ,
+            'ip' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'ip'
+                ) 
+            )  ,
+            'time' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'time'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}spiders_log'
+    )  ,
+    '{DBKEY}spiders_stats' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'lastseen' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'visits' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            )  ,
+            'lastseen' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastseen'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}spiders_stats'
+    )  ,
+    '{DBKEY}styles' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'varchar(4)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'name' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'visual' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'CSS' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            )  ,
+            'name' => Array (
+                'type' => 'UNIQUE' ,
+                'cols' => Array (
+                    0 => 'name'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}styles'
+    )  ,
+    '{DBKEY}topics' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => 'auto_increment'
+            )  ,
+            'parent' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'author' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'author_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'name' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => true ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'descr' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'minrights' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'postrights' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 1 ,
+                'extra' => ''
+            )  ,
+            'time' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'lasttime' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'lastposter' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'lastposter_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'posts' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'MaxID' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'locked' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'special' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'pinned' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'deleted' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            )  ,
+            'parent' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'parent'
+                ) 
+            )  ,
+            'author_id' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'author_id'
+                ) 
+            )  ,
+            'lastposter_id' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastposter_id'
+                ) 
+            )  ,
+            'rights' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'minrights' ,
+                    1 => 'postrights'
+                ) 
+            )  ,
+            'state' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'locked' ,
+                    1 => 'special' ,
+                    2 => 'pinned' ,
+                    3 => 'deleted'
+                ) 
+            )  ,
+            'MaxID' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'MaxID'
+                ) 
+            )  ,
+            'text' => Array (
+                'type' => 'FULLTEXT' ,
+                'cols' => Array (
+                    0 => 'name' ,
+                    1 => 'descr'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}topics'
+    )  ,
+    '{DBKEY}users' => Array (
+        'fields' => Array (
+            'id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => 'auto_increment'
+            )  ,
+            'nick' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'pass' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'passdropcode' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'email' => Array (
+                'type' => 'varchar(36)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'new_email' => Array (
+                'type' => 'varchar(36)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'new_acode' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'homepage' => Array (
+                'type' => 'varchar(50)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'descr' => Array (
+                'type' => 'varchar(128)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'icq' => Array (
+                'type' => 'varchar(36)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'city' => Array (
+                'type' => 'varchar(128)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'about' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'more_fields' => Array (
+                'type' => 'text' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'avatar' => Array (
+                'type' => 'varchar(64)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'greet' => Array (
+                'type' => 'varchar(30)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'timezone' => Array (
+                'type' => 'decimal(5,2)' ,
+                'null' => true ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'style' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'noemailpm' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'subscrtype' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 1 ,
+                'extra' => ''
+            )  ,
+            'active' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 1 ,
+                'extra' => ''
+            )  ,
+            'hasnewpm' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'hasnewsubscr' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'regtime' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'sessid' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'autologin' => Array (
+                'type' => 'varchar(32)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'lastseen' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'lasturl' => Array (
+                'type' => 'varchar(255)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'lastip' => Array (
+                'type' => 'varchar(16)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
+            'rights' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 1 ,
+                'extra' => ''
+            )  ,
+            'modlevel' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'admin' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'deleted' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'id'
+                ) 
+            )  ,
+            'nick' => Array (
+                'type' => 'UNIQUE' ,
+                'cols' => Array (
+                    0 => 'nick'
+                ) 
+            )  ,
+            'lastseen' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastseen'
+                ) 
+            )  ,
+            'subscrtype' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'subscrtype'
+                ) 
+            )  ,
+            'active' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'active'
+                ) 
+            )  ,
+            'rights' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'rights' ,
+                    1 => 'modlevel' ,
+                    2 => 'admin'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}users'
+    )  ,
+    '{DBKEY}userstats' => Array (
+        'fields' => Array (
+            'user_id' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'posts' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'themes' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'files' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'lastposttime' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'lasttheme' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            )  ,
+            'lastpost' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
+            ) 
+        )  ,
+        'keys' => Array (
+            'PRIMARY' => Array (
+                'type' => 'PRIMARY' ,
+                'cols' => Array (
+                    0 => 'user_id'
+                ) 
+            ) 
+        )  ,
+        'name' => '{DBKEY}userstats'
+    ) 
+) 
