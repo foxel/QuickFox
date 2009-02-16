@@ -378,6 +378,7 @@ CREATE TABLE `{DBKEY}users` (
     `new_email` varchar(36) NOT NULL, 
     `new_acode` varchar(32) NOT NULL, 
     `homepage` varchar(50) NOT NULL, 
+    `sex` char(1) NOT NULL, 
     `descr` varchar(128) NOT NULL, 
     `icq` varchar(36) NOT NULL, 
     `city` varchar(128) NOT NULL, 

@@ -30,35 +30,51 @@ $sessid=HTMLStrVal($sid);
 $result=$QF_DBase->sql_doselect('{DBKEY}sessions', '*', Array( 'sid' => $sessid, 'ip' => $QF_Client['ipaddr']) );
 if ($result) $sess = $QF_DBase->sql_fetchrow($result);
 
-// this is the image
-$image=imagecreatetruecolor(96,18);
-// setting up colors
-$fon=imagecolorallocate($image,rand(200,255),rand(200,255),rand(200,255));
-imagefill($image,10,10,$fon);
-imageantialias($image,true);
-
-$colors=Array();
-for ($i=0;$i<8;$i++) {	$colors[$i]=imagecolorallocate($image,rand(50,150),rand(50,150),rand(50,150));
-}
+$width = 8*15 + 5;
+$dest_img = imagecreatetruecolor($width, 25);
+imagefilledrectangle($dest_img, 0, 0, $width-1, 24, imagecolorallocate($dest_img, rand(200, 255), rand(200, 255), rand(200, 255)));
 
 if (is_array($sess)) {
 	$newcode=substr(md5(uniqid($sid)),0,8);
 
    	$QF_DBase->sql_doupdate('{DBKEY}sessions', Array( 'spamcode' => $newcode, 'spctime' => $timer->time), Array( 'sid' => $sess['sid']) );
 
-    for ($i=0;$i<8;$i++) {
-		imagetext($image,3,6+12*$i,9,substr($newcode,$i,1),$colors[$i],True);
-	}
+    $root_img = imagecreatefrompng('kernel/as_data.dat');
+
+    $count = strlen($newcode);
+
+    if (function_exists('imageantialias'))
+        imageantialias($dest_img, true);
+
+    for ($i = 0; $i < $count; $i++)
+        imageline($dest_img, rand(-10, 0), rand(-30, 55), $width + rand(0, 10), rand(-30, 55), imagecolorallocate($dest_img, rand(100, 200), rand(100, 200), rand(100, 200)));
+
+    for ($i = 0; $i < $count; $i++)
+    {
+        $id = (int) hexdec($newcode{$i}) + rand(0,3)*16;
+
+        $sx = ($id%8) * 24;
+        $sy = floor($id/8) * 32;
+
+        $x = $i*15;
+        $w = rand(15, 20);
+        $h = rand(20, 25);
+        $x+= rand(0, 20-$w);
+        $y = rand(0, 25-$h);
+        imagecopyresampled($dest_img, $root_img, $x, $y, $sx, $sy, $w, $h, 24, 32);
+    }
+    imagerectangle($dest_img, 0, 0, $width-1, 24, 0x6b7d87);
 
 
 }
 else
-	imagetext($image,2,48,9,'ERROR',$colors[0],True);
+	imagetext($dest_img,2,48,9,'ERROR',$colors[0],True);
 
 
 header('Content-Type: image/png');
-header('Cache-control: no-cache, no-store');
-imagetruecolortopalette($image,true,16);
+header('Cache-control: no-cache, no-store, must-revalidate');
+header('Pragma: no-cache');
+imagetruecolortopalette($dest_img,true,128);
 ob_end_clean();
-imagepng($image);
+imagepng($dest_img);
 ?>

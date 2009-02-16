@@ -94,7 +94,7 @@ class qf_parser
         $this->Add_Tag('code', Visual('CODE_TABLE', Array( 'caption'=> '{param}', 'content' => '{data}')), QF_BBTAG_BLLEV | QF_BBTAG_FHTML | QF_BBTAG_NOCH );
 
         // QuickFox user related tags
-        $this->Add_Tag('hide', (($QF_User->uid) ? '\\1' : ''), QF_BBTAG_FHTML | QF_BBTAG_NOCH );
+        $this->Add_Tag('hide', (($QF_User->uid) ? '{data}' : ''), QF_BBTAG_FHTML | QF_BBTAG_NOCH );
 
         // Set inited
         $this->ext_loaded = True;
@@ -115,7 +115,7 @@ class qf_parser
             usort($this->smiles, 'parser_smiles_sort');
 
             foreach ($this->smiles as $item)
-                $this->Add_Preg(preg_quote($item['sm_text'], '#'), '<img src="imgs/smiles/'.$item['sm_icon'].'" alt="'.$item['sm_text'].'" title="'.$item['sm_capt'].'" border="0" />');
+                $this->Add_Preg(preg_quote($item['sm_text'], '#'), '<img src="imgs/smiles/'.$item['sm_icon'].'" alt="'.$item['sm_text'].'" border="0" />');
         }
     }
 

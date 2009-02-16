@@ -1104,6 +1104,8 @@ REPLACE INTO  {DBKEY}styles (`id`, `name`, `visual`, `CSS`)
 REPLACE INTO  {DBKEY}styles (`id`, `name`, `visual`, `CSS`) 
     VALUES('1111', 'Gravel mod', 'qf_def', 'graver');
 REPLACE INTO  {DBKEY}styles (`id`, `name`, `visual`, `CSS`) 
+    VALUES('2222', 'Violet mod', 'qf_def', 'violet');
+REPLACE INTO  {DBKEY}styles (`id`, `name`, `visual`, `CSS`) 
     VALUES('3333', 'Green mod', 'qf_def', 'green');
 
 

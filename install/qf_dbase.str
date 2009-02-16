@@ -1687,6 +1687,12 @@ Array (
                 'def' => '' ,
                 'extra' => ''
             )  ,
+            'sex' => Array (
+                'type' => 'char(1)' ,
+                'null' => false ,
+                'def' => '' ,
+                'extra' => ''
+            )  ,
             'descr' => Array (
                 'type' => 'varchar(128)' ,
                 'null' => false ,

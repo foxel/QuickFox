@@ -10,14 +10,22 @@ $_JS_REPLACE = array(
        );
 
 if (($mess = Get_Request('newmess', 2, 's')) && $QF_User->uid)
-{    $new_mess = Array(
+{    if ($mess{0} == '!' && $QF_User->cuser['admin'])
+    {
+        list($command, $mess) = explode(' ', $mess, 2);
+        if ($command == '!clear')
+            $QF_DBase->sql_query('truncate table {DBKEY}minichats');
+    }
+
+    $new_mess = Array(
         'author' => $QF_User->uname,
         'author_id' => $QF_User->uid,
         'text'   => nl2br(htmlspecialchars(substr($mess, 0, 2048))),
         'time' => time() );
     if (($msglvl = Get_Request('messlevel', 2, 'i')) && $msglvl > 0 && $msglvl <= $QF_User->level )
         $new_mess['acc_lv'] = $msglvl;
-    $QF_DBase->sql_doinsert('{DBKEY}minichats', $new_mess);
+    if ($mess)
+        $QF_DBase->sql_doinsert('{DBKEY}minichats', $new_mess);
 }
 
 $mesages = Array();

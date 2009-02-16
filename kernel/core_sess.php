@@ -279,8 +279,6 @@ function qf_session_handler($text)
         return $text;
     elseif (!$QF_Session->started)
         return $text;
-    elseif ($QF_Session->fix)
-        return $text;
 
 
     if (!$QF_User->is_spider) {
@@ -290,10 +288,9 @@ function qf_session_handler($text)
 
         if ($QF_Session->loaded)
             $QF_DBase->sql_doupdate('{DBKEY}sessions', Array('vars' => $data, 'lastused' => $timer->time, 'clicks' => $QF_Session->clicks), Array('sid' => $QF_Session->SID) );
-        else
+        elseif (!$QF_Session->fix)
             $QF_DBase->sql_doinsert('{DBKEY}sessions', Array('sid' => $QF_Session->SID, 'ip' => $QF_Client['ipaddr'], 'starttime' => $timer->time, 'vars' => $data, 'lastused' => $timer->time, 'clicks' => $QF_Session->clicks) );
 
-        $QF_DBase->sql_query($query);
         $err=$QF_DBase->sql_error();
         if ($err['message']) trigger_error('Session_management: Can\'t set session record '.$err['message'], 256);
 
@@ -301,8 +298,14 @@ function qf_session_handler($text)
         if ($QF_DBase->sql_affectedrows()) { //let's clear old session caches
             $QF_DBase->sql_dodelete('{DBKEY}sess_cache', 'WHERE ch_stored < '.($timer->time-3600) );
         }
-
-        if ($QF_Session->use_url ) {
+    }
+    
+    if ($QF_Session->fix)
+        return $text;
+        
+    if (!$QF_User->is_spider) {
+        if ($QF_Session->use_url )
+        {
             function SID_Compose($vars)
             {                global $QF_Session;
                 $url = $vars[3];

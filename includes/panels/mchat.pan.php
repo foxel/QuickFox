@@ -20,7 +20,7 @@ if ( $result = $QF_DBase->sql_query($query) ) {
     $QF_DBase->sql_freeresult($result);
 }
 
-Connect_JS('jscripts/mchat.js');
+Connect_JS('mchat');
 
 
 $datas = '';

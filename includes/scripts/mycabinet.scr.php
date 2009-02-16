@@ -36,6 +36,7 @@ if ($action=='profile')
   $location = Get_Request('location', 2, 'ht', 128);
 
   $descr = Get_Request('descr', 2, 'ht', 128);
+  $sex   = Get_Request('sex', 2, 's', 1);
 
   $icq = Get_Request('icq', 2, 'ht', 36);
 
@@ -48,7 +49,7 @@ if ($action=='profile')
   $greet = Get_Request('greet', 2, 'ht', 30);
 
   $ntz = Get_Request('timezone', 2, 'f');
-  $nstyle = Get_Request('ustyle', 2);
+  $nstyle = Get_Request('ustyle', 2, 's');
 
   $noemailpm = Get_Request('noemailpm', 2, 'b');
   $emailsubs = Get_Request('emailsubs', 2, 'b');
@@ -58,6 +59,7 @@ if (empty($error)) // если ошибок нет, обрабатываем сообщение
 
   if ($QF_User->uid) {
       $upd_data = Array(
+          'sex'       => $sex,
           'city'      => $location,
           'descr'     => $descr,
           'icq'       => $icq,

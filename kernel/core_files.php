@@ -52,11 +52,14 @@ class DownLoadFile{
 
 // private
 
-  function outHeaderCommon(){
+  function outHeaderCommon(){    global $QF_Config;
     $info=pathinfo($this->RealName);
     header('Content-Transfer-Encoding: binary');
     header('Content-Type: '.$this->mime.'; charset=windows-1251');
-    header('Content-Disposition: attachment; filename="'.$info['basename'].'"');
+    if ($QF_Config['files']['no_attc'])
+      header('Content-Disposition: inline; filename="'.$info['basename'].'"');
+    else
+      header('Content-Disposition: attachment; filename="'.$info['basename'].'"');
     //header('Title: '.$info['basename']);
     header('Last-modified: '.$this->time);
     header('Content-Length: '.($this->size - $this->start));

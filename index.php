@@ -92,6 +92,7 @@ if($QF_Job!='')
 
   $QF_Pagedata['footstat'].=($GZipped) ? $Vis['GZIP_FLAG'] : '';
 
+  header('Content-Type: text/html; charset=windows-1251', true);
   header('Cache-Control: no-cache');
   print Visual('GLOBAL_HTMLPAGE', $QF_Pagedata);
 

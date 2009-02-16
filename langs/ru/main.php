@@ -145,10 +145,16 @@ $lang['THEME_EDIT_HINT']='Указанные Вами параметры прав будут скорректированы в 
  <i> - уровень доступа к данной ветви ниже чем к родительскому разделу;</i><br />
  <i> - уровень записи в данной ветви ниже чем уровень чтения.</i><br />
  При выборе родительского раздела обратите внимание на указанный в скобках уровень доступа.';
-$lang['FOR_SEARCH_CAPT']='Поиск по форуму:';
+$lang['FOR_SEARCH_CAPT']='Поиск по форуму';
 $lang['FOR_SEARCH_UNREAD']='Непрочтенные темы';
+$lang['FOR_SEARCH_SUBSCRIBES']='Мои подписки';
+$lang['FOR_SEARCH_LAST50']='Последние 50 тем (30 дней)';
 $lang['FOR_SEARCH_STRING']='Поиск строки "%s"';
 $lang['FOR_SEARCH_REQ_STR']='Поиск:';
+$lang['FOR_SEARCH_REQ_LAST50']='Последние 50 тем';
+$lang['FOR_SEARCH_REQ_SUBS']='Мои подписки';
+$lang['FOR_SEARCH_REQ_SUBS_ALL']='все';
+$lang['FOR_SEARCH_REQ_SUBS_UNR']='новые';
 $lang['FOR_SEARCH_REQ_UNR']='Непрочитанные сообщения';
 $lang['FOR_SEARCH_REQ_UNR_ALL']='все';
 $lang['FOR_SEARCH_REQ_UNR_SUBSCR']='по подписке';
@@ -304,6 +310,8 @@ $lang['DROP_PASS_CODE_MORE']='Введите 32 символа полученного Вами буквенно-цифро
 $lang['INFO_CAPT']='Информация о пользователе %s';
 $lang['INFO_MODLEVEL']='Модератор уровня %s';
 $lang['INFO_CONTACT']='Контактная информация';
+$lang['INFO_USEX_M']='Муж.';
+$lang['INFO_USEX_F']='Жен.';
 $lang['INFO_UABOUT']='Коротко о себе';
 $lang['INFO_CAN_CHANGE']='%s, Вы можете изменить права этого пользователя';
 $lang['INFO_CHANGE']='Изменить параметры доступа.';
@@ -394,6 +402,8 @@ $lang['UCAB_MPMS_LISTS']='Приватные списки';
 $lang['UCAB_PROFILE_CAPT']='Данные профиля.';
 $lang['UCAB_PROFILE_REQUEST']='Пожалуйста заполните/измените следующие поля, содержащие информацию о Вас а также настройки системы.';
 $lang['UCAB_PROFILE_PRFINFO']='Информация о пользователе.';
+$lang['UCAB_PROFILE_SEX']='Пол:';
+$lang['UCAB_PROFILE_SEX_MORE']='Здесь Вы можете при желании указать свой пол.';
 $lang['UCAB_PROFILE_CITY']='Место жительства:';
 $lang['UCAB_PROFILE_CITY_MORE']='Ваше место жительства в качестве дополнительной информации. Возможно, так вы сможете найти новых друзей в своем городе.';
 $lang['UCAB_PROFILE_DESCR']='Подпись:';
@@ -492,6 +502,12 @@ $lang['REDIRECT_YOU']='Сейчас Вы будете перемещены.<br />Если не хотите ждать на
 $lang['AUTOLOGIN']='Выставить автовход.';
 $lang['TIMEZONE']='Часовой пояс';
 $lang['STYLE']='Стиль (скин)';
+
+// QF RSS
+$lang['RSS_TITLE_LAST_MSGS']='Обновленные темы на форуме "%s"';
+$lang['RSS_TITLE_LAST_MSGS_MORE']='%s :: последние обновления на форуме.';
+$lang['RSS_TITLE_TOPIC_MSGS']='%1$s :: %2$s';
+$lang['RSS_TITLE_TOPIC_MSGS_MORE']='%1$s :: %2$s :: последние сообщения.';
 
 // QF Editor
 $lang['EDITOR_CAPTION']='Редактор сообщения';

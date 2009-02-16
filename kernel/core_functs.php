@@ -9,7 +9,7 @@ if ( defined('CORE_FUNCITONS_LOADED') )
 
 define('CORE_FUNCITONS_LOADED', True);
 
-define('QF_RURL_MASK', '[\w\#$%&~/.\-;:=,?@+\(\)\[\]]+');
+define('QF_RURL_MASK', '[\w_\#$%&~/.\-;:=,?@+\(\)\[\]]+');
 define('QF_FURL_MASK', '(?>[0-9A-z]+://[0-9A-z_\-\.]+\.[A-z]{2,4})(?:\/'.QF_RURL_MASK.')?');
 
 //
@@ -219,24 +219,66 @@ Function QF_exit($mess = '')
     exit();
 }
 
-function GetFullUrl($url, $delamp=True)
-{    global $QF_Config;
+function GetFullUrl($url, $no_amps = true)
+{
+    global $QF_Config;
 
-    $server_protocol = ($QF_Config['cookie_secure']) ? 'https://' : 'http://';
-    $server_name = preg_replace('#^\/?(.*?)\/?$#', '\1', trim($QF_Config['server_name']));
-    $script_name = preg_replace('#^\/?(.*?)\/?$#', '\1', trim($QF_Config['root']));
-    $script_name = ($script_name == '') ? $script_name : '/' . $script_name;
-    $server_port = ($QF_Config['server_port'] <> 80) ? ':' . trim($QF_Config['server_port']) : '';
+    if ($url{0} == '#')
+        return $url;
 
-    $url = preg_replace('#^\/?(.*?)\/?$#', '/\1', trim($url));
+    $url_p = parse_url($url);
 
-    if ($delamp)
-        $url = str_replace('&amp;', '&', $url);
+    if (preg_match('#mailto#i', $url_p['scheme']))
+        return $url;
 
-    $url = str_replace('\\', '', $url);
+    $url = '';
+    if (isset($url_p['scheme']))
+        $url.= $url_p['scheme'].'://';
+    else
+        $url.= ($QF_Config['cookie_secure']) ? 'https://' : 'http://';
 
-    return $server_protocol.$server_name.$server_port.$script_name.$url ;
+    if (isset($url_p['host']))
+    {
+        if (isset($url_p['username']))
+        {
+            $url.= $url_p['username'];
+            if (isset($url_p['password']))
+                $url.= $url_p['password'];
+            $url.= '@';
+        }
+        $url.= $url_p['host'];
+        if (isset($url_p['port']))
+            $url.= ':'.$url_p['port'];
+
+        if (isset($url_p['path']))
+            $url.= preg_replace('#(\/|\\\)+#', '/', $url_p['path']);
+    }
+    else
+    {
+        $url.= trim($QF_Config['server_name']);
+        if (isset($url_p['path']))
+        {
+            if ($url_p['path']{0} != '/')
+                $url_p['path'] = '/'.$QF_Config['root'].'/'.$url_p['path'];
+        }
+        else
+            $url_p['path'] = '/'.$QF_Config['root'].'/index.php';
+
+        $url_p['path'] = preg_replace('#(\/|\\\)+#', '/', $url_p['path']);
+        $url.= $url_p['path'];
+    }
+
+    if (isset($url_p['query']))
+        $url.= '?'.$url_p['query'];
+
+    if (isset($url_p['fragment']))
+        $url.= '#'.$url_p['fragment'];
+
+    $url = ($no_amps) ? str_replace('&amp;', '&', $url) : preg_replace('#\&(?![A-z]+;)#', '&amp;', $url);
+
+    return $url;
 }
+
 
 //
 // Redirecting function
@@ -296,7 +338,7 @@ function create_date($format, $timestamp, $tz='', $dontconv=false)
 
     $tzc = (3600 * $tz + 60 * $correct); // correction of GMT
 
-    if ($last_tz!=$tz) {
+    if ($last_tz!==$tz) {
         $today = $now + $tzc;
         if (qf_time_DST($now, $tz))
             $today+= 3600;
@@ -469,11 +511,17 @@ function Combine_ECSS($file) {
 function Load_Language($part = '')
 {
     Global $QF_Config, $lang;
+    $part = ($part) ? $part : 'main';
     $lang_file = ($part) ? $part.'.php' : 'main.php';
-    $lang_file = 'langs/'.$QF_Config['def_lang'].'/'.$lang_file;
+    $lang_file = 'langs/'.$QF_Config['def_lang'].'/'.$part.'.php';
+    $mlang_file = 'langs/'.$QF_Config['def_lang'].'/'.$part.'_mods.php';
 
     if (file_exists($lang_file))
+    {
         include $lang_file;
+        if (file_exists($mlang_file))
+            include $mlang_file;
+    }
     else
         trigger_error('Error loading language file for ['.$QF_Config['def_lang'].'] part "'.$part.'"', 256);
 }
@@ -536,8 +584,8 @@ Function StartGZIP() {
         if (!$GZipped) {
             $phpver = phpversion();
 
-            if ($phpver>='4.0.4') $compressor='ob_gzhandler';
-            elseif ($phpver > '4.0') $compressor='qf_gzhandler';
+
+            if ($phpver > '4.0') $compressor='qf_gzhandler';
 
             if ( strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') ) $compress=true;
             elseif ( preg_match('#(mozilla/[4-9])|(opera/[7-9])#i',$QF_Client['uagent']) ) $compress=true;
@@ -548,9 +596,10 @@ Function StartGZIP() {
             return $GZipped;
         }
     }
-    else
-        return False;
+
+    return False;
 }
+
 
 //
 // Gzip handler for old PHP
@@ -570,7 +619,7 @@ function qf_gzhandler($page) {
     $out.=  pack('V', $gzip_crc);
     $out.=  pack('V', $gzip_size);
 
-    header('Content-Lenght: '.strlen($out));
+    header('Content-Length: '.strlen($out), true);
 
     return $out;
 }

@@ -27,6 +27,8 @@ $NeedUsers = Array();
 $PIDs      = Array();
 
 $SectPrint = Array();
+$Page_SubTitle = $lang['FOR_SEARCH_CAPT'];
+
 
 switch ($find_mode)
 {    case 1: // unread search
@@ -84,6 +86,42 @@ switch ($find_mode)
             $SectPrint['caption'] = sprintf($lang['FOR_SEARCH_STRING'], $find_what) ;
             $SectPrint['search_str'] = $find_what;
         }
+        break;
+    case 3: // subsribes
+        if (!$QF_User->uid)
+            break;
+        $query = 'SELECT t.*, r.active AS is_read FROM {DBKEY}topics t
+        LEFT JOIN {DBKEY}reads r ON (t.id=r.theme AND r.user_id='.$QF_User->uid.')
+        WHERE t.deleted = 0 AND t.parent IN ('.$acc_forums_list.') AND t.minrights<='.$QF_User->level.'
+        AND r.subscribe = 1';
+
+        $query.= ' ORDER BY t.lasttime DESC ';
+        if ($result = $QF_DBase->sql_query($query)) {
+            while ($topic = $QF_DBase->sql_fetchrow($result)) {
+                $SubTopics[] = $topic;
+                $NeedUsers[] = intval($topic['author_id']);
+                $NeedUsers[] = intval($topic['lastposter_id']);
+            }
+            $QF_DBase->sql_freeresult($result);
+        }
+        $SectPrint['caption'] = $lang['FOR_SEARCH_SUBSCRIBES'];
+        break;
+    case 50: // last 50
+        $query = 'SELECT t.*, r.active AS is_read FROM {DBKEY}topics t
+        LEFT JOIN {DBKEY}reads r ON (t.id=r.theme AND r.user_id='.$QF_User->uid.')
+        WHERE t.deleted = 0 AND t.parent IN ('.$acc_forums_list.') AND t.minrights<='.$QF_User->level.'
+        AND t.lasttime > '.($timer->time - 30*24*3600);
+
+        $query.= ' ORDER BY t.lasttime DESC LIMIT 50';
+        if ($result = $QF_DBase->sql_query($query)) {
+            while ($topic = $QF_DBase->sql_fetchrow($result)) {
+                $SubTopics[] = $topic;
+                $NeedUsers[] = intval($topic['author_id']);
+                $NeedUsers[] = intval($topic['lastposter_id']);
+            }
+            $QF_DBase->sql_freeresult($result);
+        }
+        $SectPrint['caption'] = $lang['FOR_SEARCH_LAST50'];
         break;
     default:
         $SectPrint['caption'] = $lang['ERR_NO_SEARCH_REQUEST'];

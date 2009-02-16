@@ -24,7 +24,7 @@ if ($result) while ($stylerec=$QF_DBase->sql_fetchrow($result)) {
 // Common loadings
 //
 // Loading Common JS
-Connect_JS('jscripts/common.js');
+Connect_JS('common');
 
 //
 //if we have banned user

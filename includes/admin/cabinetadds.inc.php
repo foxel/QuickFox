@@ -263,7 +263,7 @@ elseif ($job=='vis_config') {
         'descr'   => $lang['CONFIG_VISUAL_MHIDE_USERS_MORE'] );
 
     $fields['menu_add_buttons']=Array(
-        'value' => $QF_Config['std_menu']['add_buttons'],
+        'value' => htmlspecialchars($QF_Config['std_menu']['add_buttons']),
         'type'  => 'textarea',
         'capt'  => $lang['CONFIG_VISUAL_MADD_BUTTS'],
         'descr' => $lang['CONFIG_VISUAL_MADD_BUTTS_MORE'] );
@@ -273,13 +273,13 @@ elseif ($job=='vis_config') {
         'capt' => $lang['CONFIG_VISUAL_ADVS'] );
 
     $fields['adv_data']=Array(
-        'value' => $QF_Config['adv_data'],
+        'value' => htmlspecialchars($QF_Config['adv_data']),
         'type'  => 'textarea',
         'capt'  => $lang['CONFIG_VISUAL_ADVDATA'],
         'descr' => $lang['CONFIG_VISUAL_ADVDATA_MORE'] );
 
     $fields['bott_adv_data']=Array(
-        'value' => $QF_Config['bottom_adv_data'],
+        'value' => htmlspecialchars($QF_Config['bottom_adv_data']),
         'type'  => 'textarea',
         'capt'  => $lang['CONFIG_VISUAL_BADVDATA'],
         'descr' => $lang['CONFIG_VISUAL_BADVDATA_MORE'] );
@@ -305,7 +305,7 @@ elseif ($job=='acc_groups') {    $cabinet_caption = $lang['UCAB_ADMIN_ACCGROUPS
     Glob_Request('edit_grp show_grp drop_grp');
     $ptmpl = Array();
 
-    $query = 'SELECT ag.*, COUNT(al.user_id) AS users FROM {DBKEY}acc_groups ag LEFT JOIN {DBKEY}acc_links al ON (al.group_id = ag.id) LEFT JOIN {DBKEY}users us ON (us.id = al.user_id) WHERE us.deleted = 0 GROUP BY ag.id ';
+    $query = 'SELECT ag.*, COUNT(al.user_id) AS users FROM {DBKEY}acc_groups ag LEFT JOIN {DBKEY}acc_links al ON (al.group_id = ag.id) LEFT JOIN {DBKEY}users us ON (us.id = al.user_id AND us.deleted = 0) GROUP BY ag.id ';
     $result = $QF_DBase->sql_query($query);
     if ($result) {        $ttmpl = Array(
             'rows'      => '',

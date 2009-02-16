@@ -38,6 +38,15 @@ elseIf ($infouser)
             'uicq'       => ($iuser['icq']) ? $iuser['icq'] : "n/a",
             'ulasturl'   => $iuser['lasturl'] );
 
+        switch($iuser['sex'])
+        {            case 'M':
+                $tmpl['usex'] = $lang['INFO_USEX_M'];
+                break;
+            case 'F':
+                $tmpl['usex'] = $lang['INFO_USEX_F'];
+                break;
+        }
+
         if ($QF_User->admin) {             $tmpl['ulastip'] = $iuser['lastip'];
              if ($iuser['lastip']) $tmpl['ulastdns'] = gethostbyaddr($iuser['lastip']);
         }

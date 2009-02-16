@@ -33,6 +33,13 @@ function init_err_parse($errno, $errstr, $errfile, $errline)
     }
 }
 
+function Cont_Measurer($page)
+{    header('Content-Length: '.strlen($page));
+    return $page;
+}
+
+ob_start('Cont_Measurer');
+
 class QF_Timer
 {	var $start_time;
 	var $time;

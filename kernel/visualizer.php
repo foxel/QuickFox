@@ -117,10 +117,13 @@ function Vis_Draw_Hint($content, $object='') {
 //
 // JS includer
 //
-function Connect_JS($file) {
-    Global $QF_Pagedata, $lang;
+function Connect_JS($name) {
+    Global $QF_Pagedata, $QF_Config, $lang;
 
-    if ($sfile=@fopen($file, 'r')) {
+    $file = 'jscripts/'.$name.'.js';
+    if ($QF_Config['force_css_separate'])
+        $QF_Pagedata['JAVA'].='<script language="JavaScript" type="text/javascript" src="index.php?sr=JS&amp;scripts='.$name.'"></script>';
+    elseif ($sfile =@ fopen($file, 'r')) {
         $indata=fread($sfile,filesize($file));
         $indata=preg_replace('#\{L_(\w+)\}#e', '\$lang["\\1"]', $indata);
         $QF_Pagedata['JAVA'].='<script language="JavaScript" type="text/javascript">

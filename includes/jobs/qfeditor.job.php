@@ -6,7 +6,7 @@ if ( !defined('QF_STARTED') )
 
 include 'kernel/start.php';
 
-Connect_JS('jscripts/qfeditor.js');
+Connect_JS('qfeditor');
 
 // We'll not get smiles that have a same icon
 $editorsmiles=Array();

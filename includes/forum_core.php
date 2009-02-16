@@ -75,7 +75,7 @@ class qf_forum
                     $sect['sects'] = 0;
                     $sect['unreads'] = 0;
 
-                    $cur_access = $sect['minrights'] <= $QF_User->level;
+                    $cur_access = ($sect['minrights'] <= $QF_User->level) || $QF_User->admin;
                     if (!empty($sect['acc_group_name'])) {
                          if (!$QF_User->uid)
                              $cur_access = false;
@@ -121,6 +121,7 @@ class qf_forum
                         WHERE t.deleted = 0
                         AND (r.active = 0 OR r.active IS NULL)
                         AND t.minrights <= '.$QF_User->level.'
+                        AND t.lasttime > '.$QF_User->cuser['regtime'].'
                         GROUP BY t.parent';
                     if ( $result = $QF_DBase->sql_query($query) ) {
                         while ( $ts = $QF_DBase->sql_fetchrow($result))
@@ -164,7 +165,11 @@ class qf_forum
     }
 
     function Draw_Forum()
-    {        return Visual('FORUM_WINDOW', Array( 'fastjumper' => $this->FastJumper(), 'window' => $this->Window ) );
+    {        global $QF_Pagedata, $QF_Config, $lang;
+
+        $QF_Pagedata['META'].= "\n".'<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(sprintf($lang['RSS_TITLE_LAST_MSGS'], $QF_Config['site_name'])).'" href="index.php?sr=RSS" >';
+
+        return Visual('FORUM_WINDOW', Array( 'fastjumper' => $this->FastJumper(), 'window' => $this->Window ) );
     }
 
     // compiles FastJumper
@@ -237,6 +242,6 @@ class qf_forum
 
 $sect_inc_url = 'index.php?st=section';
 $topic_inc_url = 'index.php?st=branch';
-Connect_JS('jscripts/forum.js');
+Connect_JS('forum');
 
 ?>

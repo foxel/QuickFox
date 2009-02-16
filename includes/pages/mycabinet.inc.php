@@ -54,7 +54,7 @@ $tmpl=Array(
 
 $content=Visual('MYCABINET_OVERVIEW', $tmpl);
 
-$cabinet_menu_tower.= Vis_Draw_panel($content,$lang['UCAB_CAPT'].' '.$ucabuser['nick'],'200');
+$cabinet_menu_tower.= Vis_Draw_panel($content,$lang['UCAB_CAPT'],'200');
 
 // Profile menu
 $mrows='';
@@ -97,6 +97,13 @@ elseif ($job=='profile') {
 
     $fields['prfinfo']['type']='separator';
     $fields['prfinfo']['capt']=$lang['UCAB_PROFILE_PRFINFO'];
+
+    $fields['sex']['type']='select';
+    $fields['sex']['capt']=$lang['UCAB_PROFILE_SEX'];
+    $fields['sex']['descr']=$lang['UCAB_PROFILE_SEX_MORE'];
+        $fields['sex']['subs'][0] = Array('name' => '---', 'value' => ' ');
+        $fields['sex']['subs'][1] = Array('name' => $lang['INFO_USEX_M'], 'value' => 'M', 'selected' => ($ucabuser['sex']=='M'));
+        $fields['sex']['subs'][2] = Array('name' => $lang['INFO_USEX_F'], 'value' => 'F', 'selected' => ($ucabuser['sex']=='F'));
 
     $fields['location']['type']='text';
     $fields['location']['params']='maxlength=128';

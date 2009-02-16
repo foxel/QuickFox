@@ -147,7 +147,7 @@ Class qf_forum_upd
                 elseif (!in_array($fid, $fids) )
                 {
                     $caption=Get_Request('file'.$fdx.'capt', 2, 'ht', 255);
-                    if (!$caption) $caption=$file_info['basename'];
+                    if (!$caption) $caption = trim(preg_replace('#(?<=\S)\.\w+$#', '', strtr($filename, '_', ' ')));
 
                     $this->pfiles[$fdx] = Array(
                         'tmpname'  => $tmpname,

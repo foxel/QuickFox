@@ -11,6 +11,8 @@ if (!$QF_User->is_spider) {
 	$SeenGuests='';
 	$LastCount=0;
 	$tzs=floatval($QF_Config['tz'])*3600 + intval($QF_Config['date_corr_mins'])*60;
+	if (qf_time_DST($timer->time, $QF_Config['tz']))
+	    $tzs+= 3600;
 	$chtime=$timer->time - 86400*10;
 	$STtime=floor(($timer->time + $tzs)/86400)*86400 - $tzs;
 	$SNtime=$timer->time - 600;

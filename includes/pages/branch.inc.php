@@ -96,8 +96,6 @@ if (is_array($topic))
         $t_postdel   = 0;
     }
 
-    $Page_SubTitle = $topic['name'];
-
     $t_posts_per_page = $forconfig['posts_per_page'];
 
     if ($topic['id'] == $forconfig['guest_book'])
@@ -124,6 +122,10 @@ if (is_array($topic))
         $BranchPrint['content']= Vis_Err_String($lang['FOR_THEME_UNAVAILABLE']);
     else
     {
+        if ($topic['minrights'] <= 2 && !$cur_sect['acc_group_name'])
+            $QF_Pagedata['META'].= "\n".'<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(sprintf($lang['RSS_TITLE_TOPIC_MSGS'], $QF_Config['site_name'], $topic['name'])).'" href="index.php?sr=RSS&amp;topic='.$topic_id.'" >';
+
+        $Page_SubTitle = $topic['name'];
 
         $BranchPrint['caption'] = $topic['name'];
 
@@ -450,6 +452,7 @@ if (is_array($topic))
 	                            foreach ($atts[$post['id']] as $att)
 	                                {
                 	                    $Can_Edit_Att = ($QF_User->cuser['modlevel']>=$att['rights'] && $t_curaccess>=3) || ($QF_User->uid==$att['user_id'] && $QF_User->uid);
+
         	                            $atmpl=Array(
 	                                        'fid'  => $att['id'],
 	                                        'url'  => 'index.php?st=getfile&amp;file='.$att['id'],
@@ -457,6 +460,8 @@ if (is_array($topic))
 	                                        'capt' => $att['caption'],
         	                                'size' => round($att['size']/1024,2).' Kb.',
 	                                        );
+
+
         	                            if ($Can_Edit_Att)
 	                                        $form['unattach'].=Visual('POST_EDIT_UNATTACH', $atmpl);
 	                                }
@@ -510,10 +515,14 @@ if (is_array($topic))
         	                $tmpl['attaches']='';
 	                        if (is_array($atts[$post['id']]))
 	                            foreach ($atts[$post['id']] as $att)
-        	                        {	                                    $atmpl=Array(
+        	                        {        	                            $capt = $att['caption'];
+        	                            if (strlen($capt)>30)
+                                            $capt = substr($capt, 0, 18).'...'.substr($capt, -7);
+
+	                                    $atmpl=Array(
 	                                        'url'  => 'index.php?st=getfile&amp;file='.$att['id'],
 	                                        'src'  => 'index.php?sr=thumb&amp;fid='.$att['id'],
-	                                        'capt' => $att['caption'],
+	                                        'capt' => $capt,
         	                                'size' => round($att['size']/1024,2).' Kb.',
 	                                        'dloads' => intVal($att['dloads']) );
 	                                    $tmpl['attaches'].=Visual('POST_ATTACH', $atmpl);
@@ -712,6 +721,8 @@ if (is_array($topic))
                 'lasttime'   => create_date('', $topic['lasttime']) );
 
             $cont['subscribe']=($t_subscribe) ? $Vis['SUBSCR_FLAG'].' <a href="'.$Base_Link.'&amp;subscribe=0#theme">'.$lang['FOR_UNSUBSCRIBE'].'</a>' : '' ;
+            if ($topic['minrights'] <= 2 && !$cur_sect['acc_group_name'])
+                $cont['subscribe'].= ' <a href="index.php?sr=RSS&amp;topic='.$topic_id.'">[RSS]</a>';
 
             $tmpl['body']=Visual('THEME_READ_BODY', $cont);
 

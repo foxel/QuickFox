@@ -115,14 +115,15 @@ class qf_curuser
     	        $curuser['lastip']=$QF_Client['ipaddr'];
                 $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'lastseen' => $timer->time, 'lasturl' => $QF_Client['request'], 'sessid' => $session_ids, 'autologin' => $autokey, 'lastip' => $QF_Client['ipaddr']), Array( 'id' => $uid) );
             }
-
+            else
+                $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'lastseen' => $timer->time, 'lastip' => $QF_Client['ipaddr']), Array( 'id' => $uid) );
         }
 
         if ($curuser['id']) {
             // Loadings
             if ($curuser['timezone']!='')
                 $QF_Config['tz']=floatval($curuser['timezone']);
-            if ($curuser['style']!=$QF_Config['style'] && !empty($curuser['style']))
+            if ($curuser['style']!=$QF_Config['style'] && $curuser['style'])
                 $QF_Config['style']=trim($curuser['style']);
             if ($curuser['id']==1) $curuser['admin']=1;
 
@@ -133,7 +134,7 @@ class qf_curuser
 
             $this->uid = $uid;
             $this->uname = $curuser['nick'];
-            $this->level = $curuser['rights'];
+            $this->level = ($curuser['admin']) ? 7 : $curuser['rights'];
             $this->cuser = $curuser;
         }
         else {

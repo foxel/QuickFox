@@ -56,7 +56,6 @@
   {C_META}
 
   <link href="imgs/qfl_sm.ico" rel="shortcut icon" >
-  <link href="png_fix.css" rel="styleSheet" type="text/css" media="screen">
 
   <style type="text/css">
   {C_CSS}
@@ -544,7 +543,7 @@ PM #{C_pmsno} (<b>{C_from}</b> {L_UCAB_PMS_WRITESTO} <b>{C_to}</b>)<br />
 <tr><td >
 <table class="invisible fullwidth">
 <tr><td align="left" valign="top" height="64">
-<b>{C_unick}</b>{IF_udescr} - {C_udescr}{ENDIF}<br />
+<b>{C_unick}</b>{IF_usex} ({C_usex}){ENDIF}{IF_udescr} - {C_udescr}{ENDIF}<br />
 {L_UCAB_PROFILE_CITY} {C_ucity}<br />
 {L_UCAB_PROFILE_RIGHTS} {C_urights}<br />
 {L_UCAB_PROFILE_REGISTERED} {C_uregtime}<br />
@@ -749,6 +748,9 @@ toggleview('Pan{COUNTER}');
 <<+ 'FORUMSTAT_TABLE'>>
 <table class="invisible fullwidth">
 {C_rows}
+<tr class="hlight" ><td style="text-align: right;">
+<a href="index.php?st=fsearch&amp;mode=50">[{L_FOR_SEARCH_REQ_LAST50}]</a> <a href="index.php?sr=RSS">[RSS]</a>
+</td></tr>
 </table>
 <<- 'FORUMSTAT_TABLE'>>
 
@@ -1004,6 +1006,9 @@ function checkForm(form) {
 <<- 'PM_NEW_FORM'>>
 
 <<+ 'USER_GREET_ROW'>>
+<tr><td colspan="2">
+<a href="index.php?st=fsearch&amp;mode=3" >{L_FOR_SEARCH_REQ_SUBS}</a>
+</td></tr>
 <tr><td>
 <form action="index.php" name="logoutbtn" method="get">
 <input type="hidden" name="logout" value="1">
