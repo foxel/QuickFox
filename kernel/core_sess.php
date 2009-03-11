@@ -299,10 +299,10 @@ function qf_session_handler($text)
             $QF_DBase->sql_dodelete('{DBKEY}sess_cache', 'WHERE ch_stored < '.($timer->time-3600) );
         }
     }
-    
+
     if ($QF_Session->fix)
         return $text;
-        
+
     if (!$QF_User->is_spider) {
         if ($QF_Session->use_url )
         {

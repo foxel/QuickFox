@@ -30,8 +30,9 @@ Class qf_forum_upd
     }
 
     Function preload_data()
-    {        global $QF_Parser, $QF_Config, $QF_User, $lang, $QF_DBase, $QF_Session;
+    {        global $QF_Parser, $QF_Config, $QF_User, $lang, $QF_DBase, $QF_Session, $QF_Forum;
 
+        $QF_Forum = new qf_forum();
         $this->error = '';
 
         // Preloading User Data
@@ -82,9 +83,14 @@ Class qf_forum_upd
         if ($t_id) {
             if ($result = $QF_DBase->sql_doselect('{DBKEY}topics', '*', Array('id' => $t_id) ) )
             {                $this->curtheme = $QF_DBase->sql_fetchrow($result);
-                if($QF_User->admin || ($QF_User->cuser['modlevel']>=$this->curtheme['postrights'] && $QF_User->cuser['modlevel']>0))
+                $QF_Forum->CurSection = $QF_Forum->ForumTree[$this->curtheme['parent']];
+                $cur_sect = &$QF_Forum->CurSection;
+
+                if (!$cur_sect['curuser_access'] || ($cur_sect['acc_group'] && !$QF_User->cuser['active']))
+                    $this->curtheme['cu_access']=0;
+                elseif($QF_User->admin || ($QF_User->cuser['modlevel']>=$this->curtheme['postrights'] && $QF_User->cuser['modlevel']>0))
                     $this->curtheme['cu_access']=3;
-                elseif($QF_User->level >= $this->curtheme['postrights'] && !$this->curtheme['locked'])
+                elseif($QF_User->wlevel >= $this->curtheme['postrights'] && !$this->curtheme['locked'])
                     $this->curtheme['cu_access']=2;
                 elseif($QF_User->level >= $this->curtheme['minrights'])
                     $this->curtheme['cu_access']=1;
@@ -101,7 +107,7 @@ Class qf_forum_upd
             	$this->cursect = $QF_DBase->sql_fetchrow($result);
                 if($QF_User->admin || ($QF_User->cuser['modlevel']>=$this->cursect['postrights'] && $QF_User->cuser['modlevel']>0))
                     $this->cursect['cu_access']=3;
-                elseif($QF_User->level >= $this->cursect['postrights'] && !$this->cursect['locked'])
+                elseif($QF_User->wlevel >= $this->cursect['postrights'] && !$this->cursect['locked'])
                     $this->cursect['cu_access']=2;
                 elseif($QF_User->level >= $this->cursect['minrights'])
                     $this->cursect['cu_access']=1;
@@ -130,13 +136,14 @@ Class qf_forum_upd
         $this->pfiles = Array();
         $fids = Array(); //for checkeng as unique
 
+        if ($QF_User->wlevel >= $QF_Config['post_files_rights'])
         for( $fdx=1; $fdx<=$QF_Config['forum']['post_upl_files']; $fdx++) {
             $tmpname = $_FILES['file'.$fdx]['tmp_name'];
             $filename = $_FILES['file'.$fdx]['name'];
             $fsize=filesize($tmpname);
             $err = $_FILES['file'.$fdx]['error'];
             if (is_uploaded_file($tmpname) && $fsize == $_FILES['file'.$fdx]['size'] && !$err) {                $file_info=pathinfo($filename);
-                $filename=$file_info['basename'];
+                $filename=preg_replace('#^.*[\\\/]#', '', $filename);
                 $file=substr($this->ucode.'-'.$this->time.$fdx.'.'.$file_info['extension'],0,28).'.qff';
                 $uni_name=implode('-', Array($this->ucode, $filename, $fsize) );
                 $fid=md5($uni_name);
@@ -763,10 +770,10 @@ Class qf_forum_upd
     }
 
     function rebuild_forum_rights()
-    {        global $QF_Config, $lang, $QF_DBase, $QF_Session;
+    {        global $QF_Config, $lang, $QF_DBase, $QF_Session, $QF_Forum;
 
 	    $QF_Forum = new qf_forum();
-	    $tree = $QF_Forum->ForumTree;   // Generating tree
+        $tree = $QF_Forum->ForumTree;   // Generating tree
         unset ($tree[0]);
 
 	    // Combining Sections Rights

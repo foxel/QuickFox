@@ -72,7 +72,6 @@ if (empty($error)) // если ошибок нет, обрабатываем сообщение
     $curtime=$timer->time;
     $descr = $QF_Parser->prep_mess($descr);
 
-    include 'includes/forum_scr.php';
     if ($sect=='new') {
         $ins_data = Array(
             'parent'     => $parent,
@@ -97,6 +96,7 @@ if (empty($error)) // если ошибок нет, обрабатываем сообщение
         $QF_DBase->sql_doupdate('{DBKEY}sections', $upd_data, Array('id' => $sect) );
     }
 
+    include 'includes/forum_scr.php';
     $forum = New qf_forum_upd();
     $forum->upd_all_sections();
     $forum->rebuild_forum_rights();

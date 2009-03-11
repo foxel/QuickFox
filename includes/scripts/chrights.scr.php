@@ -10,6 +10,7 @@ $motiv=Get_Request('motiv', 2, 'ht');
 $nrights=Get_Request('nrights', 2, 'i');
 $nmodlevel=Get_Request('nmodlevel', 2, 'i');
 $ndeluser= Get_Request('deluser', 2, 'b') ? 1 : 0;
+$nactive= Get_Request('inactive', 2, 'b') ? 0 : 1;
 $error="";
 
 $result = $QF_DBase->sql_doselect('{DBKEY}users', '*', Array( 'id' => $chuser ) );
@@ -22,13 +23,14 @@ if (is_array($ndata) && $ndata['deleted'] && !$QF_User->admin)
 if (!empty($ndata))
 {
 
-  if($QF_User->uname==$iuser && $QF_User->level > $ndata['rights'])
+  if($QF_User->uname==$iuser && $QF_User->wlevel > $ndata['rights'])
   {
 
     if (!$QF_User->admin)
     {
         $nmodlevel = $ndata['modlevel'];
         $ndeluser = $ndata['deleted'];
+        $nactive  = $ndata['active'];
     }
 
     if ($nmodlevel > $nrights)
@@ -36,7 +38,7 @@ if (!empty($ndata))
     if ($ndeluser)
         $nmodlevel = $nrights = 0;
 
-    $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'rights' => $nrights, 'modlevel' => $nmodlevel, 'deleted' => $ndeluser), Array( 'id' => $chuser ) );
+    $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'rights' => $nrights, 'modlevel' => $nmodlevel, 'deleted' => $ndeluser, 'active' => $nactive), Array( 'id' => $chuser ) );
 
     if (!$ndeluser || !$ndata['deleted'])
     {        $tmpl['nick']=$ndata['nick'];

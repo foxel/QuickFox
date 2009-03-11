@@ -5,7 +5,7 @@
 $lang['UCAB_ADMIN_IPB_CONV']='IPB Data Conversion Tool';
 
 $lang['ADMCAB_VISSTAT_USERS']='Активность пользователей';
-$lang['ADMCAB_VISSTAT_GUESTS']='Недавние гости';
+$lang['ADMCAB_VISSTAT_GUESTS']='Недавние гости (посл. 50)';
 $lang['ADMCAB_VISSTAT_SPIDERS']='Активность поисковых машин';
 $lang['ADMCAB_VISSTAT_SESSION']='Активные сессии';
 $lang['ADMCAB_VISSTAT_LASTIP']='IP-Адрес';

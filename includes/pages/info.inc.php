@@ -19,6 +19,11 @@ elseIf ($infouser)
 
         if (empty($iuser['timezone'])) $iuser['timezone']=$QF_Config['def_tz'];
         if ($iuser['id']==1) $iuser['admin']=1;
+        if (!$iuser['active'])
+        {
+            $iuser['modlevel'] = 0;
+            $iuser['admin']    = 0;
+        }
 
         $Page_SubTitle = sprintf($lang['INFO_CAPT'],$iuser['nick']);
         $tmpl=Array(
@@ -51,7 +56,8 @@ elseIf ($infouser)
              if ($iuser['lastip']) $tmpl['ulastdns'] = gethostbyaddr($iuser['lastip']);
         }
 
-        if ($iuser['admin']) $tmpl['urights'].=' + '.$lang['ADMINISTRATOR'];
+        if (!$iuser['active']) $tmpl['urights'].=' ['.$lang['INFO_UINACTIVE'].']';
+        elseif ($iuser['admin']) $tmpl['urights'].=' + '.$lang['ADMINISTRATOR'];
         elseif ($iuser['modlevel']) $tmpl['urights'].=' + '.sprintf($lang['INFO_MODLEVEL'],$iuser['modlevel']);
 
         $query='SELECT us.*, t.name as ltheme_name, t.minrights as ltheme_level, s.acc_group AS ltheme_acc, al.user_id AS ltheme_accu
@@ -78,7 +84,7 @@ elseIf ($infouser)
             $tmpl['usltheme'] = ($iuserstats['lasttheme'] && $can_show_lasttheme) ? '<a href="index.php?st=branch&amp;branch='.$iuserstats['lasttheme'].'&amp;postshow='.$iuserstats['lastpost'].'#'.$iuserstats['lastpost'].'">'.$iuserstats['ltheme_name'].'</a>' : 'n/a';
         }
 
-        if($iuser['rights']<$QF_User->level && $QF_User->level > 1){
+        if($iuser['rights']<$QF_User->wlevel && $QF_User->wlevel > 1){
 
         	$fields['script']['value']='chrights';
         	$fields['script']['type']='hidden';
@@ -117,6 +123,13 @@ elseIf ($infouser)
                     'checked' => ($iuser['deleted']) ? '1' : '',
                     'capt'    => $lang['INFO_SET_DELUSER'],
                     'descr'   => $lang['INFO_DELUSER_MORE'] );
+
+                $fields['inactive']=Array(
+                    'value'   => '1',
+                    'type'    => 'checkbox',
+                    'checked' => ($iuser['active']) ? '' : '1',
+                    'capt'    => $lang['INFO_SET_INACTIVE'],
+                    'descr'   => $lang['INFO_INACTIVE_MORE'] );
         	}
 
 	        $fields['motiv']['type']='textarea';
@@ -221,7 +234,7 @@ else
             'u_id'    => $iuser['id'],
             'u_nick'  => '<a href="index.php?st=info&amp;infouser='.$iuser['id'].'">'.$iuser['nick'].'</a>',
             'u_avatar'=> Vis_Gen_Avatar($iuser),
-            'u_level' => Vis_Gen_Rights($iuser['rights'],$lang['OUTCAST']).(($iuser['admin'])?" +A":(($iuser['modlevel'])?" +M".$iuser['modlevel']:'')),
+            'u_level' => Vis_Gen_Rights($iuser['rights'],$lang['OUTCAST']).((!$iuser['active'])?" [R/O]":(($iuser['admin'])?" +A":(($iuser['modlevel'])?" +M".$iuser['modlevel']:''))),
             'u_lseen' => create_date('',$iuser['lastseen']),
             'u_posts' => intVal($iuser['s_posts']),
             'u_themes'=> intVal($iuser['s_themes']),

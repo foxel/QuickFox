@@ -150,7 +150,7 @@ else {
     }
 
 
-    if (!empty($cur_sect) && ($cur_sect['postrights']<=$QF_User->level)) {
+    if (!empty($cur_sect) && ($cur_sect['postrights']<=$QF_User->wlevel) && ($QF_User->cuser['active'] || !$cur_sect['acc_group'])) {
 
         $tmpl=Array(
             'formstart' => '<form name="addtheme" action="index.php" method="post">',
@@ -175,7 +175,7 @@ else {
             'prights_options' => '',
             );
 
-        for ($stt=$cur_sect['minrights']; $stt<=$QF_User->level; $stt++) {
+        for ($stt=$cur_sect['minrights']; $stt<=$QF_User->wlevel; $stt++) {
             $form['mrights_options'].='<option value="'.$stt.'" >'.(($stt>0) ? $stt : $lang['FOR_ALL']).'</option>';
             $form['prights_options'].='<option value="'.$stt.'" '.(($stt==1) ? 'SELECTED' : '').'>'.(($stt>0) ? $stt : $lang['FOR_ALL']).'</option>';
         }

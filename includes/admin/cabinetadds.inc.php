@@ -531,7 +531,7 @@ elseif ($job=='vis_stat') {
     $visstats.= Vis_Draw_Panel($toprint,$lang['ADMCAB_VISSTAT_SESSION'], "100%");
 
     $toprint='';
-    $query='SELECT *, SUM(views) as views, MAX(lastseen) as lastseen FROM {DBKEY}guests GROUP BY gcode ORDER BY lastseen DESC ';
+    $query='SELECT *, SUM(views) as views, MAX(lastseen) as lastseen FROM {DBKEY}guests GROUP BY gcode ORDER BY lastseen DESC LIMIT 50';
     $result=$QF_DBase->sql_query($query);
     if ($result) {
        while ( $guest = $QF_DBase->sql_fetchrow($result) ) {

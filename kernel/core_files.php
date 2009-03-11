@@ -114,6 +114,8 @@ class DownLoadFile{
 // public
 
   function out(){
+    qf_ob_free();
+
     if($this->size>0){
        $this->outHeaderCommon();
       // $this->outContentType();

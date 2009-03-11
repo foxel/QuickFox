@@ -13,6 +13,7 @@ class qf_curuser
 {    var $uid = 0;
     var $uname = '';
     var $level = 0;
+    var $wlevel = 0;
     var $admin = 0;
     var $cuser = Array();
     var $guest = Array();
@@ -36,6 +37,7 @@ class qf_curuser
         $this->uid = 0;
         $this->uname = '';
         $this->level = 0;
+        $this->wlevel = 0;
         $this->cuser = Array();
         $this->guest = Array();
         $this->spider = Array();
@@ -132,9 +134,15 @@ class qf_curuser
                 $QF_Session->Drop('QF_Guest');
             }
 
+            if (!$curuser['active'])
+            {                $curuser['modlevel'] = 0;
+                $curuser['admin']    = 0;
+            }
+
             $this->uid = $uid;
             $this->uname = $curuser['nick'];
             $this->level = ($curuser['admin']) ? 7 : $curuser['rights'];
+            $this->wlevel = ($curuser['active']) ? $this->level : 0;
             $this->cuser = $curuser;
         }
         else {
@@ -299,6 +307,11 @@ Class UsersList {
                     $user['admin']=1;
                 if ($user['deleted'])
                     continue;
+                if (!$user['active'])
+                {
+                    $user['modlevel'] = 0;
+                    $user['admin']    = 0;
+                }
 
                 $this->users[$user['id']] = $user;
                 $this->nick_id[strtolower($user['nick'])] = $user['id'];

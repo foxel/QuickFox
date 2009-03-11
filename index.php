@@ -95,6 +95,5 @@ if($QF_Job!='')
   header('Content-Type: text/html; charset=windows-1251', true);
   header('Cache-Control: no-cache');
   print Visual('GLOBAL_HTMLPAGE', $QF_Pagedata);
-
   QF_exit();
 ?>

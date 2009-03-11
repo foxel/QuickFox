@@ -73,7 +73,7 @@ if (is_array($topic))
     elseif ($QF_User->uid) {
         if ($QF_User->admin || ($QF_User->cuser['modlevel']>=$topic['postrights'] && $QF_User->cuser['modlevel']>0))
             $t_curaccess = 3;
-        elseif ($QF_User->level >= $topic['postrights'] && !$topic['locked'])
+        elseif ($QF_User->wlevel >= $topic['postrights'] && !$topic['locked'])
             $t_curaccess = 2;
         elseif ($QF_User->level >= $topic['minrights'])
             $t_curaccess = 1;
@@ -419,7 +419,7 @@ if (is_array($topic))
         		            'avatar'    => Vis_Gen_Avatar($puser),
 	                        'u_descr'   => ($puser) ?  $puser['descr'] : $lang['GUEST'],
 	                        'u_rights'  => Vis_Gen_Rights($puser['rights'],' '),
-        	                'u_status'  => ($puser['modlevel']>=$topic['postrights'] && $puser['modlevel']>0) ? $lang['MODERATOR'] : '' ,
+        	                'u_status'  => ($puser['modlevel']>=$topic['postrights'] && $puser['modlevel']>0 && $puser['active']) ? $lang['MODERATOR'] : '' ,
 	                        'flags'     => ($post['id']>$t_lastread && $QF_User->uid) ? $Vis['NEW_FLAG'].' ' :'' ,
 	                        'time'      => create_date('', $post['time']) ,
         	                'user'      => ($puser) ? '<a href="index.php?st=info&amp;infouser='.$puser['id'].'">'.$puser['nick'].'</a>' : $post['author']
@@ -467,7 +467,7 @@ if (is_array($topic))
 	                                }
 
         	                $content='';
-	                        if ($QF_User->level >= $QF_Config['post_files_rights'])
+	                        if ($QF_User->wlevel >= $QF_Config['post_files_rights'])
 	                        {
 	                            for( $fdx=1; $fdx<=$forconfig['post_upl_files']; $fdx++)
         	                        $content.=Visual('FILE_ROW', Array( 'id' => $fdx ));
@@ -623,7 +623,7 @@ if (is_array($topic))
                     $form['subscribe'] = 'true';
 
                 $content='';
-                if ($QF_User->level >= $QF_Config['post_files_rights'])
+                if ($QF_User->wlevel >= $QF_Config['post_files_rights'])
                 {
                     for( $fdx=1; $fdx<=$forconfig['post_upl_files']; $fdx++)
                         $content.=Visual('FILE_ROW', Array( 'id' => $fdx ));
@@ -690,7 +690,7 @@ if (is_array($topic))
             if ($topic['deleted']) $form['deltheme']='checked';
             if ($topic['locked']) $form['locktheme']='checked';
 
-            for($stt=$cur_sect['minrights']; $stt <= $QF_User->level; $stt++){
+            for($stt=$cur_sect['minrights']; $stt <= $QF_User->wlevel; $stt++){
                 $form['mrights_options'].='<option value="'.$stt.'" '.(($topic['minrights']==$stt) ? " SELECTED" : ''). '>'.(($stt>0) ? $stt : $lang['FOR_ALL']).'</option>';
                 $form['prights_options'].='<option value="'.$stt.'" '.(($topic['postrights']==$stt) ? " SELECTED" : ''). '>'.(($stt>0) ? $stt : $lang['FOR_ALL']).'</option>';
             }

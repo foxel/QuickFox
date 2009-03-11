@@ -40,6 +40,7 @@ if ( $result = $QF_DBase->sql_query($query) ) {
 $script = '';
 $datas = '';
 //$datas = '<table class="fullwidth" style="max-width: 200px;">';
+if ($QF_User->uid)
 foreach ($mesages as $mess)
 {
     $q_author = strtr($mess['author'], $_JS_REPLACE);

@@ -207,15 +207,40 @@ Function PostStrip()
 }
 
 
+// Closes all the OB buffers
+function qf_ob_free()
+{
+    if (function_exists('ob_get_level')) // PHP 4.2.0
+        while (ob_get_level())
+            ob_end_clean();
+    else
+        while (ob_get_contents()!==false)
+            ob_end_clean();
+}
+
+function qf_ob_flush()
+{
+    if (function_exists('ob_get_level')) // PHP 4.2.0
+        while (ob_get_level())
+            ob_end_flush();
+    else
+        while (ob_get_contents()!==false)
+            ob_end_flush();
+}
+
 //
 // Accurate Exit
 //
-Function QF_exit($mess = '')
+Function QF_exit($mess = false)
 {    global $QF_DBase;
 
-    print $mess;
-    for ($l=ob_get_level(); $l>0; $l--)
-        ob_end_flush();
+    if ($mess === false)
+        qf_ob_flush();
+    else
+    {
+        qf_ob_free();
+        print $mess;
+    }
     exit();
 }
 
@@ -591,7 +616,7 @@ Function StartGZIP() {
             elseif ( preg_match('#(mozilla/[4-9])|(opera/[7-9])#i',$QF_Client['uagent']) ) $compress=true;
 
             if ($compress && $compressor)
-                $GZipped=ob_start($compressor);
+                $GZipped = ob_start($compressor);
 
             return $GZipped;
         }
