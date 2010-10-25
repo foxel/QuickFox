@@ -51,8 +51,16 @@ define ('QF_STARTED',True);
 define ('QF_SETUP_STARTED',True);
 
 //$debug=1;
+if (!defined('E_STRICT'))
+    define('E_STRICT', 2048);
+if (!defined('E_RECOVERABLE_ERROR'))
+    define('E_RECOVERABLE_ERROR', 4096);
+if (!defined('E_DEPRECATED'))
+    define('E_DEPRECATED', 8192);
+if (!defined('E_USER_DEPRECATED'))
+    define('E_USER_DEPRECATED', 16384);
+Error_Reporting(E_ALL & ~(E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED) );
 
-Error_Reporting(E_ALL & ~E_NOTICE);
 set_magic_quotes_runtime(0);
 if (ini_get('safe_mode') == 0)
     set_time_limit(0);

@@ -63,6 +63,7 @@ class qf_parser
         $this->Add_Tag('img', '', QF_BBTAG_NOSUB, Array('func' => Array( &$this, 'BBCode_Std_UrlImg') ) );
         $this->Add_Tag('url', '', false, Array('func' => Array( &$this, 'BBCode_Std_UrlImg') ) );
         $this->Add_Tag('table', '', QF_BBTAG_BLLEV | QF_BBTAG_USEBRK | QF_BBTAG_SUBDUP, Array('func' => Array( &$this, 'BBCode_Std_Table') ) );
+        $this->Add_Tag('list', '', QF_BBTAG_USEBRK, Array('func' => Array( &$this, '_BBCode_Std_List') ) );
 
         // Replacers
         $this->Add_Preg(QF_URL_MASK, '[url]{data}[/url]');
@@ -566,7 +567,7 @@ class qf_parser
         return str_replace(Array('{url}', '{capt}'), Array($url, $capt), $html);
     }
 
-    function BBCode_Std_Table($name, $buffer, $param = false)
+    function _BBCode_Std_Table($name, $buffer, $param = false)
     {
         $useborder = false;
         $parr = explode('|', $param);
@@ -591,7 +592,8 @@ class qf_parser
 
             if ($part==='')
                 $part = '&nbsp;';
-
+            else
+                $part = preg_replace('#^\s*\<br\s?/?\>#', '', $part);
             $buffer.= '<td>'.$part.'</td>';
             $i++;
         }
@@ -601,6 +603,41 @@ class qf_parser
             $i++;
         }
         $buffer.= '</table>';
+
+        return $buffer;
+    }
+
+    function _BBCode_Std_List($name, $buffer, $param = false)
+    {
+        static $styles = Array(
+            '' => 'disc', 'd' => 'disc', 'c' => 'circle', 's' => 'square', '1' => 'decimal',
+            'a' => 'lower-alpha', 'A' => 'upper-alpha', 'i' => 'lower-roman', 'I' => 'upper-roman',
+            );
+        static $ols = Array('1', 'a', 'A', 'i', 'I');
+
+        $useborder = false;
+        $parr = explode('|', $param);
+        $style = $prefix = '';
+        if (isset($styles[$parr[0]]))
+            $style = ' style="list-style-type: '.$styles[$parr[0]].';"';
+        else
+        {
+            $style = ' style="list-style-position: inside; list-style-type: none;"';
+            $prefix = $parr[0].' ';
+        }
+        $useOL = in_array($parr[0], $ols);
+
+        $list = explode('['.$this->tagbreaker.']', $buffer);
+        $buffer = '';
+        foreach ($list as $item)
+        {
+            $item = preg_replace('#^\s*\<br\s?/?\>#', '', $item);
+            if (strlen($item))
+                $buffer.= '<li>'.$prefix.$item.'</li>';
+        }
+        $buffer = ($useOL)
+            ? '<ol'.$style.'>'.$buffer.'</ol>'
+            : '<ul'.$style.'>'.$buffer.'</ul>';
 
         return $buffer;
     }

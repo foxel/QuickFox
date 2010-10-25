@@ -307,8 +307,22 @@ elseif ($job=='pms') {
 
     $cabinet_caption=$lang['UCAB_PMS_INFO'];
 
-    $query=', {DBKEY}pms p WHERE (u.id=p.recipient_id OR u.id=p.author_id)';
-    $ulist->load($query);
+    $uids = Array();
+    //$result = $QF_DBase->sql_doselect('{DBKEY}pms', 'author_id, recipient_id', '(author_id='.$ucabuser['id'].' OR recipient_id='.$ucabuser['id'].') AND deleted = 0');
+    $query = 'SELECT DISTINCT author_id FROM {DBKEY}pms WHERE recipient_id='.$ucabuser['id'].' AND deleted = 0';
+    $result = $QF_DBase->sql_query($query);
+    while ( $ids = $QF_DBase->sql_fetchrow($result))
+        $uids = array_merge($uids, array_values($ids));
+    $query = 'SELECT DISTINCT recipient_id FROM {DBKEY}pms WHERE author_id='.$ucabuser['id'].' AND deleted = 0';
+    $result = $QF_DBase->sql_query($query);
+    while ( $ids = $QF_DBase->sql_fetchrow($result))
+        $uids = array_merge($uids, array_values($ids));
+
+    if ($uids)
+    {
+        $query=' WHERE u.id in ('.implode(', ', array_unique($uids)).')';
+        $ulist->load($query);
+    }
     $content='';
     Glob_Request('pm delpm');
     if ($delpm) {
@@ -374,7 +388,7 @@ elseif ($job=='pms') {
         'fixuser'  => 'true',
         'formname' => 'newpm' );
 
-    if ($is_inpm && $puser['id']) {        $form['recip']=$curpm['author'];
+    if ($is_inpm && $puser['id']) {        $form['recip'] = $puser['nick'];
         $np_theme = trim($curpm['theme']);
         if (preg_match('#^(?:Re\[(\d+)\]\s*|((?:Re\s)+))(.*)$#is', $np_theme, $np_parts))
         {            $recount = ($np_parts[1])
@@ -390,7 +404,7 @@ elseif ($job=='pms') {
     $tmpl['formbody']=Visual('PM_NEW_FORM', $form);
     $write_pm = Vis_Draw_Fliper(Visual('POST_BODY', $tmpl), $lang['WRITE_NEW_PM'], '100%', True);
 
-    $result = $QF_DBase->sql_doselect('{DBKEY}pms', '*', Array( 'recipient_id' => $ucabuser['id'], 'deleted' => 0), ' ORDER BY time DESC');
+    $result = $QF_DBase->sql_doselect('{DBKEY}pms', '*', Array( 'recipient_id' => $ucabuser['id'], 'deleted' => 0), ' ORDER BY time DESC limit 250');
 
     $hasnewpm=0; // let's reset curuser has new pm
 
@@ -424,7 +438,7 @@ elseif ($job=='pms') {
            $QF_User->cuser['hasnewpm']=$hasnewpm;
     }
 
-    $result = $QF_DBase->sql_doselect('{DBKEY}pms', '*', Array( 'author_id' => $ucabuser['id'], 'deleted' => 0), ' ORDER BY time DESC');
+    $result = $QF_DBase->sql_doselect('{DBKEY}pms', '*', Array( 'author_id' => $ucabuser['id'], 'deleted' => 0), ' ORDER BY time DESC limit 250');
 
     $pm_rows='';
     while ( $outpm = $QF_DBase->sql_fetchrow($result))

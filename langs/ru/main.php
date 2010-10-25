@@ -1,7 +1,8 @@
 <?php
 
 // system
- setlocale(LC_ALL, 'ru_RU.CP1251');
+if (!setlocale(LC_ALL, 'ru_RU.CP1251'))
+    setlocale(LC_ALL, 'ru_RU');
 
 $lang['ENCODING'] = 'windows-1251';
 $lang['DIRECTION'] = 'ltr';
@@ -158,7 +159,7 @@ $lang['FOR_SEARCH_REQ_SUBS_UNR']='новые';
 $lang['FOR_SEARCH_REQ_UNR']='Непрочитанные сообщения';
 $lang['FOR_SEARCH_REQ_UNR_ALL']='все';
 $lang['FOR_SEARCH_REQ_UNR_SUBSCR']='по подписке';
-$lang['FOR_ROOT_COUNTS']='Всего %s сообщений в %s темах';
+$lang['FOR_ROOT_COUNTS']='Всего сообщений/тем: %s/%s.';
 
 // Errors
 $lang['ERR']='Ошибка !!';

@@ -12,8 +12,18 @@ define('UNAME_MASK', '^[0-9\w_\+\-=\(\)\[\] ]{3,16}$');
 //
 // Gets current time for page generetion time counter
 //
-Error_Reporting(E_ALL & ~E_NOTICE);
+// this will add missing error constants for older PHP
+if (!defined('E_STRICT'))
+    define('E_STRICT', 2048);
+if (!defined('E_RECOVERABLE_ERROR'))
+    define('E_RECOVERABLE_ERROR', 4096);
+if (!defined('E_DEPRECATED'))
+    define('E_DEPRECATED', 8192);
+if (!defined('E_USER_DEPRECATED'))
+    define('E_USER_DEPRECATED', 16384);
+Error_Reporting(E_ALL & ~(E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED) );
 set_magic_quotes_runtime(0);
+setlocale(LC_ALL, 'ru_RU');
 
 //Функция обработки ошибок на стадии инициализации. После инициализации юзается error_catcher
 function init_err_parse($errno, $errstr, $errfile, $errline)
@@ -149,7 +159,7 @@ $QF_Inc=Get_Request('st', 1, 'v');
 $QF_Job=Get_Request('sr', 1, 'v');
 $QF_Script=Get_Request('script', 2, 'v');
 // Get QF root dir and relative
-$QF_SrvName = preg_replace('#^\/*?(.*)\/*$#', '\1', trim($_SERVER['SERVER_NAME']));
+$QF_SrvName = isset($_SERVER['HTTP_HOST']) ? preg_replace('#:\d+#', '', $_SERVER['HTTP_HOST']) : $_SERVER['SERVER_NAME'];
 $QF_RootUrl = 'http://'.$QF_SrvName.'/';
 
 $QF_Root = preg_replace('#\/+|\\\+#', '/', $_SERVER['PHP_SELF']);
@@ -171,7 +181,7 @@ $QF_Client = Array(
 );
 
 // Init Server settings
-$QF_Config['server_name']=$_SERVER['SERVER_NAME'];
+$QF_Config['server_name']=$QF_SrvName;
 $QF_Config['server_port']=$_SERVER['SERVER_PORT'];
 $QF_Config['root']=$QF_Root;
 

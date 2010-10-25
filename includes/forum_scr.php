@@ -599,7 +599,7 @@ Class qf_forum_upd
         elseIf (empty($this->curtheme)) {
             $this->error .= '<LI>'.$lang['ERR_THEME_LOST']."\n";
         }
-        elseIf ($this->curtheme['cu_access']<3) {
+        elseIf ($this->curtheme['cu_access']<2 || ($this->curtheme['cu_access']<3 && $this->uid != $this->curtheme['author_id'])) {
             $this->error .= '<LI>'.$lang['ERR_LOWLEVEL']."\n";
         }
         If (empty($this->cursect)) {
@@ -622,10 +622,15 @@ Class qf_forum_upd
             'descr'      => $this->t_descr,
             'minrights'  => $this->t_mrights,
             'postrights' => $this->t_prights,
-            'locked'     => intval($locked),
             'deleted'    => intval($deleted),
-            'pinned'     => intval($pinned),
             );
+
+        if ($this->curtheme['cu_access']>=3)
+        {
+            $upd_data['pinned'] = intval($pinned);
+            $upd_data['locked'] = intval($locked);
+        }
+
         $QF_DBase->sql_doupdate('{DBKEY}topics', $upd_data, Array ('id' => $this->curtheme['id']) );
 
         $this->upd_theme_data($this->curtheme['id']);

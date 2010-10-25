@@ -88,6 +88,12 @@ Array (
                 'cols' => Array (
                     0 => 'drop_after'
                 ) 
+            )  ,
+            'time_given' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'time_given'
+                ) 
             ) 
         )  ,
         'name' => '{DBKEY}acc_links'
@@ -143,6 +149,18 @@ Array (
                 'cols' => Array (
                     0 => 'first_ip' ,
                     1 => 'last_ip'
+                ) 
+            )  ,
+            'used' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'used'
+                ) 
+            )  ,
+            'lastused' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastused'
                 ) 
             ) 
         )  ,
@@ -243,6 +261,18 @@ Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'user'
+                ) 
+            )  ,
+            'time' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'time'
+                ) 
+            )  ,
+            'used' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'used'
                 ) 
             ) 
         )  ,
@@ -365,6 +395,24 @@ Array (
                 'cols' => Array (
                     0 => 'rights'
                 ) 
+            )  ,
+            'time' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'time'
+                ) 
+            )  ,
+            'size' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'size'
+                ) 
+            )  ,
+            'dloads' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'dloads'
+                ) 
             ) 
         )  ,
         'name' => '{DBKEY}files'
@@ -455,6 +503,12 @@ Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'gcode'
+                ) 
+            )  ,
+            'views' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'views'
                 ) 
             ) 
         )  ,
@@ -565,6 +619,12 @@ Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'author_id'
+                ) 
+            )  ,
+            'acc_lv' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'acc_lv'
                 ) 
             ) 
         )  ,
@@ -683,6 +743,12 @@ Array (
                     0 => 'readed' ,
                     1 => 'deleted'
                 ) 
+            )  ,
+            'time' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'time'
+                ) 
             ) 
         )  ,
         'name' => '{DBKEY}pms'
@@ -785,6 +851,24 @@ Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'deleted'
+                ) 
+            )  ,
+            'locked' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'locked'
+                ) 
+            )  ,
+            'time' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'time'
+                ) 
+            )  ,
+            'ctime' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'ctime'
                 ) 
             )  ,
             'text' => Array (
@@ -960,6 +1044,12 @@ Array (
                 'cols' => Array (
                     0 => 'echecked'
                 ) 
+            )  ,
+            'time' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'time'
+                ) 
             ) 
         )  ,
         'name' => '{DBKEY}regs'
@@ -1002,6 +1092,12 @@ Array (
                 'type' => 'PRIMARY' ,
                 'cols' => Array (
                     0 => 'id'
+                ) 
+            )  ,
+            'time' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'time'
                 ) 
             ) 
         )  ,
@@ -1232,6 +1328,18 @@ Array (
                 'cols' => Array (
                     0 => 'lastused'
                 ) 
+            )  ,
+            'starttime' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'starttime'
+                ) 
+            )  ,
+            'clicks' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'clicks'
+                ) 
             ) 
         )  ,
         'name' => '{DBKEY}sessions'
@@ -1421,6 +1529,12 @@ Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'lastseen'
+                ) 
+            )  ,
+            'visits' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'visits'
                 ) 
             ) 
         )  ,
@@ -1627,11 +1741,28 @@ Array (
                     0 => 'MaxID'
                 ) 
             )  ,
-            'text' => Array (
+            'time' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'time'
+                ) 
+            )  ,
+            'lasttime' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lasttime'
+                ) 
+            )  ,
+            'name' => Array (
                 'type' => 'FULLTEXT' ,
                 'cols' => Array (
-                    0 => 'name' ,
-                    1 => 'descr'
+                    0 => 'name'
+                ) 
+            )  ,
+            'descr' => Array (
+                'type' => 'FULLTEXT' ,
+                'cols' => Array (
+                    0 => 'descr'
                 ) 
             ) 
         )  ,
@@ -1876,6 +2007,36 @@ Array (
                     1 => 'modlevel' ,
                     2 => 'admin'
                 ) 
+            )  ,
+            'regtime' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'regtime'
+                ) 
+            )  ,
+            'sessid' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'sessid'
+                ) 
+            )  ,
+            'autologin' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'autologin'
+                ) 
+            )  ,
+            'lastip' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastip'
+                ) 
+            )  ,
+            'deleted' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'deleted'
+                ) 
             ) 
         )  ,
         'name' => '{DBKEY}users'
@@ -1930,6 +2091,42 @@ Array (
                 'type' => 'PRIMARY' ,
                 'cols' => Array (
                     0 => 'user_id'
+                ) 
+            )  ,
+            'posts' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'posts'
+                ) 
+            )  ,
+            'themes' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'themes'
+                ) 
+            )  ,
+            'files' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'files'
+                ) 
+            )  ,
+            'lastposttime' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastposttime'
+                ) 
+            )  ,
+            'lasttheme' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lasttheme'
+                ) 
+            )  ,
+            'lastpost' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastpost'
                 ) 
             ) 
         )  ,

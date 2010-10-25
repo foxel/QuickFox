@@ -245,8 +245,8 @@ Forms for forum pages. MODIFY CAREFULLY !!!
  {C_prights_options}
  </select>{C_rights_hint}
  <br />
- <input name="t_pin" type="checkbox" value="1" {C_pintheme} />{L_FOR_PIN_THEME}<br />
- <input name="t_lock" type="checkbox" value="1" {C_locktheme} />{L_FOR_CLOSE_THEME}<br />
+ {IF_moderate}<input name="t_pin" type="checkbox" value="1" {C_pintheme} />{L_FOR_PIN_THEME}<br />
+ <input name="t_lock" type="checkbox" value="1" {C_locktheme} />{L_FOR_CLOSE_THEME}<br />{ENDIF}
  <input name="t_del" type="checkbox" value="1" {C_deltheme} />{L_FOR_DEL_THEME}<br />
  {L_FOR_SECT_PAR}: <select name="s_id" style="width: 50%;">
  {C_psect_options}

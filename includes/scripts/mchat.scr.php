@@ -3,7 +3,7 @@
 // Simple InUSE Check
 if ( !defined('QF_STARTED') )
         die('Hacking attempt');
-if (!$QF_User->is_spider && $QF_User->uid && ($mess = Get_Request('newmess', 2, 's')))
+if (!$QF_User->is_spider && $QF_User->uid && ($mess = Get_Request('newmess', 2, 's')) && $QF_User->wlevel)
 {
     $new_mess = Array(
         'author' => $QF_User->uname,

@@ -63,7 +63,7 @@ if ($SET_step=='finish_install')
     $QF_Root = preg_replace('#^\/*([^\'\"]*)\/+([^\/]+)$#', '\\1', $QF_Root);
 
     // Init Server settings
-    $QF_Config['server_name']=$_SERVER['SERVER_NAME'];
+    $QF_Config['server_name']=isset($_SERVER['HTTP_HOST']) ? preg_replace('#:\d+#', '', $_SERVER['HTTP_HOST']) : $_SERVER['SERVER_NAME'];
     $QF_Config['server_port']=$_SERVER['SERVER_PORT'];
     $QF_Config['root']=$QF_Root;
 

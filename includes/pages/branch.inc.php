@@ -654,7 +654,8 @@ if (is_array($topic))
 
         unset ($MB);
         $toprint='';
-        $Open_Edit_Theme=($t_curaccess>=3 && $t_edittheme && ($topic['special']==0 || $QF_User->admin));
+        $Can_Edit_Theme = (($t_curaccess>=3) || ($t_curaccess>=2 && $QF_User->uid == $topic['author_id'] && $QF_User->uid)) && ($topic['special']==0 || $QF_User->admin);
+        $Open_Edit_Theme = $Can_Edit_Theme && $t_edittheme;
 
         $puser=$ulist->get($topic['author_id']);
 
@@ -684,6 +685,7 @@ if (is_array($topic))
                 'formname' => 'edittheme',
                 'mrights_options' => '',
                 'prights_options' => '',
+                'moderate' => ($t_curaccess>=3) ? 1 : null,
                 );
 
             if ($topic['pinned']) $form['pintheme']='checked';
@@ -730,7 +732,7 @@ if (is_array($topic))
             // : (($curaccess>=3) ? '<a href="'.$Base_Link.'&amp;showdels=1#theme">'.$lang['SHOW_DELS'].'</a>' : '');
         }
 
-        if ($t_curaccess>=3 && ($topic['special']==0 || $QF_User->admin)) {
+        if ($Can_Edit_Theme) {
             $MB['content']='<a href="'.$Base_Link.'&amp;edittheme=1#theme"> '.$Vis['BTN_EDIT'].' </a>';
             $tmpl['modblock']=Visual('THEME_MOD_BLOCK', $MB);
         }

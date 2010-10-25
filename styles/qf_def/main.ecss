@@ -26,10 +26,15 @@
 
 {/VARS}
 
-body {
+body, html {
 	background-color: {page_bg};
 	font-size : 14px;
 	color : {text};
+}
+
+body {
+	width: 1000px;
+    margin: 0 auto;
 }
 
 A:link,A:active,A:visited  {

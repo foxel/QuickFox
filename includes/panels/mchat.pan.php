@@ -34,7 +34,7 @@ foreach ($mesages as $mess)
 
 $data = '<form action="index.php" onSubmit="javascript: mchat_send(); return false;" method="post">
 <input type="hidden" name="script" value="mchat" />
-<textarea id="mchat_msg" name="newmess" style="width: 95%; height: 35px;"></textarea>
+<textarea id="mchat_msg" onKeyPress="javascript: if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13)) {mchat_send();}" name="newmess" style="width: 95%; height: 35px;"></textarea>
 <input type="submit" value="Send" />
 <select id="mchat_lv" name="messlevel" >
 <option value="0">0</option>';

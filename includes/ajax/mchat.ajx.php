@@ -9,7 +9,7 @@ $_JS_REPLACE = array(
        "\t" => '\\t',  "\b" => '\\b', "\f" => '\\f', '"'  => '\\"',
        );
 
-if (($mess = Get_Request('newmess', 2, 's')) && $QF_User->uid)
+if (($mess = Get_Request('newmess', 2, 's')) && $QF_User->uid && $QF_User->wlevel)
 {    if ($mess{0} == '!' && $QF_User->cuser['admin'])
     {
         list($command, $mess) = explode(' ', $mess, 2);
