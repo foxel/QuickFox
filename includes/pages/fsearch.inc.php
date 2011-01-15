@@ -34,6 +34,7 @@ switch ($find_mode)
 {    case 1: // unread search
         if (!$QF_User->uid)
             break;
+        $bySubscribe = Get_Request('by_subscr', 1, 'b');
         $query = 'SELECT t.*, r.active AS is_read FROM {DBKEY}topics t
         LEFT JOIN {DBKEY}reads r ON (t.id=r.theme AND r.user_id='.$QF_User->uid.')
         WHERE t.deleted = 0 AND (r.active = 0 OR r.active IS NULL)
@@ -41,7 +42,7 @@ switch ($find_mode)
         if (!Get_Request('fulllist', 1, 'b'))
         {
             $query.= ' AND t.lasttime >= '.$QF_User->cuser['regtime'];
-            if (Get_Request('by_subscr', 1, 'b'))
+            if ($bySubscribe)
                 $query.= ' AND r.subscribe = 1';
         }
 
@@ -53,6 +54,11 @@ switch ($find_mode)
                 $NeedUsers[] = intval($topic['lastposter_id']);
             }
             $QF_DBase->sql_freeresult($result);
+            if ($bySubscribe && !count($SubTopics) && $QF_User->cuser['hasnewsubscr'])
+            {
+                $QF_DBase->sql_doupdate('{DBKEY}users', Array('hasnewsubscr' => 0), Array('id' => $QF_User->uid) );
+                $QF_DBase->sql_doupdate('{DBKEY}reads', Array('active' => 1), Array('user_id' => $QF_User->uid) );
+            }
         }
         $SectPrint['caption'] = $lang['FOR_SEARCH_UNREAD'];
         break;

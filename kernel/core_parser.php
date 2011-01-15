@@ -631,7 +631,7 @@ class qf_parser
         $buffer = '';
         foreach ($list as $item)
         {
-            $item = preg_replace('#^\s*\<br\s?/?\>#', '', $item);
+            $item = preg_replace('#^\s*\<br\s?/?\>\r?\n?#', '', $item);
             if (strlen($item))
                 $buffer.= '<li>'.$prefix.$item.'</li>';
         }

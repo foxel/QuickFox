@@ -9,6 +9,7 @@ include 'includes/forum_core.php';
 $QF_Forum = new qf_forum();
 
 $sect_id = Get_Request('section', 1, 'i');
+$showdels = Get_Request('showdels', 1, 'b');
 $cur_sect_posts_num = 0;
 $cur_sect_topics_num = 0;
 

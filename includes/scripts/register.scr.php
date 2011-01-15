@@ -27,7 +27,11 @@ if (!empty($action))
   if (!empty($result))
       $ouser = $QF_DBase->sql_fetchrow($result);
 
-  $result = $QF_DBase->sql_doselect('{DBKEY}regs', '*', Array( 'nick' => $nuser) );
+  $result = $QF_DBase->sql_doselect('{DBKEY}users', '*', Array( 'email' => $nemail) );
+  if (!empty($result))
+      $emuser = $QF_DBase->sql_fetchrow($result);
+
+      $result = $QF_DBase->sql_doselect('{DBKEY}regs', '*', Array( 'nick' => $nuser) );
   if (!empty($result))
       $ruser = $QF_DBase->sql_fetchrow($result);
 
@@ -46,6 +50,11 @@ if (!empty($action))
       {
         $action = "";
         $error = $error."<LI>".$lang['ERR_USED_NICK']."\n";
+      }
+      elseif ($emuser['id']) // User nick is used
+      {
+        $action = "";
+        $error = $error."<LI>".$lang['ERR_USED_EMAIL']."\n";
       }
       elseif ($ruser['nick']) // User nick is used
       {
