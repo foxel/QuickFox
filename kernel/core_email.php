@@ -184,7 +184,9 @@ class mailer
                         $empty_to_header = ($to == '') ? TRUE : FALSE;
                         $to = ($to == '') ? (($QF_Config['sendmail_fix']) ? ' ' : 'Undisclosed-recipients:;') : $to;
 
-                        $result = mail($to, $this->subject, preg_replace("#(?<!\r)\n#s", "\n", $this->msg), $this->headers);
+                        $result = $QF_Config['sendmail_smtp']
+                            ? $this->MailSMTP($to, $this->subject, preg_replace("#(?<!\r)\n#s", "\n", $this->msg), $this->headers)
+                            : mail($to, $this->subject, preg_replace("#(?<!\r)\n#s", "\n", $this->msg), $this->headers);
 
                         if (!$result && !$QF_Config['sendmail_fix'] && $empty_to_header)
                         {
@@ -207,6 +209,32 @@ class mailer
                 }
 
                 return true;
+        }
+        
+        function MailSMTP($to, $subject, $message, $headers)
+        {
+            $connect = fsockopen ('127.0.0.1', 25, $errno, $errstr, 30); 
+            if (!$connect)
+                return false;
+            fwrite($connect, "HELO 127.0.0.1\r\n"); 
+            fwrite($connect, "MAIL FROM: ".$QF_Config['site_mail']."\n"); 
+            fwrite($connect, "RCPT TO: $to\n"); 
+            fwrite($connect, "DATA\r\n"); 
+            fwrite($connect, "To: $to\n"); 
+            fwrite($connect, "Subject: $subject\n"); 
+            $headers = explode("\n", $headers);
+            foreach ($headers as $header)
+                if ($header) fwrite($connect, $header."\n"); 
+            fwrite($connect, "\n\n"); 
+            fwrite($connect, $message." \r\n"); 
+            fwrite($connect, ".\r\n"); 
+            fwrite($connect, "RSET\r\n");
+            fwrite($connect, "QUIT\r\n");
+            $resp = '';
+            while(!feof($connect))
+                $resp.= fread($connect, 1024);
+            fclose($connect);
+            return true;
         }
 
 

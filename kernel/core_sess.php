@@ -327,7 +327,7 @@ function qf_session_handler($text)
 
     if ($QF_Config['use_spcode'] && !$QF_User->uid) {
         $text=str_replace('{SPAMFIELD}', Visual('SPAM_FIELD'),$text);
-        $text=str_replace('{SPAMIMG}', '<img src="index.php?sr=spamcode&amp;sid='.$QF_Session->SID.'&amp;rand='.rand(1000,10000).'" alt="SpamCode">', $text);
+        $text=str_replace('{SPAMIMG}', '<img src="index.php?sr=spamcode&amp;sid='.$QF_Session->SID.'&amp;rand='.rand(1000,10000).'" alt="SpamCode" onclick="this.src=\'index.php?sr=spamcode&sid='.$QF_Session->SID.'&rand=\'+Math.random();" style="cursor: pointer;" title="Click to reload" >', $text);
     }
     else {
         $text=str_replace('{SPAMFIELD}','',$text);

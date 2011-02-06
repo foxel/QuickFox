@@ -85,6 +85,13 @@ elseif ($job=='config') {
         'capt'    => $lang['CONFIG_COMMON_SITE_GZIP'],
         'descr'   => $lang['CONFIG_COMMON_SITE_GZIP_MORE'] );
 
+    $fields['site_smtp']=Array(
+        'value'   => 'ON',
+        'type'    => 'checkbox',
+        'checked' => ($QF_Config['sendmail_smtp']) ? '1' : '',
+        'capt'    => $lang['CONFIG_COMMON_SITE_SMTP'],
+        'descr'   => $lang['CONFIG_COMMON_SITE_SMTP_MORE'] );
+
     $fields['site_guests']=Array(
         'value'   => 'ON',
         'type'    => 'checkbox',

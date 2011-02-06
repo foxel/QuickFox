@@ -57,6 +57,13 @@ elseif ($action=='common_config') {    $site_name = Get_Request('site_name', 2,
         'value'  => $site_gzip,
     );
 
+    $site_smtp = (Get_Request('site_smtp', 2)=='ON') ? 1 : 0;
+    $apply_conf[]=Array(
+        'parent' => '',
+        'name'   => 'sendmail_smtp',
+        'value'  => $site_smtp,
+    );
+
     $site_guests = (Get_Request('site_guests', 2)=='ON') ? 1 : 0;
     $apply_conf[]=Array(
         'parent' => '',
