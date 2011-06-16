@@ -151,16 +151,16 @@ Array (
                     1 => 'last_ip'
                 ) 
             )  ,
-            'used' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'used'
-                ) 
-            )  ,
             'lastused' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'lastused'
+                ) 
+            )  ,
+            'used' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'used'
                 ) 
             ) 
         )  ,
@@ -257,12 +257,6 @@ Array (
                     1 => 'filecode'
                 ) 
             )  ,
-            'user' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'user'
-                ) 
-            )  ,
             'time' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
@@ -273,6 +267,12 @@ Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'used'
+                ) 
+            )  ,
+            'user' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'user'
                 ) 
             ) 
         )  ,
@@ -372,22 +372,22 @@ Array (
                     0 => 'id'
                 ) 
             )  ,
-            'folder' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'folder'
-                ) 
-            )  ,
             'att_to' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'att_to'
                 ) 
             )  ,
-            'user_id' => Array (
+            'dloads' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
-                    0 => 'user_id'
+                    0 => 'dloads'
+                ) 
+            )  ,
+            'folder' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'folder'
                 ) 
             )  ,
             'rights' => Array (
@@ -396,22 +396,22 @@ Array (
                     0 => 'rights'
                 ) 
             )  ,
-            'time' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'time'
-                ) 
-            )  ,
             'size' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'size'
                 ) 
             )  ,
-            'dloads' => Array (
+            'time' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
-                    0 => 'dloads'
+                    0 => 'time'
+                ) 
+            )  ,
+            'user_id' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'user_id'
                 ) 
             ) 
         )  ,
@@ -493,16 +493,16 @@ Array (
                     0 => 'gid'
                 ) 
             )  ,
-            'lastseen' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'lastseen'
-                ) 
-            )  ,
             'gcode' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'gcode'
+                ) 
+            )  ,
+            'lastseen' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastseen'
                 ) 
             )  ,
             'views' => Array (
@@ -609,10 +609,10 @@ Array (
                     0 => 'msg_id'
                 ) 
             )  ,
-            'time' => Array (
+            'acc_lv' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
-                    0 => 'time'
+                    0 => 'acc_lv'
                 ) 
             )  ,
             'author_id' => Array (
@@ -621,10 +621,10 @@ Array (
                     0 => 'author_id'
                 ) 
             )  ,
-            'acc_lv' => Array (
+            'time' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
-                    0 => 'acc_lv'
+                    0 => 'time'
                 ) 
             ) 
         )  ,
@@ -716,6 +716,12 @@ Array (
                 'null' => false ,
                 'def' => 0 ,
                 'extra' => ''
+            )  ,
+            'deleted_out' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 0 ,
+                'extra' => ''
             ) 
         )  ,
         'keys' => Array (
@@ -748,6 +754,12 @@ Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'time'
+                ) 
+            )  ,
+            'deleted_out' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'deleted_out'
                 ) 
             ) 
         )  ,
@@ -835,16 +847,10 @@ Array (
                     0 => 'author_id'
                 ) 
             )  ,
-            'theme' => Array (
+            'ctime' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
-                    0 => 'theme'
-                ) 
-            )  ,
-            'hash' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'hash'
+                    0 => 'ctime'
                 ) 
             )  ,
             'deleted' => Array (
@@ -853,22 +859,28 @@ Array (
                     0 => 'deleted'
                 ) 
             )  ,
+            'hash' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'hash'
+                ) 
+            )  ,
             'locked' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'locked'
                 ) 
             )  ,
+            'theme' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'theme'
+                ) 
+            )  ,
             'time' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'time'
-                ) 
-            )  ,
-            'ctime' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'ctime'
                 ) 
             )  ,
             'text' => Array (
@@ -970,18 +982,18 @@ Array (
                     1 => 'theme'
                 ) 
             )  ,
+            'lastmail' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastmail'
+                ) 
+            )  ,
             'state' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'active' ,
                     1 => 'subscribe' ,
                     2 => 'notified'
-                ) 
-            )  ,
-            'lastmail' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'lastmail'
                 ) 
             ) 
         )  ,
@@ -1173,6 +1185,18 @@ Array (
                     0 => 'id'
                 ) 
             )  ,
+            'acc_group' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'acc_group'
+                ) 
+            )  ,
+            'order_id' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'order_id'
+                ) 
+            )  ,
             'parent' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
@@ -1191,18 +1215,6 @@ Array (
                 'cols' => Array (
                     0 => 'locked' ,
                     1 => 'deleted'
-                ) 
-            )  ,
-            'acc_group' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'acc_group'
-                ) 
-            )  ,
-            'order_id' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'order_id'
                 ) 
             )  ,
             'text' => Array (
@@ -1317,6 +1329,12 @@ Array (
                     0 => 'sid'
                 ) 
             )  ,
+            'clicks' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'clicks'
+                ) 
+            )  ,
             'ip' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
@@ -1333,12 +1351,6 @@ Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'starttime'
-                ) 
-            )  ,
-            'clicks' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'clicks'
                 ) 
             ) 
         )  ,
@@ -1476,16 +1488,16 @@ Array (
                     0 => 'log_id'
                 ) 
             )  ,
-            'name' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'name'
-                ) 
-            )  ,
             'ip' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'ip'
+                ) 
+            )  ,
+            'name' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'name'
                 ) 
             )  ,
             'time' => Array (
@@ -1692,6 +1704,12 @@ Array (
                 'null' => false ,
                 'def' => 0 ,
                 'extra' => ''
+            )  ,
+            'merged_to' => Array (
+                'type' => 'int(10) unsigned' ,
+                'null' => true ,
+                'def' => '' ,
+                'extra' => ''
             ) 
         )  ,
         'keys' => Array (
@@ -1699,12 +1717,6 @@ Array (
                 'type' => 'PRIMARY' ,
                 'cols' => Array (
                     0 => 'id'
-                ) 
-            )  ,
-            'parent' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'parent'
                 ) 
             )  ,
             'author_id' => Array (
@@ -1717,6 +1729,24 @@ Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'lastposter_id'
+                ) 
+            )  ,
+            'lasttime' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lasttime'
+                ) 
+            )  ,
+            'MaxID' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'MaxID'
+                ) 
+            )  ,
+            'parent' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'parent'
                 ) 
             )  ,
             'rights' => Array (
@@ -1735,34 +1765,28 @@ Array (
                     3 => 'deleted'
                 ) 
             )  ,
-            'MaxID' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'MaxID'
-                ) 
-            )  ,
             'time' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'time'
                 ) 
             )  ,
-            'lasttime' => Array (
+            'merged_to' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
-                    0 => 'lasttime'
-                ) 
-            )  ,
-            'name' => Array (
-                'type' => 'FULLTEXT' ,
-                'cols' => Array (
-                    0 => 'name'
+                    0 => 'merged_to'
                 ) 
             )  ,
             'descr' => Array (
                 'type' => 'FULLTEXT' ,
                 'cols' => Array (
                     0 => 'descr'
+                ) 
+            )  ,
+            'name' => Array (
+                'type' => 'FULLTEXT' ,
+                'cols' => Array (
+                    0 => 'name'
                 ) 
             ) 
         )  ,
@@ -1982,22 +2006,40 @@ Array (
                     0 => 'nick'
                 ) 
             )  ,
+            'active' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'active'
+                ) 
+            )  ,
+            'autologin' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'autologin'
+                ) 
+            )  ,
+            'deleted' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'deleted'
+                ) 
+            )  ,
+            'lastip' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastip'
+                ) 
+            )  ,
             'lastseen' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'lastseen'
                 ) 
             )  ,
-            'subscrtype' => Array (
+            'regtime' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
-                    0 => 'subscrtype'
-                ) 
-            )  ,
-            'active' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'active'
+                    0 => 'regtime'
                 ) 
             )  ,
             'rights' => Array (
@@ -2008,34 +2050,16 @@ Array (
                     2 => 'admin'
                 ) 
             )  ,
-            'regtime' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'regtime'
-                ) 
-            )  ,
             'sessid' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'sessid'
                 ) 
             )  ,
-            'autologin' => Array (
+            'subscrtype' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
-                    0 => 'autologin'
-                ) 
-            )  ,
-            'lastip' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'lastip'
-                ) 
-            )  ,
-            'deleted' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'deleted'
+                    0 => 'subscrtype'
                 ) 
             ) 
         )  ,
@@ -2093,22 +2117,16 @@ Array (
                     0 => 'user_id'
                 ) 
             )  ,
-            'posts' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'posts'
-                ) 
-            )  ,
-            'themes' => Array (
-                'type' => 'INDEX' ,
-                'cols' => Array (
-                    0 => 'themes'
-                ) 
-            )  ,
             'files' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'files'
+                ) 
+            )  ,
+            'lastpost' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'lastpost'
                 ) 
             )  ,
             'lastposttime' => Array (
@@ -2123,10 +2141,16 @@ Array (
                     0 => 'lasttheme'
                 ) 
             )  ,
-            'lastpost' => Array (
+            'posts' => Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
-                    0 => 'lastpost'
+                    0 => 'posts'
+                ) 
+            )  ,
+            'themes' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'themes'
                 ) 
             ) 
         )  ,

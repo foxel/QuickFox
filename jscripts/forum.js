@@ -57,3 +57,20 @@ function for_hidepreview(frm_name) {
         }
     }
 }
+
+function for_attmouseclick(e, obj) {
+
+    if (e.button == 1 && !obj.myhref) {
+        obj.myhref = obj.href;
+        obj.href+='&download=1';
+        window.setTimeout(function() {for_atthrefclear(obj);}, 500);
+    }
+}
+
+function for_atthrefclear(obj) {
+
+    if (obj.myhref) {
+        obj.href = obj.myhref;
+        obj.myhref = false;
+    }
+}

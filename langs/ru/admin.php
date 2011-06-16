@@ -143,9 +143,12 @@ $lang['CONFIG_COMMON_TIMECORR']='Коррекция времени:';
 $lang['CONFIG_COMMON_TIMECORR_MORE']='Эта опция позволяет скорректировать отображение времени на сайте в случае ошибочной настройки времени на сервере. При отображении времени оно будет скорректировано на указанное количество минут.';
 
 $lang['CONFIG_COMMON_FILESCONF']='Параметры загрузки файлов.';
-$lang['CONFIG_COMMON_FILES_PRIGHTS']='Уровень доступа для закрузки файлов:';
+$lang['CONFIG_COMMON_FILES_PRIGHTS']='Уровень доступа для загрузки файлов:';
 $lang['CONFIG_COMMON_FILES_PRIGHTS_MORE']='Задает минимальный уровень доступа для загзузки файлов на сервер.';
-$lang['CONFIG_COMMON_FILES_PRIGHTS_ERR']='Уровень доступа для закрузки файлов задан неверно.';
+$lang['CONFIG_COMMON_FILES_PRIGHTS_ERR']='Уровень доступа для загрузки файлов задан неверно.';
+
+$lang['CONFIG_COMMON_FILES_NOATTC']='Отправлять файлы с заголовком Inline:';
+$lang['CONFIG_COMMON_FILES_NOATTC_MORE']='Позволяет браузеру самому отображать файлы вместо принудительного открытия диалога сохранения файла при скачивании.';
 
 $lang['CONFIG_COMMON_FILES_MSIZE']='Предельный размер файлов:';
 $lang['CONFIG_COMMON_FILES_MSIZE_MORE']='Задает максимальный размер файлов, принимаемых QuickFox при загрузке на сервер. (512 - 102400 КБайт)<br />

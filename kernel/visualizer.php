@@ -244,9 +244,12 @@ function Visual($name, $content=Array()) {
 
     foreach($content as $pname => $ptext)
        if (strlen($ptext)>0)
+       {
     	    $templ=preg_replace('#\{C_'.$pname.'\}#si', str_replace('$', '\$', $ptext), $templ);
+    	    $templ=preg_replace('#\{\!C_'.$pname.'\}#si', str_replace('$', '\$', smartHTMLSchars($ptext)), $templ);
+       }
 
-    $templ=preg_replace('#\{C_([\w_]+)\}#s', '', $templ);
+    $templ=preg_replace('#\{\!?C_([\w_]+)\}#s', '', $templ);
     $templ=str_replace('{COUNTER}',$counter++,$templ);
     return $templ;
 }

@@ -205,7 +205,7 @@ Separated to reduce dataload in common procedures
 
 <<+ 'POST_ATTACH'>>
 <table class="atttbl"><tr><td class="centered">
-<a href="{C_url}" title="{C_descr}"><img class="attach" src="{C_src}" alt="{C_capt}" /></a>
+<a href="{C_url}" title="{C_descr}" onclick="for_attmouseclick(window.event, this);" ><img class="attach" src="{C_src}" alt="{C_capt}" /></a>
 <br />
 {C_capt}<br />
 {C_size}<br />
@@ -231,8 +231,8 @@ Forms for forum pages. MODIFY CAREFULLY !!!
  <input type="hidden" name="st" value="{C_st}" />
  <input type="hidden" name="page" value="{C_page}" />
  <input type="hidden" name="t_id" value="{C_id}" />
- <input type="hidden" name="qfuser" value="{C_user}" />
- {L_FOR_THEME_CAPT}: <input type="text" name="t_caption" maxlength="255" size="50" value="{C_caption}" /><br />
+ <input type="hidden" name="qfuser" value="{!C_user}" />
+ {L_FOR_THEME_CAPT}: <input type="text" name="t_caption" maxlength="255" size="50" value="{!C_caption}" /><br />
  {L_FOR_THEME_DESC}:
  <br />
  <div id='{C_formname}_preview' class="post_body" onclick="for_hidepreview('{C_formname}')" style="display: none; border-width: 1px; border-style: solid; cursor: text;">
@@ -248,6 +248,7 @@ Forms for forum pages. MODIFY CAREFULLY !!!
  {IF_moderate}<input name="t_pin" type="checkbox" value="1" {C_pintheme} />{L_FOR_PIN_THEME}<br />
  <input name="t_lock" type="checkbox" value="1" {C_locktheme} />{L_FOR_CLOSE_THEME}<br />{ENDIF}
  <input name="t_del" type="checkbox" value="1" {C_deltheme} />{L_FOR_DEL_THEME}<br />
+ <input name="t_merge" type="checkbox" value="1" />{L_FOR_MERGE_THEME} <input type="text" name="t_merge_to" size="6" /><br />
  {L_FOR_SECT_PAR}: <select name="s_id" style="width: 50%;">
  {C_psect_options}
  </select>
@@ -259,10 +260,10 @@ Forms for forum pages. MODIFY CAREFULLY !!!
  <input type="hidden" name="st" value="{C_st}" />
  <input type="hidden" name="page" value="{C_page}" />
  <input type="hidden" name="s_id" value="{C_sid}" />
-{IF_user} <input type="hidden" name="qfuser" value="{C_user}" />{ELSE}
- {L_AUTHOR}: <input type="text" name="qfuser" value="{C_guser}" /><br />
+{IF_user} <input type="hidden" name="qfuser" value="{!C_user}" />{ELSE}
+ {L_AUTHOR}: <input type="text" name="qfuser" value="{!C_guser}" /><br />
  {SPAMFIELD}{ENDIF}
- {L_FOR_THEME_CAPT}: <input type="text" name="t_caption" maxlength="255" size="50" value="{C_caption}" /><br />
+ {L_FOR_THEME_CAPT}: <input type="text" name="t_caption" maxlength="255" size="50" value="{!C_caption}" /><br />
  {L_FOR_THEME_DESC}:
  <br /><textarea cols="40" class="post" rows="2" name="t_descr" style="width:99%" >{C_descr}</textarea><br />
  {L_FOR_THEME_FIRSTMSG}:
@@ -286,12 +287,14 @@ Forms for forum pages. MODIFY CAREFULLY !!!
  <input type="hidden" name="script" value="forum" />
  <input type="hidden" name="action" value="editpost" />
  <input type="hidden" name="p_id" value="{C_id}" />
- <input type="hidden" name="qfuser" value="{C_user}" />
+ <input type="hidden" name="qfuser" value="{!C_user}" />
  <div id='{C_formname}_preview' class="post_body" onclick="for_hidepreview('{C_formname}')" style="display: none; border-width: 1px; border-style: solid; cursor: text;">
  </div>
  <textarea cols="50" class="post" style="width:99%" onchange="for_hidepreview('{C_formname}')" rows="8" name="message">{C_text}</textarea>
  <input name="p_del" type="checkbox" value="1" {C_delmessage} />{L_FOR_DEL_POST}<br />
  {IF_canhide}<input name="p_hedit" type="checkbox" value="1" />{L_FOR_HIDE_EDIT}<br />{ENDIF}
+ {IF_canmerge}<input name="p_merge" type="checkbox" value="1" />{L_FOR_MERGE_POST} <input type="text" name="t_merge_to" size="6" /><br />
+ <input name="p_merge_all" type="checkbox" value="1" />{L_FOR_MERGE_POST_ALL}<br />{ENDIF}
  {IF_unattach}
  {L_FOR_POST_UNATTACH}:<br />
  <div style="margin-left: 20px;">
@@ -310,8 +313,8 @@ Forms for forum pages. MODIFY CAREFULLY !!!
  <input type="hidden" name="script" value="forum" />
  <input type="hidden" name="action" value="newpost" />
  <input type="hidden" name="t_id" value="{C_tid}" />
-{IF_fixuser} <input type="hidden" name="qfuser" value="{C_user}" />
-{ELSE}{L_AUTHOR}: <input type="text" name="qfuser" value="{C_user}" /><br />
+{IF_fixuser} <input type="hidden" name="qfuser" value="{!C_user}" />
+{ELSE}{L_AUTHOR}: <input type="text" name="qfuser" value="{!C_user}" /><br />
 {SPAMFIELD}{ENDIF}
  <div id='{C_formname}_preview' class="post_body" onclick="for_hidepreview('{C_formname}')" style="display: none; border-width: 1px; border-style: solid; cursor: text;">
  </div>

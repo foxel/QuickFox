@@ -36,8 +36,8 @@ CREATE TABLE `{DBKEY}bans` (
     `lastused` int(11) default NULL, 
     PRIMARY KEY (`ban_id`) , 
     INDEX `ips` (`first_ip`, `last_ip`) , 
-    INDEX `used` (`used`) , 
-    INDEX `lastused` (`lastused`)  
+    INDEX `lastused` (`lastused`) , 
+    INDEX `used` (`used`)  
 ); 
 
 # Table definition for {DBKEY}config 
@@ -61,9 +61,9 @@ CREATE TABLE `{DBKEY}dloads` (
     `used` tinyint(1) unsigned NOT NULL default '0', 
     PRIMARY KEY (`filecode`) , 
     UNIQUE `fileid` (`fileid`, `filecode`) , 
-    INDEX `user` (`user`) , 
     INDEX `time` (`time`) , 
-    INDEX `used` (`used`)  
+    INDEX `used` (`used`) , 
+    INDEX `user` (`user`)  
 ); 
 
 # Table definition for {DBKEY}files 
@@ -84,13 +84,13 @@ CREATE TABLE `{DBKEY}files` (
     `rights` tinyint(1) unsigned NOT NULL default '1', 
     `dloads` int(10) unsigned NOT NULL default '0', 
     PRIMARY KEY (`id`) , 
-    INDEX `folder` (`folder`) , 
     INDEX `att_to` (`att_to`) , 
-    INDEX `user_id` (`user_id`) , 
+    INDEX `dloads` (`dloads`) , 
+    INDEX `folder` (`folder`) , 
     INDEX `rights` (`rights`) , 
-    INDEX `time` (`time`) , 
     INDEX `size` (`size`) , 
-    INDEX `dloads` (`dloads`)  
+    INDEX `time` (`time`) , 
+    INDEX `user_id` (`user_id`)  
 ); 
 
 # Table definition for {DBKEY}guests 
@@ -108,8 +108,8 @@ CREATE TABLE `{DBKEY}guests` (
     `gcode` varchar(32) NOT NULL, 
     `views` int(10) unsigned NOT NULL default '0', 
     PRIMARY KEY (`gid`) , 
-    INDEX `lastseen` (`lastseen`) , 
     INDEX `gcode` (`gcode`) , 
+    INDEX `lastseen` (`lastseen`) , 
     INDEX `views` (`views`)  
 ); 
 
@@ -135,9 +135,9 @@ CREATE TABLE `{DBKEY}minichats` (
     `time` int(11) NOT NULL default '0', 
     `acc_lv` tinyint(1) unsigned NOT NULL default '0', 
     PRIMARY KEY (`msg_id`) , 
-    INDEX `time` (`time`) , 
+    INDEX `acc_lv` (`acc_lv`) , 
     INDEX `author_id` (`author_id`) , 
-    INDEX `acc_lv` (`acc_lv`)  
+    INDEX `time` (`time`)  
 ); 
 
 # Table definition for {DBKEY}parchive 
@@ -161,11 +161,13 @@ CREATE TABLE `{DBKEY}pms` (
     `text` text NOT NULL, 
     `readed` tinyint(1) unsigned NOT NULL default '0', 
     `deleted` tinyint(1) unsigned NOT NULL default '0', 
+    `deleted_out` tinyint(1) unsigned NOT NULL default '0', 
     PRIMARY KEY (`id`) , 
     INDEX `author_id` (`author_id`) , 
     INDEX `recipient_id` (`recipient_id`) , 
     INDEX `state` (`readed`, `deleted`) , 
-    INDEX `time` (`time`)  
+    INDEX `time` (`time`) , 
+    INDEX `deleted_out` (`deleted_out`)  
 ); 
 
 # Table definition for {DBKEY}posts 
@@ -184,12 +186,12 @@ CREATE TABLE `{DBKEY}posts` (
     `deleted` tinyint(1) unsigned NOT NULL default '0', 
     PRIMARY KEY (`id`) , 
     INDEX `author_id` (`author_id`) , 
-    INDEX `theme` (`theme`) , 
-    INDEX `hash` (`hash`) , 
-    INDEX `deleted` (`deleted`) , 
-    INDEX `locked` (`locked`) , 
-    INDEX `time` (`time`) , 
     INDEX `ctime` (`ctime`) , 
+    INDEX `deleted` (`deleted`) , 
+    INDEX `hash` (`hash`) , 
+    INDEX `locked` (`locked`) , 
+    INDEX `theme` (`theme`) , 
+    INDEX `time` (`time`) , 
     FULLTEXT `text` (`text`)  
 ); 
 
@@ -214,8 +216,8 @@ CREATE TABLE `{DBKEY}reads` (
     `notified` tinyint(1) unsigned NOT NULL default '0', 
     `lastmail` int(11) NOT NULL default '0', 
     PRIMARY KEY (`user_id`, `theme`) , 
-    INDEX `state` (`active`, `subscribe`, `notified`) , 
-    INDEX `lastmail` (`lastmail`)  
+    INDEX `lastmail` (`lastmail`) , 
+    INDEX `state` (`active`, `subscribe`, `notified`)  
 ); 
 
 # Table definition for {DBKEY}regs 
@@ -259,11 +261,11 @@ CREATE TABLE `{DBKEY}sections` (
     `locked` tinyint(1) unsigned NOT NULL default '0', 
     `deleted` tinyint(1) unsigned NOT NULL default '0', 
     PRIMARY KEY (`id`) , 
+    INDEX `acc_group` (`acc_group`) , 
+    INDEX `order_id` (`order_id`) , 
     INDEX `parent` (`parent`) , 
     INDEX `rights` (`minrights`, `postrights`) , 
     INDEX `state` (`locked`, `deleted`) , 
-    INDEX `acc_group` (`acc_group`) , 
-    INDEX `order_id` (`order_id`) , 
     FULLTEXT `text` (`name`, `descr`)  
 ); 
 
@@ -290,10 +292,10 @@ CREATE TABLE `{DBKEY}sessions` (
     `spamcode` varchar(10) NOT NULL, 
     `spctime` int(11) NOT NULL default '0', 
     PRIMARY KEY (`sid`) , 
+    INDEX `clicks` (`clicks`) , 
     INDEX `ip` (`ip`) , 
     INDEX `lastused` (`lastused`) , 
-    INDEX `starttime` (`starttime`) , 
-    INDEX `clicks` (`clicks`)  
+    INDEX `starttime` (`starttime`)  
 ); 
 
 # Table definition for {DBKEY}smiles 
@@ -328,8 +330,8 @@ CREATE TABLE `{DBKEY}spiders_log` (
     `user_agent` varchar(255) NOT NULL, 
     `ip` varchar(16) NOT NULL, 
     PRIMARY KEY (`log_id`) , 
-    INDEX `name` (`name`) , 
     INDEX `ip` (`ip`) , 
+    INDEX `name` (`name`) , 
     INDEX `time` (`time`)  
 ); 
 
@@ -376,17 +378,19 @@ CREATE TABLE `{DBKEY}topics` (
     `special` tinyint(1) unsigned NOT NULL default '0', 
     `pinned` tinyint(1) unsigned NOT NULL default '0', 
     `deleted` tinyint(1) unsigned NOT NULL default '0', 
+    `merged_to` int(10) unsigned default NULL, 
     PRIMARY KEY (`id`) , 
-    INDEX `parent` (`parent`) , 
     INDEX `author_id` (`author_id`) , 
     INDEX `lastposter_id` (`lastposter_id`) , 
+    INDEX `lasttime` (`lasttime`) , 
+    INDEX `MaxID` (`MaxID`) , 
+    INDEX `parent` (`parent`) , 
     INDEX `rights` (`minrights`, `postrights`) , 
     INDEX `state` (`locked`, `special`, `pinned`, `deleted`) , 
-    INDEX `MaxID` (`MaxID`) , 
     INDEX `time` (`time`) , 
-    INDEX `lasttime` (`lasttime`) , 
-    FULLTEXT `name` (`name`) , 
-    FULLTEXT `descr` (`descr`)  
+    INDEX `merged_to` (`merged_to`) , 
+    FULLTEXT `descr` (`descr`) , 
+    FULLTEXT `name` (`name`)  
 ); 
 
 # Table definition for {DBKEY}users 
@@ -427,15 +431,15 @@ CREATE TABLE `{DBKEY}users` (
     `deleted` tinyint(1) unsigned NOT NULL default '0', 
     PRIMARY KEY (`id`) , 
     UNIQUE `nick` (`nick`) , 
-    INDEX `lastseen` (`lastseen`) , 
-    INDEX `subscrtype` (`subscrtype`) , 
     INDEX `active` (`active`) , 
-    INDEX `rights` (`rights`, `modlevel`, `admin`) , 
-    INDEX `regtime` (`regtime`) , 
-    INDEX `sessid` (`sessid`) , 
     INDEX `autologin` (`autologin`) , 
+    INDEX `deleted` (`deleted`) , 
     INDEX `lastip` (`lastip`) , 
-    INDEX `deleted` (`deleted`)  
+    INDEX `lastseen` (`lastseen`) , 
+    INDEX `regtime` (`regtime`) , 
+    INDEX `rights` (`rights`, `modlevel`, `admin`) , 
+    INDEX `sessid` (`sessid`) , 
+    INDEX `subscrtype` (`subscrtype`)  
 ); 
 
 # Table definition for {DBKEY}userstats 
@@ -449,11 +453,11 @@ CREATE TABLE `{DBKEY}userstats` (
     `lasttheme` int(10) unsigned NOT NULL default '0', 
     `lastpost` int(10) unsigned NOT NULL default '0', 
     PRIMARY KEY (`user_id`) , 
-    INDEX `posts` (`posts`) , 
-    INDEX `themes` (`themes`) , 
     INDEX `files` (`files`) , 
+    INDEX `lastpost` (`lastpost`) , 
     INDEX `lastposttime` (`lastposttime`) , 
     INDEX `lasttheme` (`lasttheme`) , 
-    INDEX `lastpost` (`lastpost`)  
+    INDEX `posts` (`posts`) , 
+    INDEX `themes` (`themes`)  
 ); 
 

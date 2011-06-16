@@ -4,7 +4,7 @@
 if ( !defined('QF_STARTED') )
         die('Hacking attempt');
 
-Glob_Request('file');
+Glob_Request('file download');
 $Page_SubTitle = $lang['GETFILE_CAPT'];
 
 $QF_DBase->sql_dodelete('{DBKEY}dloads', 'WHERE time<'.($timer->time - 3600*3));
@@ -70,6 +70,9 @@ else $filetable= Visual('ERR_STRING', Array('message'=>$lang['GETFILE_NOT_FOUND'
 }
 else $filetable= Visual('ERR_STRING', Array('message'=>$lang['GETFILE_NO_INFO']));
 
-print Visual('GETFILE_PAGE', Array('filetable' => $filetable));
+if ($QF_Config['files']['no_attc'] && $download)
+    redirect('index.php?sr=download&file='.$gfile['id'].'&fcode='.$fcode);
+else
+    print Visual('GETFILE_PAGE', Array('filetable' => $filetable));
 
 ?>

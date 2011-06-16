@@ -118,7 +118,9 @@ if (is_array($topic))
 
     // ---
 
-    if (($topic['deleted']==1 && $t_curaccess < 3) || ($t_curaccess < 1))
+    if ($topic['merged_to'])
+        redirect('index.php?st=branch&branch='.$topic['merged_to']);
+    elseif (($topic['deleted']==1 && $t_curaccess < 3) || ($t_curaccess < 1))
         $BranchPrint['content']= Vis_Err_String($lang['FOR_THEME_UNAVAILABLE']);
     else
     {
@@ -444,6 +446,8 @@ if (is_array($topic))
 
         	                if ($post['deleted'])
 	                            $form['delmessage']='checked';
+	                        if ($t_curaccess>=3)
+	                            $form['canmerge']='true';
 	                        if ($t_curaccess>=3 && (!$post['ctime'] || $post['changer'] == $QF_User->uname))
 	                            $form['canhide']='true';
 
@@ -451,7 +455,7 @@ if (is_array($topic))
 	                        if (is_array($atts[$post['id']]))
 	                            foreach ($atts[$post['id']] as $att)
 	                                {
-                	                    $Can_Edit_Att = ($QF_User->cuser['modlevel']>=$att['rights'] && $t_curaccess>=3) || ($QF_User->uid==$att['user_id'] && $QF_User->uid);
+                	                    $Can_Edit_Att = $QF_User->admin || ($QF_User->cuser['modlevel']>=$att['rights'] && $t_curaccess>=3) || ($QF_User->uid==$att['user_id'] && $QF_User->uid);
 
         	                            $atmpl=Array(
 	                                        'fid'  => $att['id'],

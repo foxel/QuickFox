@@ -62,6 +62,11 @@
   </style>
 </head>
 <body>
+<script language="Javascript" type="text/javascript">
+<!-- // anonimizers ban
+if (document.domain != '{C_server_name}') location.href='http://{C_server_name}';
+//-->
+</script>
 {C_JAVA}
 <table class="qf_mainframe">
 <tr>
@@ -513,7 +518,8 @@ PM #{C_pmsno} (<b>{C_from}</b> {L_UCAB_PMS_WRITESTO} <b>{C_to}</b>)<br />
 
 <<+ 'PM_LIST_ROW'>>
 <tr><td style="border-bottom-width: 1px;" onmouseover="qf_show_div_id('pm{COUNTER}')" onmouseout="qf_hide_div_id('pm{COUNTER}')">
-{C_caption}
+{IF_candel}<a href="index.php?st=mycabinet&amp;job=pms&amp;delpm={C_pmid}" style="display: block; float: right;">{V_BTN_DROP}</a>{ENDIF}
+{IF_unread}{V_NEW_FLAG} {ENDIF}{C_caption}
 <div style="position: relative" >
 <div id="pm{COUNTER}" style="position: absolute; left: 25px; display: none;" align="center">
 <table class="overlay fullwidth" ><tr><td class="genmed nowrap">
@@ -923,7 +929,7 @@ Forms For Common Pages. MODIFY CAREFULLY !!!
 <form action="index.php" name="delavatar" method="post">
 <input type="hidden" name="script" value="mycabinet">
 <input type="hidden" name="action" value="delavatar">
-<input type="hidden" name="qfuser" value="{C_unick}">
+<input type="hidden" name="qfuser" value="{!C_unick}">
 <input type="submit" name="DelAva" value="{L_BTN_DELETE}">
 </form>
 </td>
@@ -936,7 +942,7 @@ Forms For Common Pages. MODIFY CAREFULLY !!!
 <form action="index.php" name="uplavatar" method="post" enctype="multipart/form-data">
 <input type="hidden" name="script" value="mycabinet">
 <input type="hidden" name="action" value="newavatar">
-<input type="hidden" name="qfuser" value="{C_unick}">
+<input type="hidden" name="qfuser" value="{!C_unick}">
 <input type="file" name="newavatar">
 <input type="submit" name="Upl" value="{L_BTN_UPLOAD}">
 </form>
@@ -968,7 +974,7 @@ function checkForm(form) {
 <form action="index.php" name="newmail" method="post" onsubmit="return checkForm(this)">
 <input type="hidden" name="script" value="mycabinet">
 <input type="hidden" name="action" value="newmail">
-<input type="hidden" name="qfuser" value="{C_unick}">
+<input type="hidden" name="qfuser" value="{!C_unick}">
 <input type="text" name="newmail" maxlength="36">
 <input type="submit" name="set" value="{L_BTN_ACCEPT}">
 </form>
@@ -979,7 +985,7 @@ function checkForm(form) {
 <form action="index.php" name="actmail" method="post">
 <input type="hidden" name="script" value="mycabinet">
 <input type="hidden" name="action" value="actmail">
-<input type="hidden" name="qfuser" value="{C_unick}">
+<input type="hidden" name="qfuser" value="{!C_unick}">
 <input type="text" name="nacode" maxlength="32" value="{C_uacode}" style="width: 300px;"><br />
 {L_UCAB_ACODE_PASSREQUEST}<br />
 <input type="password" name="userpass" >
@@ -994,12 +1000,12 @@ function checkForm(form) {
 <<+ 'PM_NEW_FORM'>>
  <input type="hidden" name="script" value="newpm" />
  <input type="hidden" name="action" value="post" />
-{IF_fixrecip}<input type="hidden" name="qfrec" value="{C_recip}" />
-{ELSE}{L_RECIPIENT}: <input type="text" name="qfrec" value="{C_recip}" /><br />{ENDIF}
-{IF_fixuser} <input type="hidden" name="qfuser" value="{C_user}" />
-{ELSE}{L_AUTHOR}: <input type="text" name="qfuser" value="{C_user}" /><br />
+{IF_fixrecip}<input type="hidden" name="qfrec" value="{!C_recip}" />
+{ELSE}{L_RECIPIENT}: <input type="text" name="qfrec" value="{!C_recip}" /><br />{ENDIF}
+{IF_fixuser} <input type="hidden" name="qfuser" value="{!C_user}" />
+{ELSE}{L_AUTHOR}: <input type="text" name="qfuser" value="{!C_user}" /><br />
 {SPAMFIELD}{ENDIF}
- {L_THEME}: <input type="text" name="qftheme" value="{C_theme}" /><br />
+ {L_THEME}: <input type="text" name="qftheme" value="{!C_theme}" /><br />
  <textarea cols="50" class="post" style="width:98%" rows="8" name="message">{C_text}</textarea><br />
  <input type="button" accesskey="e" name="geteditor" value="{L_BTN_EDITOR}" onClick="window.open('index.php?sr=qfeditor&amp;senderform={C_formname}', '_qfeditor', 'HEIGHT=450, resizable=yes, scrollbars=yes, WIDTH=520');return false;" title="{L_BTN_EDITOR}" />
  <input type="submit" class="post" value="{L_BTN_SEND}" title="{L_BTN_SEND}" />
@@ -1113,15 +1119,15 @@ Universal form parts.
 <<+ 'UNIFORM_CHECKBOX'>>
 <tr><td class="qf_rborder toptext">{C_capt}<br /><span class="genmed">{C_descr}</span></td>
 <td width="150" style="border-bottom-width: 1px;" align="center">
-{C_capt} <br /><input name="{C_name}" type="checkbox" value="{C_value}" {C_checked} {C_params}>
+{C_capt} <br /><input name="{C_name}" type="checkbox" value="{!C_value}" {C_checked} {C_params}>
 </td></tr>
 <<- 'UNIFORM_CHECKBOX'>>
 
 <<+ 'UNIFORM_DOUBLEDPASS'>>
 <tr><td class="qf_rborder toptext">{C_capt}<br /><span class="genmed">{C_descr}</span></td>
 <td width="150" style="border-bottom-width: 1px;" align="center">
-{C_capt} <br /><input name="{C_name}1" type="password" value="{C_value}" {C_params}>
-{C_capt2} <br /><input name="{C_name}2" type="password" value="{C_value}" {C_params}>
+{C_capt} <br /><input name="{C_name}1" type="password" value="{!C_value}" {C_params}>
+{C_capt2} <br /><input name="{C_name}2" type="password" value="{!C_value}" {C_params}>
 </td></tr>
 <<- 'UNIFORM_DOUBLEDPASS'>>
 
@@ -1150,7 +1156,7 @@ Universal form parts.
 <<+ 'UNIFORM_DEFAULT'>>
 <tr><td class="qf_rborder toptext">{C_capt}<br /><span class="genmed">{C_descr}</span></td>
 <td width="150" style="border-bottom-width: 1px;" align="center">
-{C_capt} <br /><input name="{C_name}" type="{C_type}" value="{C_value}" {C_params}>
+{C_capt} <br /><input name="{C_name}" type="{C_type}" value="{!C_value}" {C_params}>
 </td></tr>
 <<- 'UNIFORM_DEFAULT'>>
 

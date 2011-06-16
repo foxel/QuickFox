@@ -450,6 +450,11 @@ class qf_sql_base
         return $result;
     }
 
+    function sql_quote($string)
+    {
+        return mysql_escape_string($string);
+    }
+
     function srv_info()
     {
         return ($this->db_connect_id) ? 'MySQL. Version '.mysql_get_server_info($this->db_connect_id) : 'Unconnected';

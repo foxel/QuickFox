@@ -772,6 +772,28 @@ function ParseTempl($templ,$params)
     return $templ;
 }
 
+function smartAmpersands($string)
+{
+    return preg_replace('#\&(?!([A-z]+|\#\d{1,5}|\#x[0-9a-fA-F]{2,4});)#', '&amp;', $string);
+}
+
+
+function smartHTMLSchars($string, $no_quotes = false)
+{
+    static $SCHARS = null;
+    static $NQSCHARS = null;
+
+    if (is_null($SCHARS))
+    {
+        $SCHARS = get_html_translation_table(HTML_SPECIALCHARS);
+        unset($SCHARS['&']);
+        $NQSCHARS = $SCHARS;
+        unset($NQSCHARS['"'], $NQSCHARS['\'']);
+    }
+
+    return strtr(smartAmpersands($string), $no_quotes ? $NQSCHARS : $SCHARS);
+}
+
 
 // returns true if given function link leads to existing func
 // provides is_callable function on old PHP

@@ -22,8 +22,9 @@ define('QF_BBTAG_USEBRK', 8);      // this tag uses bekers within it's contents
 define('QF_BBTAG_FHTML', 16);      // formatted html string as a replace (not a html tag name)
 define('QF_BBTAG_NOCH',  32);      // tag data in not cachable (must have function to parse)
 
-// seme usefull defines
+// some usefull defines
 define('QF_URL_MASK', '[0-9A-z]+://[\w\#$%&~/.\-;:=,?@+\(\)\[\]]+');
+define('QF_EMAIL_MASK','[0-9A-z_\-\.]+@[0-9A-z_\-\.]+\.[A-z]{2,4}');
 
 class qf_parser
 {    var $mode = 0;
@@ -56,17 +57,31 @@ class qf_parser
         $this->Add_Tag('s', 'strike');
         $this->Add_Tag('sub', 'sub');
         $this->Add_Tag('sup', 'sup');
+
+        $this->Add_Tag('h1', 'h1', QF_BBTAG_BLLEV);
+        $this->Add_Tag('h2', 'h2', QF_BBTAG_BLLEV);
+        $this->Add_Tag('h3', 'h3', QF_BBTAG_BLLEV);
+        $this->Add_Tag('h4', 'h4', QF_BBTAG_BLLEV);
+        $this->Add_Tag('h5', 'h5', QF_BBTAG_BLLEV);
+        $this->Add_Tag('h6', 'h6', QF_BBTAG_BLLEV);
+
+        $this->Add_Tag('align', '<div style="text-align: {param};">{data}</div>', QF_BBTAG_FHTML | QF_BBTAG_BLLEV, Array('param_mask' => 'left|right|center|justify') );
+        $this->Add_Tag('center', '<div style="text-align: center;">{data}</div>', QF_BBTAG_FHTML | QF_BBTAG_BLLEV);
+        $this->Add_Tag('float', '<div style="float: {param};">{data}</div>', QF_BBTAG_FHTML | QF_BBTAG_BLLEV, Array('param_mask' => 'left|right') );
+
         $this->Add_Tag('color', '<span style="color: {param};">{data}</span>', QF_BBTAG_FHTML, Array('param_mask' => '\#[0-9a-f]{6}|[a-z\-]+') );
         $this->Add_Tag('background', '<span style="background-color: {param};">{data}</span>', QF_BBTAG_FHTML, Array('param_mask' => '\#[0-9a-f]{6}|[a-z\-]+') );
         $this->Add_Tag('font', '<span style="font-family: {param};">{data}</span>', QF_BBTAG_FHTML, Array('param_mask' => '[a-zA-Z\x20]+') );
         $this->Add_Tag('size', '<span style="font-size: {param}px;">{data}</span>', QF_BBTAG_FHTML, Array('param_mask' => '[1-2]?[0-9]') );
-        $this->Add_Tag('img', '', QF_BBTAG_NOSUB, Array('func' => Array( &$this, 'BBCode_Std_UrlImg') ) );
-        $this->Add_Tag('url', '', false, Array('func' => Array( &$this, 'BBCode_Std_UrlImg') ) );
-        $this->Add_Tag('table', '', QF_BBTAG_BLLEV | QF_BBTAG_USEBRK | QF_BBTAG_SUBDUP, Array('func' => Array( &$this, 'BBCode_Std_Table') ) );
+        $this->Add_Tag('email', '<a href="mailto:{data}">{data}</a>', QF_BBTAG_FHTML, Array('data_mask' => QF_EMAIL_MASK));
+        $this->Add_Tag('img', '', QF_BBTAG_NOSUB, Array('func' => Array( &$this, '_BBCode_Std_UrlImg') ) );
+        $this->Add_Tag('url', '', false, Array('func' => Array( &$this, '_BBCode_Std_UrlImg') ) );
+        $this->Add_Tag('table', '', QF_BBTAG_BLLEV | QF_BBTAG_USEBRK | QF_BBTAG_SUBDUP, Array('func' => Array( &$this, '_BBCode_Std_Table') ) );
         $this->Add_Tag('list', '', QF_BBTAG_USEBRK, Array('func' => Array( &$this, '_BBCode_Std_List') ) );
 
         // Replacers
         $this->Add_Preg(QF_URL_MASK, '[url]{data}[/url]');
+        $this->Add_Preg(QF_EMAIL_MASK, '[email]{data}[/email]');
         $this->Add_Preg('\([cñ]\)','&copy;');
         $this->Add_Preg('-','—');
 
@@ -536,7 +551,7 @@ class qf_parser
             return false;
     }
 
-    function BBCode_Std_UrlImg($name, $buffer, $param = false)
+    function _BBCode_Std_UrlImg($name, $buffer, $param = false)
     {
         if ($name == 'url')
             $html = '<a href="{url}" title="{url}" >{capt}</a>';
@@ -569,20 +584,46 @@ class qf_parser
 
     function _BBCode_Std_Table($name, $buffer, $param = false)
     {
-        $useborder = false;
+        static $cellaligns = array('t' => 'vertical-align: top; ', 'b' => 'vertical-align: bottom; ', 'm' => 'vertical-align: middle; ');
+        static $aligns = array('l' => 'text-align: left; ', 'r' => 'text-align: right; ', 'c' => 'text-align: center; ', 'j' => 'text-align: justify; ');
+        
+        $useborder = $width = $align = false;
         $parr = explode('|', $param);
         if (count($parr)>1)
         {
             $param = $parr[0];
-            $useborder = (bool) $parr[1];
+            $useborder = (int) $parr[1];
+            if ($width = (int) $parr[2])
+            {
+                if (substr($parr[2], -1) == '%')
+                    $width = $width.'%';
+                else
+                    $width = $width.'px';
+            }
+            $align = $parr[3];
         }
         $param = (int) $param;
         if ($param <= 0)
             $param = 1;
 
         $table = explode('['.$this->tagbreaker.']', $buffer);
-        $buffer = ($useborder)
-            ? '<table style="border: solid 1px;"><tr>'
+        $style = $cellstyle = '';
+        if ($useborder)
+            $style.= 'border: solid '.$useborder.'px; ';
+        if ($width)
+            $style.= 'width: '.$width.'; ';
+        if ($align)
+            for ($i = strlen($align); $i > 0; )
+            {
+                $i--;
+                $part = $align[$i];
+                if (isset($aligns[$part]))
+                    $style.= $aligns[$part];
+                if (isset($cellaligns[$part]))
+                    $cellstyle.= $cellaligns[$part];
+            }
+        $buffer = ($style)
+            ? '<table style="'.$style.'"><tr>'
             : '<table><tr>';
         $i = 0;
         foreach ($table as $part)
@@ -594,7 +635,9 @@ class qf_parser
                 $part = '&nbsp;';
             else
                 $part = preg_replace('#^\s*\<br\s?/?\>#', '', $part);
-            $buffer.= '<td>'.$part.'</td>';
+            $buffer.= ($cellstyle)
+                ? '<td style="'.$cellstyle.'">'.$part.'</td>'
+                : '<td>'.$part.'</td>';
             $i++;
         }
         while ($i%$param != 0)

@@ -184,6 +184,13 @@ elseif ($job=='config') {
 	        'value'    => $stt,
     	    'selected' => ($QF_Config['post_files_rights']==$stt) );
 
+    $fields['file_noattc']=Array(
+        'value'   => 'ON',
+        'type'    => 'checkbox',
+        'checked' => ($QF_Config['files']['no_attc']) ? '1' : '',
+        'capt'    => $lang['CONFIG_COMMON_FILES_NOATTC'],
+        'descr'   => $lang['CONFIG_COMMON_FILES_NOATTC_MORE'] );
+
     $fields['file_msize']=Array(
         'value' => round($QF_Config['post_file_size']/1024),
         'type'  => 'text',

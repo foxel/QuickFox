@@ -9,7 +9,7 @@ if ( !defined('FORUM_CORE_LOADED') )
 
 Class qf_forum_upd
 {
-    var $curpost, $curtheme, $cursect, $parchive;
+    var $curpost, $curtheme, $mergetheme, $cursect, $parchive;
     var $uname, $uid, $ucode, $urights, $spcode;
     var $pfiles = Array();
     var $t_mrights, $t_prights, $t_caption, $t_descr, $dupthemeid; //posted theme data
@@ -96,6 +96,26 @@ Class qf_forum_upd
                     $this->curtheme['cu_access']=1;
                 else
                     $this->curtheme['cu_access']=0;
+            };
+        }
+
+        // preloading merge branch
+        $mt_id = Get_Request('t_merge_to', 2, 'i');
+        if ($mt_id) {
+            if ($result = $QF_DBase->sql_doselect('{DBKEY}topics', '*', Array('id' => $mt_id) ) )
+            {                $this->mergetheme = $QF_DBase->sql_fetchrow($result);
+                $mrg_sect = $QF_Forum->ForumTree[$this->mergetheme['parent']];
+
+                if (!$mrg_sect['curuser_access'] || ($mrg_sect['acc_group'] && !$QF_User->cuser['active']))
+                    $this->mergetheme['cu_access']=0;
+                elseif($QF_User->admin || ($QF_User->cuser['modlevel']>=$this->mergetheme['postrights'] && $QF_User->cuser['modlevel']>0))
+                    $this->mergetheme['cu_access']=3;
+                elseif($QF_User->wlevel >= $this->mergetheme['postrights'] && !$this->mergetheme['locked'])
+                    $this->mergetheme['cu_access']=2;
+                elseif($QF_User->level >= $this->mergetheme['minrights'])
+                    $this->mergetheme['cu_access']=1;
+                else
+                    $this->mergetheme['cu_access']=0;
             };
         }
 
@@ -360,6 +380,9 @@ Class qf_forum_upd
 
         if (!$this->loaded) $this->preload_data();
 
+        $to_merge = Get_Request('p_merge', 2, 'b');
+        $to_merge_all = Get_Request('p_merge_all', 2, 'b');
+        
         If (empty($this->message)) {
             $this->error .= '<LI>'.$lang['ERR_NO_MESS']."\n";
         }
@@ -381,12 +404,26 @@ Class qf_forum_upd
         elseIf ($this->curtheme['cu_access']<3 && $this->uid != $this->curpost['author_id']) {
             $this->error .= '<LI>'.$lang['ERR_LOWLEVEL']."\n";
         }
+        if ($to_merge) {
+            If (empty($this->mergetheme)) {
+                $this->error .= '<LI>'.$lang['ERR_MERGETHEME_LOST']."\n";
+            }
+            elseIf ($this->mergetheme['cu_access']<3) {
+                $this->error .= '<LI>'.$lang['ERR_LOWLEVEL']."\n";
+            }
+            elseIf ($this->mergetheme['merged_to']) {
+                $this->error .= '<LI>'.$lang['ERR_MERGETHEME_MERGED']."\n";
+            }
+        }
 
         if ($this->error) Return False;
 
         $this->append_files($this->curpost['id']);
 
         if ($this->error) Return False;
+
+        if ($this->mergetheme['id'] == $this->curtheme['id'])
+            $to_merge = null;
 
         $deleted = Get_Request('p_del', 2, 'b');
         $hideedit = Get_Request('p_hedit', 2, 'b');
@@ -395,16 +432,24 @@ Class qf_forum_upd
         if (is_array($unattach)) {            $unatt_list=Array();
             foreach ($unattach as $id)
                 $unatt_list[]='"'.addslashes($id).'"';
-            $mod = ($this->curtheme['cu_access']>=3) ? ' OR rights <= '.$QF_User->cuser['modlevel'] : '';
             if (count($unatt_list)>0)
             {
+                if (!$QF_User->admin)
+                {
+                    $mod = ($this->curtheme['cu_access']>=3)
+                        ? 'AND (user_id = '.$QF_User->uid.' OR rights <= '.$QF_User->cuser['modlevel'].')'
+                        : 'AND user_id = '.$QF_User->uid;
+                }
+                else
+                    $mod = '';
                 //$QF_DBase->sql_doupdate('{DBKEY}files', Array('att_to' => 0),  'WHERE att_to = '.$this->curpost['id'].' AND id IN ('.implode(',', $unatt_list).') AND (user_id = '.$QF_User->uid.' '.$mod.')' );
-                $QF_DBase->sql_dodelete('{DBKEY}files', 'WHERE att_to = '.$this->curpost['id'].' AND id IN ('.implode(',', $unatt_list).') AND (user_id = '.$QF_User->uid.' '.$mod.')' );
+                $QF_DBase->sql_dodelete('{DBKEY}files', 'WHERE att_to = '.$this->curpost['id'].' AND id IN ('.implode(',', $unatt_list).') '.$mod );
             }
 
         }
 
-        if ($this->curtheme['cu_access']<3) $hideedit=0;
+        if ($this->curtheme['cu_access']<3)
+            $hideedit = false;
 
         if (!$this->curpost['changer'] && $this->curpost['time'] >= ($this->time-$QF_Config['forum']['mess_lock_time']*60) && $this->uid == $this->curpost['author_id'])
             $hideedit = true;
@@ -439,14 +484,43 @@ Class qf_forum_upd
             }
         }
 
-        $QF_DBase->sql_doinsert('{DBKEY}posts_cache', Array('ch_id' => $this->curpost['id'], 'ch_text' => $this->parsed_post, 'ch_stored' => $this->time), true );
+        if ($to_merge)
+        {
+            $post_ids = array();
+            if ($to_merge_all)
+            {
+                if ($result = $QF_DBase->sql_doselect('{DBKEY}posts', 'id', 'WHERE `theme` = '.$this->curtheme['id'].' AND `id` >= '.$this->curpost['id']))
+                {
+                    while (list($pid) = $QF_DBase->sql_fetchrow($result, false))
+                        $post_ids[] = $pid;
+                    $QF_DBase->sql_freeresult($result);
+                }
+            }
+            else
+                $post_ids[] = $this->curpost['id'];
+            $msg = "\n\n".sprintf($lang['FOR_POST_MERGED'], $this->curtheme['name'], $this->curtheme['id']);
+            $QF_DBase->sql_query('UPDATE `{DBKEY}posts` SET `text` = CONCAT(`text`, \''.$QF_DBase->sql_quote($msg).'\'), `theme` = '.$this->mergetheme['id'].' WHERE `theme` = '.$this->curtheme['id'].' AND `id` '.($to_merge_all ? '>=' : '=').' '.$this->curpost['id'].';' );
+            if (count($post_ids))
+            {
+                $post_ids = implode(', ', $post_ids);
+                $QF_DBase->sql_query('UPDATE `{DBKEY}posts` SET `hash` = MD5(`text`) WHERE `id` IN ('.$post_ids.')' );
+                $QF_DBase->sql_dodelete('{DBKEY}posts_cache', 'WHERE `ch_id` IN ('.$post_ids.')');
+            }
+        }
+        else
+            $QF_DBase->sql_doinsert('{DBKEY}posts_cache', Array('ch_id' => $this->curpost['id'], 'ch_text' => $this->parsed_post, 'ch_stored' => $this->time), true );
 
 
         $this->upd_theme_data($this->curtheme['id']);
         $this->upd_sect_data($this->curtheme['parent']);
+        if ($to_merge)
+        {
+            $this->upd_theme_data($this->mergetheme['id']);
+            $this->upd_sect_data($this->mergetheme['parent']);
+        }
         $this->upd_userstats($this->curpost['author_id']);
 
-        $this->redir = 'index.php?st=branch&amp;branch='.$this->curtheme['id'].'&amp;postshow='.$this->curpost['id'].'#'.$this->curpost['id'];
+        $this->redir = 'index.php?st=branch&amp;branch='.($to_merge ? $this->mergetheme['id'] : $this->curtheme['id']).'&amp;postshow='.$this->curpost['id'].'#'.$this->curpost['id'];
         $this->result=sprintf($lang['FOR_POST_MODED'],$this->curtheme['name'],'<a href="'.$this->redir.'">','</a>');
 
     }
@@ -587,6 +661,8 @@ Class qf_forum_upd
 
         if (!$this->loaded) $this->preload_data();
 
+        list($deleted, $locked, $pinned, $to_merge) = Get_Request_Multi('t_del t_lock t_pin t_merge', 2, 'b');
+
         If (!$this->uid) {
             $this->error .= '<LI>'.$lang['ERR_LOWLEVEL']."\n";
         }
@@ -608,10 +684,19 @@ Class qf_forum_upd
         elseIf ($this->cursect['cu_access']<2) {
             $this->error .= '<LI>'.$lang['ERR_SECT_LOWLEVEL']."\n";
         }
+        if ($to_merge) {
+            If (empty($this->mergetheme)) {
+                $this->error .= '<LI>'.$lang['ERR_MERGETHEME_LOST']."\n";
+            }
+            elseIf ($this->mergetheme['cu_access']<3) {
+                $this->error .= '<LI>'.$lang['ERR_LOWLEVEL']."\n";
+            }
+            elseIf ($this->mergetheme['merged_to']) {
+                $this->error .= '<LI>'.$lang['ERR_MERGETHEME_MERGED']."\n";
+            }
+        }
 
         if ($this->error) Return False;
-
-        list($deleted, $locked, $pinned) = Get_Request_Multi('t_del t_lock t_pin', 2, 'b');
 
         $this->t_mrights = Max($this->t_mrights, intval($this->cursect['minrights']));
         $this->t_prights = Max($this->t_prights, $this->t_mrights);
@@ -625,6 +710,15 @@ Class qf_forum_upd
             'deleted'    => intval($deleted),
             );
 
+        if ($this->mergetheme['id'] == $this->curtheme['id'])
+            $to_merge = null;
+    
+        if ($to_merge)
+        {
+            $upd_data['merged_to'] = $this->mergetheme['id'];
+            $upd_data['deleted']   = 1;
+        }
+
         if ($this->curtheme['cu_access']>=3)
         {
             $upd_data['pinned'] = intval($pinned);
@@ -633,8 +727,33 @@ Class qf_forum_upd
 
         $QF_DBase->sql_doupdate('{DBKEY}topics', $upd_data, Array ('id' => $this->curtheme['id']) );
 
+        if ($to_merge)
+        {
+            $post_ids = array();
+            if ($result = $QF_DBase->sql_doselect('{DBKEY}posts', 'id', Array('theme' => $this->curtheme['id']) ) )
+            {
+                while (list($pid) = $QF_DBase->sql_fetchrow($result, false))
+                    $post_ids[] = $pid;
+                $QF_DBase->sql_freeresult($result);
+            }
+            $msg = "\n\n".sprintf($lang['FOR_POST_MERGED'], $this->curtheme['name'], $this->curtheme['id']);
+            $QF_DBase->sql_query('UPDATE `{DBKEY}posts` SET `text` = CONCAT(`text`, \''.$QF_DBase->sql_quote($msg).'\'), `theme` = '.$this->mergetheme['id'].' WHERE `theme` = '.$this->curtheme['id'].';' );
+            if (count($post_ids))
+            {
+                $post_ids = implode(', ', $post_ids);
+                $QF_DBase->sql_query('UPDATE `{DBKEY}posts` SET `hash` = MD5(`text`) WHERE `id` IN ('.$post_ids.')' );
+                $QF_DBase->sql_dodelete('{DBKEY}posts_cache', 'WHERE `ch_id` IN ('.$post_ids.')');
+            }
+        }
+
+
         $this->upd_theme_data($this->curtheme['id']);
         $this->upd_sect_data($this->curtheme['parent']);
+        if ($to_merge)
+        {
+            $this->upd_theme_data($this->mergetheme['id']);
+            $this->upd_sect_data($this->mergetheme['parent']);
+        }
         $this->upd_sect_data($this->cursect['id']);
         $this->upd_userstats($this->uid);
 

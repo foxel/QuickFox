@@ -150,6 +150,13 @@ elseif ($action=='common_config') {    $site_name = Get_Request('site_name', 2,
     else
         $error .= '<LI>'.$lang['CONFIG_COMMON_FILES_PRIGHTS_ERR'];
 
+    $file_noattc = (Get_Request('file_noattc', 2)=='ON') ? 1 : 0;
+    $apply_conf[]=Array(
+        'parent' => 'files',
+        'name'   => 'no_attc',
+        'value'  => $file_noattc,
+    );
+
     $file_msize = Get_Request('file_msize', 2, 'i');
     if ($file_msize>=512 && $file_msize<=102400)
         $apply_conf[]=Array(

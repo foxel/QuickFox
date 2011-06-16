@@ -313,7 +313,7 @@ elseif ($job=='pms') {
     $result = $QF_DBase->sql_query($query);
     while ( $ids = $QF_DBase->sql_fetchrow($result))
         $uids = array_merge($uids, array_values($ids));
-    $query = 'SELECT DISTINCT recipient_id FROM {DBKEY}pms WHERE author_id='.$ucabuser['id'].' AND deleted = 0';
+    $query = 'SELECT DISTINCT recipient_id FROM {DBKEY}pms WHERE author_id='.$ucabuser['id'].' AND deleted_out = 0';
     $result = $QF_DBase->sql_query($query);
     while ( $ids = $QF_DBase->sql_fetchrow($result))
         $uids = array_merge($uids, array_values($ids));
@@ -326,16 +326,18 @@ elseif ($job=='pms') {
     $content='';
     Glob_Request('pm delpm');
     if ($delpm) {
-           $QF_DBase->sql_doupdate('{DBKEY}pms', Array( 'deleted' => 1), Array( 'id' => $delpm, 'recipient_id' => $ucabuser['id']) );
+        $QF_DBase->sql_doupdate('{DBKEY}pms', Array('deleted' => 1), Array( 'id' => $delpm, 'recipient_id' => $ucabuser['id']) );
+        $QF_DBase->sql_doupdate('{DBKEY}pms', Array('deleted_out' => 1), Array( 'id' => $delpm, 'author_id' => $ucabuser['id']) );
     }
     if ($pm) {
-           $query = 'SELECT * FROM {DBKEY}pms WHERE id='.$pm.' AND (author_id='.$ucabuser['id'].' OR recipient_id='.$ucabuser['id'].') AND deleted = 0';
+           $query = 'SELECT * FROM {DBKEY}pms WHERE id='.$pm.' AND ((author_id='.$ucabuser['id'].' AND deleted_out = 0) OR (recipient_id='.$ucabuser['id'].' AND deleted = 0))';
            $result = $QF_DBase->sql_query($query);
            if ($result) $curpm = $QF_DBase->sql_fetchrow($result);
        if (is_array($curpm)) {
-            $QF_DBase->sql_doupdate('{DBKEY}pms', Array( 'readed' => 1), Array( 'id' => $pm, 'recipient_id' => $ucabuser['id']) );
+            if ($QF_User->uid == $curpm['recipient_id'])
+                $QF_DBase->sql_doupdate('{DBKEY}pms', Array( 'readed' => 1), Array( 'id' => $pm, 'recipient_id' => $ucabuser['id']) );
 
-            $is_inpm=($curpm['recipient']==$ucabuser['nick']);
+            $is_inpm=($curpm['recipient_id']==$ucabuser['id']);
             if ($is_inpm) {
                 $puser=$ulist->get($curpm['author_id']);
                 $ruser=$ucabuser;
@@ -355,10 +357,8 @@ elseif ($job=='pms') {
                                     'caption' => $curpm['theme'],
                                     'content' => $QF_Parser->parse_mess($curpm['text']) ) );
 
-            if ($is_inpm) {
-                $MB['content']='<a href="index.php?st=mycabinet&amp;job=pms&amp;delpm='.$curpm['id'].'"> '.$Vis['BTN_DROP'].' </a>';
-                $tmpl['modblock']=Visual('POST_MOD_BLOCK', $MB);
-                }
+            $MB = array('content' => '<a href="index.php?st=mycabinet&amp;job=pms&amp;delpm='.$curpm['id'].'"> '.$Vis['BTN_DROP'].' </a>');
+            $tmpl['modblock']=Visual('POST_MOD_BLOCK', $MB);
 
             $show_pm=Visual('MYCABINET_PMS_LINE', Array(
                 'pmsno' => $pm,
@@ -413,7 +413,10 @@ elseif ($job=='pms') {
     {
         $puser=$ulist->get($inpm['author_id']);
         $tmpl=Array(
-            'caption' => (($inpm['readed'])? '': $Vis['NEW_FLAG'].' ').'<a href="index.php?st=mycabinet&amp;job=pms'.(($cabuser)?'&amp;cabuser='.$cabuser:'').'&amp;pm='.$inpm['id'].'">'.$inpm['theme'].'</a>',
+            'pmid'    => $inpm['id'],
+            'unread'  => $inpm['readed'] ? null : 1,
+            'candel'  => $inpm['readed'] ? 1 : null,
+            'caption' => '<a href="index.php?st=mycabinet&amp;job=pms'.(($cabuser)?'&amp;cabuser='.$cabuser:'').'&amp;pm='.$inpm['id'].'">'.$inpm['theme'].'</a>',
             'inpm'    => 'true',
             'date'    => create_date('', $inpm['time']),
             'user'    => ($puser) ? '<a href="index.php?st=info&amp;infouser='.$puser['id'].'">'.$puser['nick'].'</a>' : $inpm['author']
@@ -438,16 +441,19 @@ elseif ($job=='pms') {
            $QF_User->cuser['hasnewpm']=$hasnewpm;
     }
 
-    $result = $QF_DBase->sql_doselect('{DBKEY}pms', '*', Array( 'author_id' => $ucabuser['id'], 'deleted' => 0), ' ORDER BY time DESC limit 250');
+    $result = $QF_DBase->sql_doselect('{DBKEY}pms', '*', Array( 'author_id' => $ucabuser['id'], 'deleted_out' => 0), ' ORDER BY time DESC limit 250');
 
     $pm_rows='';
     while ( $outpm = $QF_DBase->sql_fetchrow($result))
     {
         $puser=$ulist->get($outpm['recipient_id']);
         $tmpl=Array(
-            'caption' => (($outpm['readed'])? '': $Vis['UNR_FLAG'].' ').'<a href="index.php?st=mycabinet&amp;job=pms'.(($cabuser)?'&amp;cabuser='.$cabuser:'').'&amp;pm='.$outpm['id'].'">'.$outpm['theme'].'</a>',
+            'pmid'    => $outpm['id'],
+            'unread'  => $outpm['readed'] ? null : 1,
+            'candel'  => 1,
+            'caption' => '<a href="index.php?st=mycabinet&amp;job=pms'.(($cabuser)?'&amp;cabuser='.$cabuser:'').'&amp;pm='.$outpm['id'].'">'.$outpm['theme'].'</a>',
             'date'    => create_date('', $outpm['time']),
-            'user'    => (($puser) ? '<a href="index.php?st=info&amp;infouser='.$puser['id'].'">'.$puser['nick'].'</a>' : str_replace('[|]','',$outpm['author'])) );
+            'user'    => (($puser) ? '<a href="index.php?st=info&amp;infouser='.$puser['id'].'">'.$puser['nick'].'</a>' : str_replace('[|]','',$outpm['recipient'])) );
 
         $pm_rows.=Visual('PM_LIST_ROW', $tmpl);
     }
@@ -524,7 +530,7 @@ if ($cabinet_main_window==''){
     }
 
     $query='SELECT COUNT(time) as pmscount, SUM(readed) as pmsreads FROM {DBKEY}pms
-        WHERE author_id='.$ucabuser['id'].' AND deleted=0';
+        WHERE author_id='.$ucabuser['id'].' AND deleted_out=0';
     $result=$QF_DBase->sql_query($query);
     if ($result) $pmsstats=$QF_DBase->sql_fetchrow($result);
 

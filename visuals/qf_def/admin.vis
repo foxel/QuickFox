@@ -257,8 +257,8 @@ Forms For Admin Pages. MODIFY CAREFULLY !!!
 
 <<+ 'ACCESS_GROUPS_TBLROW_CHFORM'>>
 <tr class="selected" >
-<td class="nowrap"><input type="text" name="gr_name" value="{C_name}" maxlength="32" /></td>
-<td class="genmed"><input type="text" name="gr_descr" value="{C_descr}" maxlength="255" /></td>
+<td class="nowrap"><input type="text" name="gr_name" value="{!C_name}" maxlength="32" /></td>
+<td class="genmed"><input type="text" name="gr_descr" value="{!C_descr}" maxlength="255" /></td>
 <td class="nowrap" colspan="2" align="right">
 <input type="hidden" name="script" value="acc_gr_edit" />
 <input type="hidden" name="action" value="gr_edit" />
@@ -312,7 +312,7 @@ Forms For Admin Pages. MODIFY CAREFULLY !!!
 
 <table class="border fullwidth"><tr>
 <td valign="top" width="90%">
-	{L_FOR_SECT_NAME}: <input type="text" name="name" size="36" size="40" value="{C_capt}"><br />
+	{L_FOR_SECT_NAME}: <input type="text" name="name" size="36" size="40" value="{!C_capt}"><br />
 	{L_FOR_SECT_DESC}: <br />
 	<textarea cols="30" class="post" rows="4" name="descript" style="width: 98%;">{C_descr}</textarea>
 	{L_READL}:

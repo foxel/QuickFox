@@ -198,6 +198,9 @@ if ($result) {    while ( $setting = $QF_DBase->sql_fetchrow($result))
     $QF_DBase->sql_freeresult($result);
 };
 
+$QF_Pagedata['server_name']=$QF_SrvName;
+
+
 // Bancheck
 $result=$QF_DBase->sql_doselect('{DBKEY}bans', '', 'WHERE "'.$QF_Client['ip_hex'].'" BETWEEN first_ip AND last_ip ');
 if ($result) {    $current_ban = $QF_DBase->sql_fetchrow($result);

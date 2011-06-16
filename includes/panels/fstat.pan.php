@@ -18,6 +18,8 @@ if (is_null($forumstat_themes)) {
             AND (al.user_id = '.$QF_User->uid.' || s.acc_group = 0 || t.parent = 0)';
     elseif (!$QF_User->admin)
         $query.= ' WHERE t.minrights = 0 AND t.deleted = 0 AND (s.acc_group = 0 || t.parent = 0)';
+    else
+        $query.= ' WHERE t.deleted = 0';
 
     $query.= ' ORDER BY t.lasttime DESC LIMIT 0, 10';
     if ( $result = $QF_DBase->sql_query($query) ) {        while ( $subtheme = $QF_DBase->sql_fetchrow($result))            $forumstat_themes[] = $subtheme;
