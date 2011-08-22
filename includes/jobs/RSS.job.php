@@ -91,7 +91,7 @@ if (is_array($topic)) // by Topic RSS
 
     $rss_data = Array(
        '{title}'       => htmlspecialchars(sprintf($lang['RSS_TITLE_TOPIC_MSGS'], $QF_Config['site_name'], $topic['name'])),
-       '{link}'        => GetFullUrl('index.php?st=branch&amp;branch='.$topic['id'].'&shownew=1#unread', false),
+       '{link}'        => GetFullUrl('index.php?st=branch&branch='.$topic['id'].'&shownew=1#unread', false),
        '{description}' => htmlspecialchars(sprintf($lang['RSS_TITLE_TOPIC_MSGS_MORE'], $QF_Config['site_name'], $topic['name'])),
        '{copyright}'   => $QF_Config['site_name'],
        '{time}'        => date('r', $topic['lasttime']),
@@ -118,7 +118,7 @@ if (is_array($topic)) // by Topic RSS
         if (!$topic['minrights'])
             $post_text = $QF_Parser->parse_mess(STrim($post['text'], 256));
 
-        $link = GetFullUrl('http://quickfox1.ru/index.php?st=branch&branch='.$topic['id'].'&postshow='.$id.'#'.$id, false);
+        $link = GetFullUrl('index.php?st=branch&branch='.$topic['id'].'&postshow='.$id.'#'.$id, false);
         $guid = md5('QuickFox-'.$QF_Config['server_name'].'-'.$post['id'].'-'.$post['time']);
 
         $items[$id] = Array(

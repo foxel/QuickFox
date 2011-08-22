@@ -241,6 +241,8 @@ if (is_array($topic))
             if ($t_pages>=10)
             {
                 $draw_pages='|';
+                /* if ($t_page > 1)
+                    $draw_pages.=' <a class="pglink" href="'.$topic_inc_url.'&amp;branch='.$topic_id.'&amp;page='.($t_page-1).'#theme" title="'.$lang['PAGE_NO'].' '.($t_page-1).'">&lt;&lt;</a> |'; */
                 $pp=False;
                 for($stt=1; $stt<=$t_pages; $stt++)
                 {
@@ -257,10 +259,14 @@ if (is_array($topic))
                         $pp=False;
                     }
                 }
+                /* if ($t_page < $t_pages)
+                    $draw_pages.=' <a class="pglink" href="'.$topic_inc_url.'&amp;branch='.$topic_id.'&amp;page='.($t_page+1).'#theme" title="'.$lang['PAGE_NO'].' '.($t_page+1).'">&gt;&gt;</a> |'; */
             }
             elseif ($t_pages>1)
             {
                 $draw_pages='|';
+                /* if ($t_page > 1)
+                    $draw_pages.=' <a class="pglink" href="'.$topic_inc_url.'&amp;branch='.$topic_id.'&amp;page='.($t_page-1).'#theme" title="'.$lang['PAGE_NO'].' '.($t_page-1).'">&lt;&lt;</a> |'; */
                 for($stt=1; $stt<=$t_pages; $stt++)
                 {
                     if ($stt != $t_page)
@@ -268,6 +274,8 @@ if (is_array($topic))
                     else
                         $draw_pages.='<b>['.$stt.']</b>|';
                 }
+                /* if ($t_page < $t_pages)
+                    $draw_pages.=' <a class="pglink" href="'.$topic_inc_url.'&amp;branch='.$topic_id.'&amp;page='.($t_page+1).'#theme" title="'.$lang['PAGE_NO'].' '.($t_page+1).'">&gt;&gt;</a> |'; */
             }
             else
                 $draw_pages = '';

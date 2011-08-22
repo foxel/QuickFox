@@ -124,7 +124,7 @@ Class qf_forum_upd
         if ($s_id) {
             if ($result = $QF_DBase->sql_doselect('{DBKEY}sections', '*', Array('id' => $s_id) ) )
             {
-            	$this->cursect = $QF_DBase->sql_fetchrow($result);
+                $this->cursect = $QF_DBase->sql_fetchrow($result);
                 if($QF_User->admin || ($QF_User->cuser['modlevel']>=$this->cursect['postrights'] && $QF_User->cuser['modlevel']>0))
                     $this->cursect['cu_access']=3;
                 elseif($QF_User->wlevel >= $this->cursect['postrights'] && !$this->cursect['locked'])
@@ -150,7 +150,7 @@ Class qf_forum_upd
         // preloading message
         $this->message = Get_Request('message', 2, 'ht');
         $this->message = $QF_Parser->prep_mess($this->message);
-	    $this->parsed_post = $QF_Parser->parse_mess($this->message, 1);  //Preparsed post data
+        $this->parsed_post = $QF_Parser->parse_mess($this->message, 1);  //Preparsed post data
         $this->mhash = md5($this->message);
 
         $this->pfiles = Array();
@@ -169,8 +169,8 @@ Class qf_forum_upd
                 $fid=md5($uni_name);
 
                 if ($fsize>$QF_Config['post_file_size'])
-                	$this->error .= '<LI>'.$filename.' - '.$lang['ERR_FILE_TOOBIG'].' '.
-                		sprintf($lang['FILE_MAX_UPLSIZE'],round($QF_Config['post_file_size']/1024,2))."\n";
+                    $this->error .= '<LI>'.$filename.' - '.$lang['ERR_FILE_TOOBIG'].' '.
+                        sprintf($lang['FILE_MAX_UPLSIZE'],round($QF_Config['post_file_size']/1024,2))."\n";
                 elseif (!in_array($fid, $fids) )
                 {
                     $caption=Get_Request('file'.$fdx.'capt', 2, 'ht', 255);
@@ -189,7 +189,7 @@ Class qf_forum_upd
                 }
             }
             elseif ($filename)
-              	$this->error .= '<LI>'.$filename.' - '.$lang['ERR_FILE_SRVERROR']."\n";
+                $this->error .= '<LI>'.$filename.' - '.$lang['ERR_FILE_SRVERROR']."\n";
         }
 
         if (count($fids)>0) {            $fids = '"'.implode('", "', $fids).'"';
@@ -202,7 +202,7 @@ Class qf_forum_upd
 
                 foreach ($this->pfiles as $pfile)
                     if (in_array($pfile['id'], $fids) )
-                      	$this->error .= '<LI>'.$pfile['filename'].' - '.$lang['ERR_FILE_UPL_DUP']."\n";
+                        $this->error .= '<LI>'.$pfile['filename'].' - '.$lang['ERR_FILE_UPL_DUP']."\n";
             }
         }
 
@@ -282,7 +282,7 @@ Class qf_forum_upd
 
         if ($this->error) Return False;
 
-		if (!$QF_User->uid) $QF_Session->CheckSpamCode($this->spcode);
+        if (!$QF_User->uid) $QF_Session->CheckSpamCode($this->spcode);
 
         if ( $result = $QF_DBase->sql_doselect('{DBKEY}posts', '*', Array ('theme' => $this->curtheme['id']), 'ORDER BY id DESC LIMIT 1' ) ) {            $this->curpost = $QF_DBase->sql_fetchrow($result);
             $QF_DBase->sql_freeresult($result);
@@ -368,7 +368,7 @@ Class qf_forum_upd
         if (count($uids)>0)
             $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'hasnewsubscr' => 1), 'WHERE id IN ('.implode(', ', $uids).')' );
 
-        $QF_DBase->sql_doupdate('{DBKEY}reads', Array( 'active' => 0), 'WHERE theme = '.$this->curtheme['id'].' AND user_id!= '.$QF_User->uid);
+        $QF_DBase->sql_doupdate('{DBKEY}reads', Array('active' => 0), 'WHERE theme = '.$this->curtheme['id'].' AND user_id!= '.$QF_User->uid);
 
     }
 
@@ -528,7 +528,7 @@ Class qf_forum_upd
     function del_message($p_id, $t_id=0)
     {        global $QF_Config, $lang, $QF_DBase, $QF_User, $timer;
 
-        if ( $result = $QF_DBase->sql_doselect('{DBKEY}posts', 'id, theme', Array( 'id' => $p_id) ) )        	$this->curpost = $QF_DBase->sql_fetchrow($result);
+        if ( $result = $QF_DBase->sql_doselect('{DBKEY}posts', 'id, theme', Array( 'id' => $p_id) ) )            $this->curpost = $QF_DBase->sql_fetchrow($result);
 
         if (empty($this->curpost))
             return False;
@@ -584,7 +584,7 @@ Class qf_forum_upd
 
         if ($this->error) Return False;
 
-		if (!$QF_User->uid) $QF_Session->CheckSpamCode($this->spcode);
+        if (!$QF_User->uid) $QF_Session->CheckSpamCode($this->spcode);
 
         $this->append_files();
 
@@ -806,7 +806,7 @@ Class qf_forum_upd
             $upd_data['lasttime'] = $curtheme['time'];
         }
         $QF_DBase->sql_doupdate ('{DBKEY}topics', $upd_data, Array( 'id' => $id ) );
-
+        $QF_DBase->sql_doupdate ('{DBKEY}reads', Array('active' => 1), 'WHERE theme = '.$id.' AND active = 0 AND lastread>= '.$ts['MaxID']);
     }
 
     function upd_sect_data($id, $noparent=Array() ) //$noparent - Array with sections that can't be parent of $id section
@@ -896,50 +896,50 @@ Class qf_forum_upd
     function rebuild_forum_rights()
     {        global $QF_Config, $lang, $QF_DBase, $QF_Session, $QF_Forum;
 
-	    $QF_Forum = new qf_forum();
+        $QF_Forum = new qf_forum();
         $tree = $QF_Forum->ForumTree;   // Generating tree
         unset ($tree[0]);
 
-	    // Combining Sections Rights
-	    foreach ($tree as $sect) {
-	        $sn=$sect['id'];
-	        if (empty($sect['acc_group_name']))
-	            $tree[$sn]['acc_group']=0;
+        // Combining Sections Rights
+        foreach ($tree as $sect) {
+            $sn=$sect['id'];
+            if (empty($sect['acc_group_name']))
+                $tree[$sn]['acc_group']=0;
 
-	        if ($sect['parent']>0) {
-	            $psect = &$tree[$sect['parent']];
-	            if ($sect['minrights']<$psect['minrights'])
-	                $tree[$sn]['minrights']=$psect['minrights'];
+            if ($sect['parent']>0) {
+                $psect = &$tree[$sect['parent']];
+                if ($sect['minrights']<$psect['minrights'])
+                    $tree[$sn]['minrights']=$psect['minrights'];
 
-	            if ($psect['acc_group']>0)
-	            {
-	                $tree[$sn]['acc_group']=$psect['acc_group'];
-	                $tree[$sn]['acc_group_name']=$psect['acc_group_name'];
-	            }
-	        }
-	        if ($tree[$sn]['postrights']<$tree[$sn]['minrights'])
-	            $tree[$sn]['postrights']=$tree[$sn]['minrights'];
-	    }
+                if ($psect['acc_group']>0)
+                {
+                    $tree[$sn]['acc_group']=$psect['acc_group'];
+                    $tree[$sn]['acc_group_name']=$psect['acc_group_name'];
+                }
+            }
+            if ($tree[$sn]['postrights']<$tree[$sn]['minrights'])
+                $tree[$sn]['postrights']=$tree[$sn]['minrights'];
+        }
 
-	    // Writing Sections rights & correcting topics rights
-	    foreach ($tree as $sn=>$sect) {
-	        $mrights=intval($sect['minrights']);
-	        $prights=intval($sect['postrights']);
-	        $acc_group=intval($sect['acc_group']);
+        // Writing Sections rights & correcting topics rights
+        foreach ($tree as $sn=>$sect) {
+            $mrights=intval($sect['minrights']);
+            $prights=intval($sect['postrights']);
+            $acc_group=intval($sect['acc_group']);
 
-	        $query='UPDATE {DBKEY}sections SET
-	        minrights = '.$mrights.',
-	        postrights = '.$prights.',
-	        acc_group = '.$acc_group.'
-	        WHERE id = '.$sn;
-	        $QF_DBase->sql_query($query);
+            $query='UPDATE {DBKEY}sections SET
+            minrights = '.$mrights.',
+            postrights = '.$prights.',
+            acc_group = '.$acc_group.'
+            WHERE id = '.$sn;
+            $QF_DBase->sql_query($query);
 
-	        $query='UPDATE {DBKEY}topics SET
-	        minrights = '.$mrights.'
-	        WHERE minrights < '.$mrights.' AND parent = '.$sn;
-	        $QF_DBase->sql_query($query);
+            $query='UPDATE {DBKEY}topics SET
+            minrights = '.$mrights.'
+            WHERE minrights < '.$mrights.' AND parent = '.$sn;
+            $QF_DBase->sql_query($query);
 
-	    }
+        }
 
         $query='UPDATE {DBKEY}topics SET
         postrights = minrights

@@ -15,6 +15,10 @@ function for_preview(frm_name) {
                 if (xmlhttp.status == 200) {
                     if (prv = qf_getbyid(frm_name + '_preview')) {
                         prv.innerHTML = xmlhttp.responseText;
+                        if (links = prv.getElementsByTagName('a'))
+                            for (var i in links) {
+                                links[i].onclick = function (e) {alert(this.href); if (!e) window.event.cancelBubble = true; else e.stopPropagation(); return false;};
+                            }
                         prv.style.display = "";
                         par_msg.style.display = "none";
                     }
@@ -31,7 +35,7 @@ function for_preview(frm_name) {
             prv_butt.value = '{L_WAITASEC}';
         }
         var req = "class=forum&job=preview&message=" + encodeURIComponent(par_msg.value);
-        xmlhttp.open('POST', 'index.php?sr=AJAX&'+req, true);
+        xmlhttp.open('POST', 'index.php?sr=AJAX', true);
         xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xmlhttp.send(req);
     }
@@ -74,3 +78,91 @@ function for_atthrefclear(obj) {
         obj.myhref = false;
     }
 }
+
+var QF_STORE = function() {
+    if (!window.localStorage)
+        return {
+            store:   function(obj) {return false;},  
+            restore: function(obj) {return false;},
+            clear:   function(obj) { return false;}
+        };
+
+    function getElementKey(obj) {
+        var key = obj.name;
+        if (obj.form && obj.form.name)
+            key += '.'+obj.form.name;
+        return key;
+    }
+    
+    function elementStore(obj) {
+        if (typeof obj.value == 'undefined' || (obj.value && obj.value.length < 50))
+            return;
+        var val = obj.value;
+        var key = getElementKey(obj);
+        window.localStorage.setItem(key, val);
+    }
+
+    function elementRestore(obj) {
+        if (obj.value)
+            return;
+        var key = getElementKey(obj);
+        var val = window.localStorage.getItem(key);
+        if (val && val.length > 50)
+            obj.value = val;
+    }
+
+    function elementClear(obj) {
+        var key = getElementKey(obj);
+        window.localStorage.removeItem(key);
+    }
+
+    function formClear(obj) {
+        for (var i = obj.elements.length - 1; i >= 0; i--)
+            elementClear(obj.elements[i]);
+    }
+
+    function formRestore(obj) {
+        for (var i = obj.elements.length - 1; i >= 0; i--)
+            elementRestore(obj.elements[i]);
+    }
+
+    function formStore(obj) {
+        for (var i = obj.elements.length - 1; i >= 0; i--)
+            elementStore(obj.elements[i]);
+    }
+
+    window.addEventListener('load', function() {
+        for (var i = document.forms.length - 1; i >= 0; i--) {
+            formRestore(document.forms[i]); 
+            document.forms[i].addEventListener('submit', function () { QF_STORE.clear(this) });
+        }
+    });
+    
+    return {
+        store: function(obj) {
+            if (!obj || !obj.tagName)
+                return;
+            if (obj.tagName == 'FORM')
+                return formStore(obj);
+            else
+                return elementStore(obj);
+        },
+        clear: function(obj) {
+            if (!obj || !obj.tagName)
+                return;
+            if (obj.tagName == 'FORM')
+                return formClear(obj);
+            else
+                return elementClear(obj);
+        },
+        restore: function(obj) {
+            if (!obj || !obj.tagName)
+                return;
+            if (obj.tagName == 'FORM')
+                return formRestore(obj);
+            else
+                return elementRestore(obj);
+        }
+    }
+}();
+

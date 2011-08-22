@@ -237,7 +237,7 @@ Forms for forum pages. MODIFY CAREFULLY !!!
  <br />
  <div id='{C_formname}_preview' class="post_body" onclick="for_hidepreview('{C_formname}')" style="display: none; border-width: 1px; border-style: solid; cursor: text;">
  </div>
- <textarea cols="40" class="post" rows="4" name="t_descr" onchange="for_hidepreview('{C_formname}')" style="width:99%" >{C_descr}</textarea>
+ <textarea cols="40" class="post" rows="4" name="t_descr" onchange="for_hidepreview('{C_formname}'); QF_STORE.store(this);" style="width:99%" >{C_descr}</textarea>
  {L_READL}: <SELECT NAME="t_minrights">
  {C_mrights_options}
  </select>
@@ -270,7 +270,7 @@ Forms for forum pages. MODIFY CAREFULLY !!!
  <br />
  <div id='{C_formname}_preview' class="post_body" onclick="for_hidepreview('{C_formname}')" style="display: none; border-width: 1px; border-style: solid; cursor: text;">
  </div>
- <textarea cols="40" class="post" onchange="for_hidepreview('{C_formname}')" style="width:99%" rows="8" name="message">{C_text}</textarea>
+ <textarea cols="40" class="post" onchange="for_hidepreview('{C_formname}'); QF_STORE.store(this);" style="width:99%" rows="8" name="message">{C_text}</textarea>
  {L_READL}: <SELECT NAME="t_minrights">
  {C_mrights_options}
  </select>
@@ -290,7 +290,7 @@ Forms for forum pages. MODIFY CAREFULLY !!!
  <input type="hidden" name="qfuser" value="{!C_user}" />
  <div id='{C_formname}_preview' class="post_body" onclick="for_hidepreview('{C_formname}')" style="display: none; border-width: 1px; border-style: solid; cursor: text;">
  </div>
- <textarea cols="50" class="post" style="width:99%" onchange="for_hidepreview('{C_formname}')" rows="8" name="message">{C_text}</textarea>
+ <textarea cols="50" class="post" style="width:99%" onchange="for_hidepreview('{C_formname}'); QF_STORE.store(this);" rows="8" name="message">{C_text}</textarea>
  <input name="p_del" type="checkbox" value="1" {C_delmessage} />{L_FOR_DEL_POST}<br />
  {IF_canhide}<input name="p_hedit" type="checkbox" value="1" />{L_FOR_HIDE_EDIT}<br />{ENDIF}
  {IF_canmerge}<input name="p_merge" type="checkbox" value="1" />{L_FOR_MERGE_POST} <input type="text" name="t_merge_to" size="6" /><br />
@@ -318,7 +318,7 @@ Forms for forum pages. MODIFY CAREFULLY !!!
 {SPAMFIELD}{ENDIF}
  <div id='{C_formname}_preview' class="post_body" onclick="for_hidepreview('{C_formname}')" style="display: none; border-width: 1px; border-style: solid; cursor: text;">
  </div>
- <textarea cols="50" class="post" style="width:99%" onchange="for_hidepreview('{C_formname}')" rows="8" name="message">{C_text}</textarea>
+ <textarea cols="50" class="post" style="width:99%" onchange="for_hidepreview('{C_formname}'); QF_STORE.store(this);" rows="8" name="message">{C_text}</textarea>
  {IF_subscribe}
  <input name="tsubscribe" type="checkbox" value="1" /> {L_FOR_SUBSCRIBE}<br />
  {ENDIF}
