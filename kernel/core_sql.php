@@ -9,13 +9,15 @@ if ( defined('CORE_SQL_LOADED') )
 define('CORE_SQL_LOADED', True);
 
 class mysql_dumper
-{    var $struct = Array();
+{
+    var $struct = Array();
     var $fstream, $filename, $fgzip;
     var $repldbkey = false;
     var $tblslist = Array();
 
     function mysql_dumper($repldbkey=false)
-    {        global $QF_DBase;
+    {
+        global $QF_DBase;
 
         $this->repldbkey = ($repldbkey) ? true : false;
 
@@ -70,7 +72,8 @@ class mysql_dumper
     }
 
     function get_table_structure($table)
-    {        global $QF_DBase;
+    {
+        global $QF_DBase;
         $dbkey = $QF_DBase->tbl_prefix;
 
         if (!in_array($table, $this->tblslist)) return false;
@@ -147,7 +150,8 @@ class mysql_dumper
     }
 
     function combine_create_table($tblstruct, $dropfirst=false)
-    {        if (!is_array($tblstruct)) return false;
+    {
+        if (!is_array($tblstruct)) return false;
 
         $tblname = $tblstruct['name'];
 
@@ -204,7 +208,8 @@ class mysql_dumper
     }
 
     function get_create_table($table, $dropfirst=false)
-    {        global $QF_DBase;
+    {
+        global $QF_DBase;
         $dbkey = $QF_DBase->tbl_prefix;
 
         if (strpos($table,$dbkey)==0 && $this->repldbkey)
@@ -218,8 +223,9 @@ class mysql_dumper
         return $this->combine_create_table($tblstruct, $dropfirst);
     }
 
-    function dump_content($table, $do_replace=false)
-    {        global $QF_DBase;
+    function dump_content($table, $do_replace=false, $addSQL = '')
+    {
+        global $QF_DBase;
         $dbkey = $QF_DBase->tbl_prefix;
 
         $comm = ($do_replace) ? 'REPLACE INTO ' : 'INSERT INTO ';
@@ -231,7 +237,7 @@ class mysql_dumper
         else
             $tblname = $table;
 
-        if (!($result = $QF_DBase->sql_query("SELECT * FROM $table")))
+        if (!($result = $QF_DBase->sql_query("SELECT * FROM $table $addSQL")))
                 trigger_error("Failed in dump_content (select *) SELECT * FROM $table",256);
 
         if ($row = $QF_DBase->sql_fetchrow($result))
@@ -282,7 +288,8 @@ class mysql_dumper
     }
 
     function dump_tables($file, $try_gzip=false, $sets=Array())
-    {        global $QF_DBase;
+    {
+        global $QF_DBase;
         $all_tables = false;
         $nostruct = false;
         $nocontent = false;
@@ -315,7 +322,8 @@ class mysql_dumper
 }
 
 class mysql_importer
-{    var $struct = Array();
+{
+    var $struct = Array();
     var $fstream, $filename, $fgzip;
     var $buffer = '';
     var $EOF = false;
@@ -337,7 +345,8 @@ class mysql_importer
     function file_init($file, $force_gzip=false )
     {
         $finfo=pathinfo($file);
-        if (preg_match('#^gz$#i', $finfo['extension']) || $force_gzip) {            if (extension_loaded('zlib')) {
+        if (preg_match('#^gz$#i', $finfo['extension']) || $force_gzip) {
+            if (extension_loaded('zlib')) {
                 $this->fgzip = true;
                 $this->stream = gzopen($file, 'rb');
             }
@@ -388,12 +397,14 @@ class mysql_importer
     }
 
     function set_data($string)
-    {        $this->buffer = $string;
+    {
+        $this->buffer = $string;
         $this->file_close();
     }
 
     function parse_sql($sel_db='')
-    {        global $QF_DBase;
+    {
+        global $QF_DBase;
 
         $sql_pos = 0;
         $exit = false;
@@ -413,7 +424,8 @@ class mysql_importer
             $sql_pos++;
             $dchar = substr($dchar.$char, -2);
 
-            if ($sql_pos>=strlen($this->buffer)) {                if ($this->stream) {
+            if ($sql_pos>=strlen($this->buffer)) {
+                if ($this->stream) {
                     $this->file_read();
                     $sql_pos = 0;
                 }
@@ -426,7 +438,8 @@ class mysql_importer
                 }
             }
 
-            if ($in_comm) {                switch ($in_comm) {                    case 2:
+            if ($in_comm) {
+                switch ($in_comm) {                    case 2:
                         if ($dchar == '*/')
                             $in_comm = 0;
                         break;
@@ -436,7 +449,8 @@ class mysql_importer
                 }
             }
 
-            elseif ($in_str) {                $sql.= $char;
+            elseif ($in_str) {
+                $sql.= $char;
                 if ($char == $in_str) {
 
                     if ($in_str == '`') {
@@ -459,11 +473,13 @@ class mysql_importer
                 }
             }
 
-            elseif (($char == '"') || ($char == '\'') || ($char == '`')) {                $sql.= $char;
+            elseif (($char == '"') || ($char == '\'') || ($char == '`')) {
+                $sql.= $char;
                 $in_str = $char;
             }
 
-            elseif ($char == '#') {                $in_comm = 1;
+            elseif ($char == '#') {
+                $in_comm = 1;
             }
             elseif (($dchar == '/*') || ($dchar == '--')) {
                 $in_comm = ($dchar == '/*') ? 2 : 1;
@@ -485,7 +501,8 @@ class mysql_importer
                 $sql = '';
             }
 
-            else {                $sql.= $char;
+            else {
+                $sql.= $char;
             }
 
             $time1     = time();
@@ -499,7 +516,8 @@ class mysql_importer
     }
 
     function apply_table_structure($tblstruct, $drop_extra_fields = false)
-    {        global $QF_DBase;
+    {
+        global $QF_DBase;
         $dbkey = $QF_DBase->tbl_prefix;
 
         if (!is_array($tblstruct)) return false;
@@ -510,7 +528,8 @@ class mysql_importer
         $dumper = new mysql_dumper();
         $oldstruct = $dumper->get_table_structure($table);
 
-        if (!is_array($oldstruct)) { // we must create table            $query = $dumper->combine_create_table($tblstruct);
+        if (!is_array($oldstruct)) { // we must create table
+            $query = $dumper->combine_create_table($tblstruct);
             $QF_DBase->sql_query($query);
             $err=$QF_DBase->sql_error();
             if ($err['code'])
@@ -573,13 +592,15 @@ class mysql_importer
 
         $prev_field = ''; // previous field - for inserting operations
 
-        foreach ($fields as $fname => $fdata) {            $do_correct = false;
+        foreach ($fields as $fname => $fdata) {
+            $do_correct = false;
             $do_add = false;
             if (!is_array($old_fields[$fname])) {
                 $do_correct = true;
                 $do_add = true;
             }
-            else {                foreach ($fdata as $param => $val)                    if ($old_fields[$fname][$param]!=$val)
+            else {
+                foreach ($fdata as $param => $val)                    if ($old_fields[$fname][$param]!=$val)
                         $do_correct = true;
             }
 
@@ -612,7 +633,8 @@ class mysql_importer
         }
 
         // Droping extra fields
-        if ($drop_extra_fields) {            foreach ($old_fields as $fname => $fdata)
+        if ($drop_extra_fields) {
+            foreach ($old_fields as $fname => $fdata)
                 if (!is_array($fields[$fname]))
                     $commands[]='DROP `'.$fname.'`';
         }
@@ -631,7 +653,8 @@ class mysql_importer
             $commands[] = 'ADD '.$key;
         }
 
-        if (sizeof($commands)>0) {            $query = 'ALTER TABLE `'.$table.'` '.implode(', ', $commands);
+        if (sizeof($commands)>0) {
+            $query = 'ALTER TABLE `'.$table.'` '.implode(', ', $commands);
 
             $QF_DBase->sql_query($query);
             $err=$QF_DBase->sql_error();

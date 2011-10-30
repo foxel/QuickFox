@@ -23,7 +23,7 @@ function err_parse($errno, $errstr, $errfile, $errline)
     global $debug, $QF_User, $lang;
     static $logfile;
 
-    if (!$logfile) {        $logfile = fopen('err_log.txt','ab');
+    if (!$logfile) {        $logfile = fopen('err_log.txt','ab');
     }
 
     if ($logfile && ($errno & ~(E_NOTICE | E_USER_NOTICE | E_STRICT)))
@@ -52,12 +52,12 @@ function err_parse($errno, $errstr, $errfile, $errline)
 // returns request value
 //
 function Get_Request($var_name, $from=0, $type = '', $len = false)
-{    global $_GET, $_POST, $_COOKIE, $_REQUEST, $QF_CharConv;
+{    global $_GET, $_POST, $_COOKIE, $_REQUEST, $QF_CharConv;
 
     static $cache = Array();
 
     if (!isset($cache[$from][$var_name]))
-    {        switch ($from) {            case 1:
+    {        switch ($from) {            case 1:
                 $val = $_GET[$var_name];
                 break;
             case 2:
@@ -69,7 +69,7 @@ function Get_Request($var_name, $from=0, $type = '', $len = false)
             default:
                 $val = $_REQUEST[$var_name];
         }
-        if (get_magic_quotes_gpc() && !is_numeric($val) && !is_null($val)) {            if (is_array($val))
+        if (get_magic_quotes_gpc() && !is_numeric($val) && !is_null($val)) {            if (is_array($val))
                 $val = Array_Unslash($val);
             else
                 $val = stripslashes($val);
@@ -82,7 +82,7 @@ function Get_Request($var_name, $from=0, $type = '', $len = false)
     else
         $val = $cache[$from][$var_name];
 
-    switch ($type) {        case 'b': // boolean
+    switch ($type) {        case 'b': // boolean
             $val = ($val) ? true : false;
             $len = false;
             break;
@@ -168,11 +168,11 @@ function qf_array_2dresort($array, $field, $rsort = false, $sort_flags = SORT_RE
 // drops slashes inside array
 //
 function Array_Unslash($arr)
-{    if (!is_array($arr)) {
+{    if (!is_array($arr)) {
         if (!is_numeric($arr))
             $arr = stripslashes($arr);
     }
-    else {        foreach ($arr AS $key=>$val)
+    else {        foreach ($arr AS $key=>$val)
             $arr[$key] = Array_Unslash($val);
     }
 
@@ -188,7 +188,7 @@ function Glob_Request($vals_list,$allreq=false,$overwrite=false){
         global $$needval;
         if (!isset($$needval) || $overwrite) {
             $found=($allreq) ? $_REQUEST[$needval] : $_GET[$needval];
-            if (isset($found))                $$needval=(get_magic_quotes_gpc()) ? stripslashes($found) : $found;
+            if (isset($found))                $$needval=(get_magic_quotes_gpc()) ? stripslashes($found) : $found;
         }
     }
 }
@@ -197,10 +197,10 @@ function Glob_Request($vals_list,$allreq=false,$overwrite=false){
 // Stripslashes for $_POST data
 //
 Function PostStrip()
-{    Global $_POST, $HTTP_POST_VARS;
+{    Global $_POST, $HTTP_POST_VARS;
     if (get_magic_quotes_gpc())
         foreach ($_POST as $key=>$val)
-        if (!is_array($val)) {            $val = stripslashes($val);
+        if (!is_array($val)) {            $val = stripslashes($val);
             $_POST[$key] = $val;
             $HTTP_POST_VARS[$key] = $val;
         }
@@ -232,7 +232,7 @@ function qf_ob_flush()
 // Accurate Exit
 //
 Function QF_exit($mess = false)
-{    global $QF_DBase;
+{    global $QF_DBase;
 
     if ($mess === false)
         qf_ob_flush();
@@ -342,7 +342,7 @@ function create_date($format, $timestamp, $tz='', $dontconv=false)
 
     static $translate, $now, $correct, $today, $yesterday, $last_tz = '-';
 
-    if (!$now) {        if (is_object($timer))
+    if (!$now) {        if (is_object($timer))
             $now = $timer->time;
         else
             $now=time();
@@ -365,8 +365,8 @@ function create_date($format, $timestamp, $tz='', $dontconv=false)
 
     if ($last_tz!==$tz) {
         $today = $now + $tzc;
-        if (qf_time_DST($now, $tz))
-            $today+= 3600;
+        //if (qf_time_DST($now, $tz))
+        //    $today+= 3600;
         $today = floor($today/86400)*86400;
         $yesterday = $today - 86400;
         $last_tz = $tz;
@@ -376,8 +376,8 @@ function create_date($format, $timestamp, $tz='', $dontconv=false)
         $format=$QF_Config['def_date_format'];
 
     $timetodraw = $timestamp + $tzc;
-    if (qf_time_DST($timestamp, $tz))
-        $timetodraw+= 3600;
+    //if (qf_time_DST($timestamp, $tz))
+    //    $timetodraw+= 3600;
 
 
     if ($timestamp == $now || $dontconv)
@@ -577,9 +577,9 @@ function Set_Result($error, $result, $redirurl="") {
 // Sets a admin lock. Set 0 to Drop block.
 //
 function Set_Adm_Lock($period=600)
-{    global $QF_DBase;
+{    global $QF_DBase;
     global $QF_User, $QF_Config, $QF_Session, $timer;
-    if ($QF_User->admin && $QF_Session->Get('is_admin')) {        $period = intval($period);
+    if ($QF_User->admin && $QF_Session->Get('is_admin')) {        $period = intval($period);
         if ($period>3600)
             $period=3600;
         elseif ($period<60)
@@ -652,16 +652,16 @@ function qf_gzhandler($page) {
 // --------------------------------<Common parsers>----------------------
 
 function ArrayDefinition($data, $tabs=0)
-{    $tab = '    ';
+{    $tab = '    ';
     $tabs = intval($tabs);
     $pref = str_repeat($tab, $tabs);
 
     if (!is_array($data))
         $def = $data;
-    else {        $def = "Array (\n";
+    else {        $def = "Array (\n";
         $fields = Array();
         $maxlen = 0;
-        foreach( $data as $key => $val ) {            if (is_numeric($key))
+        foreach( $data as $key => $val ) {            if (is_numeric($key))
                 $field=$pref.$tab.$key." => ";
             else
                 $field=$pref.$tab."'".$key."' => ";
@@ -686,14 +686,14 @@ function ArrayDefinition($data, $tabs=0)
 // Correct mess string value
 //
 function HTMLStrVal($string)
-{    return htmlspecialchars(trim($string));
+{    return htmlspecialchars(trim($string));
 }
 
 //
 // Trims String with '...'
 //
 function STrim($inp,$len=15)
-{    if (strlen($inp)>$len) {        $len=$len-2;
+{    if (strlen($inp)>$len) {        $len=$len-2;
         $inp=substr($inp,0,$len+1);
         $pos=strrpos($inp,' ');
         if ($pos>0)

@@ -64,7 +64,8 @@
 <body>
 <script language="Javascript" type="text/javascript">
 <!-- // anonimizers ban
-if (document.domain != '{C_server_name}') location.href='http://{C_server_name}';
+if (document.domain != '{C_server_name}' && document.domain.match(/^[\w\-\.]+(\.[a-z]+$|\.[a-z][\w\-]+$)/)) 
+    location.href='http://{C_server_name}';
 //-->
 </script>
 {C_JAVA}

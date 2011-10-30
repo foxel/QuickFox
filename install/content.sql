@@ -1096,6 +1096,10 @@ REPLACE INTO  {DBKEY}spiders (`id`, `agent_mask`, `name`)
     VALUES('319', 'UASEARCH.KIEV.UA', 'UASEARCH.KIEV.UA');
 REPLACE INTO  {DBKEY}spiders (`id`, `agent_mask`, `name`) 
     VALUES('320', 'METASpider', 'meta.ua');
+REPLACE INTO  {DBKEY}spiders (`id`, `agent_mask`, `name`) 
+    VALUES('321', 'bingbot', 'Bing');
+REPLACE INTO  {DBKEY}spiders (`id`, `agent_mask`, `name`) 
+    VALUES('322', 'Mail.RU', 'Mail.ru');
 
 
 # Data content for {DBKEY}styles 

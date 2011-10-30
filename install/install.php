@@ -105,8 +105,8 @@ if ($SET_step=='admin_setup')
                 'nick'     => $nuser,
                 'pass'     => $npass1,
                 'email'    => $nemail,
-                'regtime'  => $timer->time,
-                'lastseen' => $timer->time,
+                'regtime'  => time(),
+                'lastseen' => time(),
                 'rights'   => 7,
                 'descr'    => 'Root Admin',
                 );
