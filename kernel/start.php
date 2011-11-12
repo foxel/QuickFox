@@ -62,6 +62,9 @@ elseif ($QF_Banned){
 $timer->Time_Log('Session before');
 
 $QF_Session->Open_Session($QF_Fix_Session);
+if (!$QF_Session->Get('script_token')) {
+    $QF_Session->Set('script_token', md5(uniqid()));
+}
 
 $timer->Time_Log('Session started');
 
@@ -87,13 +90,18 @@ if ($QF_User->is_spider && $QF_Config['restrict_spiders']) {
 }
 
 // Running Scripts
-if(!empty($QF_Script))
+if(!empty($QF_Script)) {
     $scr_file = 'includes/scripts/'.$QF_Script.'.scr.php';
-    If (file_exists($scr_file)) {
+    $gotScriptToken = Get_Request('script_token');
+    $realScriptToken = $QF_Session->Get('script_token');
+    if (!$realScriptToken || $realScriptToken != $gotScriptToken) {
+        Set_Result($lang['ERR_SCRIPT_TOKEN'], '', '/');
+    } elseif (file_exists($scr_file)) {
         Ignore_User_Abort (True);
         include($scr_file);
         $QF_User->login();;
     }
+}
 
 // Loading setted style
 $curstyle=$styles[$QF_Config['style']];

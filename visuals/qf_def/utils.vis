@@ -48,6 +48,7 @@ Forms For Admin Pages. PLEASE DO NOT MODIFY !!!
 <h2>{L_UTILS_IPBC_CFG_SETS}</h2>
 <form action="index.php" method="post" name="conv_config_form">
 <input type="hidden" name="script" value="IPB_convert" />
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <input type="hidden" name="action" value="convert" />
 <input type="hidden" name="database" value="{C_database}" />
 <input type="hidden" name="prefix" value="{C_prefix}" />

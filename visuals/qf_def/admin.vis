@@ -225,6 +225,7 @@ Forms For Admin Pages. MODIFY CAREFULLY !!!
 <table class="qf_grid fullwidth">
 <tr><td>
 <input type="hidden" name="script" value="acc_gr_edit" />
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <input type="hidden" name="action" value="us_add" />
 <input type="hidden" name="gr_id" value="{C_gr_id}" />
 {L_ADMCAB_ACCGRP_US_ADD_REQUEST}<br />
@@ -244,6 +245,7 @@ Forms For Admin Pages. MODIFY CAREFULLY !!!
 
 <<+ 'ACCESS_GROUP_USERS_CTRL'>>
 <input type="hidden" name="script" value="acc_gr_edit" />
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <input type="hidden" name="action" value="us_edit" />
 <input type="hidden" name="gr_id" value="{C_gr_id}" />
 {L_ADMCAB_ACCGRP_US_SELDO}:
@@ -261,6 +263,7 @@ Forms For Admin Pages. MODIFY CAREFULLY !!!
 <td class="genmed"><input type="text" name="gr_descr" value="{!C_descr}" maxlength="255" /></td>
 <td class="nowrap" colspan="2" align="right">
 <input type="hidden" name="script" value="acc_gr_edit" />
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <input type="hidden" name="action" value="gr_edit" />
 <input type="hidden" name="gr_id" value="{C_id}" />
 <input type="submit" value="{L_BTN_SAVE}" />
@@ -274,8 +277,9 @@ Forms For Admin Pages. MODIFY CAREFULLY !!!
 <form action="index.php" method="post">
 {L_UCAB_MADMIN_NEEDPASS}
 <input type="hidden" name="script" value="admcheck" />
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <input name="userpass" type="password" maxlength="32" />
-<input type=submit value="{L_BTN_ENTER}" />
+<input type="submit" value="{L_BTN_ENTER}" />
 </form>
 </td></tr>
 </table>
@@ -294,6 +298,7 @@ Forms For Admin Pages. MODIFY CAREFULLY !!!
 {L_ADMCAB_FORUMSYNC_REQUEST}
 <form action="index.php" method="post">
 <input type="hidden" name="script" value="forumsync" />
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <input type="hidden" name="action" value="sync" />
 <input type="submit" value="{L_BTN_SYNC}" />
 </form>
@@ -307,6 +312,7 @@ Forms For Admin Pages. MODIFY CAREFULLY !!!
 {ENDIF}
 <form action="index.php" method="post">
 <input type="hidden" name="script" value="forumedit" />
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <input type="hidden" name="action" value="edit" />
 <input type="hidden" name="section" value="{C_sect}" />
 

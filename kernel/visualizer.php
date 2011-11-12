@@ -222,7 +222,7 @@ function AddVisual($name, $templ) {
 // Use Visual
 //
 function Visual($name, $content=Array()) {
-    Global $Vis, $VIF;
+    Global $Vis, $VIF, $QF_Session;
     Static $counter=1;
 
     $templ=$Vis[$name];
@@ -250,7 +250,8 @@ function Visual($name, $content=Array()) {
        }
 
     $templ=preg_replace('#\{\!?C_([\w_]+)\}#s', '', $templ);
-    $templ=str_replace('{COUNTER}',$counter++,$templ);
+    $templ=str_replace('{COUNTER}', $counter++, $templ);
+    $templ=str_replace('{SCRIPT_TOKEN}', $QF_Session->Get('script_token'), $templ);
     return $templ;
 }
 
@@ -278,14 +279,14 @@ function Add_META($tag){
 }
 
 function Vis_Draw_Form($caption, $frmname, $script, $text, $fields, $width='', $tblclass='', $frmadds=''){
-    global $lang;
+    global $lang, $QF_Session;
 
     if (!$width) $width='500';
     if (is_numeric($width))
         $width.='px';
 
     $frmfields='';
-    $hid_fields='';
+    $hid_fields='<input type="hidden" name="script_token" value="'.$QF_Session->Get('script_token').'" />'.PHP_EOL;
 
     foreach ($fields as $name=>$field){
         $field['name']=$name;
@@ -360,5 +361,5 @@ $Vis['COPYRIGHT']=
 'Powered by<br />
 QuickFox<br />
 &copy; Foxel aka LION<br />
-2006 - 2008';
+2006 - 2011';
 ?>

@@ -902,6 +902,7 @@ Forms For Common Pages. MODIFY CAREFULLY !!!
 <<+ 'QUICKSETS_PANEL'>>
 <form action="index.php" method="post" name="qsetsform">
 <input type="hidden" name="script" value="quicksets" />
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <table class="invisible fullwidth">
 <tr><td align="left">{L_TIMEZONE}:</td></tr>
 <tr><td align="right">
@@ -929,6 +930,7 @@ Forms For Common Pages. MODIFY CAREFULLY !!!
 <tr><td valign="bottom">
 <form action="index.php" name="delavatar" method="post">
 <input type="hidden" name="script" value="mycabinet">
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <input type="hidden" name="action" value="delavatar">
 <input type="hidden" name="qfuser" value="{!C_unick}">
 <input type="submit" name="DelAva" value="{L_BTN_DELETE}">
@@ -942,6 +944,7 @@ Forms For Common Pages. MODIFY CAREFULLY !!!
 {L_UCAB_AVATAR_UPLOAD}<br />
 <form action="index.php" name="uplavatar" method="post" enctype="multipart/form-data">
 <input type="hidden" name="script" value="mycabinet">
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <input type="hidden" name="action" value="newavatar">
 <input type="hidden" name="qfuser" value="{!C_unick}">
 <input type="file" name="newavatar">
@@ -974,6 +977,7 @@ function checkForm(form) {
 {L_UCAB_EMAIL_CURRENT} <b>{C_uemail}</b><br />
 <form action="index.php" name="newmail" method="post" onsubmit="return checkForm(this)">
 <input type="hidden" name="script" value="mycabinet">
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <input type="hidden" name="action" value="newmail">
 <input type="hidden" name="qfuser" value="{!C_unick}">
 <input type="text" name="newmail" maxlength="36">
@@ -985,6 +989,7 @@ function checkForm(form) {
 {L_UCAB_ACODE_REQUEST}<br />
 <form action="index.php" name="actmail" method="post">
 <input type="hidden" name="script" value="mycabinet">
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <input type="hidden" name="action" value="actmail">
 <input type="hidden" name="qfuser" value="{!C_unick}">
 <input type="text" name="nacode" maxlength="32" value="{C_uacode}" style="width: 300px;"><br />
@@ -1000,6 +1005,7 @@ function checkForm(form) {
 
 <<+ 'PM_NEW_FORM'>>
  <input type="hidden" name="script" value="newpm" />
+ <input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
  <input type="hidden" name="action" value="post" />
 {IF_fixrecip}<input type="hidden" name="qfrec" value="{!C_recip}" />
 {ELSE}{L_RECIPIENT}: <input type="text" name="qfrec" value="{!C_recip}" /><br />{ENDIF}
@@ -1033,6 +1039,7 @@ function checkForm(form) {
 <tr><td>
 <form action="index.php" method="post">
 <input type="hidden" name="script" value="check" />
+<input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr><td>{L_REG_LOGIN_SHORT}</td></tr>
 <tr><td align="right">

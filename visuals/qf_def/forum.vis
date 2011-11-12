@@ -227,6 +227,7 @@ Forms for forum pages. MODIFY CAREFULLY !!!
 
 <<+ 'THEME_EDIT_FORM'>>
  <input type="hidden" name="script" value="forum" />
+ <input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
  <input type="hidden" name="action" value="editbranch" />
  <input type="hidden" name="st" value="{C_st}" />
  <input type="hidden" name="page" value="{C_page}" />
@@ -256,6 +257,7 @@ Forms for forum pages. MODIFY CAREFULLY !!!
 
 <<+ 'THEME_NEW_FORM'>>
  <input type="hidden" name="script" value="forum" />
+ <input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
  <input type="hidden" name="action" value="newbranch" />
  <input type="hidden" name="st" value="{C_st}" />
  <input type="hidden" name="page" value="{C_page}" />
@@ -285,6 +287,7 @@ Forms for forum pages. MODIFY CAREFULLY !!!
 
 <<+ 'POST_EDIT_FORM'>>
  <input type="hidden" name="script" value="forum" />
+ <input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
  <input type="hidden" name="action" value="editpost" />
  <input type="hidden" name="p_id" value="{C_id}" />
  <input type="hidden" name="qfuser" value="{!C_user}" />
@@ -311,6 +314,7 @@ Forms for forum pages. MODIFY CAREFULLY !!!
 
 <<+ 'POST_NEW_FORM'>>
  <input type="hidden" name="script" value="forum" />
+ <input type="hidden" name="script_token" value="{SCRIPT_TOKEN}" />
  <input type="hidden" name="action" value="newpost" />
  <input type="hidden" name="t_id" value="{C_tid}" />
 {IF_fixuser} <input type="hidden" name="qfuser" value="{!C_user}" />
