@@ -251,7 +251,7 @@ function Visual($name, $content=Array()) {
 
     $templ=preg_replace('#\{\!?C_([\w_]+)\}#s', '', $templ);
     $templ=str_replace('{COUNTER}', $counter++, $templ);
-    $templ=str_replace('{SCRIPT_TOKEN}', $QF_Session->Get('script_token'), $templ);
+    $templ=str_replace('{SCRIPT_TOKEN}', is_object($QF_Session) ? $QF_Session->Get('script_token') : '', $templ);
     return $templ;
 }
 
@@ -295,7 +295,7 @@ function Vis_Draw_Form($caption, $frmname, $script, $text, $fields, $width='', $
         break;
         case 'hidden':
             $hid_fields.='<input type="hidden" name="'.$name.'" value="'.$field['value'].'">'.PHP_EOL;
-            if ($name == 'script') {
+            if ($name == 'script' && is_object($QF_Session)) {
                 $hid_fields.='<input type="hidden" name="script_token" value="'.$QF_Session->Get('script_token').'" />'.PHP_EOL;
             }
         break;
