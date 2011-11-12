@@ -286,7 +286,7 @@ function Vis_Draw_Form($caption, $frmname, $script, $text, $fields, $width='', $
         $width.='px';
 
     $frmfields='';
-    $hid_fields='<input type="hidden" name="script_token" value="'.$QF_Session->Get('script_token').'" />'.PHP_EOL;
+    $hid_fields='';
 
     foreach ($fields as $name=>$field){
         $field['name']=$name;
@@ -294,8 +294,10 @@ function Vis_Draw_Form($caption, $frmname, $script, $text, $fields, $width='', $
         case '':
         break;
         case 'hidden':
-            $hid_fields.='<input type="hidden" name="'.$name.'" value="'.$field['value'].'">
-            ';
+            $hid_fields.='<input type="hidden" name="'.$name.'" value="'.$field['value'].'">'.PHP_EOL;
+            if ($name == 'script') {
+                $hid_fields.='<input type="hidden" name="script_token" value="'.$QF_Session->Get('script_token').'" />'.PHP_EOL;
+            }
         break;
         case 'textarea':
             $frmfields.=Visual('UNIFORM_TEXTAREA', $field);
