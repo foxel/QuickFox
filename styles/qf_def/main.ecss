@@ -24,11 +24,13 @@
 {link1h}=#344250
 {linkmh}=#445260
 
+{def_font}=Verdana,Arial,Helvetica,sans-serif
+{def_font_size}=12px
+
 {/VARS}
 
 body, html {
 	background-color: {page_bg};
-	font-size : 14px;
 	color : {text};
 }
 
@@ -36,6 +38,10 @@ body {
 	width: 1000px;
     margin: 0 auto;
 }
+
+html, body, td, th, div, font { font-family: {def_font}; line-height: 1.2em; font-size-adjust: 0.55; color: {text}; }
+html, body { font-size: {def_font_size}; }
+td, th, div, font { font-size: inherit; }
 
 A:link,A:active,A:visited  {
 	color: {link1};
@@ -58,7 +64,7 @@ A.pglink {
 /* Global Styles */
 TABLE {
 	border-color: {base_brd};
-	font-size   : 14px;
+	font-size   : {def_font_size};
 }
 
 DIV {
@@ -80,7 +86,8 @@ HR {
 	width: 90%;
 }
 
-H1, H2, H3 {    text-align: center;
+H1, H2, H3 {
+    text-align: center;
 }
 
 FORM{
@@ -94,9 +101,6 @@ IMG{
 	vertical-align: middle;
 }
 
-FONT {
-	font-size : 14px;
-}
 
 /* Global Page */
 
@@ -121,18 +125,22 @@ TD.qf_panels {
 	margin: 0px;
 }
 
-TD.qf_bott_adv {	border-top: {base_brd} solid 1px;
+TD.qf_bott_adv {
+	border-top: {base_brd} solid 1px;
     text-align: center;
 	background-color: {base3};
 }
 
-DIV.qf_advblock {    text-align: center;
+DIV.qf_advblock {
+    text-align: center;
 }
 
-TABLE.qf_footstat {    border: none;
+TABLE.qf_footstat {
+    border: none;
 	width: 100%;
 }
-TD#qf_genstats {    vertical-align: top;
+TD#qf_genstats {
+    vertical-align: top;
     text-align: left;
 }
 TD#qf_staticons {
@@ -140,7 +148,8 @@ TD#qf_staticons {
     text-align: right;
 }
 
-DIV.qf_centermess {    width: 500px;
+DIV.qf_centermess {
+    width: 500px;
     margin: auto;
 
 }
@@ -181,7 +190,8 @@ TD.qf_menuright {
 }
 
 /* qfeditor style */
-TABLE.qf_editor_butts {    text-align: center;
+TABLE.qf_editor_butts {
+    text-align: center;
     width: 100%;
 }
 
@@ -199,7 +209,8 @@ DIV.qf_mycabmtail {
     padding: 10px 7px 20px 7px;
     width: 200px;
 }
-TD.qf_mycabpage {    padding: 10px 15px 20px 15px;
+TD.qf_mycabpage {
+    padding: 10px 15px 20px 15px;
     vertical-align: top;
 }
 
@@ -218,7 +229,8 @@ DIV.qf_flpcapt {
 }
 
 /* Panels Styling */
-DIV.qf_panel {	margin: 5px 0 10px 0;
+DIV.qf_panel {
+	margin: 5px 0 10px 0;
 	padding: 0;
 }
 DIV.qf_pancapt {
@@ -242,10 +254,12 @@ DIV.qf_pancont TABLE {
 }
 
 /* forum specials */
-DIV.qf_forumer {    width: 85%;
+DIV.qf_forumer {
+    width: 85%;
     margin: auto;
 }
-TABLE.qf_pages {    width: auto;
+TABLE.qf_pages {
+    width: auto;
     margin: auto;
     border-collapse: collapse;
 }
@@ -253,7 +267,8 @@ TD.qf_pages_tl, TD.qf_pages_tr, TD.qf_pages_bl, TD.qf_pages_br {
 	margin: 0 !important;
 	padding: 0 !important;
 }
-TD.qf_pages_tl {	background: url({CSS_IMGS}/in.gif);
+TD.qf_pages_tl {
+	background: url({CSS_IMGS}/in.gif);
 	width: 50px;
 }
 TD.qf_pages_tr {
@@ -279,10 +294,11 @@ TD.qf_pages_b {
 	margin: 0 !important;
 }
 
-TABLE.quote {    margin: 10px 25px 7px 25px;
+TABLE.quote {
+    margin: 10px 25px 7px 25px;
 }
 TD.quote_body {
-	font-size: 14px;
+	font-size: {def_font_size};
 	color: {text};
 	line-height: 125%;
 	background-color: {controls};
@@ -300,7 +316,8 @@ TR.tblline, TD.tblline {
 	margin: 0 !important;
 }
 
-TD.tblliner, TD.tbllinel {    padding: 0 !important;
+TD.tblliner, TD.tbllinel {
+    padding: 0 !important;
     margin: 0 !important;
 }
 TD.tblliner {
@@ -366,7 +383,8 @@ DIV.post_body, DIV.post_atts {
 }
 
 
-TABLE.qf_grid {	border-style: solid;
+TABLE.qf_grid {
+	border-style: solid;
 	border-width: 1px 1px 2px 1px;
 	margin: 5px 0px 5px 0px;
 	-moz-border-radius: 5px;
@@ -419,7 +437,8 @@ TR.error, TD.error, TABLE.error {
 	border-color: {brdrerr};
 }
 
-TABLE.error * {	border-color: {brdrerr};
+TABLE.error * {
+	border-color: {brdrerr};
 }
 
 TR.selected {
@@ -429,10 +448,10 @@ TR.selected {
 
 
 /* General text */
-.gen { font-size : 14px; }
-.genmed { font-size : 12px; }
-.gensmall { font-size : 10px; }
-.posttext { font-size : 14px; line-height: 16px}
+.gen { font-size : 100%; }
+.genmed { font-size : 90%; }
+.gensmall { font-size : 75%; }
+.posttext { font-size : 100%; line-height: 16px}
 .gen,.genmed,.gensmall { color : {text}; }
 
 .error { color : #CC1010; font-weight: bold; }
@@ -508,9 +527,11 @@ TABLE.invisible {
 TABLE.noborder {
     border: none !important;
 }
-.toptext {    vertical-align: top;
+.toptext {
+    vertical-align: top;
 }
 
 
-DIV.minichater {    width: 195px;
+DIV.minichater {
+    width: 195px;
 }
