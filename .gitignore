@@ -3,9 +3,10 @@ files/*
 cache/*
 .idea
 *.log
+*_log.txt
 *.sh
 *.patch
 *.diff
 *.sess
 tags*
-
+pack.tgz

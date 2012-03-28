@@ -1,7 +1,9 @@
 #!/bin/bash
 
-rm -f pack.tgz
+PACK_FILE="pack.tgz";
 
-tar -czf pack.tgz --exclude=setup.php `ls`
+rm -f "$PACK_FILE";
+
+git archive --format=tar --worktree-attributes HEAD | gzip -c > "$PACK_FILE"
 
 
