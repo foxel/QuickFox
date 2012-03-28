@@ -9,7 +9,8 @@ if ( defined('CORE_IMAGES_LOADED') )
 define('CORE_IMAGES_LOADED', True);
 
 function img_resize_to($srcfile, $destfile, $nw, $nh, $autoext=False)
-{    if (empty($destfile))
+{
+    if (empty($destfile))
         $destfile=$srcfile;
 
     if (!extension_loaded('gd'))
@@ -58,8 +59,8 @@ function img_resize_to($srcfile, $destfile, $nw, $nh, $autoext=False)
         $dest_img = imagecreatetruecolor($w, $h);
 
         imagealphablending($dest_img,True);
-        $fon=imagecolorallocatealpha($dest_img,255,255,255,255);
-        imagefill($dest_img, 0, 0, $fon);
+        imagealphablending($dest_img, false);
+        imagefilledrectangle($dest_img, 0, 0, $w-1, $h-1, 0x7FFFFFFF);
 
         imagecopyresampled($dest_img, $src_img, 0, 0, 0, 0, $w, $h, $size_img[0], $size_img[1]);
 
