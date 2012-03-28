@@ -1,0 +1,11 @@
+avatars/*
+files/*
+cache/*
+.idea
+*.log
+*.sh
+*.patch
+*.diff
+*.sess
+tags*
+
