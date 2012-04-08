@@ -20,7 +20,8 @@ Class qf_forum_upd
     var $do_cache = true;
 
     Function qf_forum_upd()
-    {        global $QF_Session, $QF_Config;
+    {
+        global $QF_Session, $QF_Config;
         $this->time = time();
         $this->error = '';
         $this->loaded = False;
@@ -30,7 +31,8 @@ Class qf_forum_upd
     }
 
     Function preload_data()
-    {        global $QF_Parser, $QF_Config, $QF_User, $lang, $QF_DBase, $QF_Session, $QF_Forum;
+    {
+        global $QF_Parser, $QF_Config, $QF_User, $lang, $QF_DBase, $QF_Session, $QF_Forum;
 
         $QF_Forum = new qf_forum();
         $this->error = '';
@@ -40,6 +42,9 @@ Class qf_forum_upd
         $this->uname = Get_Request('qfuser', 2, 's', 16);
         $this->uid = $QF_User->uid ? $QF_User->uid : 0;
         $this->spcode = Get_Request('spamcode', 2, 'h', 8);
+
+        // trimming username
+        $this->uname = trim(preg_replace('#\s+#', ' ', $this->uname), ' ');
 
         $this->ucode = ($QF_User->uid) ? 'US'.$QF_User->uid : 'GS'.substr($QF_Session->SID,0,3);
 
@@ -82,7 +87,8 @@ Class qf_forum_upd
         $t_id = ($this->curpost['id']) ? $this->curpost['theme'] : Get_Request('t_id', 2, 'i');
         if ($t_id) {
             if ($result = $QF_DBase->sql_doselect('{DBKEY}topics', '*', Array('id' => $t_id) ) )
-            {                $this->curtheme = $QF_DBase->sql_fetchrow($result);
+            {
+                $this->curtheme = $QF_DBase->sql_fetchrow($result);
                 $QF_Forum->CurSection = $QF_Forum->ForumTree[$this->curtheme['parent']];
                 $cur_sect = &$QF_Forum->CurSection;
 
@@ -103,7 +109,8 @@ Class qf_forum_upd
         $mt_id = Get_Request('t_merge_to', 2, 'i');
         if ($mt_id) {
             if ($result = $QF_DBase->sql_doselect('{DBKEY}topics', '*', Array('id' => $mt_id) ) )
-            {                $this->mergetheme = $QF_DBase->sql_fetchrow($result);
+            {
+                $this->mergetheme = $QF_DBase->sql_fetchrow($result);
                 $mrg_sect = $QF_Forum->ForumTree[$this->mergetheme['parent']];
 
                 if (!$mrg_sect['curuser_access'] || ($mrg_sect['acc_group'] && !$QF_User->cuser['active']))
@@ -162,7 +169,8 @@ Class qf_forum_upd
             $filename = $_FILES['file'.$fdx]['name'];
             $fsize=filesize($tmpname);
             $err = $_FILES['file'.$fdx]['error'];
-            if (is_uploaded_file($tmpname) && $fsize == $_FILES['file'.$fdx]['size'] && !$err) {                $file_info=pathinfo($filename);
+            if (is_uploaded_file($tmpname) && $fsize == $_FILES['file'.$fdx]['size'] && !$err) {
+                $file_info=pathinfo($filename);
                 $filename=preg_replace('#^.*[\\\/]#', '', $filename);
                 $file=substr($this->ucode.'-'.$this->time.$fdx.'.'.$file_info['extension'],0,28).'.qff';
                 $uni_name=implode('-', Array($this->ucode, $filename, $fsize) );
@@ -192,7 +200,8 @@ Class qf_forum_upd
                 $this->error .= '<LI>'.$filename.' - '.$lang['ERR_FILE_SRVERROR']."\n";
         }
 
-        if (count($fids)>0) {            $fids = '"'.implode('", "', $fids).'"';
+        if (count($fids)>0) {
+            $fids = '"'.implode('", "', $fids).'"';
             if ($result = $QF_DBase->sql_doselect('{DBKEY}files', 'id', 'WHERE id IN ('.$fids.')' ) )
             {
                 $fids = Array();
@@ -215,14 +224,16 @@ Class qf_forum_upd
 
         $this->dupthemeid = 0;
         if ($result = $QF_DBase->sql_doselect('{DBKEY}topics', '*', Array('name' => $this->t_caption, 'parent' => $s_id, 'deleted' => 0) ) )
-        {            $foundtheme = $QF_DBase->sql_fetchrow($result);
+        {
+            $foundtheme = $QF_DBase->sql_fetchrow($result);
             if (is_array($foundtheme))
                 $this->dupthemeid = $foundtheme['id'];
         };
 
         $this->duppostid = 0;
         if ($result = $QF_DBase->sql_doselect('{DBKEY}posts', '*', Array('hash' => $this->mhash, 'deleted' => 0) ) )
-        {            $foundpost = $QF_DBase->sql_fetchrow($result);
+        {
+            $foundpost = $QF_DBase->sql_fetchrow($result);
             if (is_array($foundpost))
                 $this->duppostid = $foundpost['id'];
         };
@@ -232,13 +243,15 @@ Class qf_forum_upd
     }
 
     function append_files($msgid=0)
-    {        global $QF_Config, $lang, $QF_DBase;
+    {
+        global $QF_Config, $lang, $QF_DBase;
 
         if ($this->error) Return False;
 
         if (!$this->loaded) $this->preload_data();
 
-        foreach($this->pfiles as $file) {            $res = move_uploaded_file($file['tmpname'], 'files/'.$file['file']);
+        foreach($this->pfiles as $file) {
+            $res = move_uploaded_file($file['tmpname'], 'files/'.$file['file']);
             if ($res == false)
                 $this->error .= '<LI>'.$lang['ERR_FILE_SYSTEM']."\n";
             else {
@@ -262,13 +275,15 @@ Class qf_forum_upd
     }
 
     function post_message()
-    {        global $QF_Config, $QF_Session, $lang, $QF_DBase, $QF_User, $QF_Parser;
+    {
+        global $QF_Config, $QF_Session, $lang, $QF_DBase, $QF_User, $QF_Parser;
 
         if ($this->error) Return False;
 
         if (!$this->loaded) $this->preload_data();
 
-        If (empty($this->message)) {            $this->error .= '<LI>'.$lang['ERR_NO_MESS']."\n";
+        If (empty($this->message)) {
+            $this->error .= '<LI>'.$lang['ERR_NO_MESS']."\n";
         }
         elseIf ($this->duppostid>0) {
             $this->error .= '<LI>'.$lang['ERR_POST_DUPLICATE']."\n";
@@ -284,12 +299,14 @@ Class qf_forum_upd
 
         if (!$QF_User->uid) $QF_Session->CheckSpamCode($this->spcode);
 
-        if ( $result = $QF_DBase->sql_doselect('{DBKEY}posts', '*', Array ('theme' => $this->curtheme['id']), 'ORDER BY id DESC LIMIT 1' ) ) {            $this->curpost = $QF_DBase->sql_fetchrow($result);
+        if ( $result = $QF_DBase->sql_doselect('{DBKEY}posts', '*', Array ('theme' => $this->curtheme['id']), 'ORDER BY id DESC LIMIT 1' ) ) {
+            $this->curpost = $QF_DBase->sql_fetchrow($result);
             $QF_DBase->sql_freeresult($result);
         };
 
         if ($this->curpost['author']==$this->uname && $this->curpost['author_id']==$this->uid && !$this->curpost['changer'] && $this->curpost['time'] >= ($this->time-$QF_Config['forum']['mess_lock_time']*60))
-        {            $this->message = $this->curpost['text']."\n\n".$this->message;
+        {
+            $this->message = $this->curpost['text']."\n\n".$this->message;
             $this->mhash = md5($this->message);
             $this->parsed_post = $QF_Parser->parse_mess($this->message, 1);
             $QF_DBase->sql_doupdate('{DBKEY}posts', Array('text' => $this->message, 'hash' => $this->mhash, 'time' => $this->time), Array( 'id' => $this->curpost['id']) );
@@ -309,7 +326,8 @@ Class qf_forum_upd
             $new_id = intval($QF_DBase->sql_nextid());
 
             if ( $result = $QF_DBase->sql_doselect('{DBKEY}posts', '*', Array ('id' => $new_id) ) )
-            {                $this->curpost = $QF_DBase->sql_fetchrow($result);
+            {
+                $this->curpost = $QF_DBase->sql_fetchrow($result);
                 $QF_DBase->sql_freeresult($result);
             }
         }
@@ -351,10 +369,12 @@ Class qf_forum_upd
 
         $uids = Array(); //Subscribed
         $send = False;
-        if ( $result ) {            while ( $data = $QF_DBase->sql_fetchrow($result))
+        if ( $result ) {
+            while ( $data = $QF_DBase->sql_fetchrow($result))
             {
                 $uemail = trim($data['email']);
-                if (!empty($uemail) && $data['subscrtype'] == 1) {                    //$tmpl['nick']=$data['nick'];
+                if (!empty($uemail) && $data['subscrtype'] == 1) {
+                    //$tmpl['nick']=$data['nick'];
                     $email->bcc($uemail);
                     $send = True;
                 }
@@ -429,7 +449,8 @@ Class qf_forum_upd
         $hideedit = Get_Request('p_hedit', 2, 'b');
         $unattach = Get_Request('unattach', 2);
 
-        if (is_array($unattach)) {            $unatt_list=Array();
+        if (is_array($unattach)) {
+            $unatt_list=Array();
             foreach ($unattach as $id)
                 $unatt_list[]='"'.addslashes($id).'"';
             if (count($unatt_list)>0)
@@ -458,7 +479,8 @@ Class qf_forum_upd
             $hideedit = false;
 
         if ($hideedit && $deleted==$this->curpost['deleted'])
-        {            $QF_DBase->sql_doupdate('{DBKEY}posts', Array('text' => $this->message, 'hash' => $this->mhash), Array( 'id' => $this->curpost['id']) );
+        {
+            $QF_DBase->sql_doupdate('{DBKEY}posts', Array('text' => $this->message, 'hash' => $this->mhash), Array( 'id' => $this->curpost['id']) );
         }
         elseif ($this->mhash != $this->curpost['hash'] || $deleted!=$this->curpost['deleted']) {
             $upd_data = Array(
@@ -470,7 +492,8 @@ Class qf_forum_upd
                 );
             $QF_DBase->sql_doupdate('{DBKEY}posts', $upd_data,  Array( 'id' => $this->curpost['id']) );
 
-            if ($this->mhash != $this->curpost['hash']) {                $oldtime = ($this->curpost['ctime']) ? $this->curpost['ctime'] : $this->curpost['time'];
+            if ($this->mhash != $this->curpost['hash']) {
+                $oldtime = ($this->curpost['ctime']) ? $this->curpost['ctime'] : $this->curpost['time'];
                 $oldchanger = ($this->curpost['changer']) ? $this->curpost['changer'] : $this->curpost['author'];
                 if (!empty($this->parchive))
                     $arch=$this->parchive['content'];
@@ -526,9 +549,11 @@ Class qf_forum_upd
     }
 
     function del_message($p_id, $t_id=0)
-    {        global $QF_Config, $lang, $QF_DBase, $QF_User, $timer;
+    {
+        global $QF_Config, $lang, $QF_DBase, $QF_User, $timer;
 
-        if ( $result = $QF_DBase->sql_doselect('{DBKEY}posts', 'id, theme', Array( 'id' => $p_id) ) )            $this->curpost = $QF_DBase->sql_fetchrow($result);
+        if ( $result = $QF_DBase->sql_doselect('{DBKEY}posts', 'id, theme', Array( 'id' => $p_id) ) )
+            $this->curpost = $QF_DBase->sql_fetchrow($result);
 
         if (empty($this->curpost))
             return False;
@@ -540,7 +565,8 @@ Class qf_forum_upd
             return False;
 
         if ( $result = $QF_DBase->sql_doselect('{DBKEY}topics', '*', Array( 'id' => $t_id) ) )
-        {            $this->curtheme = $QF_DBase->sql_fetchrow($result);
+        {
+            $this->curtheme = $QF_DBase->sql_fetchrow($result);
             if($QF_User->admin || ($QF_User->cuser['modlevel']>=$this->curtheme['postrights'] && $QF_User->cuser['modlevel']>0))
                 $this->curtheme['cu_access']=3;
             else
@@ -557,7 +583,8 @@ Class qf_forum_upd
     }
 
     function add_branch()
-    {        global $QF_Config, $QF_Session, $lang, $QF_DBase, $QF_User;
+    {
+        global $QF_Config, $QF_Session, $lang, $QF_DBase, $QF_User;
 
         if ($this->error) Return False;
 
@@ -655,7 +682,8 @@ Class qf_forum_upd
 
 
     function edit_branch()
-    {        global $QF_Config, $lang, $QF_DBase, $QF_User;
+    {
+        global $QF_Config, $lang, $QF_DBase, $QF_User;
 
         if ($this->error) Return False;
 
@@ -767,7 +795,8 @@ Class qf_forum_upd
     //
 
     function upd_theme_data($id)
-    {        global $QF_Config, $lang, $QF_DBase;
+    {
+        global $QF_Config, $lang, $QF_DBase;
 
         $id = intval($id);
         if (!$id) return False;
@@ -801,7 +830,8 @@ Class qf_forum_upd
             $upd_data['lastposter_id'] = $lpost['author_id'];
             $upd_data['lasttime'] = $lpost['time'];
         }
-        else {            $upd_data['lastposter'] = $curtheme['author'];
+        else {
+            $upd_data['lastposter'] = $curtheme['author'];
             $upd_data['lastposter_id'] = $curtheme['author_id'];
             $upd_data['lasttime'] = $curtheme['time'];
         }
@@ -810,7 +840,8 @@ Class qf_forum_upd
     }
 
     function upd_sect_data($id, $noparent=Array() ) //$noparent - Array with sections that can't be parent of $id section
-    {        global $QF_Config, $lang, $QF_DBase;
+    {
+        global $QF_Config, $lang, $QF_DBase;
 
         $id = intval($id);
         if (!$id) return False;
@@ -830,7 +861,8 @@ Class qf_forum_upd
     }
 
     function upd_userstats($id)
-    {        global $QF_Config, $lang, $QF_DBase;
+    {
+        global $QF_Config, $lang, $QF_DBase;
 
         $id = intval($id);
         if (!$id) return False;
@@ -881,7 +913,8 @@ Class qf_forum_upd
     }
 
     function upd_all_sections()
-    {        global $QF_Config, $lang, $QF_DBase;
+    {
+        global $QF_Config, $lang, $QF_DBase;
 
         $query='SELECT s.id, s.name, COUNT(ss.id) AS scount FROM {DBKEY}sections s
                 LEFT JOIN {DBKEY}sections ss ON(ss.parent = s.id)
@@ -894,7 +927,8 @@ Class qf_forum_upd
     }
 
     function rebuild_forum_rights()
-    {        global $QF_Config, $lang, $QF_DBase, $QF_Session, $QF_Forum;
+    {
+        global $QF_Config, $lang, $QF_DBase, $QF_Session, $QF_Forum;
 
         $QF_Forum = new qf_forum();
         $tree = $QF_Forum->ForumTree;   // Generating tree
@@ -950,7 +984,8 @@ Class qf_forum_upd
     }
 
     function rebuild_forum_stats()
-    {        global $QF_Config, $lang, $QF_DBase;
+    {
+        global $QF_Config, $lang, $QF_DBase;
 
         if ( $result = $QF_DBase->sql_doselect('{DBKEY}topics') )
             while($tdata=$QF_DBase->sql_fetchrow($result))

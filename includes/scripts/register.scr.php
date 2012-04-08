@@ -17,6 +17,9 @@ if (!empty($action))
   $nemail = Get_Request('nemail', 2, 'ht', 36); // обрабатываем e-mail
   $spcode = Get_Request('spamcode', 2, 'h');
 
+  // trimming username
+  $nuser = trim(preg_replace('#\s+#', ' ', $nuser), ' ');
+
   if (!preg_match('/'.EMAIL_MASK.'/i', $nemail))
   {
    $nemail="";
@@ -58,9 +61,11 @@ if (!empty($action))
       }
       elseif ($ruser['nick']) // User nick is used
       {
-        if ($ruser['pass']==$npass1) {            $QF_DBase->sql_dodelete('{DBKEY}regs', Array('nick' => $nuser) );
+        if ($ruser['pass']==$npass1) {
+            $QF_DBase->sql_dodelete('{DBKEY}regs', Array('nick' => $nuser) );
         }
-        else {            $action = "";
+        else {
+            $action = "";
             $error = $error."<LI>".$lang['ERR_USED_NICK']."\n";
         }
       }

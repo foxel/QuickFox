@@ -9,10 +9,14 @@ $login = Get_Request('userlogin', 2, 'ht');
 $pass  = md5(Get_Request('userpass', 2));
 $useauto = Get_Request('autologin', 2, 'b');
 
+// trimming username
+$login = trim(preg_replace('#\s+#', ' ', $login), ' ');
+
 if (isset($_SERVER['HTTP_REFERER'])
      && ($url_redir = trim($_SERVER['HTTP_REFERER']))
      && (strpos($url_redir, $QF_RootUrl) === 0))
-{    $url_redir = substr($url_redir, strlen($QF_RootUrl));
+{
+    $url_redir = substr($url_redir, strlen($QF_RootUrl));
     if (!$url_redir)
         $url_redir = 'index.php';
 }
@@ -40,7 +44,8 @@ if (strstr($url_redir, 'showresult'))
       {
         $action = "";
         if ($ruser['nick'])
-        {          if ($pass==$ruser['pass'])
+        {
+          if ($pass==$ruser['pass'])
           {
             if (!$ruser['echecked'])
                 $error = sprintf($lang['ERR_LOGIN_NOT_ECHECKED'],$login);
@@ -66,7 +71,8 @@ if (strstr($url_redir, 'showresult'))
 
 
 if (empty($error))
-{   $curuser=$user;
+{
+   $curuser=$user;
    $uid = intval($curuser['id']);
    $QF_Session->Set('QF_user', $login);
    $QF_Session->Set('QF_uid', $uid);
