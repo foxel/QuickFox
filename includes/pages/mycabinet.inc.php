@@ -48,7 +48,7 @@ $tmpl=Array(
     'link'   => 'index.php?st=mycabinet'.(($cabuser) ? '&amp;cabuser='.$cabuser : ''),
     'nick'   => $ucabuser['nick'],
     'avatar' => Vis_Gen_Avatar($ucabuser, true),
-    'rights' => Vis_Gen_Rights($ucabuser['rights'],$lang['OUTCAST']).(($ucabuser['admin'])?" +A":(($ucabuser['modlevel'])?" +M".$ucabuser['modlevel']:'')),
+    'rights' => Vis_Gen_Rights($ucabuser['rights'],(!$ucabuser['active'] || !$ucabuser['approved']) ? $lang['INFO_UINACTIVE'] : $lang['OUTCAST']).(($ucabuser['admin'])?" +A":(($ucabuser['modlevel'])?" +M".$ucabuser['modlevel']:'')),
     'descr'  => $ucabuser['descr'],
     'email'  => $ucabuser['email']);
 
@@ -388,10 +388,12 @@ elseif ($job=='pms') {
         'fixuser'  => 'true',
         'formname' => 'newpm' );
 
-    if ($is_inpm && $puser['id']) {        $form['recip'] = $puser['nick'];
+    if ($is_inpm && $puser['id']) {
+        $form['recip'] = $puser['nick'];
         $np_theme = trim($curpm['theme']);
         if (preg_match('#^(?:Re\[(\d+)\]\s*|((?:Re\s)+))(.*)$#is', $np_theme, $np_parts))
-        {            $recount = ($np_parts[1])
+        {
+            $recount = ($np_parts[1])
                         ? $np_parts[1] + 1
                         : (int) (strlen($np_parts[2])/3) + 1;
             $np_theme = 'Re['.($recount).'] '.$np_parts[3];

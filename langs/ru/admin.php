@@ -119,6 +119,8 @@ $lang['CONFIG_COMMON_SITE_DOSPIDERS_MORE']='При включении данной опции QuickFox 
 $lang['CONFIG_COMMON_SITE_NOSPIDERS']='Запретить индексацию.';
 $lang['CONFIG_COMMON_SITE_NOSPIDERS_MORE']='При включении данной опции QuickFox не будет выдавать информацию распознанным поисковым машинам.
  Имеет значение только при включенной опции "Работа с поисковыми машинами".';
+$lang['CONFIG_COMMON_SITE_REGAPPROVE'] = 'Проверка аккаунтов администратором.';
+$lang['CONFIG_COMMON_SITE_REGAPPROVE_MORE'] = 'Устанавливает ограничение для вновь регистрируемых пользователей. Кажды новый аккаунт должен быть проверен администратором.';
 $lang['CONFIG_COMMON_SITE_UINFOACC']='Доступ к информации о пользователях.';
 $lang['CONFIG_COMMON_SITE_UINFOACC_MORE']='Устанавливает уровень доступа к информации о зарегистрированных пользователях.';
 $lang['CONFIG_COMMON_SITE_UINFOACC_ERR']='Уровень доступа к информации о пользователях задан неверно.';

@@ -17,6 +17,8 @@ if ($QF_User->uid) {
        $tmpl['flags'].='<a href="index.php?st=mycabinet&amp;job=pms" title="'.$lang['U_HAVE_NEW_PM'].'">'.$Vis['NEWPM_FLAG'].'</a><br />';
    if ($QF_User->cuser['hasnewsubscr'])
        $tmpl['flags'].='<a href="index.php?st=fsearch&amp;mode=1&amp;by_subscr=1" title="'.$lang['U_HAVE_NEW_SUBS'].'">'.$Vis['NEWSUBS_FLAG'].'</a><br />';
+   if (!$QF_User->cuser['approved'])
+       $tmpl['flags'].='<a href="index.php?st=mycabinet&job=profile" title="'.$lang['U_NOT_APPROVED'].'">'.$Vis['NOT_APPROVED_FLAG'].'</a><br />';
 } else {
    $tmpl=Array(
    'form_row' => $Vis['USER_LOGIN_ROW'],

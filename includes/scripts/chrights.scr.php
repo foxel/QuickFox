@@ -11,6 +11,7 @@ $nrights=Get_Request('nrights', 2, 'i');
 $nmodlevel=Get_Request('nmodlevel', 2, 'i');
 $ndeluser= Get_Request('deluser', 2, 'b') ? 1 : 0;
 $nactive= Get_Request('inactive', 2, 'b') ? 0 : 1;
+$approved= Get_Request('approved', 2, 'b') ? 1 : 0;
 $error="";
 
 $result = $QF_DBase->sql_doselect('{DBKEY}users', '*', Array( 'id' => $chuser ) );
@@ -31,6 +32,10 @@ if (!empty($ndata))
         $nmodlevel = $ndata['modlevel'];
         $ndeluser = $ndata['deleted'];
         $nactive  = $ndata['active'];
+        $approved  = $ndata['approved'];
+    } elseif ($ndata['approved']) {
+        // can't disapprove
+        $approved = 1;
     }
 
     if ($nmodlevel > $nrights)
@@ -38,10 +43,11 @@ if (!empty($ndata))
     if ($ndeluser)
         $nmodlevel = $nrights = 0;
 
-    $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'rights' => $nrights, 'modlevel' => $nmodlevel, 'deleted' => $ndeluser, 'active' => $nactive), Array( 'id' => $chuser ) );
+    $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'rights' => $nrights, 'modlevel' => $nmodlevel, 'deleted' => $ndeluser, 'active' => $nactive, 'approved' => $approved), Array( 'id' => $chuser ) );
 
     if (!$ndeluser || !$ndata['deleted'])
-    {        $tmpl['nick']=$ndata['nick'];
+    {
+        $tmpl['nick']=$ndata['nick'];
         $tmpl['anick']=$iuser;
         $tmpl['nrights']=($nrights>0) ? $nrights : $lang['OUTCAST'];
         $tmpl['nmodlevel']=($nmodlevel>0) ? $nmodlevel : $lang['NOT_MODERATOR'];

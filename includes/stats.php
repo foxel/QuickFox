@@ -17,7 +17,7 @@ if (!$QF_User->is_spider) {
 	$STtime=floor(($timer->time + $tzs)/86400)*86400 - $tzs;
 	$SNtime=$timer->time - 600;
 
-	$ulist->load('WHERE lastseen>'.$chtime, true);
+	$ulist->load('WHERE approved = true AND lastseen>'.$chtime, true);
 	$ulist->timesort();
 	Foreach($ulist->users as $suser)
 	{
@@ -58,7 +58,8 @@ if (!$QF_User->is_spider) {
 	  if ($result)
 	      if ($QF_DBase->sql_numrows($result)>0) {
 	          $SeenSpidersList=Array();
-	          while ($spider=$QF_DBase->sql_fetchrow($result)) {	              $SeenSpidersList[]=$spider['name'];
+	          while ($spider=$QF_DBase->sql_fetchrow($result)) {
+	              $SeenSpidersList[]=$spider['name'];
 	          }
 	          $SeenSpiders=sprintf($lang['USTATS_SPIDERS'],implode(', ',$SeenSpidersList));
 	      }
@@ -73,7 +74,8 @@ if (!$QF_User->is_spider) {
 
 	print Vis_Draw_Panel(Visual('USERSTAT_TABLE', $tmpl),$lang['USTATS_CAPT']);
 }
-else {    $tmpl=Array(
+else {
+    $tmpl=Array(
         'spider_name'   => $QF_User->spider['name'],
         'spider_visits' => $QF_User->spider['visits']);
 

@@ -10,7 +10,8 @@ if ( defined('CORE_USERS_LOADED') )
 define('CORE_USERS_LOADED', True);
 
 class qf_curuser
-{    var $uid = 0;
+{
+    var $uid = 0;
     var $uname = '';
     var $level = 0;
     var $wlevel = 0;
@@ -21,7 +22,8 @@ class qf_curuser
     var $is_spider = false;
 
     function qf_curuser()
-    {        Global $QF_User;
+    {
+        Global $QF_User;
         if (defined('QF_CURUSER_CREATED'))
             trigger_error('Duplicate curuser creation!', 256);
 
@@ -31,7 +33,8 @@ class qf_curuser
     }
 
     function login()
-    {        global $QF_Session, $QF_Client;
+    {
+        global $QF_Session, $QF_Client;
         global $QF_DBase, $lang, $QF_Config, $timer;
 
         $this->uid = 0;
@@ -134,8 +137,13 @@ class qf_curuser
                 $QF_Session->Drop('QF_Guest');
             }
 
-            if (!$curuser['active'])
-            {                $curuser['modlevel'] = 0;
+            if (!$curuser['approved']) {
+                $curuser['rights']   = 0;
+                $curuser['modlevel'] = 0;
+                $curuser['admin']    = 0;
+                $curuser['active']   = 0;
+            } elseif (!$curuser['active']) {
+                $curuser['modlevel'] = 0;
                 $curuser['admin']    = 0;
             }
 
@@ -307,7 +315,13 @@ Class UsersList {
                     $user['admin']=1;
                 if ($user['deleted'])
                     continue;
-                if (!$user['active'])
+                if (!$user['approved'])
+                {
+                    $user['modlevel'] = 0;
+                    $user['admin']    = 0;
+                    $user['active']   = 0;
+                }
+                elseif (!$user['active'])
                 {
                     $user['modlevel'] = 0;
                     $user['admin']    = 0;

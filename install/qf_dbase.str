@@ -1914,6 +1914,12 @@ Array (
                 'def' => 1 ,
                 'extra' => ''
             )  ,
+            'approved' => Array (
+                'type' => 'tinyint(1) unsigned' ,
+                'null' => false ,
+                'def' => 1 ,
+                'extra' => ''
+            )  ,
             'active' => Array (
                 'type' => 'tinyint(1) unsigned' ,
                 'null' => false ,
@@ -2060,6 +2066,12 @@ Array (
                 'type' => 'INDEX' ,
                 'cols' => Array (
                     0 => 'subscrtype'
+                ) 
+            )  ,
+            'approved' => Array (
+                'type' => 'INDEX' ,
+                'cols' => Array (
+                    0 => 'approved'
                 ) 
             ) 
         )  ,

@@ -18,7 +18,8 @@ if (!empty($action))
       $ouser = $QF_DBase->sql_fetchrow($result);
 
   $result = $QF_DBase->sql_doselect('{DBKEY}regs', '*', Array( 'nick' => $nuser) );
-  if (!empty($result))      $ruser = $QF_DBase->sql_fetchrow($result);
+  if (!empty($result))
+      $ruser = $QF_DBase->sql_fetchrow($result);
 
 //Lets check the data (this is a second step - first step is in javascript)
       if (!$nuser) // No username
@@ -64,6 +65,7 @@ if (!empty($action))
         'regtime'  => $timer->time,
         'lastseen' => $timer->time,
         'rights'   => 1,
+        'approved' => ($QF_Config['register_need_approve']) ? 0 : 1,
         'about'    => $ruser['descr'],
         );
     $QF_DBase->sql_doinsert('{DBKEY}users', $ins_data);

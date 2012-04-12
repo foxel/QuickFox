@@ -6,7 +6,8 @@ if ( !defined('QF_STARTED') )
 
 $infouser=Get_Request('infouser', 1, 'i');
 if (($acc_lev = $QF_Config['uinfo_acc_lvl']) && ($QF_User->level < $acc_lev))
-{    print Vis_Err_String($lang['ERR_LOWLEVEL']);
+{
+    print Vis_Err_String($lang['ERR_LOWLEVEL']);
 }
 elseIf ($infouser)
 {
@@ -14,7 +15,7 @@ elseIf ($infouser)
     $result = $QF_DBase->sql_doselect('{DBKEY}users', '*', Array( 'id' => $infouser) );
     if (!empty($result))
         $iuser = $QF_DBase->sql_fetchrow($result);
-    if (!empty($iuser) && (!$iuser['deleted'] || $QF_User->admin))
+    if (!empty($iuser) && ((!$iuser['deleted'] && $iuser['approved']) || $QF_User->admin))
     {
 
         if (empty($iuser['timezone'])) $iuser['timezone']=$QF_Config['def_tz'];
@@ -44,7 +45,8 @@ elseIf ($infouser)
             'ulasturl'   => $iuser['lasturl'] );
 
         switch($iuser['sex'])
-        {            case 'M':
+        {
+            case 'M':
                 $tmpl['usex'] = $lang['INFO_USEX_M'];
                 break;
             case 'F':
@@ -52,11 +54,13 @@ elseIf ($infouser)
                 break;
         }
 
-        if ($QF_User->admin) {             $tmpl['ulastip'] = $iuser['lastip'];
+        if ($QF_User->admin) {
+             $tmpl['ulastip'] = $iuser['lastip'];
              if ($iuser['lastip']) $tmpl['ulastdns'] = gethostbyaddr($iuser['lastip']);
         }
 
-        if (!$iuser['active']) $tmpl['urights'].=' ['.$lang['INFO_UINACTIVE'].']';
+        if (!$iuser['approved']) $tmpl['urights'].=' ['.$lang['INFO_USER_NOT_APPROVED'].']';
+        elseif (!$iuser['active']) $tmpl['urights'].=' ['.$lang['INFO_UINACTIVE'].']';
         elseif ($iuser['admin']) $tmpl['urights'].=' + '.$lang['ADMINISTRATOR'];
         elseif ($iuser['modlevel']) $tmpl['urights'].=' + '.sprintf($lang['INFO_MODLEVEL'],$iuser['modlevel']);
 
@@ -117,6 +121,15 @@ elseIf ($infouser)
 	            	if($iuser['modlevel']==$stt) $fields['nmodlevel']['subs'][$stt]['selected']=1;
         		}
 
+                if (!$iuser['approved']) {
+                    $fields['approved'] = Array(
+                        'value'   => '1',
+                        'type'    => 'checkbox',
+                        'checked' => '',
+                        'capt'    => $lang['INFO_SET_APPROVED'],
+                        'descr'   => $lang['INFO_APPROVED_MORE']);
+                }
+
                 $fields['deluser']=Array(
                     'value'   => '1',
                     'type'    => 'checkbox',
@@ -161,7 +174,8 @@ elseIf ($infouser)
                 'formname' => 'newpm',
                 'user'     => $QF_User->uname );
 
-            if ($QF_User->uid)                $form['fixuser']='true';
+            if ($QF_User->uid)
+                $form['fixuser']='true';
 
             $pmfrm['formbody']=Visual('PM_NEW_FORM', $form);
             $pmfrm['class']='noborder';
@@ -175,7 +189,8 @@ elseIf ($infouser)
 
     }
     else
-    {        $userinfo = Visual('ERR_STRING', Array('message'=>$lang['INFO_NO_INFO']));
+    {
+        $userinfo = Visual('ERR_STRING', Array('message'=>$lang['INFO_NO_INFO']));
         $Page_SubTitle = $lang['INFO_NOT_FOUND'];
     }
 
@@ -204,13 +219,16 @@ else
 
     $toprint='';
     if ($sortby = Get_Request('sortby', 1, 'v'))
-    {        switch ($sortby)
-        {            case 'nick':
+    {
+        switch ($sortby)
+        {
+            case 'nick':
                 $lusers = qf_array_2dresort($lusers, 'nick');
                 break;
             case 'level':
                 $lusers = qf_array_2dresort($lusers, 'rights', true);
                 $lusers = qf_array_2dresort($lusers, 'admin', true);
+                $lusers = qf_array_2dresort($lusers, 'approved', true);
                 break;
             case 'time':
                 $lusers = qf_array_2dresort($lusers, 'lastseen', true);
@@ -230,11 +248,15 @@ else
     }
 
     Foreach($lusers as $iuser) {
+        if (!$iuser['approved'] && !$QF_User->admin) {
+            continue;
+        }
+
         $row = Array(
             'u_id'    => $iuser['id'],
             'u_nick'  => '<a href="index.php?st=info&amp;infouser='.$iuser['id'].'">'.$iuser['nick'].'</a>',
             'u_avatar'=> Vis_Gen_Avatar($iuser),
-            'u_level' => Vis_Gen_Rights($iuser['rights'],$lang['OUTCAST']).((!$iuser['active'])?" [R/O]":(($iuser['admin'])?" +A":(($iuser['modlevel'])?" +M".$iuser['modlevel']:''))),
+            'u_level' => Vis_Gen_Rights($iuser['rights'],$lang['OUTCAST']).((!$iuser['approved']) ? " [NEW]" :((!$iuser['active'])?" [R/O]":(($iuser['admin'])?" +A":(($iuser['modlevel'])?" +M".$iuser['modlevel']:'')))),
             'u_lseen' => create_date('',$iuser['lastseen']),
             'u_posts' => intVal($iuser['s_posts']),
             'u_themes'=> intVal($iuser['s_themes']),
@@ -243,7 +265,7 @@ else
             'u_url'   => ($iuser['homepage']) ? '<a href="'.$iuser['homepage'].'">'.$iuser['homepage'].'</a>' : 'n/a' );
 
         $toprint.=Visual('USERINFO_USER_ROW', $row);
-    $LastCount++;
+        $LastCount++;
     }
 
     $tmpl=Array(

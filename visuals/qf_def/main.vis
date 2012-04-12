@@ -30,6 +30,10 @@
 <span class="red">[{L_NEW_SUBS}]</span>
 <<- 'NEWSUBS_FLAG'>>
 
+<<+ 'NOT_APPROVED_FLAG'>>
+<span class="red">[{L_NOT_APPROVED}]</span>
+<<- 'NOT_APPROVED_FLAG'>>
+
 <<+ 'NO_AVATAR'>>
 <b>{L_NO_AVATAR}</b>
 <<- 'NO_AVATAR'>>

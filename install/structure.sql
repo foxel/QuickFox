@@ -416,6 +416,7 @@ CREATE TABLE `{DBKEY}users` (
     `style` varchar(16) NOT NULL, 
     `noemailpm` tinyint(1) unsigned NOT NULL default '0', 
     `subscrtype` tinyint(1) unsigned NOT NULL default '1', 
+    `approved` tinyint(1) unsigned NOT NULL default '1', 
     `active` tinyint(1) unsigned NOT NULL default '1', 
     `hasnewpm` tinyint(1) unsigned NOT NULL default '0', 
     `hasnewsubscr` tinyint(1) unsigned NOT NULL default '0', 
@@ -439,7 +440,8 @@ CREATE TABLE `{DBKEY}users` (
     INDEX `regtime` (`regtime`) , 
     INDEX `rights` (`rights`, `modlevel`, `admin`) , 
     INDEX `sessid` (`sessid`) , 
-    INDEX `subscrtype` (`subscrtype`)  
+    INDEX `subscrtype` (`subscrtype`) , 
+    INDEX `approved` (`approved`)  
 ); 
 
 # Table definition for {DBKEY}userstats 

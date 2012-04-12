@@ -15,7 +15,8 @@ if ($QF_Session->Get('is_admin')!=1 || !$QF_User->admin) {
     $error = $lang['ERR_ADMIN_ONLY'];
 }
 
-elseif ($action=='common_config') {    $site_name = Get_Request('site_name', 2, 'ht', 255);
+elseif ($action=='common_config') {
+    $site_name = Get_Request('site_name', 2, 'ht', 255);
     if (strlen($site_name)<3)
         $error .= '<LI>'.$lang['CONFIG_COMMON_SITENAME_ERR'];
     $apply_conf[]=Array(
@@ -83,6 +84,13 @@ elseif ($action=='common_config') {    $site_name = Get_Request('site_name', 2,
         'parent' => '',
         'name'   => 'restrict_spiders',
         'value'  => $site_no_spiders,
+    );
+
+    $register_need_approve = (Get_Request('register_need_approve', 2) == 'ON') ? 1 : 0;
+    $apply_conf[] = Array(
+        'parent' => '',
+        'name'   => 'register_need_approve',
+        'value'  => $register_need_approve,
     );
 
     $uinfo_rights = Get_Request('uinfo_rights', 2, 'i');
@@ -285,7 +293,8 @@ elseif ($action=='visual_config') {
     $redir_url = 'index.php?st=mycabinet&amp;job=vis_config';
 }
 
-elseif ($action=='forum_config') {
+elseif ($action=='forum_config') {
+
     $root_name = Get_Request('root_name', 2, 'ht');
     if (strlen($root_name)<3 && $root_name!='')
         $error .= '<LI>'.$lang['CONFIG_FORUM_ROOTNAME_ERR'];
@@ -365,7 +374,8 @@ elseif ($action=='forum_config') {
 else
     $error = $lang['ERR_NO_ACTION'];
 
-if (!$error) {    // Initial Default config values
+if (!$error) {
+    // Initial Default config values
     require 'kernel/QF_def_conf.php';
 
     foreach($apply_conf as $conf) {

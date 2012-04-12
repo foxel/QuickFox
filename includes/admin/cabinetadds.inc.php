@@ -21,7 +21,8 @@ $showdels=1;
 $cabinet_adm_hide=false;
 
 // if not logged in admin
-if ($QF_Session->Get('is_admin') != 1) {    $cabinet_adm_hide=true;
+if ($QF_Session->Get('is_admin') != 1) {
+    $cabinet_adm_hide=true;
 }
 
 
@@ -112,6 +113,13 @@ elseif ($job=='config') {
         'checked' => ($QF_Config['restrict_spiders']) ? '1' : '',
         'capt'    => $lang['CONFIG_COMMON_SITE_NOSPIDERS'],
         'descr'   => $lang['CONFIG_COMMON_SITE_NOSPIDERS_MORE'] );
+
+    $fields['register_need_approve'] = Array(
+        'value'   => 'ON',
+        'type'    => 'checkbox',
+        'checked' => ($QF_Config['register_need_approve']) ? '1' : '',
+        'capt'    => $lang['CONFIG_COMMON_SITE_REGAPPROVE'],
+        'descr'   => $lang['CONFIG_COMMON_SITE_REGAPPROVE_MORE']);
 
     $fields['uinfo_rights']=Array(
         'type'  => 'select',
@@ -314,20 +322,23 @@ elseif ($job=='vis_config') {
 //
 // Access Groups
 //
-elseif ($job=='acc_groups') {    $cabinet_caption = $lang['UCAB_ADMIN_ACCGROUPS'];
+elseif ($job=='acc_groups') {
+    $cabinet_caption = $lang['UCAB_ADMIN_ACCGROUPS'];
 
     Glob_Request('edit_grp show_grp drop_grp');
     $ptmpl = Array();
 
     $query = 'SELECT ag.*, COUNT(al.user_id) AS users FROM {DBKEY}acc_groups ag LEFT JOIN {DBKEY}acc_links al ON (al.group_id = ag.id) LEFT JOIN {DBKEY}users us ON (us.id = al.user_id AND us.deleted = 0) GROUP BY ag.id ';
     $result = $QF_DBase->sql_query($query);
-    if ($result) {        $ttmpl = Array(
+    if ($result) {
+        $ttmpl = Array(
             'rows'      => '',
             'formstart' => '<form action="index.php" method="post">',
             'formend'   => '</form>',
             );
 
-        while ($acc_gr = $QF_DBase->sql_fetchrow($result) ) {            $gtmpl= Array(
+        while ($acc_gr = $QF_DBase->sql_fetchrow($result) ) {
+            $gtmpl= Array(
                 'id'    => $acc_gr['id'],
                 'name'  => $acc_gr['name'],
                 'descr' => $acc_gr['descr'],
@@ -340,7 +351,8 @@ elseif ($job=='acc_groups') {    $cabinet_caption = $lang['UCAB_ADMIN_ACCGROUPS
                 $group_to_show = $acc_gr;
             }
 
-            if ($drop_grp == $acc_gr['id']) {                $do_del = Get_Request('do', 1, 'b');
+            if ($drop_grp == $acc_gr['id']) {
+                $do_del = Get_Request('do', 1, 'b');
                 if ($do_del) {
                     $QF_DBase->sql_query('DELETE FROM {DBKEY}acc_groups WHERE id = '.$drop_grp );
                     $QF_DBase->sql_query('DELETE FROM {DBKEY}acc_links WHERE group_id = '.$drop_grp );
@@ -353,7 +365,8 @@ elseif ($job=='acc_groups') {    $cabinet_caption = $lang['UCAB_ADMIN_ACCGROUPS
                         true );
             }
 
-            if ($edit_grp == $acc_gr['id']) {                $ttmpl['rows'].= Visual('ACCESS_GROUPS_TBLROW_CHFORM', $gtmpl);
+            if ($edit_grp == $acc_gr['id']) {
+                $ttmpl['rows'].= Visual('ACCESS_GROUPS_TBLROW_CHFORM', $gtmpl);
             }
             elseif (!$acc_gr['del']) {
                 $gtmpl['controls'] = '<a href="index.php?st=mycabinet&amp;job=acc_groups&amp;edit_grp='.$acc_gr['id'].'">'.$Vis['BTN_EDIT'].'</a>
@@ -379,7 +392,8 @@ elseif ($job=='acc_groups') {    $cabinet_caption = $lang['UCAB_ADMIN_ACCGROUPS
 
         $QF_DBase->sql_freeresult($result);
 
-        if ($group_to_show>0) {            $query = 'SELECT l.*, u.nick AS user_nick FROM {DBKEY}acc_links l JOIN {DBKEY}users u ON (u.id = l.user_id) WHERE l.group_id = '.$group_to_show['id'].' AND u.deleted = 0 ORDER BY l.user_id';
+        if ($group_to_show>0) {
+            $query = 'SELECT l.*, u.nick AS user_nick FROM {DBKEY}acc_links l JOIN {DBKEY}users u ON (u.id = l.user_id) WHERE l.group_id = '.$group_to_show['id'].' AND u.deleted = 0 ORDER BY l.user_id';
             $result = $QF_DBase->sql_query($query);
             if ($result) {
                 $gtmpl=Array(
@@ -390,7 +404,8 @@ elseif ($job=='acc_groups') {    $cabinet_caption = $lang['UCAB_ADMIN_ACCGROUPS
                     'gr_name'   => $group_to_show['name'],
                     );
                 while ($gr_link = $QF_DBase->sql_fetchrow($result))
-                {                    $rtmpl=Array(
+                {
+                    $rtmpl=Array(
                         'name'    => $gr_link['user_nick'],
                         't_given' => create_date('',$gr_link['time_given']),
                         't_drop'  => (isset($gr_link['drop_after'])) ? create_date('',$gr_link['drop_after']) : $lang['ADMCAB_ACCGRP_US_GOTPERM'],
@@ -745,7 +760,8 @@ elseif ($job=='db_reserv') {
 
 }
 
-else {
+else {
+
     $cabinet_adm_hide=true;
 
 }
