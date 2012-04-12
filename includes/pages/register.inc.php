@@ -29,7 +29,7 @@ if ($QF_Config['use_spcode'] && !$QF_User->uid) {
 
 $fields['submit']['value']=$lang['BTN_ACCEPT'];
 $fields['submit']['type']='submit';
-$fields['submit']['descr']=$lang['ACT_ACCEPT_MORE'].(($QF_Config['check_regs']) ? $lang['ACT_NEED_ADMIN'] : '');
+$fields['submit']['descr']=$lang['ACT_ACCEPT_MORE'].(($QF_Config['register_need_approve']) ? $lang['ACT_NEED_ADMIN'] : '');
 
 print Vis_Draw_Form($lang['DROP_PASS_CAPT'], 'drppassform', 'index.php', $lang['DROP_PASS_REQUEST'], $fields);
 
@@ -61,7 +61,7 @@ $fields['drop_code']['descr']=$lang['DROP_PASS_CODE_MORE'];
 
 $fields['submit']['value']=$lang['BTN_ACCEPT'];
 $fields['submit']['type']='submit';
-$fields['submit']['descr']=$lang['ACT_ACCEPT_MORE'].(($QF_Config['check_regs']) ? $lang['ACT_NEED_ADMIN'] : '');
+$fields['submit']['descr']=$lang['ACT_ACCEPT_MORE'].(($QF_Config['register_need_approve']) ? $lang['ACT_NEED_ADMIN'] : '');
 
 print Vis_Draw_Form($lang['DROP_PASS_ST2_CAPT'], 'actform', 'index.php', $lang['DROP_PASS_ST2_REQUEST'], $fields);
 
@@ -90,7 +90,7 @@ $fields['activatecode']['descr']=$lang['ACT_ACODE_MORE'];
 
 $fields['submit']['value']=$lang['BTN_ACCEPT'];
 $fields['submit']['type']='submit';
-$fields['submit']['descr']=$lang['ACT_ACCEPT_MORE'].(($QF_Config['check_regs']) ? $lang['ACT_NEED_ADMIN'] : '');
+$fields['submit']['descr']=$lang['ACT_ACCEPT_MORE'].(($QF_Config['register_need_approve']) ? $lang['ACT_NEED_ADMIN'] : '');
 
 print Vis_Draw_Form($lang['ACT_CAPT_DO'], 'actform', 'index.php', $lang['ACT_REQUEST'], $fields);
 }
@@ -166,7 +166,7 @@ $fields['nemail']['descr']=$lang['REG_EMAIL_MORE'].'<br />
 
 $fields['nuinfo']['type']='textarea';
 $fields['nuinfo']['capt']=$lang['REG_INFO'];
-$fields['nuinfo']['descr']=(($QF_Config['check_regs']) ? '<span class="red">'.$lang['REG_INFO_MORE'].'</span>' : '');
+$fields['nuinfo']['descr']=(($QF_Config['register_need_approve']) ? '<span class="red">'.$lang['REG_INFO_MORE'].'</span>' : '');
 
 if ($QF_Config['use_spcode'] && !$QF_User->uid) {
     $fields['spamcode']['type']='text';
@@ -178,7 +178,7 @@ if ($QF_Config['use_spcode'] && !$QF_User->uid) {
 $fields['submit']['value']=$lang['BTN_ACCEPT'];
 $fields['submit']['type']='submit';
 $fields['submit']['descr']=$lang['REG_ACCEPT_MORE'].'
-'.(($QF_Config['check_regs']) ? '<span class="red">'.$lang['REG_NEED_ADMIN'].'</span>' : '');
+'.(($QF_Config['register_need_approve']) ? '<span class="red">'.$lang['REG_NEED_ADMIN'].'</span>' : '');
 
 print Vis_Draw_Form($lang['CAPT_REG_NEW'], 'regform', 'index.php', $lang['REG_REQUEST'], $fields, '', '', 'onsubmit="return checkForm(this)"');
 
