@@ -96,10 +96,14 @@ if(!empty($QF_Script)) {
     $realScriptToken = $QF_Session->Get('script_token');
     if (!$realScriptToken || $realScriptToken != $gotScriptToken) {
         Set_Result($lang['ERR_SCRIPT_TOKEN'], '', '/');
-    } elseif (file_exists($scr_file)) {
-        Ignore_User_Abort (True);
-        include($scr_file);
-        $QF_User->login();;
+    } else {
+        // resetting script_token to new value
+        $QF_Session->Set('script_token', md5(uniqid()));
+        if (file_exists($scr_file)) {
+            Ignore_User_Abort (True);
+            include($scr_file);
+            $QF_User->login();;
+        }
     }
 }
 
