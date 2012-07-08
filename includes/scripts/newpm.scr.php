@@ -68,6 +68,11 @@ if ( !defined('QF_STARTED') )
         }
       }
 
+      if (($acc_lev = $QF_Config['uinfo_acc_lvl']) && ($QF_User->level < $acc_lev)) {
+          $action = "";
+          $error  = $error."<LI>".$lang['ERR_LOWLEVEL']."\n";
+      }
+
       if (!$QF_User->uid)
           $QF_Session->CheckSpamCode($spcode);
 
