@@ -403,7 +403,7 @@ elseif ($job=='pms') {
         $form['theme'] = $np_theme;
     }
 
-    if (!($acc_lev = $QF_Config['uinfo_acc_lvl']) || ($QF_User->level >> $acc_lev)) {
+    if (!($acc_lev = $QF_Config['uinfo_acc_lvl']) || ($QF_User->level >= $acc_lev)) {
         $tmpl['formbody']=Visual('PM_NEW_FORM', $form);
         $write_pm = Vis_Draw_Fliper(Visual('POST_BODY', $tmpl), $lang['WRITE_NEW_PM'], '100%', True);
     }
