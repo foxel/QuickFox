@@ -402,7 +402,8 @@ Class qf_forum_upd
 
         $to_merge = Get_Request('p_merge', 2, 'b');
         $to_merge_all = Get_Request('p_merge_all', 2, 'b');
-        
+        $to_merge_hide = Get_Request('p_merge_hide', 2, 'b');
+
         If (empty($this->message)) {
             $this->error .= '<LI>'.$lang['ERR_NO_MESS']."\n";
         }
@@ -510,22 +511,28 @@ Class qf_forum_upd
         if ($to_merge)
         {
             $post_ids = array();
-            if ($to_merge_all)
-            {
+            if ($to_merge_all) {
                 if ($result = $QF_DBase->sql_doselect('{DBKEY}posts', 'id', 'WHERE `theme` = '.$this->curtheme['id'].' AND `id` >= '.$this->curpost['id']))
                 {
                     while (list($pid) = $QF_DBase->sql_fetchrow($result, false))
                         $post_ids[] = $pid;
                     $QF_DBase->sql_freeresult($result);
                 }
-            }
-            else
+            } else {
                 $post_ids[] = $this->curpost['id'];
-            $msg = "\n\n".sprintf($lang['FOR_POST_MERGED'], $this->curtheme['name'], $this->curtheme['id']);
-            $QF_DBase->sql_query('UPDATE `{DBKEY}posts` SET `text` = CONCAT(`text`, \''.$QF_DBase->sql_quote($msg).'\'), `theme` = '.$this->mergetheme['id'].' WHERE `theme` = '.$this->curtheme['id'].' AND `id` '.($to_merge_all ? '>=' : '=').' '.$this->curpost['id'].';' );
+            }
+
+
             if (count($post_ids))
             {
                 $post_ids = implode(', ', $post_ids);
+
+                $msg = "\n\n".sprintf($lang['FOR_POST_MERGED'], $this->curtheme['name'], $this->curtheme['id']);
+                $QF_DBase->sql_query('UPDATE `{DBKEY}posts` SET '.
+                    ($to_merge_hide ? '' : '`text` = CONCAT(`text`, \''.$QF_DBase->sql_quote($msg).'\'), ').
+                    '`theme` = '.$this->mergetheme['id'].' '.
+                    'WHERE `id` IN ('.$post_ids.');' );
+
                 $QF_DBase->sql_query('UPDATE `{DBKEY}posts` SET `hash` = MD5(`text`) WHERE `id` IN ('.$post_ids.')' );
                 $QF_DBase->sql_dodelete('{DBKEY}posts_cache', 'WHERE `ch_id` IN ('.$post_ids.')');
             }
@@ -689,7 +696,7 @@ Class qf_forum_upd
 
         if (!$this->loaded) $this->preload_data();
 
-        list($deleted, $locked, $pinned, $to_merge) = Get_Request_Multi('t_del t_lock t_pin t_merge', 2, 'b');
+        list($deleted, $locked, $pinned, $to_merge, $to_merge_hide) = Get_Request_Multi('t_del t_lock t_pin t_merge t_merge_hide', 2, 'b');
 
         If (!$this->uid) {
             $this->error .= '<LI>'.$lang['ERR_LOWLEVEL']."\n";
@@ -764,11 +771,16 @@ Class qf_forum_upd
                     $post_ids[] = $pid;
                 $QF_DBase->sql_freeresult($result);
             }
-            $msg = "\n\n".sprintf($lang['FOR_POST_MERGED'], $this->curtheme['name'], $this->curtheme['id']);
-            $QF_DBase->sql_query('UPDATE `{DBKEY}posts` SET `text` = CONCAT(`text`, \''.$QF_DBase->sql_quote($msg).'\'), `theme` = '.$this->mergetheme['id'].' WHERE `theme` = '.$this->curtheme['id'].';' );
             if (count($post_ids))
             {
                 $post_ids = implode(', ', $post_ids);
+
+                $msg = "\n\n".sprintf($lang['FOR_POST_MERGED'], $this->curtheme['name'], $this->curtheme['id']);
+                $QF_DBase->sql_query('UPDATE `{DBKEY}posts` SET '.
+                    ($to_merge_hide ? '' : '`text` = CONCAT(`text`, \''.$QF_DBase->sql_quote($msg).'\'), ').
+                    '`theme` = '.$this->mergetheme['id'].' '.
+                    'WHERE `id` IN ('.$post_ids.');' );
+
                 $QF_DBase->sql_query('UPDATE `{DBKEY}posts` SET `hash` = MD5(`text`) WHERE `id` IN ('.$post_ids.')' );
                 $QF_DBase->sql_dodelete('{DBKEY}posts_cache', 'WHERE `ch_id` IN ('.$post_ids.')');
             }

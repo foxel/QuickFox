@@ -90,7 +90,8 @@ if (is_array($topic))
     // ---
 
     // Related Vars
-    if ($topic['deleted']) {        $t_edittheme = true;
+    if ($topic['deleted']) {
+        $t_edittheme = true;
         $t_moderate  = false;
         $t_editpost  = 0;
         $t_postdel   = 0;
@@ -101,19 +102,24 @@ if (is_array($topic))
     if ($topic['id'] == $forconfig['guest_book'])
         $t_reverssorting=1;
 
-    if ($t_curaccess<3) {        $t_moderate = false;
+    if ($t_curaccess<3) {
+        $t_moderate = false;
         $t_postdel  = 0;
     }
-    if ($t_moderate==1) {        $t_edittheme = 0;
+    if ($t_moderate==1) {
+        $t_edittheme = 0;
         $t_editpost  = 0;
         $t_postdel   = 0;
     }
-    elseif ($t_postdel>0) {        $t_editpost = 0;
+    elseif ($t_postdel>0) {
+        $t_editpost = 0;
         $t_postshow = $t_postdel;
     }
-    elseif ($t_editpost>0) {        $t_postshow = $t_editpost;
+    elseif ($t_editpost>0) {
+        $t_postshow = $t_editpost;
     }
-    elseif ($t_postfind>0) {        $t_postshow = $t_postfind;
+    elseif ($t_postfind>0) {
+        $t_postshow = $t_postfind;
     }
 
     // ---
@@ -149,7 +155,8 @@ if (is_array($topic))
             $readp = null;
 
         if ($readp['user_id'] != $QF_User->uid)
-        {            $query = 'SELECT MAX(p.id) as lastread, COUNT(p.id) AS readposts
+        {
+            $query = 'SELECT MAX(p.id) as lastread, COUNT(p.id) AS readposts
                 FROM {DBKEY}posts p
                 WHERE p.time < '.$QF_User->cuser['regtime'].' AND p.theme = '.$topic_id.' AND p.deleted = 0';
             if ($result = $QF_DBase->sql_query($query)) {
@@ -194,7 +201,8 @@ if (is_array($topic))
         // Loading History Data
         if ($t_history) {
             $query = 'SELECT * FROM {DBKEY}parchive WHERE id = '.$t_history;
-            if ($result = $QF_DBase->sql_query($query)) {                $t_archive = $QF_DBase->sql_fetchrow($result);
+            if ($result = $QF_DBase->sql_query($query)) {
+                $t_archive = $QF_DBase->sql_fetchrow($result);
                 $QF_DBase->sql_freeresult($result);
             }
             if (!is_array($t_archive))
@@ -312,7 +320,8 @@ if (is_array($topic))
                 $postid_list = Array();
 
                 while ( $post = $QF_DBase->sql_fetchrow($presult))
-                {                    if ($counter == 0)
+                {
+                    if ($counter == 0)
                         $sel_deleted_query.=' AND p.id > '.$post['id'];
 
                     $counter++;
@@ -342,8 +351,10 @@ if (is_array($topic))
 
                 // let's add deleted posts
                 if ($t_curaccess>=3)
-                {                    $dresult = $QF_DBase->sql_query($sel_deleted_query);
-                    if ($dresult) {                        while ( $post = $QF_DBase->sql_fetchrow($dresult))
+                {
+                    $dresult = $QF_DBase->sql_query($sel_deleted_query);
+                    if ($dresult) {
+                        while ( $post = $QF_DBase->sql_fetchrow($dresult))
                         {
                             $post['labels']='';
 
@@ -365,11 +376,13 @@ if (is_array($topic))
 
                 $postid_list = implode(', ',$postid_list); // creating list string for attaches query
 
-                if ($postid_list) {                    $attquery = 'SELECT * FROM {DBKEY}files WHERE att_to IN ('.$postid_list.') ORDER BY file';
+                if ($postid_list) {
+                    $attquery = 'SELECT * FROM {DBKEY}files WHERE att_to IN ('.$postid_list.') ORDER BY file';
                     $attresult = $QF_DBase->sql_query($attquery);
                     if ($attresult) {
                         While ($attach = $QF_DBase->sql_fetchrow($attresult))
-                        {                            $atts[$attach['att_to']][]=$attach;
+                        {
+                            $atts[$attach['att_to']][]=$attach;
                         }
                         $QF_DBase->sql_freeresult($attresult);
                     }
@@ -397,7 +410,8 @@ if (is_array($topic))
 
                     $puser = $ulist->get($post['author_id']);
 
-                    if ($post['deleted'] && !$showthisone && !$t_showdels) {                        $tmpl=Array(
+                    if ($post['deleted'] && !$showthisone && !$t_showdels) {
+                        $tmpl=Array(
                             'showlink' => $Base_Link.'&amp;postshow='.$post['id'].'#'.$post['id'],
 	                        'labels'   => '<a name="'.$post['id'].'"></a>'.$post['labels'],
 	                        'flags'    => ($post['id']>$t_lastread && $QF_User->uid) ? $Vis['NEW_FLAG'].' ' :'' ,
@@ -454,10 +468,12 @@ if (is_array($topic))
 
         	                if ($post['deleted'])
 	                            $form['delmessage']='checked';
-	                        if ($t_curaccess>=3)
-	                            $form['canmerge']='true';
-	                        if ($t_curaccess>=3 && (!$post['ctime'] || $post['changer'] == $QF_User->uname))
-	                            $form['canhide']='true';
+	                        if ($t_curaccess>=3) {
+                                $form['canmerge']='true';
+                                if ($QF_User->admin || !$post['ctime'] || $post['changer'] == $QF_User->uname) {
+                                    $form['canhide']='true';
+                                }
+                            }
 
         	                $form['unattach']='';
 	                        if (is_array($atts[$post['id']]))
@@ -507,7 +523,8 @@ if (is_array($topic))
                             else {
 	                            $parsed_post = $post['parsed_post'];
 
-    	                        if (empty($parsed_post)) {	                                $parsed_post = $QF_Parser->parse_mess($post['text'], 1);
+    	                        if (empty($parsed_post)) {
+	                                $parsed_post = $QF_Parser->parse_mess($post['text'], 1);
         	                        $QF_DBase->sql_doinsert('{DBKEY}posts_cache', Array( 'ch_id' => $post['id'], 'ch_text' => $parsed_post, 'ch_stored' => $timer->time), true );
 	                            }
 
@@ -527,7 +544,8 @@ if (is_array($topic))
         	                $tmpl['attaches']='';
 	                        if (is_array($atts[$post['id']]))
 	                            foreach ($atts[$post['id']] as $att)
-        	                        {        	                            $capt = $att['caption'];
+        	                        {
+        	                            $capt = $att['caption'];
         	                            if (strlen($capt)>30)
                                             $capt = substr($capt, 0, 18).'...'.substr($capt, -7);
 
@@ -575,10 +593,13 @@ if (is_array($topic))
                         );
                     $QF_DBase->sql_doinsert('{DBKEY}reads', $ins_data, true);
 
-                    if ($t_readed!=$readp['active']) {                        if ($result = $QF_DBase->sql_doselect('{DBKEY}reads', 'theme', Array( 'active' => 0, 'subscribe' => 1, 'user_id' => $QF_User->uid) ) ) {                            $cuser_has_unrsubs = ($QF_DBase->sql_numrows($result)>0) ? 1 : 0;
+                    if ($t_readed!=$readp['active']) {
+                        if ($result = $QF_DBase->sql_doselect('{DBKEY}reads', 'theme', Array( 'active' => 0, 'subscribe' => 1, 'user_id' => $QF_User->uid) ) ) {
+                            $cuser_has_unrsubs = ($QF_DBase->sql_numrows($result)>0) ? 1 : 0;
                             if ($QF_User->cuser['hasnewsubscr']!=$cuser_has_unrsubs) {
                                 $QF_User->cuser['hasnewsubscr'] = $cuser_has_unrsubs;
-                                $QF_DBase->sql_doupdate('{DBKEY}users', Array('hasnewsubscr' => $cuser_has_unrsubs), Array('id' => $QF_User->uid) );                            }
+                                $QF_DBase->sql_doupdate('{DBKEY}users', Array('hasnewsubscr' => $cuser_has_unrsubs), Array('id' => $QF_User->uid) );
+                            }
                             $QF_DBase->sql_freeresult($result);
                         }
                         if ($t_readed) {
@@ -698,6 +719,7 @@ if (is_array($topic))
                 'mrights_options' => '',
                 'prights_options' => '',
                 'moderate' => ($t_curaccess>=3) ? 1 : null,
+                'canhide'  => ($QF_User->admin) ? 1 : null,
                 );
 
             if ($topic['pinned']) $form['pintheme']='checked';

@@ -250,6 +250,7 @@ Forms for forum pages. MODIFY CAREFULLY !!!
  <input name="t_lock" type="checkbox" value="1" {C_locktheme} />{L_FOR_CLOSE_THEME}<br />{ENDIF}
  <input name="t_del" type="checkbox" value="1" {C_deltheme} />{L_FOR_DEL_THEME}<br />
  <input name="t_merge" type="checkbox" value="1" />{L_FOR_MERGE_THEME} <input type="text" name="t_merge_to" size="6" /><br />
+ {IF_canhide}<input name="t_merge_hide" type="checkbox" value="1" />{L_FOR_MERGE_POST_HIDE}<br />{ENDIF}
  {L_FOR_SECT_PAR}: <select name="s_id" style="width: 50%;">
  {C_psect_options}
  </select>
@@ -297,7 +298,8 @@ Forms for forum pages. MODIFY CAREFULLY !!!
  <input name="p_del" type="checkbox" value="1" {C_delmessage} />{L_FOR_DEL_POST}<br />
  {IF_canhide}<input name="p_hedit" type="checkbox" value="1" />{L_FOR_HIDE_EDIT}<br />{ENDIF}
  {IF_canmerge}<input name="p_merge" type="checkbox" value="1" />{L_FOR_MERGE_POST} <input type="text" name="t_merge_to" size="6" /><br />
- <input name="p_merge_all" type="checkbox" value="1" />{L_FOR_MERGE_POST_ALL}<br />{ENDIF}
+ <input name="p_merge_all" type="checkbox" value="1" />{L_FOR_MERGE_POST_ALL}<br />
+ {IF_canhide}<input name="p_merge_hide" type="checkbox" value="1" />{L_FOR_MERGE_POST_HIDE}<br />{ENDIF}{ENDIF}
  {IF_unattach}
  {L_FOR_POST_UNATTACH}:<br />
  <div style="margin-left: 20px;">
