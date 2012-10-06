@@ -377,11 +377,15 @@ TABLE.post  {
 }
 
 DIV.post_body, DIV.post_atts {
-	overflow: auto;
-	width: 100%;
-	max-height: 350px;
+    padding: 3px;
 }
 
+DIV.post_atts {
+    clear: both;
+    overflow: auto;
+    margin: 0 5px;
+    max-height: 370px;
+}
 
 TABLE.qf_grid {
 	border-style: solid;
@@ -465,7 +469,7 @@ TR.selected {
 
 /* attaches table */
 TABLE.atttbl {
-  	display: inline;
+  	display: inline-block;
 	margin: 10px 20px 0 0;
 }
 

@@ -25,20 +25,19 @@
 {link2}=#FFFFFF
 {linkmh}=#FFFFFF
 
+{def_font}=Verdana,Arial,Helvetica,sans-serif
+{def_font_size}=12px
+
 {/VARS}
 
-body {
+body, html {
 	background-color: {page_bg};
-	scrollbar-face-color: {controls};
-	scrollbar-highlight-color: {base_color};
-	scrollbar-shadow-color: {controls};
-	scrollbar-3dlight-color: {base1};
-	scrollbar-arrow-color:  #092484;
-	scrollbar-track-color: #9FAED5;
-	scrollbar-darkshadow-color: #180984;
-	font-size : 14px;
 	color : {text};
 }
+
+html, body, td, th, div, font { font-family: {def_font}; line-height: 1.2em; font-size-adjust: 0.55; color: {text}; }
+html, body { font-size: {def_font_size}; }
+td, th, div, font { font-size: inherit; }
 
 A:link,A:active,A:visited  {
 	color: {link1};
@@ -61,7 +60,7 @@ A.pglink {
 /* Global Styles */
 TABLE {
 	border-color: {base_brd};
-	font-size   : 14px;
+	font-size   : {def_font_size};
 }
 
 DIV {
@@ -78,6 +77,7 @@ TD, TH {
 HR {
 	border-style: solid;
 	border-color: {base_brd};
+	border-width: 1px 0 0 0;
 	margin: 7px;
 	width: 90%;
 }
@@ -97,9 +97,6 @@ IMG{
 	vertical-align: middle;
 }
 
-FONT {
-	font-size : 14px;
-}
 
 /* Global Page */
 
@@ -118,7 +115,7 @@ TD.qf_pageframe {
 
 TD.qf_panels {
 	border-left: {base_brd} solid 2px;
-	width: 200px;
+	width: 200px !important;
 	vertical-align: top;
 	padding: 2px;
 	margin: 0px;
@@ -378,11 +375,15 @@ TABLE.post  {
 }
 
 DIV.post_body, DIV.post_atts {
-	overflow: auto;
-	width: 100%;
-	max-height: 350px;
+    padding: 3px;
 }
 
+DIV.post_atts {
+    clear: both;
+    overflow: auto;
+    margin: 0 5px;
+    max-height: 370px;
+}
 
 TABLE.qf_grid {
 	border-style: solid;
@@ -449,10 +450,10 @@ TR.selected {
 
 
 /* General text */
-.gen { font-size : 14px; }
-.genmed { font-size : 12px; }
-.gensmall { font-size : 10px; }
-.posttext { font-size : 14px; line-height: 16px}
+.gen { font-size : 100%; }
+.genmed { font-size : 90%; }
+.gensmall { font-size : 75%; }
+.posttext { font-size : 100%; line-height: 16px}
 .gen,.genmed,.gensmall { color : {text}; }
 
 .error { color : #CC1010; font-weight: bold; }
@@ -466,7 +467,7 @@ TR.selected {
 
 /* attaches table */
 TABLE.atttbl {
-  	display: inline;
+	display: inline-block;
 	margin: 10px 20px 0 0;
 }
 

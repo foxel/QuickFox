@@ -116,6 +116,7 @@ function Archive_QF()
     $arch->ArchiveDir('styles/violet', 'ecss css gif png jpg jpeg ico', '755', '644');
     $arch->ArchiveDir('visuals/qf_def', 'vis gif png jpg jpeg ico', '755', '644');
     //$arch->ArchiveDir('styles/che_skin', 'ecss css gif png jpg jpeg ico', '755', '644');
+    //$arch->ArchiveDir('styles/winter_fox', 'ecss css gif png jpg jpeg ico', '755', '644');
     //$arch->ArchiveDir('styles/furry_08', 'ecss css gif png jpg jpeg ico', '755', '644');
     //$arch->ArchiveDir('styles/furry_10', 'ecss css gif png jpg jpeg ico', '755', '644');
     //$arch->ArchiveDir('visuals/furry_08', 'vis gif png jpg jpeg ico', '755', '644');
