@@ -299,7 +299,7 @@ Forms for forum pages. MODIFY CAREFULLY !!!
  {IF_canhide}<input name="p_hedit" type="checkbox" value="1" />{L_FOR_HIDE_EDIT}<br />{ENDIF}
  {IF_canmerge}<input name="p_merge" type="checkbox" value="1" />{L_FOR_MERGE_POST} <input type="text" name="t_merge_to" size="6" /><br />
  <input name="p_merge_all" type="checkbox" value="1" />{L_FOR_MERGE_POST_ALL}<br />
- {IF_canhide}<input name="p_merge_hide" type="checkbox" value="1" />{L_FOR_MERGE_POST_HIDE}<br />{ENDIF}{ENDIF}
+ <input name="p_merge_hide" type="checkbox" value="1" />{L_FOR_MERGE_POST_HIDE}<br />{ENDIF}
  {IF_unattach}
  {L_FOR_POST_UNATTACH}:<br />
  <div style="margin-left: 20px;">
