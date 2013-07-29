@@ -127,6 +127,8 @@ $lang['CONFIG_COMMON_SITE_UINFOACC_ERR']='Уровень доступа к информации о пользов
 $lang['CONFIG_COMMON_SITE_NOSPAM']='Защита от спама.';
 $lang['CONFIG_COMMON_SITE_NOSPAM_MORE']='Система защиты от спама позволяет избежать нежелательного появления спама (информационного мусора) в форуме и других частях сайта.
  Для работы системы требуется наличие установленной в PHP библиотеки GD.';
+$lang['CONFIG_COMMON_META_KEYWORDS']='META keywords';
+$lang['CONFIG_COMMON_META_DESCRIPTION']='META description';
 
 $lang['CONFIG_COMMON_TIMECONF']='Настройки времени и даты.';
 $lang['CONFIG_COMMON_SITE_TZ']='Часовой пояс:';

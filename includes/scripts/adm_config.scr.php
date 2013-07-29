@@ -213,6 +213,20 @@ elseif ($action=='common_config') {
             'value'  => '',
         );
 
+    $meta_description = Get_Request('meta_description', 2, 's');
+    $apply_conf[] = Array(
+        'parent' => '',
+        'name'   => 'meta_description',
+        'value'  => $meta_description,
+    );
+
+    $meta_keywords     = Get_Request('meta_keywords', 2, 's');
+    $apply_conf[] = Array(
+        'parent' => '',
+        'name'   => 'meta_keywords',
+        'value'  => $meta_keywords,
+    );
+
     $redir_url = 'index.php?st=mycabinet&amp;job=config';
 }
 

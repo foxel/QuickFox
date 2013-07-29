@@ -114,6 +114,14 @@ if ($curstyle['name']) {
     $QF_Config['CSS']=$curstyle['CSS'];
 }
 
+if (isset($QF_Config['meta_keywords'])) {
+    Add_META(sprintf('name="keywords" content="%s"', htmlentities($QF_Config['meta_keywords'])));
+}
+
+if (isset($QF_Config['meta_description'])) {
+    Add_META(sprintf('name="description" content="%s"', htmlentities($QF_Config['meta_description'])));
+}
+
 // Loading CSS data
 LoadStyle();
 
