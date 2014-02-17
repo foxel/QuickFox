@@ -10,7 +10,7 @@ $_JS_REPLACE = array(
        );
 
 $mesages = Array();
-$query = 'DELETE FROM {DBKEY}minichats WHERE time < '.(time() - 86400);
+$query = 'DELETE FROM {DBKEY}minichats WHERE time < '.(time() - 5*86400);
 $QF_DBase->sql_query($query);
 $query = 'SELECT * FROM {DBKEY}minichats WHERE acc_lv <= '.$QF_User->level.' ORDER BY time DESC LIMIT 0, 50';
 if ( $result = $QF_DBase->sql_query($query) ) {
@@ -26,7 +26,8 @@ Connect_JS('mchat');
 $datas = '';
 //$datas = '<table class="fullwidth" style="max-width: 200px;">';
 foreach ($mesages as $mess)
-{    $q_author = strtr($mess['author'], $_JS_REPLACE);
+{
+    $q_author = strtr($mess['author'], $_JS_REPLACE);
     $datas.= '<div style="border: '.((stristr($mess['text'], $QF_User->uname)) ? '1px solid #7F0000' : 'none').'; margin: 2px;">['.create_date("H:i", $mess['time'], '', true).']&nbsp;<a href="#" onClick="javascript: mchat_quote(\''.$q_author.'\'); return false;">'.$mess['author'].'</a>'.(($mess['acc_lv'])?'('.$mess['acc_lv'].')':'').': '.$mess['text'].'</div>'."\n";
 //    $datas.= '<tr><td style="border: '.((stristr($mess['text'], $QF_User->uname)) ? '1px solid #7F0000' : 'none').'; padding: 2px;">['.create_date("H:i", $mess['time'], '', true).']&nbsp;<a href="#" onClick="javascript: mchat_quote(\''.$q_author.'\'); return false;">'.$mess['author'].'</a>'.(($mess['acc_lv'])?'('.$mess['acc_lv'].')':'').': '.$mess['text'].'</td></tr>'."\n";
 }
