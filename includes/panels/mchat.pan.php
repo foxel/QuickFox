@@ -24,11 +24,12 @@ Connect_JS('mchat');
 
 
 $datas = '';
+$threshold = time() - 20*3600;
 //$datas = '<table class="fullwidth" style="max-width: 200px;">';
 foreach ($mesages as $mess)
 {
     $q_author = strtr($mess['author'], $_JS_REPLACE);
-    $datas.= '<div style="border: '.((stristr($mess['text'], $QF_User->uname)) ? '1px solid #7F0000' : 'none').'; margin: 2px;">['.create_date("H:i", $mess['time'], '', true).']&nbsp;<a href="#" onClick="javascript: mchat_quote(\''.$q_author.'\'); return false;">'.$mess['author'].'</a>'.(($mess['acc_lv'])?'('.$mess['acc_lv'].')':'').': '.$mess['text'].'</div>'."\n";
+    $datas.= '<div style="border: '.((stristr($mess['text'], $QF_User->uname)) ? '1px solid #7F0000' : 'none').'; margin: 2px;">['.create_date($mess['time'] < $threshold ? "d M H:i" : "H:i", $mess['time'], '', true).']&nbsp;<a href="#" onClick="javascript: mchat_quote(\''.$q_author.'\'); return false;">'.$mess['author'].'</a>'.(($mess['acc_lv'])?'('.$mess['acc_lv'].')':'').': '.$mess['text'].'</div>'."\n";
 //    $datas.= '<tr><td style="border: '.((stristr($mess['text'], $QF_User->uname)) ? '1px solid #7F0000' : 'none').'; padding: 2px;">['.create_date("H:i", $mess['time'], '', true).']&nbsp;<a href="#" onClick="javascript: mchat_quote(\''.$q_author.'\'); return false;">'.$mess['author'].'</a>'.(($mess['acc_lv'])?'('.$mess['acc_lv'].')':'').': '.$mess['text'].'</td></tr>'."\n";
 }
 //$datas.= '</table>';
