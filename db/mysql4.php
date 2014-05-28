@@ -6,12 +6,20 @@ if (defined('SQL_DRIVER'))
 
 define('SQL_DRIVER','mysql4');
 
+if (!function_exists('mysql_real_escape_string')) {
+    function mysql_real_escape_string($string)
+    {
+        /** @noinspection PhpDeprecationInspection */
+        return mysql_escape_string($string);
+    }
+}
+
 class qf_sql_base
 {
+    /** @var resource */
+    var $db_connect_id = null;
 
-    var $db_connect_id = false;
-
-    var $server    = '';
+    var $server        = '';
     var $database      = '';
     var $codepage      = 'cp1251';
 
@@ -55,16 +63,17 @@ class qf_sql_base
                 if( !$dbselect )
                 {
                     mysql_close($this->db_connect_id);
-                    $this->db_connect_id = $dbselect;
+                    $this->db_connect_id = null;
                 }
             }
 
             mysql_query('SET NAMES '.$this->codepage, $this->db_connect_id);
 
             return $this->db_connect_id;
-        }
-        else
+        } else {
+            $this->db_connect_id = null;
             return false;
+        }
     }
 
     // Other base methods
@@ -80,7 +89,7 @@ class qf_sql_base
                 if( !$dbselect )
                 {
                     mysql_close($this->db_connect_id);
-                    $this->db_connect_id = $dbselect;
+                    $this->db_connect_id = null;
                 }
             }
 
@@ -92,7 +101,7 @@ class qf_sql_base
     function sql_close()
     {
         $connect = $this->db_connect_id;
-        $this->db_connect_id = false;
+        $this->db_connect_id = null;
         if ( $connect )
             return mysql_close($connect);
         else
@@ -145,7 +154,7 @@ class qf_sql_base
 
                     if (!is_numeric($val)) {
                         if (!$dontescape)
-                            $val = mysql_escape_string($val);
+                            $val = mysql_real_escape_string($val, $this->db_connect_id);
                         $val = '"'.$val.'"';
                     }
                     elseif (is_string($val))
@@ -177,7 +186,7 @@ class qf_sql_base
                 if (!is_null($val)) {
                     if (!is_numeric($val)) {
                         if (!$dontescape)
-                            $val = mysql_escape_string($val);
+                            $val = mysql_real_escape_string($val, $this->db_connect_id);
                         $val = '"'.$val.'"';
                     }
                     elseif (is_string($val))
@@ -217,7 +226,7 @@ class qf_sql_base
             foreach ($where AS $field=>$val) {
                 if (!is_numeric($val)) {
                     if (!$dontescape)
-                        $val = mysql_escape_string($val);
+                        $val = mysql_real_escape_string($val, $this->db_connect_id);
                     $val = '"'.$val.'"';
                 }
                 $parts[] = '`'.$field.'` = '.$val;
@@ -452,7 +461,7 @@ class qf_sql_base
 
     function sql_quote($string)
     {
-        return mysql_escape_string($string);
+        return mysql_real_escape_string($string, $this->db_connect_id);
     }
 
     function srv_info()
