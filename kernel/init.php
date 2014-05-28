@@ -8,6 +8,7 @@ if ( !defined('QF_STARTED') )
 // Defining Core constants
 define('EMAIL_MASK', '^[0-9a-zA-Z_\-\.]+@[0-9a-zA-Z_\-\.]+\.[a-zA-Z]{2,4}$');
 define('UNAME_MASK', '^[0-9\w_\+\-=\(\)\[\] ]{3,16}$');
+define('QF_ENCODING', 'windows-1251');
 
 //
 // Gets current time for page generetion time counter
@@ -44,43 +45,50 @@ function init_err_parse($errno, $errstr, $errfile, $errline)
 }
 
 function Cont_Measurer($page)
-{    header('Content-Length: '.strlen($page));
+{
+    header('Content-Length: '.strlen($page));
     return $page;
 }
 
 ob_start('Cont_Measurer');
 
 class QF_Timer
-{	var $start_time;
+{
+	var $start_time;
 	var $time;
 	var $point_time;
 	var $events = Array();
 
 	function QF_Timer()
-	{		$this->start_time = $this->Get_Time();
+	{
+		$this->start_time = $this->Get_Time();
 		$this->time = time();
 		$this->point_time = $this->start_time;
 	}
 
 	function Get_Time()
-	{        $time = explode(' ',microtime());
+	{
+        $time = explode(' ',microtime());
         $time = $time[1]+$time[0];
         return $time;
 	}
 
     function Time_Point()
-    {    	$time = $this->Get_Time();
+    {
+    	$time = $this->Get_Time();
     	$diff = $time - $this->point_time;
     	$this->point_time = $time;
     	return $diff;
     }
 
     function Time_Spent()
-    {    	return ($this->Get_Time() - $this->start_time);
+    {
+    	return ($this->Get_Time() - $this->start_time);
     }
 
     function Time_Log($event = '')
-    {        $this->events[] = Array(
+    {
+        $this->events[] = Array(
             'time' => $this->Time_Spent(),
             'name' => $event );
     }
@@ -186,7 +194,8 @@ $QF_Config['server_port']=$_SERVER['SERVER_PORT'];
 $QF_Config['root']=$QF_Root;
 
 $result=$QF_DBase->sql_doselect('{DBKEY}config');
-if ($result) {    while ( $setting = $QF_DBase->sql_fetchrow($result))
+if ($result) {
+    while ( $setting = $QF_DBase->sql_fetchrow($result))
         if ( !empty($setting['name']) )
         {
             if (!empty($setting['parent']))
@@ -203,7 +212,8 @@ $QF_Pagedata['server_name']=$QF_SrvName;
 
 // Bancheck
 $result=$QF_DBase->sql_doselect('{DBKEY}bans', '', 'WHERE "'.$QF_Client['ip_hex'].'" BETWEEN first_ip AND last_ip ');
-if ($result) {    $current_ban = $QF_DBase->sql_fetchrow($result);
+if ($result) {
+    $current_ban = $QF_DBase->sql_fetchrow($result);
     $QF_DBase->sql_freeresult($result);
 
     if ($current_ban['ban_id']) {
@@ -216,10 +226,13 @@ if ($result) {    $current_ban = $QF_DBase->sql_fetchrow($result);
 
 // Are the site is locked?
 if ($QF_Config['site_locked_for'])
-{    $QF_Sid = Get_Request('QF_SID', 3, 'h');
+{
+    $QF_Sid = Get_Request('QF_SID', 3, 'h');
 
-    if ($QF_Config['site_locked_for']<$timer->start_time)        $QF_DBase->sql_dodelete('{DBKEY}config', 'WHERE parent="" AND name IN ("site_locked_for", "site_locker_sid") ');
-    elseif ($QF_Config['site_locker_sid']!=$QF_Sid) {        $QF_Locked = true;
+    if ($QF_Config['site_locked_for']<$timer->start_time)
+        $QF_DBase->sql_dodelete('{DBKEY}config', 'WHERE parent="" AND name IN ("site_locked_for", "site_locker_sid") ');
+    elseif ($QF_Config['site_locker_sid']!=$QF_Sid) {
+        $QF_Locked = true;
         $QF_Inc = '';
         $QF_Script = '';
         $QF_Job = '';

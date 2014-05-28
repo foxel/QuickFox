@@ -24,7 +24,7 @@
             $data = fread($incms, filesize($cmfile));
     if ($cm_tti)
     {
-        $data = nl2br(preg_replace('#^([^\n\S]+)#me', 'str_repeat("&nbsp; ", strlen("\\1"));', htmlspecialchars($data)));
+        $data = nl2br(preg_replace('#^([^\n\S]+)#me', 'str_repeat("&nbsp; ", strlen("\\1"));', HTMLStrVal($data)));
     }
     if (!$data)
         print Visual('CMS_NOINDEXPAGE');

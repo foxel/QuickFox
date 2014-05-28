@@ -33,7 +33,5 @@ if (count($editorsmiles)) {
 }
 $QF_Pagedata['smiles']=$smdata;
 
-$QF_Pagedata['senderform']=($_GET['senderform']) ? htmlspecialchars(Get_Request('senderform', 1)) : 'newmess';
+$QF_Pagedata['senderform']=($_GET['senderform']) ? HTMLStrVal(Get_Request('senderform', 1)) : 'newmess';
 print Visual('QFEDITOR', $QF_Pagedata);
-
-?>

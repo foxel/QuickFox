@@ -131,7 +131,7 @@ if (is_array($topic))
     else
     {
         if ($topic['minrights'] <= 2 && !$cur_sect['acc_group_name'])
-            $QF_Pagedata['META'].= "\n".'<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(sprintf($lang['RSS_TITLE_TOPIC_MSGS'], $QF_Config['site_name'], $topic['name'])).'" href="index.php?sr=RSS&amp;topic='.$topic_id.'" >';
+            $QF_Pagedata['META'].= "\n".'<link rel="alternate" type="application/rss+xml" title="'.HTMLStrVal(sprintf($lang['RSS_TITLE_TOPIC_MSGS'], $QF_Config['site_name'], $topic['name'])).'" href="index.php?sr=RSS&amp;topic='.$topic_id.'" >';
 
         $Page_SubTitle = $topic['name'];
 

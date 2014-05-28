@@ -14,7 +14,8 @@ define('CORE_SESSION_LOADED', True);
 // ----------------------------------------------------------- \\
 
 class qf_session_cl
-{    var $SID = '';
+{
+    var $SID = '';
     var $sess_data = Array();
     var $sess_cache = Array();
     var $got_cache = Array();
@@ -29,7 +30,8 @@ class qf_session_cl
     var $fix = false;
 
     function qf_session_cl()
-    {        Global $QF_Session;
+    {
+        Global $QF_Session;
         if (defined('QF_SESSION_CREATED'))
             trigger_error('Duplicate session manager creation!', 256);
 
@@ -39,7 +41,8 @@ class qf_session_cl
     }
 
     function Open_Session($fix = false)
-    {        global $QF_DBase;
+    {
+        global $QF_DBase;
         global $QF_Client;
 
         if ($this->started)
@@ -136,7 +139,8 @@ class qf_session_cl
 
     // session cache control
     function Cache_Get($name)
-    {        global $QF_DBase;
+    {
+        global $QF_DBase;
         if (!$this->started)
             return false;
 
@@ -155,7 +159,8 @@ class qf_session_cl
     }
 
     function Cache_Add($name, $value)
-    {        if (!$this->started)
+    {
+        if (!$this->started)
             return false;
 
         $this->sess_cache[$name] = $value;
@@ -196,7 +201,8 @@ class qf_session_cl
     }
 
     function Cache_Clear()
-    {        if (!$this->started || $this->fix)
+    {
+        if (!$this->started || $this->fix)
             return false;
 
         global $QF_DBase, $timer;
@@ -211,14 +217,16 @@ class qf_session_cl
 
 
     function Cache_Do()
-    {        if (!$this->started || $this->fix)
+    {
+        if (!$this->started || $this->fix)
             return false;
 
         global $QF_DBase, $timer;
         $this->drop_cache = array_unique($this->drop_cache);
         $this->upd_cache = array_unique($this->upd_cache);
 
-        foreach ($this->drop_cache as $name)            $QF_DBase->sql_dodelete('{DBKEY}sess_cache', Array('ch_name' => $name) );
+        foreach ($this->drop_cache as $name)
+            $QF_DBase->sql_dodelete('{DBKEY}sess_cache', Array('ch_name' => $name) );
 
         foreach ($this->upd_cache as $name) {
             $query = false;
@@ -258,7 +266,8 @@ class qf_session_cl
         $url=trim($url);
 
         if ( $this->use_url && !strstr($url, 'QF_SID=') && !stristr($url, 'javasript') )
-        {            $insert = ( !strstr($url, '?') ) ? '?' : ($ampersand) ? '&amp;' : '&';
+        {
+            $insert = ( !strstr($url, '?') ) ? '?' : ($ampersand) ? '&amp;' : '&';
             $insert.= 'QF_SID='.$this->SID;
 
             $url= preg_replace('#(\#|$)#', $insert.'\\1', $url, 1);
@@ -270,7 +279,8 @@ class qf_session_cl
 }
 
 function qf_session_handler($text)
-{    Global $timer, $QF_Config, $lang, $GZipped, $QF_User, $QF_Client;
+{
+    Global $timer, $QF_Config, $lang, $GZipped, $QF_User, $QF_Client;
     Global $QF_DBase;
     Global $QF_Session;
     global $timer;
@@ -307,7 +317,8 @@ function qf_session_handler($text)
         if ($QF_Session->use_url )
         {
             function SID_Compose($vars)
-            {                global $QF_Session;
+            {
+                global $QF_Session;
                 $url = $vars[3];
                 if ( !strstr($url, 'QF_SID=') && !strstr($url, 'javascript') )
                 {
@@ -341,12 +352,13 @@ function qf_session_handler($text)
 
         $pagestats = sprintf($lang['FOOT_STATS'], $PHP_time, $QF_DBase->num_queries, $SQL_time);
 
-        if ($QF_Session->sess_data['QF_Debug'] && $QF_User->admin) {            $debug = '<b>Time Points:</b>';
+        if ($QF_Session->sess_data['QF_Debug'] && $QF_User->admin) {
+            $debug = '<b>Time Points:</b>';
             foreach($timer->events AS $event) {
                 $debug.='<br />'.$event['name'].' => '.round($event['time'],5);
             }
 
-            $debug.= '<br /><b>SQL History:</b><br /> => '.nl2br(htmlspecialchars(implode("\n => ", $QF_DBase->history)));
+            $debug.= '<br /><b>SQL History:</b><br /> => '.nl2br(HTMLStrVal(implode("\n => ", $QF_DBase->history)));
             $pagestats.= Vis_Draw_Panel($debug, 'Debug Info', '750', true);
         }
         $text=str_replace('<!-PageStats-!>', $pagestats, $text);
@@ -361,5 +373,3 @@ function qf_session_handler($text)
 //
 
 //
-
-?>

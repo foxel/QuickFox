@@ -8,7 +8,7 @@ if (!$QF_User->is_spider && $QF_User->uid && ($mess = Get_Request('newmess', 2, 
     $new_mess = Array(
         'author' => $QF_User->uname,
         'author_id' => $QF_User->uid,
-        'text'   => nl2br(htmlspecialchars(substr($mess, 0, 2048))),
+        'text'   => nl2br(HTMLStrVal(substr($mess, 0, 2048))),
         'time' => time() );
 
     if (($msglvl = Get_Request('messlevel', 2, 'i')) && $msglvl > 0 && $msglvl <= $QF_User->level )
@@ -20,5 +20,3 @@ if (!$QF_User->is_spider && $QF_User->uid && ($mess = Get_Request('newmess', 2, 
 }
 else
     Set_Result('MChat Error', '', 'index.php');
-
-?>

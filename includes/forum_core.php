@@ -37,13 +37,15 @@ function For_Parse_History($text, $html=false)
 
 
 class qf_forum
-{    var $ForumTree = Array();
+{
+    var $ForumTree = Array();
     var $CurSection, $CurTopic;
     var $Window = '';
     var $base_url = '';
 
     function qf_forum()
-    {        Global $QF_User, $QF_Session, $QF_DBase;
+    {
+        Global $QF_User, $QF_Session, $QF_DBase;
         Global $QF_Config, $forconfig, $Forum_Root_Name;
 
         $forconfig = $QF_Config['forum'];
@@ -165,9 +167,10 @@ class qf_forum
     }
 
     function Draw_Forum()
-    {        global $QF_Pagedata, $QF_Config, $lang;
+    {
+        global $QF_Pagedata, $QF_Config, $lang;
 
-        $QF_Pagedata['META'].= "\n".'<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(sprintf($lang['RSS_TITLE_LAST_MSGS'], $QF_Config['site_name'])).'" href="index.php?sr=RSS" >';
+        $QF_Pagedata['META'].= "\n".'<link rel="alternate" type="application/rss+xml" title="'.HTMLStrVal(sprintf($lang['RSS_TITLE_LAST_MSGS'], $QF_Config['site_name'])).'" href="index.php?sr=RSS" >';
 
         return Visual('FORUM_WINDOW', Array( 'fastjumper' => $this->FastJumper(), 'window' => $this->Window ) );
     }
@@ -195,7 +198,8 @@ class qf_forum
 
         $sect = end($this->ForumTree);
         do {
-            if ($sect['id']==$id && !is_null($sect['id'])) {                $workspace = '<a href="'.$this->base_url.'&amp;section='.$sect['id'].'"><< '.$sect['name'].'</a> '.$workspace;
+            if ($sect['id']==$id && !is_null($sect['id'])) {
+                $workspace = '<a href="'.$this->base_url.'&amp;section='.$sect['id'].'"><< '.$sect['name'].'</a> '.$workspace;
                 $id = $sect['parent'];
             }
         } while ($sect = prev($this->ForumTree));
@@ -243,5 +247,3 @@ class qf_forum
 $sect_inc_url = 'index.php?st=section';
 $topic_inc_url = 'index.php?st=branch';
 Connect_JS('forum');
-
-?>

@@ -12,7 +12,8 @@ LoadVisuals('utils');
 
 $Page_SubTitle = 'QuickFox Direct SQL admin tool.';
 
-if ($QF_User->uid!=1 || $QF_Session->Get('is_admin')!=1)    print Vis_Err_String('Access denied!');
+if ($QF_User->uid!=1 || $QF_Session->Get('is_admin')!=1)
+    print Vis_Err_String('Access denied!');
 
 else
 {
@@ -78,7 +79,8 @@ else
 
                 $row_no = 0;
 
-                while ($row=$QF_DBase->sql_fetchrow($result)) {                    if ( ($row_no % 20)==0 )
+                while ($row=$QF_DBase->sql_fetchrow($result)) {
+                    if ( ($row_no % 20)==0 )
                         $query_table.= $capts_row."\n";
 
                     $cur_row = '<tr class="hlight">';
@@ -92,7 +94,7 @@ else
                             else
                                 $value = $row[$field_names[$j]];
 
-                            $value = nl2br(htmlspecialchars($value));
+                            $value = nl2br(HTMLStrVal($value));
                         }
                         else
                             $value = '&nbsp;';
@@ -111,7 +113,8 @@ else
                 $QF_DBase->sql_freeresult($result);
             }
             else
-            {                $qtmpl['query_rows'] = 0;
+            {
+                $qtmpl['query_rows'] = 0;
                 $query_table = '';
             }
 
@@ -152,4 +155,3 @@ else
     print Visual('DIRECT_SQL_MAINPAGE', $ptmpl);
 
 }
-?>

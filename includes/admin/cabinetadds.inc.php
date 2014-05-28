@@ -140,13 +140,13 @@ elseif ($job=='config') {
         'descr'   => $lang['CONFIG_COMMON_SITE_NOSPAM_MORE'] );
 
     $fields['meta_keywords'] = Array(
-        'value' => htmlspecialchars($QF_Config['meta_keywords']),
+        'value' => HTMLStrVal($QF_Config['meta_keywords']),
         'type'  => 'textarea',
         'capt'  => $lang['CONFIG_COMMON_META_KEYWORDS'],
         'descr' => '');
 
     $fields['meta_description'] = Array(
-        'value' => htmlspecialchars($QF_Config['meta_description']),
+        'value' => HTMLStrVal($QF_Config['meta_description']),
         'type'  => 'textarea',
         'capt'  => $lang['CONFIG_COMMON_META_DESCRIPTION'],
         'descr' => '');
@@ -297,7 +297,7 @@ elseif ($job=='vis_config') {
         'descr'   => $lang['CONFIG_VISUAL_MHIDE_USERS_MORE'] );
 
     $fields['menu_add_buttons']=Array(
-        'value' => htmlspecialchars($QF_Config['std_menu']['add_buttons']),
+        'value' => HTMLStrVal($QF_Config['std_menu']['add_buttons']),
         'type'  => 'textarea',
         'capt'  => $lang['CONFIG_VISUAL_MADD_BUTTS'],
         'descr' => $lang['CONFIG_VISUAL_MADD_BUTTS_MORE'] );
@@ -307,13 +307,13 @@ elseif ($job=='vis_config') {
         'capt' => $lang['CONFIG_VISUAL_ADVS'] );
 
     $fields['adv_data']=Array(
-        'value' => htmlspecialchars($QF_Config['adv_data']),
+        'value' => HTMLStrVal($QF_Config['adv_data']),
         'type'  => 'textarea',
         'capt'  => $lang['CONFIG_VISUAL_ADVDATA'],
         'descr' => $lang['CONFIG_VISUAL_ADVDATA_MORE'] );
 
     $fields['bott_adv_data']=Array(
-        'value' => htmlspecialchars($QF_Config['bottom_adv_data']),
+        'value' => HTMLStrVal($QF_Config['bottom_adv_data']),
         'type'  => 'textarea',
         'capt'  => $lang['CONFIG_VISUAL_BADVDATA'],
         'descr' => $lang['CONFIG_VISUAL_BADVDATA_MORE'] );

@@ -101,7 +101,7 @@ function Get_Request($var_name, $from=0, $type = '', $len = false)
             $val = trim(strval($val));
             break;
         case 'ht': //hypertext escaped string;
-            $val = htmlspecialchars($val, ENT_NOQUOTES);
+            $val = HTMLStrVal($val, ENT_NOQUOTES, QF_ENCODING);
             break;
         case 'v': //var string without spaces;
             $val = preg_replace('#[^0-9a-zA-Z_\-]#', '', $val);
@@ -685,8 +685,9 @@ function ArrayDefinition($data, $tabs=0)
 //
 // Correct mess string value
 //
-function HTMLStrVal($string)
-{    return htmlspecialchars(trim($string));
+function HTMLStrVal($string, $mode = null)
+{
+    return htmlspecialchars(trim($string), $mode ? $mode : ENT_COMPAT, QF_ENCODING);
 }
 
 //

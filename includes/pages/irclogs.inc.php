@@ -17,21 +17,25 @@ $months = Array(
 $file = 'irclogs/'.$showlog;
 
 if (!$QF_User->uid)
-{    print Vis_Err_String('Access Denied!');
+{
+    print Vis_Err_String('Access Denied!');
 }
 elseif (file_exists($file))
-{    $log = file($file);
+{
+    $log = file($file);
     $log = implode('', $log);
     $log = $QF_CharConv->UTFto_Conv($log);
-    $log = nl2br(htmlspecialchars($log));
+    $log = nl2br(HTMLStrVal($log));
     preg_match('#^(.*)-(\d{4})-(\d{2})-(\d{2})(.*)$#', $showlog, $info);
     printf('<h3>%1$s [%2$d %3$s %4$d]  [<a href="index.php?st=irclogs">^^</a>]</h3>', $info[1], $info[4], $months[intval($info[3])], $info[2]);
     print '<table class="post" style="margin: 0 10px; width: auto;"><tr><td>'.$log.'</td></tr></table>';
 }
 elseif ($dir = opendir('irclogs'))
-{    $logslist = Array();
+{
+    $logslist = Array();
     while ($fn = readdir($dir))
-    {        $file = 'irclogs/'.$fn;
+    {
+        $file = 'irclogs/'.$fn;
         if (is_file($file) && preg_match('#^\#(.*)\.log$#', $fn, $logg))
             $logslist[] = $logg[1];
     }
@@ -49,7 +53,8 @@ elseif ($dir = opendir('irclogs'))
             {
                 $newcapt = sprintf('#%1$s %2$s %3$d', $info[1], $months[intval($info[3])], $info[2]);
                 if ($blockcapt != $newcapt)
-                {                    if ($i)
+                {
+                    if ($i)
                         print "\r\n</tr><tr>";
                     $blockcapt = $newcapt;
                     printf('<td style="text-align: center;" colspan="3"><b>%1$s</b></td>'."\r\n</tr><tr>", $blockcapt);
@@ -67,5 +72,3 @@ elseif ($dir = opendir('irclogs'))
     }
 }
 
-
-?>

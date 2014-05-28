@@ -64,18 +64,21 @@ if ($limit < 3 || $limit > 30)
     $limit = 15;
 
 if ($by_time >= 10 && $by_time <= 24*60)
-{    $time_filter = $timer->time - $by_time*60;
+{
+    $time_filter = $timer->time - $by_time*60;
     $limit = 50;
 }
 
 if (strlen($time_zone) && is_numeric($time_zone))
-{    $time_zone = (int) $time_zone;
+{
+    $time_zone = (int) $time_zone;
     if ($time_zone >= -12 && $time_zone <= 12)
         $cur_tz = $time_zone;
 }
 
 if ($topic > 0)
-{    $query = 'SELECT t.id, t.MaxID, t.name, t.lasttime, t.minrights, t.posts FROM {DBKEY}topics t
+{
+    $query = 'SELECT t.id, t.MaxID, t.name, t.lasttime, t.minrights, t.posts FROM {DBKEY}topics t
           LEFT JOIN {DBKEY}sections s ON (s.id = t.parent)
           WHERE t.id = '.$topic.' AND t.minrights <= 2 AND t.deleted = 0 AND (s.acc_group = 0 || t.parent = 0)';
     if ($result = $QF_DBase->sql_query($query)) {
@@ -87,12 +90,13 @@ if ($topic > 0)
 }
 
 if (is_array($topic)) // by Topic RSS
-{    $posts = Array();
+{
+    $posts = Array();
 
     $rss_data = Array(
-       '{title}'       => htmlspecialchars(sprintf($lang['RSS_TITLE_TOPIC_MSGS'], $QF_Config['site_name'], $topic['name'])),
+       '{title}'       => HTMLStrVal(sprintf($lang['RSS_TITLE_TOPIC_MSGS'], $QF_Config['site_name'], $topic['name'])),
        '{link}'        => GetFullUrl('index.php?st=branch&branch='.$topic['id'].'&shownew=1#unread', false),
-       '{description}' => htmlspecialchars(sprintf($lang['RSS_TITLE_TOPIC_MSGS_MORE'], $QF_Config['site_name'], $topic['name'])),
+       '{description}' => HTMLStrVal(sprintf($lang['RSS_TITLE_TOPIC_MSGS_MORE'], $QF_Config['site_name'], $topic['name'])),
        '{copyright}'   => $QF_Config['site_name'],
        '{time}'        => date('r', $topic['lasttime']),
        '{items}'       => '',
@@ -153,7 +157,8 @@ else // Common RSS feed
         $QF_DBase->sql_freeresult($result);
 
         if ($postsi)
-        {            $query = 'SELECT p.id, p.author, p.time, p.text, ch.ch_text AS parsed_text FROM {DBKEY}posts p
+        {
+            $query = 'SELECT p.id, p.author, p.time, p.text, ch.ch_text AS parsed_text FROM {DBKEY}posts p
                   LEFT JOIN {DBKEY}posts_cache ch ON (ch.ch_id = p.id)
                   WHERE p.id in ('.implode(', ', $postsi).')';
             if ( $result = $QF_DBase->sql_query($query) ) {
@@ -168,12 +173,14 @@ else // Common RSS feed
 
     if ($topics)
     foreach ($topics as $topic)
-    {        $id = $topic['id'];
+    {
+        $id = $topic['id'];
         $post_text = ' --- ';
 
         $plink = $link = GetFullUrl('index.php?st=branch&amp;branch='.$id.'&shownew=1#unread', false);
         if (isset($posts[$topic['MaxID']]) && ($post = $posts[$topic['MaxID']]))
-        {            $post_text = $QF_Parser->parse_mess(STrim($post['text'], 256));
+        {
+            $post_text = $QF_Parser->parse_mess(STrim($post['text'], 256));
             $post_text = '<b>'.$post['author'].':</b> <br />'.$post_text;
             $plink = GetFullUrl('http://quickfox1.ru/index.php?st=branch&branch='.$id.'&postshow='.$post['id'].'#'.$post['id'], false);
         }
@@ -190,9 +197,9 @@ else // Common RSS feed
     }
 
     $rss_data = Array(
-       '{title}'       => htmlspecialchars(sprintf($lang['RSS_TITLE_LAST_MSGS'], $QF_Config['site_name'])),
+       '{title}'       => HTMLStrVal(sprintf($lang['RSS_TITLE_LAST_MSGS'], $QF_Config['site_name'])),
        '{link}'        => GetFullUrl('index.php?st=section', false),
-       '{description}' => htmlspecialchars(sprintf($lang['RSS_TITLE_LAST_MSGS_MORE'], $QF_Config['site_name'])),
+       '{description}' => HTMLStrVal(sprintf($lang['RSS_TITLE_LAST_MSGS_MORE'], $QF_Config['site_name'])),
        '{copyright}'   => $QF_Config['site_name'],
        '{time}'        => date('r', $upd_time),
        '{items}'       => '',
@@ -200,7 +207,8 @@ else // Common RSS feed
 }
 
 foreach ($items as $item)
-{    $rss_data['{items}'].= strtr($item_template, $item);
+{
+    $rss_data['{items}'].= strtr($item_template, $item);
 }
 
 $output = strtr($feed_template, $rss_data);
