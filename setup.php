@@ -100,7 +100,8 @@ print '
 ';
 
 if ($SET_act == 'GO')
-{    $file = 'pack.tgz';
+{
+    $file = 'pack.tgz';
 	if (!file_exists($file))
 	    $file = 'upd_pack.tgz';
 
@@ -129,7 +130,8 @@ if ($SET_act == 'GO')
         print $error;
 
 }
-else {    print '
+else {
+    print '
     <h3>Now We are ready to install QuickFox on this server!</h3>
     <input type="hidden" name="action" value="GO" />
     First We must Extract data. <br />

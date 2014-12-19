@@ -26,16 +26,16 @@ function err_parse($errno, $errstr, $errfile, $errline)
     if (!$logfile) {        $logfile = fopen('err_log.txt','ab');
     }
 
-    if ($logfile && ($errno & ~(E_NOTICE | E_USER_NOTICE | E_STRICT)))
+    if ($logfile && ($errno & ~(E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED)))
         fwrite($logfile,date('[d M Y H:i]',time()).' - Error '.$errno.'. '.$errstr.'. File: '.$errfile.'. Line: '.$errline."\r\n");
 
     If ($debug && $QF_User->uid==1)
     {
-        if ($errno & ~(E_NOTICE | E_USER_NOTICE | E_STRICT) )
+        if ($errno & ~(E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED) )
             print '<table class="border error"><tr><td align="center">Error '.$errno.'. '.$errstr.'<hr />File: '.$errfile.'. Line: '.$errline.'</td></tr></table><br />';
     }
 
-    elseif ($errno & ~(E_NOTICE | E_WARNING | E_USER_NOTICE | E_USER_WARNING | E_STRICT))
+    elseif ($errno & ~(E_NOTICE | E_WARNING | E_USER_NOTICE | E_USER_WARNING | E_STRICT | E_DEPRECATED))
     {
         ob_clean();
         if (!$lang['ERR'])

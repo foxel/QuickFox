@@ -35,12 +35,12 @@ function init_err_parse($errno, $errstr, $errfile, $errline)
     if (!$logfile)
         $logfile = fopen('init_err_log.txt','wb');
 
-    if ($logfile && $errno!=8)
+    if ($logfile && $errno & ~(E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED))
         fwrite($logfile,'Error '.$errno.'. '.$errstr.'<hr>File: '.$errfile.'. Line: '.$errline."\r\n");
 
     If ($debug) {
-        if ($errno!=8&&$errno!=1024&&$errno!=2048)
-        print "Error $errno. $errstr <hr>File: $errfile. Line: $errline<br />";
+        if ($errno & ~(E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED))
+            print "Error $errno. $errstr <hr>File: $errfile. Line: $errline<br />";
     }
 }
 
