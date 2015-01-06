@@ -213,14 +213,16 @@ class mailer
         
         function MailSMTP($to, $subject, $message, $headers)
         {
+            global $QF_Config;
+
             $connect = fsockopen ('127.0.0.1', 25, $errno, $errstr, 30); 
             if (!$connect)
                 return false;
             fwrite($connect, "HELO 127.0.0.1\r\n"); 
-            fwrite($connect, "MAIL FROM: ".$QF_Config['site_mail']."\n"); 
-            fwrite($connect, "RCPT TO: $to\n"); 
+            fwrite($connect, "MAIL FROM: <".$QF_Config['site_mail'].">\n");
+            fwrite($connect, "RCPT TO: <$to>\n");
             fwrite($connect, "DATA\r\n"); 
-            fwrite($connect, "To: $to\n"); 
+            fwrite($connect, "To: <$to>\n");
             fwrite($connect, "Subject: $subject\n"); 
             $headers = explode("\n", $headers);
             foreach ($headers as $header)
