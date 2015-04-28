@@ -96,10 +96,10 @@ if (document.domain != '{C_server_name}' && document.domain.match(/^[\w\-\.]+(\.
         {C_stats}
         <hr />
         <div id="adv_block" class="qf_advblock" >
+            {C_adv}
+            <hr />
             <a href="index.php?st=about"><img src="imgs/qfl_sm.png" border=0 alt="QuickFox"></a><br />
             {V_COPYRIGHT}
-            <hr />
-            {C_adv}
         </div>
     </td>
 </tr>
