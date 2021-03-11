@@ -225,7 +225,7 @@ Array (
                 'extra' => ''
             )  ,
             'ip' => Array (
-                'type' => 'varchar(16)' ,
+                'type' => 'varchar(40)' ,
                 'null' => false ,
                 'def' => '' ,
                 'extra' => ''
@@ -1280,7 +1280,7 @@ Array (
                 'extra' => ''
             )  ,
             'ip' => Array (
-                'type' => 'varchar(16)' ,
+                'type' => 'varchar(40)' ,
                 'null' => false ,
                 'def' => '' ,
                 'extra' => ''
@@ -1475,7 +1475,7 @@ Array (
                 'extra' => ''
             )  ,
             'ip' => Array (
-                'type' => 'varchar(16)' ,
+                'type' => 'varchar(40)' ,
                 'null' => false ,
                 'def' => '' ,
                 'extra' => ''

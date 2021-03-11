@@ -56,7 +56,7 @@ CREATE TABLE `{DBKEY}dloads` (
     `filecode` varchar(32) NOT NULL, 
     `user` varchar(16) NOT NULL, 
     `session` varchar(32) NOT NULL, 
-    `ip` varchar(16) NOT NULL, 
+    `ip` varchar(40) NOT NULL,
     `time` int(11) NOT NULL default '0', 
     `used` tinyint(1) unsigned NOT NULL default '0', 
     PRIMARY KEY (`filecode`) , 
@@ -284,7 +284,7 @@ CREATE TABLE `{DBKEY}sess_cache` (
 DROP TABLE IF EXISTS `{DBKEY}sessions` ;
 CREATE TABLE `{DBKEY}sessions` ( 
     `sid` varchar(32) NOT NULL, 
-    `ip` varchar(16) NOT NULL, 
+    `ip` varchar(40) NOT NULL,
     `vars` text NOT NULL, 
     `starttime` int(11) NOT NULL default '0', 
     `lastused` int(11) NOT NULL default '0', 
@@ -328,7 +328,7 @@ CREATE TABLE `{DBKEY}spiders_log` (
     `time` int(11) NOT NULL default '0', 
     `query` varchar(255) NOT NULL, 
     `user_agent` varchar(255) NOT NULL, 
-    `ip` varchar(16) NOT NULL, 
+    `ip` varchar(40) NOT NULL,
     PRIMARY KEY (`log_id`) , 
     INDEX `ip` (`ip`) , 
     INDEX `name` (`name`) , 
