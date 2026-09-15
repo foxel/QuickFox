@@ -22,7 +22,9 @@ if (is_null($forumstat_themes)) {
         $query.= ' WHERE t.deleted = 0';
 
     $query.= ' ORDER BY t.lasttime DESC LIMIT 0, 10';
-    if ( $result = $QF_DBase->sql_query($query) ) {        while ( $subtheme = $QF_DBase->sql_fetchrow($result))            $forumstat_themes[] = $subtheme;
+    if ( $result = $QF_DBase->sql_query($query) ) {
+        while ( $subtheme = $QF_DBase->sql_fetchrow($result))
+            $forumstat_themes[] = $subtheme;
 
         $QF_DBase->sql_freeresult($result);
     }

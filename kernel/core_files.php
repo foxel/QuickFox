@@ -25,7 +25,8 @@ class DownLoadFile{
     else $this->RealName= $RealName;
 
     if (empty($mime))
-    {        $info=pathinfo($this->RealName);
+    {
+        $info=pathinfo($this->RealName);
         $mime=$mimes[strtolower($info['extension'])]['type'];
         if (!$mime) $mime='application/octet-stream';
     }
@@ -52,7 +53,8 @@ class DownLoadFile{
 
 // private
 
-  function outHeaderCommon(){    global $QF_Config;
+  function outHeaderCommon(){
+    global $QF_Config;
     $info=pathinfo($this->RealName);
     header('Content-Transfer-Encoding: binary');
     header('Content-Type: '.$this->mime.'; charset=windows-1251');
@@ -133,7 +135,8 @@ class DownLoadFile{
 //Load mime types list
 $result=$QF_DBase->sql_doselect('{DBKEY}mime');
 // В цикле переносим результаты запроса в массив $mimes
-if (!empty($result)) {    while ( $cmime = $QF_DBase->sql_fetchrow($result))
+if (!empty($result)) {
+    while ( $cmime = $QF_DBase->sql_fetchrow($result))
         $mimes[$cmime['ext']] = $cmime;
     $QF_DBase->sql_freeresult($result);
 }

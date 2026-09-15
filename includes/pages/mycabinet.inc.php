@@ -348,10 +348,10 @@ elseif ($job=='pms') {
             }
             $tmpl=Array(
                 'time'     => (($curpm['readed'])?'':$Vis['UNR_FLAG'].' ').create_date("", $curpm['time']),
-	            'user'     => ($puser) ? '<a href="index.php?st=info&amp;infouser='.$puser['id'].'">'.$puser['nick'].'</a>' : str_replace('[|]','',$curpm['author']),
-	            'avatar'   => Vis_Gen_Avatar($puser),
-	            'u_descr'  => ($puser) ?  $puser['descr'] : $lang['GUEST'],
-	            'u_rights' => Vis_Gen_Rights($puser['rights'],' ') );
+                'user'     => ($puser) ? '<a href="index.php?st=info&amp;infouser='.$puser['id'].'">'.$puser['nick'].'</a>' : str_replace('[|]','',$curpm['author']),
+                'avatar'   => Vis_Gen_Avatar($puser),
+                'u_descr'  => ($puser) ?  $puser['descr'] : $lang['GUEST'],
+                'u_rights' => Vis_Gen_Rights($puser['rights'],' ') );
 
             $tmpl['formbody']=Visual('PM_READ_CONTENT', Array(
                                     'caption' => $curpm['theme'],

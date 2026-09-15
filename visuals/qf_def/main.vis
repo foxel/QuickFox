@@ -84,13 +84,13 @@ if (document.domain != '{C_server_name}' && document.domain.match(/^[\w\-\.]+(\.
         </div>
     </td>
     <td class="qf_panels">
-	<div align="center">
-	{IF_site_logo}
-	<img src="{C_site_logo}" alt="SITE LOGO" >
-	{ELSE}
-	<img src="imgs/logo.png" alt="LOGO" >
+    <div align="center">
+    {IF_site_logo}
+    <img src="{C_site_logo}" alt="SITE LOGO" >
+    {ELSE}
+    <img src="imgs/logo.png" alt="LOGO" >
     {ENDIF}
-	</div>
+    </div>
         <hr />
         {C_enter}
         {C_stats}

@@ -68,7 +68,7 @@ if ($SET_step=='finish_install')
     $QF_Config['root']=$QF_Root;
 
     if (!file_exists('setup.lock'))
-	unlink('setup.php');
+    unlink('setup.php');
     redirect('index.php');
 }
 
@@ -156,7 +156,8 @@ if ($SET_step=='dbase_import')
         }
     }
 
-    if (!$upd_possible) {        $SET_act = 'GO';
+    if (!$upd_possible) {
+        $SET_act = 'GO';
         $imp_mode = 'new';
     }
 
@@ -164,7 +165,8 @@ if ($SET_step=='dbase_import')
 
         $import = new mysql_importer();
 
-        if ($imp_mode=='upd') {            $impfile = fopen('install/qf_dbase.str', 'rb');
+        if ($imp_mode=='upd') {
+            $impfile = fopen('install/qf_dbase.str', 'rb');
             $data = fread($impfile, filesize('install/qf_dbase.str'));
             eval('$bases = '.$data.';');
             foreach ($bases as $name=>$struct)
@@ -194,7 +196,8 @@ if ($SET_step=='dbase_import')
                 $QF_DBase->sql_query($query['query']);
 
             if (file_exists('install/empty.sql') && ($impfile3 = fopen('install/empty.sql', 'rb')))
-            {                $content = str_replace('{DBKEY}', $dbkey, fread($impfile3, filesize('install/empty.sql')));
+            {
+                $content = str_replace('{DBKEY}', $dbkey, fread($impfile3, filesize('install/empty.sql')));
                 PMA_splitSqlFile($queries, $content);
                 foreach ( $queries as $query )
                     $QF_DBase->sql_query($query['query']);
@@ -215,9 +218,11 @@ if ($SET_step=='dbase_import')
     }
 }
 elseif ($SET_step=='data_acc')
-{    $QF_Pagedata['step_info'] = $lang['SETUP_STEP_DATA_ACC'];
+{
+    $QF_Pagedata['step_info'] = $lang['SETUP_STEP_DATA_ACC'];
 
-    if ($SET_act == 'GO') {        require 'db/mysql4.php';
+    if ($SET_act == 'GO') {
+        require 'db/mysql4.php';
 
         $QF_Dbase_Config = Array(
             'location' => Get_Request('dblocation', 2),
@@ -261,7 +266,8 @@ elseif ($SET_step=='data_acc')
             $QF_Pagedata['form_cont'] = $lang['SETUP_STEP_DATA_OK'];
         }
         else
-        {            $QF_Pagedata['step'] = $SET_step;
+        {
+            $QF_Pagedata['step'] = $SET_step;
             $QF_Pagedata['form_cont'] = $SET_error;
         }
     }

@@ -127,9 +127,9 @@ elseif ($job=='config') {
         'descr' => $lang['CONFIG_COMMON_SITE_UINFOACC_MORE'] );
     for($stt=0; $stt<= $QF_User->level; $stt++)
         $fields['uinfo_rights']['subs'][$stt]=Array(
-    	    'name'     => $stt,
-	        'value'    => $stt,
-    	    'selected' => ($QF_Config['uinfo_acc_lvl']==$stt) );
+            'name'     => $stt,
+            'value'    => $stt,
+            'selected' => ($QF_Config['uinfo_acc_lvl']==$stt) );
 
 
     $fields['site_use_spcode']=Array(
@@ -160,17 +160,17 @@ elseif ($job=='config') {
         'capt'  => $lang['CONFIG_COMMON_SITE_TZ'],
         'descr' => $lang['CONFIG_COMMON_SITE_TZ_MORE'] );
     if ($lang['tz'])
-	    foreach($lang['tz'] as $ttz=>$ttzs)
-    	    $fields['def_tz']['subs'][$ttz]=Array(
-    	        'name'     => $ttzs,
-	            'value'    => $ttz,
-    	        'selected' => ($QF_Config['def_tz']==$ttz) );
+        foreach($lang['tz'] as $ttz=>$ttzs)
+            $fields['def_tz']['subs'][$ttz]=Array(
+                'name'     => $ttzs,
+                'value'    => $ttz,
+                'selected' => ($QF_Config['def_tz']==$ttz) );
     else
-	    for($ttz=-12;$ttz<=13;$ttz++)
-    	    $fields['def_tz']['subs'][$ttz]=Array(
-    	        'name'     => $ttz,
-	            'value'    => $ttz,
-    	        'selected' => ($QF_Config['def_tz']==$ttz) );
+        for($ttz=-12;$ttz<=13;$ttz++)
+            $fields['def_tz']['subs'][$ttz]=Array(
+                'name'     => $ttz,
+                'value'    => $ttz,
+                'selected' => ($QF_Config['def_tz']==$ttz) );
 
     $fields['date_format']=Array(
         'value' => $QF_Config['def_date_format'],
@@ -200,9 +200,9 @@ elseif ($job=='config') {
         'descr' => $lang['CONFIG_COMMON_FILES_PRIGHTS_MORE'] );
     for($stt=0; $stt<= $QF_User->level;$stt++)
         $fields['file_rights']['subs'][$stt]=Array(
-    	    'name'     => $stt,
-	        'value'    => $stt,
-    	    'selected' => ($QF_Config['post_files_rights']==$stt) );
+            'name'     => $stt,
+            'value'    => $stt,
+            'selected' => ($QF_Config['post_files_rights']==$stt) );
 
     $fields['file_noattc']=Array(
         'value'   => 'ON',
@@ -474,62 +474,62 @@ elseif ($job=='for_config') {
         'type'  => 'select',
         'capt'  => $lang['CONFIG_FORUM_PAGEPOSTS'],
         'descr' => $lang['CONFIG_FORUM_PAGEPOSTS_MORE'] );
-   	$fields['page_posts']['subs'][-1]=Array(
-   	    'name'     => $lang['DEFAULT'],
+    $fields['page_posts']['subs'][-1]=Array(
+        'name'     => $lang['DEFAULT'],
         'value'    => -1 );
     for($ttz=5;$ttz<=30;$ttz++)
-   	    $fields['page_posts']['subs'][$ttz]=Array(
-   	        'name'     => $ttz,
+        $fields['page_posts']['subs'][$ttz]=Array(
+            'name'     => $ttz,
             'value'    => $ttz,
-   	        'selected' => ($forconfig['posts_per_page']==$ttz) );
+            'selected' => ($forconfig['posts_per_page']==$ttz) );
 
     $fields['mess_lock']=Array(
         'type'  => 'select',
         'capt'  => $lang['CONFIG_FORUM_MESSLOCK'],
         'descr' => $lang['CONFIG_FORUM_MESSLOCK_MORE'] );
-   	$fields['mess_lock']['subs'][-1]=Array(
-   	    'name'     => $lang['DEFAULT'],
+    $fields['mess_lock']['subs'][-1]=Array(
+        'name'     => $lang['DEFAULT'],
         'value'    => -1 );
     for($ttz=0;$ttz<=10;$ttz++)
-   	    $fields['mess_lock']['subs'][$ttz]=Array(
-   	        'name'     => $ttz,
+        $fields['mess_lock']['subs'][$ttz]=Array(
+            'name'     => $ttz,
             'value'    => $ttz,
-   	        'selected' => ($forconfig['mess_lock_time']==$ttz) );
+            'selected' => ($forconfig['mess_lock_time']==$ttz) );
 
     $fields['guest_book']=Array(
-	    'type'  => 'select',
-	    'capt'  => $lang['CONFIG_FORUM_GBOOK'],
-	    'params' => 'style="width: 130px;"',
-	    'descr' => $lang['CONFIG_FORUM_GBOOK_MORE'] );
+        'type'  => 'select',
+        'capt'  => $lang['CONFIG_FORUM_GBOOK'],
+        'params' => 'style="width: 130px;"',
+        'descr' => $lang['CONFIG_FORUM_GBOOK_MORE'] );
     $fields['guest_book']['subs'][0]=Array(
-	    'name'     => ' --- ',
+        'name'     => ' --- ',
         'params'   => 'style="width: auto;"',
         'value'    => 0  );
 
     $gbquery='SELECT t.*, s.acc_group FROM {DBKEY}topics t LEFT JOIN {DBKEY}sections s ON (s.id=t.parent) WHERE t.postrights=0 AND t.deleted=0 AND t.locked=0';
     $result=$QF_DBase->sql_query($gbquery);
     if ($result) {
-	    while ($topic=$QF_DBase->sql_fetchrow($result))
-	   	    if (intval($topic['acc_group'])==0)
-	   	        $fields['guest_book']['subs'][$topic['id']]=Array(
-	   	            'name'     => STrim($topic['name'],30),
-    	            'params'   => 'title = "'.$topic['name'].'" style="width: auto;"',
-    	            'value'    => $topic['id'],
-	       	        'selected' => ($forconfig['guest_book']==$topic['id']) );
+        while ($topic=$QF_DBase->sql_fetchrow($result))
+            if (intval($topic['acc_group'])==0)
+                $fields['guest_book']['subs'][$topic['id']]=Array(
+                    'name'     => STrim($topic['name'],30),
+                    'params'   => 'title = "'.$topic['name'].'" style="width: auto;"',
+                    'value'    => $topic['id'],
+                    'selected' => ($forconfig['guest_book']==$topic['id']) );
     }
 
     $fields['post_files']=Array(
         'type'  => 'select',
         'capt'  => $lang['CONFIG_FORUM_POSTFILES'],
         'descr' => $lang['CONFIG_FORUM_POSTFILES_MORE'] );
-   	$fields['post_files']['subs'][-1]=Array(
-   	    'name'     => $lang['DEFAULT'],
+    $fields['post_files']['subs'][-1]=Array(
+        'name'     => $lang['DEFAULT'],
         'value'    => -1 );
     for($ttz=0;$ttz<=5;$ttz++)
-   	    $fields['post_files']['subs'][$ttz]=Array(
-   	        'name'     => $ttz,
+        $fields['post_files']['subs'][$ttz]=Array(
+            'name'     => $ttz,
             'value'    => $ttz,
-   	        'selected' => ($forconfig['post_upl_files']==$ttz) );
+            'selected' => ($forconfig['post_upl_files']==$ttz) );
 
     $fields['submit']=Array(
         'value' => $lang['BTN_ACCEPT'],

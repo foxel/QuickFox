@@ -54,36 +54,36 @@ ob_start('Cont_Measurer');
 
 class QF_Timer
 {
-	var $start_time;
-	var $time;
-	var $point_time;
-	var $events = Array();
+    var $start_time;
+    var $time;
+    var $point_time;
+    var $events = Array();
 
-	function QF_Timer()
-	{
-		$this->start_time = $this->Get_Time();
-		$this->time = time();
-		$this->point_time = $this->start_time;
-	}
+    function QF_Timer()
+    {
+        $this->start_time = $this->Get_Time();
+        $this->time = time();
+        $this->point_time = $this->start_time;
+    }
 
-	function Get_Time()
-	{
+    function Get_Time()
+    {
         $time = explode(' ',microtime());
         $time = $time[1]+$time[0];
         return $time;
-	}
+    }
 
     function Time_Point()
     {
-    	$time = $this->Get_Time();
-    	$diff = $time - $this->point_time;
-    	$this->point_time = $time;
-    	return $diff;
+        $time = $this->Get_Time();
+        $diff = $time - $this->point_time;
+        $this->point_time = $time;
+        return $diff;
     }
 
     function Time_Spent()
     {
-    	return ($this->Get_Time() - $this->start_time);
+        return ($this->Get_Time() - $this->start_time);
     }
 
     function Time_Log($event = '')

@@ -62,19 +62,19 @@ if($QF_Job!='')
   if (!$QF_User->is_spider)
   {
       include('includes/panels/fstat.pan.php');
-	  $QF_Pagedata['stats'].=ob_get_contents();
-	  ob_clean();
+      $QF_Pagedata['stats'].=ob_get_contents();
+      ob_clean();
 
-	  if ($QF_User->uid)
-	  {
-	      include('includes/panels/mchat.pan.php');
-    	  $QF_Pagedata['stats'].=ob_get_contents();
-	      ob_clean();
-	  }
+      if ($QF_User->uid)
+      {
+          include('includes/panels/mchat.pan.php');
+          $QF_Pagedata['stats'].=ob_get_contents();
+          ob_clean();
+      }
 
-	  include('includes/panels/quicksets.pan.php');
-	  $QF_Pagedata['stats'].=ob_get_contents();
-	  ob_clean();
+      include('includes/panels/quicksets.pan.php');
+      $QF_Pagedata['stats'].=ob_get_contents();
+      ob_clean();
 
   }
 

@@ -50,7 +50,8 @@ function mchat_send()
 }
 
 function mchat_quote(str)
-{    var msg_ = qf_getbyid('mchat_msg');
+{
+    var msg_ = qf_getbyid('mchat_msg');
     if (msg_)
     {
         msg_.value = msg_.value + str + ' ';

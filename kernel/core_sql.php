@@ -439,7 +439,8 @@ class mysql_importer
             }
 
             if ($in_comm) {
-                switch ($in_comm) {                    case 2:
+                switch ($in_comm) {
+                    case 2:
                         if ($dchar == '*/')
                             $in_comm = 0;
                         break;
@@ -600,7 +601,8 @@ class mysql_importer
                 $do_add = true;
             }
             else {
-                foreach ($fdata as $param => $val)                    if ($old_fields[$fname][$param]!=$val)
+                foreach ($fdata as $param => $val)
+                    if ($old_fields[$fname][$param]!=$val)
                         $do_correct = true;
             }
 

@@ -16,7 +16,8 @@ if ($find_mode == 2 && strlen($find_what)<3)
 
 $acc_forums_list = Array(0);
 foreach ($QF_Forum->ForumTree as $Forum)
-{    if ($Forum['curuser_access'])
+{
+    if ($Forum['curuser_access'])
         $acc_forums_list[] = $Forum['id'];
 }
 
@@ -31,7 +32,8 @@ $Page_SubTitle = $lang['FOR_SEARCH_CAPT'];
 
 
 switch ($find_mode)
-{    case 1: // unread search
+{
+    case 1: // unread search
         if (!$QF_User->uid)
             break;
         $bySubscribe = Get_Request('by_subscr', 1, 'b');
@@ -75,7 +77,8 @@ switch ($find_mode)
             $QF_DBase->sql_freeresult($result);
         }
         if (count($topics_list))
-        {            $topics_list = implode(', ', $topics_list);
+        {
+            $topics_list = implode(', ', $topics_list);
             $query = 'SELECT t.*, r.active AS is_read FROM {DBKEY}topics t
             LEFT JOIN {DBKEY}reads r ON (t.id=r.theme AND r.user_id='.$QF_User->uid.')
             WHERE t.deleted = 0 AND t.id IN ('.$topics_list.')

@@ -27,7 +27,8 @@ define('QF_URL_MASK', '[0-9A-z]+://[\w\#$%&~/.\-;:=,?@+\(\)\[\]]+');
 define('QF_EMAIL_MASK','[0-9A-z_\-\.]+@[0-9A-z_\-\.]+\.[A-z]{2,4}');
 
 class qf_parser
-{    var $mode = 0;
+{
+    var $mode = 0;
     var $tags = Array();
     var $pregs = Array();
     var $noparse_tag = 'no_bb';    // contetns of this tag will not be parsed (lower case)
@@ -42,12 +43,14 @@ class qf_parser
 
     // constructor
     Function qf_parser($nodefaults = False)
-    {        if ($nodefaults) $this->loaded=True;
+    {
+        if ($nodefaults) $this->loaded=True;
     }
 
     // load base tags that are cacheble
     function load_basic()
-    {        if ($this->base_loaded)
+    {
+        if ($this->base_loaded)
             return true;
 
         // Standart tags
@@ -118,9 +121,11 @@ class qf_parser
 
     // Smiles
     function load_smiles()
-    {        global $QF_DBase;
+    {
+        global $QF_DBase;
         $result = $QF_DBase->sql_doselect('{DBKEY}smiles', '*', '', 'ORDER BY LENGTH(sm_text) DESC');
-        if ($result) {            while ( $smile = $QF_DBase->sql_fetchrow($result))
+        if ($result) {
+            while ( $smile = $QF_DBase->sql_fetchrow($result))
                 $this->smiles[$smile['id']] = $smile;
 
             $QF_DBase->sql_freeresult($result);
@@ -141,7 +146,9 @@ class qf_parser
     //      1 - precache base parsing
     //      2 - postcache quick parsing
     Function parse_mess($text, $mode=0)
-    {        switch (intval($mode)) {            case 2:
+    {
+        switch (intval($mode)) {
+            case 2:
                 $this->load_extends();
                 return $this->Parse($text, QF_BBPARSE_POSTPREP);
                 break;
@@ -158,7 +165,8 @@ class qf_parser
 
     // Message preparation and validation
     Function prep_mess($text)
-    {        $this->load_basic();
+    {
+        $this->load_basic();
         $this->load_extends();
         return $this->BB_Parse($text, QF_BBPARSE_CHECK);
     }

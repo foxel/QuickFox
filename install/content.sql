@@ -1112,4 +1112,3 @@ REPLACE INTO  {DBKEY}styles (`id`, `name`, `visual`, `CSS`)
 REPLACE INTO  {DBKEY}styles (`id`, `name`, `visual`, `CSS`) 
     VALUES('3333', 'Green mod', 'qf_def', 'green');
 
-

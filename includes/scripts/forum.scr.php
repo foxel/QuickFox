@@ -7,7 +7,8 @@ include 'includes/forum_scr.php';
 
 $action = Get_Request('action', 2);
 if (!empty($action))
-{    $forum = New qf_forum_upd();
+{
+    $forum = New qf_forum_upd();
 
     $forum->preload_data();
 

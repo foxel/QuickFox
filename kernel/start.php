@@ -80,7 +80,7 @@ if ($QF_User->is_spider && $QF_Config['restrict_spiders']) {
     LoadVisuals();
     $tmpl = Array(
         'spider_name'   => $QF_User->spider['name'],
-	    'spider_visits' => $QF_User->spider['visits'] );
+        'spider_visits' => $QF_User->spider['visits'] );
 
     $QF_Pagedata['caption']=$lang['ERR_SPIDERS_RESTRICTED'];
     $QF_Pagedata['content']=Visual('NODATA_SPIDER_RESTRICTED', $tmpl);

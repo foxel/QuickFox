@@ -25,7 +25,8 @@ if ($QF_Session->Get('is_admin')!=1 || !$QF_User->admin) {
     $error = $lang['ERR_ADMIN_ONLY'];
 }
 
-elseif ($action=='gr_edit') {
+elseif ($action=='gr_edit') {
+
     $gr_name = Get_Request('gr_name', 2, 'ht', 32);
     $gr_descr = Get_Request('gr_descr', 2, 'ht', 255);
 
@@ -43,7 +44,8 @@ elseif ($action=='gr_edit') {
         $error.= '<LI>'.$lang['ADMCAB_ACCGRP_ERR_NAMEDUP']."\n";
 
     else
-    {        $upd_data = Array(
+    {
+        $upd_data = Array(
             'id'    => ($create_group) ? '' : $gr_id,
             'name'  => $gr_name,
             'descr' => $gr_descr,
@@ -84,7 +86,8 @@ elseif ($action=='us_add') {
 
         $added = 0;
 
-        foreach ($add_users as $uname) {            $uname = trim($uname);
+        foreach ($add_users as $uname) {
+            $uname = trim($uname);
             $user = $ulist->by_nick($uname);
             if ( $user['id']>0 ) {
                 $QF_DBase->sql_doinsert('{DBKEY}acc_links', Array('user_id' => $user['id'], 'group_id' => $gr_id, 'time_given' => $timer->time, 'drop_after' => $drop_time), true );

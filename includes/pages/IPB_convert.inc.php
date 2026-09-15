@@ -59,7 +59,9 @@ else
         $QF_DBase->sql_freeresult($tbls);
 
         $keys = Array();
-        foreach ($rows as $tbl) {            if (preg_match('#^(.+?)members_converge$#', $tbl, $match)) {                $key = $match[1];
+        foreach ($rows as $tbl) {
+            if (preg_match('#^(.+?)members_converge$#', $tbl, $match)) {
+                $key = $match[1];
                 $kneedle = Array(
                     $key.'members',
                     $key.'forums',
@@ -82,7 +84,8 @@ else
 
     $ptmpl['selsrc_form'] = Visual('IPB_CONV_SELSRC_FORM', $ftmpl);
 
-    if ($sel_prefix) {        include 'includes/forum_core.php';
+    if ($sel_prefix) {
+        include 'includes/forum_core.php';
         $QF_Forum = new qf_forum();
 
         $mtmpl = Array(
@@ -93,7 +96,8 @@ else
 
         $query='SELECT * FROM '.$sel_prefix.'forums ORDER BY position, id';
         $result=$QF_DBase->sql_dbquery($sel_db, $query);
-        if ($result) {            $read_options = '';
+        if ($result) {
+            $read_options = '';
             $write_options = '';
             for($stt=1; $stt <= $QF_User->level; $stt++){
                 $read_options.='<option value="'.$stt.'">'.$stt.'</option>';
@@ -104,7 +108,8 @@ else
             foreach ($stree as $ss)
                 $mtmpl['par_options'].='<option value="'.$ss['id'].'" >'.$ss['pref'].$ss['name'].' ('.$ss['minrights'].')</option>';
 
-            while ($forum = $QF_DBase->sql_fetchrow($result)) {                $ftmpl = Array(
+            while ($forum = $QF_DBase->sql_fetchrow($result)) {
+                $ftmpl = Array(
                     'id'            => $forum['id'],
                     'name'          => $forum['name'],
                     'read_options'  => $read_options,

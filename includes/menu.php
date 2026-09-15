@@ -17,9 +17,11 @@ if ($menu_config['show_irclogs']) $menu_buttons.=Visual('MAIN_MENU_BTN', Array('
 if (!$menu_config['hide_users']) $menu_buttons.=Visual('MAIN_MENU_BTN', Array('url'=>'index.php?st=info', 'caption'=>$lang['MMNU_USERS']));
 
 if (isset($menu_config['add_buttons']) && $menu_config['add_buttons'])
-{    $butts = explode("\n", $menu_config['add_buttons']);
+{
+    $butts = explode("\n", $menu_config['add_buttons']);
     foreach ($butts as $butt)
-    {        $butt = explode(' ', $butt, 2);
+    {
+        $butt = explode(' ', $butt, 2);
         $burl = trim($butt[0]);
         $bcpt = trim($butt[1]);
         if (count($butt)>1 && qf_str_is_url($burl))

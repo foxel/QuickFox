@@ -39,7 +39,8 @@ if (!empty($action))
             $caption='QuickFox DataBase dump file';
 
             if ($result = $QF_DBase->sql_doselect('{DBKEY}files', 'file', Array( 'filename' => $filename) ))
-            {                while (list($del_dump) = $QF_DBase->sql_fetchrow($result, false))
+            {
+                while (list($del_dump) = $QF_DBase->sql_fetchrow($result, false))
                     unlink('files/'.$del_dump);
                 $QF_DBase->sql_freeresult($result);
                 $QF_DBase->sql_dodelete('{DBKEY}files', Array( 'filename' => $filename) );

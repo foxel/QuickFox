@@ -10,7 +10,7 @@ function for_preview(frm_name) {
     if (xmlhttp && par_msg!=null)
     {
     xmlhttp.onreadystatechange = function()
-    	{
+        {
             if (xmlhttp.readyState == 4) {
                 if (xmlhttp.status == 200) {
                     if (prv = qf_getbyid(frm_name + '_preview')) {
@@ -165,4 +165,3 @@ var QF_STORE = function() {
         }
     }
 }();
-

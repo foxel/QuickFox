@@ -26,7 +26,8 @@ $pass=md5(Get_Request('userpass', 2));
 
 
 if (empty($error))
-{   $QF_Session->Set('is_admin', 1);
+{
+   $QF_Session->Set('is_admin', 1);
 
    $rresult=sprintf($lang['ADM_AUTHORIZED'],$QF_User->uname);
    $redir='index.php?st=mycabinet&amp;job=vis_stat';

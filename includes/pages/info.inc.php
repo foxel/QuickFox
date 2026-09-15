@@ -68,7 +68,7 @@ elseIf ($infouser)
             FROM {DBKEY}userstats us
             LEFT JOIN {DBKEY}topics t ON (us.lasttheme = t.id)
             LEFT JOIN {DBKEY}sections s ON (s.id = t.parent)
-	        LEFT JOIN {DBKEY}acc_links al ON (s.acc_group = al.group_id AND al.user_id = '.$QF_User->uid.')
+            LEFT JOIN {DBKEY}acc_links al ON (s.acc_group = al.group_id AND al.user_id = '.$QF_User->uid.')
             WHERE us.user_id='.$iuser['id'];
 
         if ( $result=$QF_DBase->sql_query($query) )
@@ -90,36 +90,36 @@ elseIf ($infouser)
 
         if($iuser['rights']<$QF_User->wlevel && $QF_User->wlevel > 1){
 
-        	$fields['script']['value']='chrights';
-        	$fields['script']['type']='hidden';
+            $fields['script']['value']='chrights';
+            $fields['script']['type']='hidden';
 
-        	$fields['chuserid']['value']=$infouser;
-	        $fields['chuserid']['type']='hidden';
-        	$fields['iuserlogin']['value']=$QF_User->uname;
-        	$fields['iuserlogin']['type']='hidden';
+            $fields['chuserid']['value']=$infouser;
+            $fields['chuserid']['type']='hidden';
+            $fields['iuserlogin']['value']=$QF_User->uname;
+            $fields['iuserlogin']['type']='hidden';
 
-        	$fields['nrights']['type']='select';
-        	$fields['nrights']['capt']=$lang['INFO_SET_RIGHTS'];
-        	$fields['nrights']['descr']=$lang['INFO_RIGHTS_MORE'];
-        	$fields['nrights']['subs'][0]['value']=0;
-        	$fields['nrights']['subs'][0]['name']=$lang['OUTCAST'];
-        	for($stt=1;$stt<$QF_User->level;$stt++){
-            	$fields['nrights']['subs'][$stt]['value']=$stt;
-            	$fields['nrights']['subs'][$stt]['name']=$stt;
-            	if($iuser['rights']==$stt) $fields['nrights']['subs'][$stt]['selected']=1;
-        	}
+            $fields['nrights']['type']='select';
+            $fields['nrights']['capt']=$lang['INFO_SET_RIGHTS'];
+            $fields['nrights']['descr']=$lang['INFO_RIGHTS_MORE'];
+            $fields['nrights']['subs'][0]['value']=0;
+            $fields['nrights']['subs'][0]['name']=$lang['OUTCAST'];
+            for($stt=1;$stt<$QF_User->level;$stt++){
+                $fields['nrights']['subs'][$stt]['value']=$stt;
+                $fields['nrights']['subs'][$stt]['name']=$stt;
+                if($iuser['rights']==$stt) $fields['nrights']['subs'][$stt]['selected']=1;
+            }
 
-        	if ($QF_User->admin) {
-	        	$fields['nmodlevel']['type']='select';
-	        	$fields['nmodlevel']['capt']=$lang['INFO_SET_MODLEVEL'];
-	        	$fields['nmodlevel']['descr']=$lang['INFO_MODLEVEL_MORE'];
-	        	$fields['nmodlevel']['subs'][0]['value']=0;
-	        	$fields['nmodlevel']['subs'][0]['name']=$lang['NOT_MODERATOR'];
-	        	for($stt=1;$stt<$QF_User->level;$stt++){
-	            	$fields['nmodlevel']['subs'][$stt]['value']=$stt;
-	            	$fields['nmodlevel']['subs'][$stt]['name']=$stt;
-	            	if($iuser['modlevel']==$stt) $fields['nmodlevel']['subs'][$stt]['selected']=1;
-        		}
+            if ($QF_User->admin) {
+                $fields['nmodlevel']['type']='select';
+                $fields['nmodlevel']['capt']=$lang['INFO_SET_MODLEVEL'];
+                $fields['nmodlevel']['descr']=$lang['INFO_MODLEVEL_MORE'];
+                $fields['nmodlevel']['subs'][0]['value']=0;
+                $fields['nmodlevel']['subs'][0]['name']=$lang['NOT_MODERATOR'];
+                for($stt=1;$stt<$QF_User->level;$stt++){
+                    $fields['nmodlevel']['subs'][$stt]['value']=$stt;
+                    $fields['nmodlevel']['subs'][$stt]['name']=$stt;
+                    if($iuser['modlevel']==$stt) $fields['nmodlevel']['subs'][$stt]['selected']=1;
+                }
 
                 if (!$iuser['approved']) {
                     $fields['approved'] = Array(
@@ -143,16 +143,16 @@ elseIf ($infouser)
                     'checked' => ($iuser['active']) ? '' : '1',
                     'capt'    => $lang['INFO_SET_INACTIVE'],
                     'descr'   => $lang['INFO_INACTIVE_MORE'] );
-        	}
+            }
 
-	        $fields['motiv']['type']='textarea';
-        	$fields['motiv']['capt']=$lang['INFO_SET_MOTIVATION'];
+            $fields['motiv']['type']='textarea';
+            $fields['motiv']['capt']=$lang['INFO_SET_MOTIVATION'];
 
-        	$fields['submit']['value']=$lang['BTN_ACCEPT'];
-        	$fields['submit']['type']='submit';
-        	$fields['submit']['descr']=$lang['INFO_SET_DO'];
+            $fields['submit']['value']=$lang['BTN_ACCEPT'];
+            $fields['submit']['type']='submit';
+            $fields['submit']['descr']=$lang['INFO_SET_DO'];
 
-        	$tmpl['chform'] = Vis_Draw_Panel(Vis_Draw_Form('', 'ChrightForm', 'index.php', sprintf($lang['INFO_CAN_CHANGE'], $QF_User->uname),$fields, '100%', 'noborder'),$lang['INFO_CHANGE'], '100%', true);
+            $tmpl['chform'] = Vis_Draw_Panel(Vis_Draw_Form('', 'ChrightForm', 'index.php', sprintf($lang['INFO_CAN_CHANGE'], $QF_User->uname),$fields, '100%', 'noborder'),$lang['INFO_CHANGE'], '100%', true);
 
         }
 

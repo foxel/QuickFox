@@ -35,9 +35,9 @@ $dest_img = imagecreatetruecolor($width, 25);
 imagefilledrectangle($dest_img, 0, 0, $width-1, 24, imagecolorallocate($dest_img, rand(200, 255), rand(200, 255), rand(200, 255)));
 
 if (is_array($sess)) {
-	$newcode=substr(md5(uniqid($sid)),0,8);
+    $newcode=substr(md5(uniqid($sid)),0,8);
 
-   	$QF_DBase->sql_doupdate('{DBKEY}sessions', Array( 'spamcode' => $newcode, 'spctime' => $timer->time), Array( 'sid' => $sess['sid']) );
+    $QF_DBase->sql_doupdate('{DBKEY}sessions', Array( 'spamcode' => $newcode, 'spctime' => $timer->time), Array( 'sid' => $sess['sid']) );
 
     $root_img = imagecreatefrompng('kernel/as_data.dat');
 
@@ -68,7 +68,7 @@ if (is_array($sess)) {
 
 }
 else
-	imagetext($dest_img,2,48,9,'ERROR',$colors[0],True);
+    imagetext($dest_img,2,48,9,'ERROR',$colors[0],True);
 
 
 header('Content-Type: image/png');

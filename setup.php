@@ -102,29 +102,29 @@ print '
 if ($SET_act == 'GO')
 {
     $file = 'pack.tgz';
-	if (!file_exists($file))
-	    $file = 'upd_pack.tgz';
+    if (!file_exists($file))
+        $file = 'upd_pack.tgz';
 
     eval(gzuncompress(base64_decode($TAR_GZ_Class)));
 
-	$arch = new TGZRead($file);
-	if (!$arch->stream)
-	    $error='Error loading archive';
-	else {
-	    $arch->ExtractArchive('',True);
+    $arch = new TGZRead($file);
+    if (!$arch->stream)
+        $error='Error loading archive';
+    else {
+        $arch->ExtractArchive('',True);
 
         if (!file_exists('index.php') || !file_exists('install/install.php'))
             $error='Error extracting pack';
     }
 
     if (!$error) {
-	    chmod($file,octdec('600'));
-	    print '
+        chmod($file,octdec('600'));
+        print '
         <h3>All the data is extracted!</h3>
         <input type="hidden" name="step" value="data_acc" />
         Now We must set up some settings. <br />
         <input type="submit" name="OK" value="GO!" />
-	    ';
+        ';
     }
     else
         print $error;

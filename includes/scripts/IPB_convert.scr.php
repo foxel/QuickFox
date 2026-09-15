@@ -16,205 +16,205 @@ if ($action == 'convert')
 {
 
 
-	function IPBC_unconvert_sql($sql="")
-	{
-		$sql = stripslashes($sql);
+    function IPBC_unconvert_sql($sql="")
+    {
+        $sql = stripslashes($sql);
 
-		$sql = preg_replace( "#<span style='.+?'>#is", "", $sql );
-		$sql = str_replace( "</span>"                , "", $sql );
-		$sql = preg_replace( "#\s*$#"                , "", $sql );
+        $sql = preg_replace( "#<span style='.+?'>#is", "", $sql );
+        $sql = str_replace( "</span>"                , "", $sql );
+        $sql = preg_replace( "#\s*$#"                , "", $sql );
 
-		return '[sql]'.$sql.'[/sql]';
-	}
+        return '[sql]'.$sql.'[/sql]';
+    }
 
-	function IPBC_unconvert_htm($html="")
-	{
-		$html = stripslashes($html);
+    function IPBC_unconvert_htm($html="")
+    {
+        $html = stripslashes($html);
 
-		$html = preg_replace( "#<span style='.+?'>#is", "", $html );
-		$html = str_replace( "</span>"                , "", $html );
-		$html = preg_replace( "#\s*$#"                , "", $html );
+        $html = preg_replace( "#<span style='.+?'>#is", "", $html );
+        $html = str_replace( "</span>"                , "", $html );
+        $html = preg_replace( "#\s*$#"                , "", $html );
 
-		return '[html]'.$html.'[/html]';
-	}
+        return '[html]'.$html.'[/html]';
+    }
 
-	function IPBC_fromDB_parse($txt="")
-	{
-		//-----------------------------------------
-		// Clean up BR tags
-		//-----------------------------------------
+    function IPBC_fromDB_parse($txt="")
+    {
+        //-----------------------------------------
+        // Clean up BR tags
+        //-----------------------------------------
 
-		$txt = str_replace( "<br>"  , "\n", $txt );
-		$txt = str_replace( "<br />", "\n", $txt );
+        $txt = str_replace( "<br>"  , "\n", $txt );
+        $txt = str_replace( "<br />", "\n", $txt );
 
-		# Make EMO_DIR safe so the ^> regex works
-		$txt = str_replace( "<#EMO_DIR#>", "&lt;#EMO_DIR&gt;", $txt );
+        # Make EMO_DIR safe so the ^> regex works
+        $txt = str_replace( "<#EMO_DIR#>", "&lt;#EMO_DIR&gt;", $txt );
 
-		# New emo
-		$txt = preg_replace( "#<([^>]+?)emoid=\"(.+?)\"([^>]+?)".">#is", "\\2", $txt );
+        # New emo
+        $txt = preg_replace( "#<([^>]+?)emoid=\"(.+?)\"([^>]+?)".">#is", "\\2", $txt );
 
-		# And convert it back again...
-		$txt = str_replace( "&lt;#EMO_DIR&gt;", "<#EMO_DIR#>", $txt );
+        # And convert it back again...
+        $txt = str_replace( "&lt;#EMO_DIR&gt;", "<#EMO_DIR#>", $txt );
 
-		# Legacy
-		$txt = preg_replace( "#<!--emo&(.+?)-->.+?<!--endemo-->#", "\\1" , $txt );
+        # Legacy
+        $txt = preg_replace( "#<!--emo&(.+?)-->.+?<!--endemo-->#", "\\1" , $txt );
 
-		//-----------------------------------------
-		// Clean up nbsp
-		//-----------------------------------------
+        //-----------------------------------------
+        // Clean up nbsp
+        //-----------------------------------------
 
-		$txt = str_replace( '&nbsp;&nbsp;&nbsp;&nbsp;', "\t", $txt );
-		$txt = str_replace( '&nbsp;&nbsp;'            , "  ", $txt );
+        $txt = str_replace( '&nbsp;&nbsp;&nbsp;&nbsp;', "\t", $txt );
+        $txt = str_replace( '&nbsp;&nbsp;'            , "  ", $txt );
 
-		if ( 1 )
-		{
-			//-----------------------------------------
-			// SQL
-			//-----------------------------------------
+        if ( 1 )
+        {
+            //-----------------------------------------
+            // SQL
+            //-----------------------------------------
 
-			$txt = preg_replace( "#<!--sql-->(.+?)<!--sql1-->(.+?)<!--sql2-->(.+?)<!--sql3-->#eis", "IPBC_unconvert_sql(\"\\2\")", $txt);
+            $txt = preg_replace( "#<!--sql-->(.+?)<!--sql1-->(.+?)<!--sql2-->(.+?)<!--sql3-->#eis", "IPBC_unconvert_sql(\"\\2\")", $txt);
 
-			//-----------------------------------------
-			// HTML
-			//-----------------------------------------
+            //-----------------------------------------
+            // HTML
+            //-----------------------------------------
 
-			$txt = preg_replace( "#<!--html-->(.+?)<!--html1-->(.+?)<!--html2-->(.+?)<!--html3-->#ise", "IPBC_unconvert_htm(\"\\2\")", $txt);
+            $txt = preg_replace( "#<!--html-->(.+?)<!--html1-->(.+?)<!--html2-->(.+?)<!--html3-->#ise", "IPBC_unconvert_htm(\"\\2\")", $txt);
 
-			//-----------------------------------------
-			// Images / Flash
-			//-----------------------------------------
+            //-----------------------------------------
+            // Images / Flash
+            //-----------------------------------------
 
-			$txt = preg_replace( "#<img src=[\"'](\S+?)['\"].+?".">#"      , "\[img\]\\1\[/img\]"            , $txt );
+            $txt = preg_replace( "#<img src=[\"'](\S+?)['\"].+?".">#"      , "\[img\]\\1\[/img\]"            , $txt );
 
-			//-----------------------------------------
-			// Email, URLs
-			//-----------------------------------------
+            //-----------------------------------------
+            // Email, URLs
+            //-----------------------------------------
 
-			$txt = preg_replace( "#<a href=[\"']mailto:(.+?)['\"]>(.+?)</a>#"                                   , "\[email=\\1\]\\2\[/email\]"   , $txt );
-			$txt = preg_replace( "#<a href=[\"'](http://|https://|ftp://|news://)?(\S+?)['\"].+?".">(.+?)</a>#" , "\[url=\\1\\2\]\\3\[/url\]"  , $txt );
+            $txt = preg_replace( "#<a href=[\"']mailto:(.+?)['\"]>(.+?)</a>#"                                   , "\[email=\\1\]\\2\[/email\]"   , $txt );
+            $txt = preg_replace( "#<a href=[\"'](http://|https://|ftp://|news://)?(\S+?)['\"].+?".">(.+?)</a>#" , "\[url=\\1\\2\]\\3\[/url\]"  , $txt );
 
-			//-----------------------------------------
-			// Quote
-			//-----------------------------------------
+            //-----------------------------------------
+            // Quote
+            //-----------------------------------------
 
-			$txt = preg_replace( "#<!--QuoteBegin-->(.+?)<!--QuoteEBegin-->#"                        , '[quote]'         , $txt );
-			$txt = preg_replace( "#<!--QuoteBegin-{1,2}([^>]+?)\+([^>]+?)-->(.+?)<!--QuoteEBegin-->#", "[quote=\\1,\\2]" , $txt );
-			$txt = preg_replace( "#<!--QuoteBegin-{1,2}([^>]+?)\+-->(.+?)<!--QuoteEBegin-->#"        , "[quote=\\1]"     , $txt );
-			$txt = preg_replace( "#<!--QuoteEnd-->(.+?)<!--QuoteEEnd-->#"                            , '[/quote]'        , $txt );
+            $txt = preg_replace( "#<!--QuoteBegin-->(.+?)<!--QuoteEBegin-->#"                        , '[quote]'         , $txt );
+            $txt = preg_replace( "#<!--QuoteBegin-{1,2}([^>]+?)\+([^>]+?)-->(.+?)<!--QuoteEBegin-->#", "[quote=\\1,\\2]" , $txt );
+            $txt = preg_replace( "#<!--QuoteBegin-{1,2}([^>]+?)\+-->(.+?)<!--QuoteEBegin-->#"        , "[quote=\\1]"     , $txt );
+            $txt = preg_replace( "#<!--QuoteEnd-->(.+?)<!--QuoteEEnd-->#"                            , '[/quote]'        , $txt );
 
-			//-----------------------------------------
-			// New quote
-			//-----------------------------------------
+            //-----------------------------------------
+            // New quote
+            //-----------------------------------------
 
-			$txt = preg_replace( "#<!--quoteo([^>]+?)?-->(.+?)<!--quotec-->#si", '[quote]' , $txt );
+            $txt = preg_replace( "#<!--quoteo([^>]+?)?-->(.+?)<!--quotec-->#si", '[quote]' , $txt );
 
-			//-----------------------------------------
-			// left, right, center
-			//-----------------------------------------
+            //-----------------------------------------
+            // left, right, center
+            //-----------------------------------------
 
-			$txt = preg_replace( "#<div align=\"(left|right|center)\">(.+?)</div>#is"  , "[\\1]\\2[/\\1]", $txt );
+            $txt = preg_replace( "#<div align=\"(left|right|center)\">(.+?)</div>#is"  , "[\\1]\\2[/\\1]", $txt );
 
-			//-----------------------------------------
-			// Ident => Block quote
-			//-----------------------------------------
+            //-----------------------------------------
+            // Ident => Block quote
+            //-----------------------------------------
 
-			while( preg_match( "#<blockquote>(.+?)</blockquote>#is" , $txt ) )
-			{
-				$txt = preg_replace( "#<blockquote>(.+?)</blockquote>#is"  , "[indent]\\1[/indent]", $txt );
-			}
+            while( preg_match( "#<blockquote>(.+?)</blockquote>#is" , $txt ) )
+            {
+                $txt = preg_replace( "#<blockquote>(.+?)</blockquote>#is"  , "[indent]\\1[/indent]", $txt );
+            }
 
-			//-----------------------------------------
-			// CODE
-			//-----------------------------------------
+            //-----------------------------------------
+            // CODE
+            //-----------------------------------------
 
-			$txt = preg_replace( "#<!--c1-->(.+?)<!--ec1-->#", '[code]' , $txt );
-			$txt = preg_replace( "#<!--c2-->(.+?)<!--ec2-->#", '[/code]', $txt );
+            $txt = preg_replace( "#<!--c1-->(.+?)<!--ec1-->#", '[code]' , $txt );
+            $txt = preg_replace( "#<!--c2-->(.+?)<!--ec2-->#", '[/code]', $txt );
 
-			//-----------------------------------------
-			// Easy peasy
-			//-----------------------------------------
+            //-----------------------------------------
+            // Easy peasy
+            //-----------------------------------------
 
-			$txt = preg_replace( "#<i>(.+?)</i>#is"            , "\[i\]\\1\[/i\]"  , $txt );
-			$txt = preg_replace( "#<b>(.+?)</b>#is"            , "\[b\]\\1\[/b\]"  , $txt );
-			$txt = preg_replace( "#<strike>(.+?)</strike>#is"  , "\[s\]\\1\[/s\]"  , $txt );
-			$txt = preg_replace( "#<u>(.+?)</u>#is"            , "\[u\]\\1\[/u\]"  , $txt );
+            $txt = preg_replace( "#<i>(.+?)</i>#is"            , "\[i\]\\1\[/i\]"  , $txt );
+            $txt = preg_replace( "#<b>(.+?)</b>#is"            , "\[b\]\\1\[/b\]"  , $txt );
+            $txt = preg_replace( "#<strike>(.+?)</strike>#is"  , "\[s\]\\1\[/s\]"  , $txt );
+            $txt = preg_replace( "#<u>(.+?)</u>#is"            , "\[u\]\\1\[/u\]"  , $txt );
 
-			//-----------------------------------------
-			// List headache
-			//-----------------------------------------
+            //-----------------------------------------
+            // List headache
+            //-----------------------------------------
 
-			$txt = preg_replace( "#(\n){0,}<ul>#" , "\\1\[list\]"  , $txt );
-			$txt = preg_replace( "#(\n){0,}<ol type='(a|A|i|I|1)'>#" , "\\1\[list=\\2\]\n"  , $txt );
-			$txt = preg_replace( "#(\n){0,}<li>#" , "\n\[*\]"     , $txt );
-			$txt = preg_replace( "#(\n){0,}</ul>(\n){0,}#", "\n\[/list\]\\2" , $txt );
-			$txt = preg_replace( "#(\n){0,}</ol>(\n){0,}#", "\n\[/list\]\\2" , $txt );
+            $txt = preg_replace( "#(\n){0,}<ul>#" , "\\1\[list\]"  , $txt );
+            $txt = preg_replace( "#(\n){0,}<ol type='(a|A|i|I|1)'>#" , "\\1\[list=\\2\]\n"  , $txt );
+            $txt = preg_replace( "#(\n){0,}<li>#" , "\n\[*\]"     , $txt );
+            $txt = preg_replace( "#(\n){0,}</ul>(\n){0,}#", "\n\[/list\]\\2" , $txt );
+            $txt = preg_replace( "#(\n){0,}</ol>(\n){0,}#", "\n\[/list\]\\2" , $txt );
 
-			//-----------------------------------------
-			// Opening style attributes
-			//-----------------------------------------
+            //-----------------------------------------
+            // Opening style attributes
+            //-----------------------------------------
 
-			$txt = preg_replace( "#<!--sizeo:(.+?)-->(.+?)<!--/sizeo-->#"               , "[size=\\1]" , $txt );
-			$txt = preg_replace( "#<!--coloro:(.+?)-->(.+?)<!--/coloro-->#"             , "[color=\\1]", $txt );
-			$txt = preg_replace( "#<!--fonto:(.+?)-->(.+?)<!--/fonto-->#"               , "[font=\\1]" , $txt );
-			$txt = preg_replace( "#<!--backgroundo:(.+?)-->(.+?)<!--/backgroundo-->#"   , "[background=\\1]" , $txt );
+            $txt = preg_replace( "#<!--sizeo:(.+?)-->(.+?)<!--/sizeo-->#"               , "[size=\\1]" , $txt );
+            $txt = preg_replace( "#<!--coloro:(.+?)-->(.+?)<!--/coloro-->#"             , "[color=\\1]", $txt );
+            $txt = preg_replace( "#<!--fonto:(.+?)-->(.+?)<!--/fonto-->#"               , "[font=\\1]" , $txt );
+            $txt = preg_replace( "#<!--backgroundo:(.+?)-->(.+?)<!--/backgroundo-->#"   , "[background=\\1]" , $txt );
 
-			//-----------------------------------------
-			// Closing style attributes
-			//-----------------------------------------
+            //-----------------------------------------
+            // Closing style attributes
+            //-----------------------------------------
 
-			$txt = preg_replace( "#<!--sizec-->(.+?)<!--/sizec-->#"            , "[/size]" , $txt );
-			$txt = preg_replace( "#<!--colorc-->(.+?)<!--/colorc-->#"          , "[/color]", $txt );
-			$txt = preg_replace( "#<!--fontc-->(.+?)<!--/fontc-->#"            , "[/font]" , $txt );
-			$txt = preg_replace( "#<!--backgroundc-->(.+?)<!--/backgroundc-->#", "[/background]" , $txt );
+            $txt = preg_replace( "#<!--sizec-->(.+?)<!--/sizec-->#"            , "[/size]" , $txt );
+            $txt = preg_replace( "#<!--colorc-->(.+?)<!--/colorc-->#"          , "[/color]", $txt );
+            $txt = preg_replace( "#<!--fontc-->(.+?)<!--/fontc-->#"            , "[/font]" , $txt );
+            $txt = preg_replace( "#<!--backgroundc-->(.+?)<!--/backgroundc-->#", "[/background]" , $txt );
 
-			//-----------------------------------------
-			// LEGACY SPAN TAGS
-			//-----------------------------------------
+            //-----------------------------------------
+            // LEGACY SPAN TAGS
+            //-----------------------------------------
 
-			while ( preg_match( "#<span style=['\"]font-size:(.+?)pt;line-height:100%['\"]>(.+?)</span>#is", $txt ) )
-			{
-				$txt = preg_replace( "#<span style=['\"]font-size:(.+?)pt;line-height:100%['\"]>(.+?)</span>#is" , "\[size=\\1\]\\2\[/size\]", $txt );
-			}
+            while ( preg_match( "#<span style=['\"]font-size:(.+?)pt;line-height:100%['\"]>(.+?)</span>#is", $txt ) )
+            {
+                $txt = preg_replace( "#<span style=['\"]font-size:(.+?)pt;line-height:100%['\"]>(.+?)</span>#is" , "\[size=\\1\]\\2\[/size\]", $txt );
+            }
 
-			while ( preg_match( "#<span style=['\"]color:(.+?)['\"]>(.+?)</span>#is", $txt ) )
-			{
-				$txt = preg_replace( "#<span style=['\"]color:(.+?)['\"]>(.+?)</span>#is"    , "\[color=\\1\]\\2\[/color\]", $txt );
-			}
+            while ( preg_match( "#<span style=['\"]color:(.+?)['\"]>(.+?)</span>#is", $txt ) )
+            {
+                $txt = preg_replace( "#<span style=['\"]color:(.+?)['\"]>(.+?)</span>#is"    , "\[color=\\1\]\\2\[/color\]", $txt );
+            }
 
-			while ( preg_match( "#<span style=['\"]font-family:(.+?)['\"]>(.+?)</span>#is", $txt ) )
-			{
-				$txt = preg_replace( "#<span style=['\"]font-family:(.+?)['\"]>(.+?)</span>#is", "\[font=\\1\]\\2\[/font\]", $txt );
-			}
+            while ( preg_match( "#<span style=['\"]font-family:(.+?)['\"]>(.+?)</span>#is", $txt ) )
+            {
+                $txt = preg_replace( "#<span style=['\"]font-family:(.+?)['\"]>(.+?)</span>#is", "\[font=\\1\]\\2\[/font\]", $txt );
+            }
 
-			while ( preg_match( "#<span style=['\"]background-color:(.+?)['\"]>(.+?)</span>#is", $txt ) )
-			{
-				$txt = preg_replace( "#<span style=['\"]background-color:(.+?)['\"]>(.+?)</span>#is", "\[background=\\1\]\\2\[/font\]", $txt );
-			}
+            while ( preg_match( "#<span style=['\"]background-color:(.+?)['\"]>(.+?)</span>#is", $txt ) )
+            {
+                $txt = preg_replace( "#<span style=['\"]background-color:(.+?)['\"]>(.+?)</span>#is", "\[background=\\1\]\\2\[/font\]", $txt );
+            }
 
-			# Legacy <strike>
-			$txt = preg_replace( "#<s>(.+?)</s>#is"            , "\[s\]\\1\[/s\]"  , $txt );
+            # Legacy <strike>
+            $txt = preg_replace( "#<s>(.+?)</s>#is"            , "\[s\]\\1\[/s\]"  , $txt );
 
-			//-----------------------------------------
-			// Tidy up the end quote stuff
-			//-----------------------------------------
+            //-----------------------------------------
+            // Tidy up the end quote stuff
+            //-----------------------------------------
 
-			$txt = preg_replace( "#(\[/QUOTE\])\s*?<br />\s*#si", "\\1\n", $txt );
-			$txt = preg_replace( "#(\[/QUOTE\])\s*?<br>\s*#si"  , "\\1\n", $txt );
+            $txt = preg_replace( "#(\[/QUOTE\])\s*?<br />\s*#si", "\\1\n", $txt );
+            $txt = preg_replace( "#(\[/QUOTE\])\s*?<br>\s*#si"  , "\\1\n", $txt );
 
-			$txt = preg_replace( "#<!--EDIT\|.+?\|.+?-->#" , "" , $txt );
-			$txt = str_replace( "</li>", "", $txt );
+            $txt = preg_replace( "#<!--EDIT\|.+?\|.+?-->#" , "" , $txt );
+            $txt = str_replace( "</li>", "", $txt );
 
-			$txt = str_replace( "&#153;", "(tm)", $txt );
-		}
+            $txt = str_replace( "&#153;", "(tm)", $txt );
+        }
 
-		//-----------------------------------------
-		// Parse html
-		//-----------------------------------------
+        //-----------------------------------------
+        // Parse html
+        //-----------------------------------------
 
-			$txt = str_replace( "&#39;", "'", $txt);
+            $txt = str_replace( "&#39;", "'", $txt);
 
-		return trim(stripslashes($txt));
-	}
+        return trim(stripslashes($txt));
+    }
 
 
     $sel_db = Get_Request('database', 2);
@@ -263,7 +263,8 @@ if ($action == 'convert')
             $uquery = 'SELECT * FROM '.$prefix.'members ORDER BY id';
             $result = $QF_DBase->sql_dbquery($sel_db, $uquery);
             if ($result) {
-                while ($user = $QF_DBase->sql_fetchrow($result)) {                    $IPB_user = Array(
+                while ($user = $QF_DBase->sql_fetchrow($result)) {
+                    $IPB_user = Array(
                         'nick'     => substr($user['name'], 0, 16),
                         'email'    => substr($user['email'], 0, 36),
                         'regtime'  => intval($user['joined']),
@@ -372,7 +373,8 @@ if ($action == 'convert')
                     $my_group = $my_groups[strtolower($grp_name)];
                     if ($my_group['id']>0)
                         $IPB_forum['acc_group']=$my_group['id'];
-                    else {                        $QF_DBase->sql_doinsert('{DBKEY}acc_groups', Array( 'name' => $grp_name ) );
+                    else {
+                        $QF_DBase->sql_doinsert('{DBKEY}acc_groups', Array( 'name' => $grp_name ) );
                         $IPB_forum['acc_group'] = intval($QF_DBase->sql_nextid());
                         $g_created++;
                     }
@@ -395,7 +397,8 @@ if ($action == 'convert')
         }
 
         $acc_used = Array();
-        foreach ($IPB_forums as $id=>$IPB_forum) {            $parent = intval($IPB_forums[$IPB_forum['par']]['new_id']);
+        foreach ($IPB_forums as $id=>$IPB_forum) {
+            $parent = intval($IPB_forums[$IPB_forum['par']]['new_id']);
             if ($parent>0)
                 $IPB_forums[$id]['parent'] = $parent;
 
@@ -438,7 +441,8 @@ if ($action == 'convert')
         if ($result) {
             while ($topic = $QF_DBase->sql_fetchrow($result))
             if ($f_pass[$topic['forum_id']])
-            {                $IPB_topic = Array(
+            {
+                $IPB_topic = Array(
                     'name'  => STrim($topic['title'], 255),
                     'descr' => $topic['description'],
                     'time'  => intval($topic['start_date']),
@@ -450,7 +454,8 @@ if ($action == 'convert')
                     );
                 $st_user = $IPB_users[$topic['starter_id']];
 
-                if ($st_user['new_id']) {                    $IPB_topic['author_id'] = intval($st_user['new_id']);
+                if ($st_user['new_id']) {
+                    $IPB_topic['author_id'] = intval($st_user['new_id']);
                     $IPB_topic['author'] = $st_user['nick'];
                 }
                 else {
@@ -539,11 +544,13 @@ if ($action == 'convert')
         }
 
         // let's import uploads
-        if ($append_attaches) {            $result = $QF_DBase->sql_dbquery($sel_db, 'SELECT conf_value FROM '.$prefix.'conf_settings WHERE conf_key = "upload_dir"' );
+        if ($append_attaches) {
+            $result = $QF_DBase->sql_dbquery($sel_db, 'SELECT conf_value FROM '.$prefix.'conf_settings WHERE conf_key = "upload_dir"' );
             if ($result)
                 list($uploads_dir) = $QF_DBase->sql_fetchrow($result, false);
 
-            if (file_exists($uploads_dir)) {                $uploads_dir = preg_replace('#(\/+|\\\+)$#', '', $uploads_dir).'/';
+            if (file_exists($uploads_dir)) {
+                $uploads_dir = preg_replace('#(\/+|\\\+)$#', '', $uploads_dir).'/';
 
                 $my_files = Array();
                 // first load list of fids
@@ -560,7 +567,8 @@ if ($action == 'convert')
                 if ($result) {
                     while ($attach = $QF_DBase->sql_fetchrow($result))
                         if ($IPB_pids[$attach['attach_pid']]>0 && file_exists($uploads_dir.$attach['attach_location']) )
-                        {                            $IPB_file = Array(
+                        {
+                            $IPB_file = Array(
                                 'att_to'   => intval($IPB_pids[$attach['attach_pid']]),
                                 'time'     => intval($attach['attach_date']),
                                 'filename' => STrim($attach['attach_file'], 255),

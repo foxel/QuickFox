@@ -104,25 +104,25 @@ class qf_curuser
             // Any Job Scripts (Previewers and other) Must Set $QF_Session->fix to prevent any changes
             If (!$QF_Session->fix) {
             // Logout
-	            if (Get_Request('logout', 1, 'b')) {
+                if (Get_Request('logout', 1, 'b')) {
                     unset($curuser);
                     setcookie('QF_Login');
                     $QF_Session->Cache_Clear();
                     $session_ids='';
-	                $autokey='';
-    	        }
+                    $autokey='';
+                }
 
                 // Dinamic Changes
-	            if ($curuser['autologin']) {
-    	            $autokey=md5($timer->time.$uid);
-	                setcookie('QF_Login', $autokey, $timer->time + 86400*30, '/');
-	            }
-    	        else {
-	                $autokey='';
-	                setcookie('QF_Login');
-	            }
+                if ($curuser['autologin']) {
+                    $autokey=md5($timer->time.$uid);
+                    setcookie('QF_Login', $autokey, $timer->time + 86400*30, '/');
+                }
+                else {
+                    $autokey='';
+                    setcookie('QF_Login');
+                }
 
-    	        $curuser['lastip']=$QF_Client['ipaddr'];
+                $curuser['lastip']=$QF_Client['ipaddr'];
                 $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'lastseen' => $timer->time, 'lasturl' => $QF_Client['request'], 'sessid' => $session_ids, 'autologin' => $autokey, 'lastip' => $QF_Client['ipaddr']), Array( 'id' => $uid) );
             }
             else
@@ -162,96 +162,96 @@ class qf_curuser
             $QF_Session->Drop('QF_user QF_uid');
             unset ($curuser);
 
-        	if ($QF_Config['enable_spiders']) {
-	            $query='SELECT s.id, s.name, ss.visits FROM {DBKEY}spiders s
-	                    LEFT JOIN {DBKEY}spiders_stats ss ON (ss.id = s.id)
-	                    WHERE INSTR("'.addslashes($QF_Client['uagent']).'", agent_mask)>0
-	                    ORDER BY LENGTH(agent_mask) DESC LIMIT 1';
+            if ($QF_Config['enable_spiders']) {
+                $query='SELECT s.id, s.name, ss.visits FROM {DBKEY}spiders s
+                        LEFT JOIN {DBKEY}spiders_stats ss ON (ss.id = s.id)
+                        WHERE INSTR("'.addslashes($QF_Client['uagent']).'", agent_mask)>0
+                        ORDER BY LENGTH(agent_mask) DESC LIMIT 1';
 
-        	    if ( $result = $QF_DBase->sql_query($query) ) {
-		            $curspider = $QF_DBase->sql_fetchrow($result);
-		            $QF_DBase->sql_freeresult($result);
-    		    }
-	            if ($curspider['name']) {
-	                $ins_data=Array(
-	                    'name'       => $curspider['name'],
-	                    'time'       => $timer->time,
-	                    'query'      => $QF_Client['request'],
-	                    'user_agent' => $QF_Client['uagent'],
-	                    'ip'         => $QF_Client['ipaddr'],
-	                    );
-	                $QF_DBase->sql_doinsert('{DBKEY}spiders_log', $ins_data);
-	                $QF_DBase->sql_dodelete('{DBKEY}spiders_log', 'WHERE time < '.($timer->time - 86400));
+                if ( $result = $QF_DBase->sql_query($query) ) {
+                    $curspider = $QF_DBase->sql_fetchrow($result);
+                    $QF_DBase->sql_freeresult($result);
+                }
+                if ($curspider['name']) {
+                    $ins_data=Array(
+                        'name'       => $curspider['name'],
+                        'time'       => $timer->time,
+                        'query'      => $QF_Client['request'],
+                        'user_agent' => $QF_Client['uagent'],
+                        'ip'         => $QF_Client['ipaddr'],
+                        );
+                    $QF_DBase->sql_doinsert('{DBKEY}spiders_log', $ins_data);
+                    $QF_DBase->sql_dodelete('{DBKEY}spiders_log', 'WHERE time < '.($timer->time - 86400));
 
-    	            $upd_data = Array(
-    	                'id'       => $curspider['id'],
-    	                'lastseen' => $timer->time,
-    	                'visits'   => ++$curspider['visits'],
-    	                );
-            	    $QF_DBase->sql_doinsert('{DBKEY}spiders_stats', $upd_data, true);
+                    $upd_data = Array(
+                        'id'       => $curspider['id'],
+                        'lastseen' => $timer->time,
+                        'visits'   => ++$curspider['visits'],
+                        );
+                    $QF_DBase->sql_doinsert('{DBKEY}spiders_stats', $upd_data, true);
 
-    	            $this->spider = $curspider;
-    	            $this->is_spider = true;
-    	        }
-    	    }
+                    $this->spider = $curspider;
+                    $this->is_spider = true;
+                }
+            }
 
-	        if ($QF_Config['enable_guests'] && !$this->is_spider) {
+            if ($QF_Config['enable_guests'] && !$this->is_spider) {
 
-        		if ( $gid = preg_replace('#[^0-9a-z]#', '', $QF_Session->Get('QF_Guest') ) ) {
-		            $result = $QF_DBase->sql_doselect('{DBKEY}guests', '*', Array('gid' => $gid) );
-        		    if ($result) {
-		                $curguest = $QF_DBase->sql_fetchrow($result);
-		                $QF_DBase->sql_freeresult($result);
-		            }
-        		}
+                if ( $gid = preg_replace('#[^0-9a-z]#', '', $QF_Session->Get('QF_Guest') ) ) {
+                    $result = $QF_DBase->sql_doselect('{DBKEY}guests', '*', Array('gid' => $gid) );
+                    if ($result) {
+                        $curguest = $QF_DBase->sql_fetchrow($result);
+                        $QF_DBase->sql_freeresult($result);
+                    }
+                }
 
-		        if (!$curguest['gid'] && $QF_Session->clicks > 1) {
-		            $curguest=Array (
-		                'gid' => md5(uniqid($timer->time.$QF_Client['ipaddr'])) );
+                if (!$curguest['gid'] && $QF_Session->clicks > 1) {
+                    $curguest=Array (
+                        'gid' => md5(uniqid($timer->time.$QF_Client['ipaddr'])) );
 
-        		    $ins_data = Array(
-        		        'gid'         => $curguest['gid'],
-        		        'sessid'      => $session_ids,
-        		        'lastseen'    => $timer->time,
-        		        'lasturl'     => $QF_Client['request'],
-        		        'lastip'      => $QF_Client['ipaddr'],
-        		        'guser_agent' => $QF_Client['uagent'],
-        		        'gcode'       => $QF_Client['ipaddr'],
-        		        'views'       => 1,
-        		        );
-		            $QF_DBase->sql_doinsert('{DBKEY}guests', $ins_data);
-        		    setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400, '/');
-		        }
-		        elseif(!$QF_Session->fix && !$QF_Session->fix) {
-        		    $curguest['views'] = intval($curguest['views'])+1;
+                    $ins_data = Array(
+                        'gid'         => $curguest['gid'],
+                        'sessid'      => $session_ids,
+                        'lastseen'    => $timer->time,
+                        'lasturl'     => $QF_Client['request'],
+                        'lastip'      => $QF_Client['ipaddr'],
+                        'guser_agent' => $QF_Client['uagent'],
+                        'gcode'       => $QF_Client['ipaddr'],
+                        'views'       => 1,
+                        );
+                    $QF_DBase->sql_doinsert('{DBKEY}guests', $ins_data);
+                    setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400, '/');
+                }
+                elseif(!$QF_Session->fix && !$QF_Session->fix) {
+                    $curguest['views'] = intval($curguest['views'])+1;
 
-        		    $upd_data = Array(
-        		        'sessid'      => $session_ids,
-        		        'lastseen'    => $timer->time,
-        		        'lasturl'     => $QF_Client['request'],
-        		        'lastip'      => $QF_Client['ipaddr'],
-        		        'guser_agent' => $QF_Client['uagent'],
-        		        'gcode'       => $curguest['gid'],
-        		        'views'       => $curguest['views'],
-        		        );
-		            $QF_DBase->sql_doupdate('{DBKEY}guests', $upd_data, Array( 'gid' => $curguest['gid']) );
+                    $upd_data = Array(
+                        'sessid'      => $session_ids,
+                        'lastseen'    => $timer->time,
+                        'lasturl'     => $QF_Client['request'],
+                        'lastip'      => $QF_Client['ipaddr'],
+                        'guser_agent' => $QF_Client['uagent'],
+                        'gcode'       => $curguest['gid'],
+                        'views'       => $curguest['views'],
+                        );
+                    $QF_DBase->sql_doupdate('{DBKEY}guests', $upd_data, Array( 'gid' => $curguest['gid']) );
 
-        		    $QF_DBase->sql_query($query);
-		            setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400*15, '/');
-        		}
+                    $QF_DBase->sql_query($query);
+                    setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400*15, '/');
+                }
 
-		        if ($curguest['gid']) {
-		            $QF_Session->Set('QF_Guest', $curguest['gid']);
-        		    if ($curguest['gtimezone']!='')
-        		        $QF_Config['tz']=floatval($curguest['gtimezone']);
-        		    if ($curguest['gstyle']!=$QF_Config['style'] && $curguest['gstyle'])
-		                $QF_Config['style']=trim($curguest['gstyle']);
-        		    $this->uname=$curguest['gnick'];
-        		    $QF_DBase->sql_dodelete('{DBKEY}guests', 'WHERE lastseen < '.($timer->time - 86400*15).' OR (lastseen < '.($timer->time-86400).' AND views <= 1)');
+                if ($curguest['gid']) {
+                    $QF_Session->Set('QF_Guest', $curguest['gid']);
+                    if ($curguest['gtimezone']!='')
+                        $QF_Config['tz']=floatval($curguest['gtimezone']);
+                    if ($curguest['gstyle']!=$QF_Config['style'] && $curguest['gstyle'])
+                        $QF_Config['style']=trim($curguest['gstyle']);
+                    $this->uname=$curguest['gnick'];
+                    $QF_DBase->sql_dodelete('{DBKEY}guests', 'WHERE lastseen < '.($timer->time - 86400*15).' OR (lastseen < '.($timer->time-86400).' AND views <= 1)');
 
-        		    $this->guest = $curguest;
-		        }
-	        }
+                    $this->guest = $curguest;
+                }
+            }
         }
 
         if ($curuser['admin'])

@@ -17,11 +17,13 @@ function Vis_Gen_Rights($r, $ifzero='')
 }
 
 Function Vis_Err_String($message)
-{    global $Vis;
+{
+    global $Vis;
     return preg_replace('#\{C_message\}#i', $message, $Vis['ERR_STRING']);
 }
 
-Function Vis_Print_Email($mail) {    global $QF_User, $QF_Config, $lang;
+Function Vis_Print_Email($mail) {
+    global $QF_User, $QF_Config, $lang;
 
     if (!empty($mail)) {
         if ( ($QF_User->uid || $QF_Config['force_show_email']) && !$QF_User->is_spider)
@@ -33,7 +35,8 @@ Function Vis_Print_Email($mail) {    global $QF_User, $QF_Config, $lang;
 }
 
 Function Vis_Gen_Avatar($user, $nolink=false)
-{    Global $Vis;
+{
+    Global $Vis;
 
     if ($user['avatar']) {
         $av_data = '<img border="0" src="'.$user['avatar'].'" alt="avatar">';
@@ -43,7 +46,8 @@ Function Vis_Gen_Avatar($user, $nolink=false)
     else
         $av_data = $Vis['NO_AVATAR'];
 
-    return $av_data;}
+    return $av_data;
+}
 
 
 // Draws a simple bordered message with caption
@@ -64,7 +68,8 @@ function Vis_Draw_Table($title, $content, $err=false, $width=500) {
 }
 
 // Draws a simple bordered message
-function Vis_Draw_Border($content, $width=500) {    if (is_numeric($width))
+function Vis_Draw_Border($content, $width=500) {
+    if (is_numeric($width))
         $width.='px';
     return '
     <div style="width: '.$width.'; margin: auto">
@@ -165,7 +170,8 @@ function LoadVisuals($part='') {
     Global $lang, $QF_Config, $QF_Session;
     Global $Vis, $VIF, $VParts;
     Static $c_loaded = false;
-    if (!$c_loaded) {//        $cache = $QF_Session->Cache_Get('visuals');
+    if (!$c_loaded) {
+//        $cache = $QF_Session->Cache_Get('visuals');
 //        if (is_array($cache))
 //            list ($Vis, $VIF, $VParts) = $cache;
         $c_loaded = true;
@@ -233,20 +239,20 @@ function Visual($name, $content=Array()) {
         $templ=preg_replace('#\{V_(\w+)\}#se', 'Visual(\'$1\', \$content)', $templ);
 
     if ($UseIF == 2)
-    	$templ=preg_replace('#\{IF_([\w_]+)\}(.*?)\{ENDIF\}#se', 'VisIfExp("$2",\$content["$1"])', $templ);
+        $templ=preg_replace('#\{IF_([\w_]+)\}(.*?)\{ENDIF\}#se', 'VisIfExp("$2",\$content["$1"])', $templ);
     elseif ($UseIF == 1) {
-    	foreach($content as $pname => $ptext)
-       	    if (strlen($ptext)>0) {
-               	$templ=preg_replace('#\{IF_'.$pname.'\}(.*?)\{ENDIF\}#si', '$1', $templ);
+        foreach($content as $pname => $ptext)
+            if (strlen($ptext)>0) {
+                $templ=preg_replace('#\{IF_'.$pname.'\}(.*?)\{ENDIF\}#si', '$1', $templ);
             }
-    	$templ=preg_replace('#\{IF_([\w_]+)\}(.*?)\{ENDIF\}#s', '', $templ);
+        $templ=preg_replace('#\{IF_([\w_]+)\}(.*?)\{ENDIF\}#s', '', $templ);
     }
 
     foreach($content as $pname => $ptext)
        if (strlen($ptext)>0)
        {
-    	    $templ=preg_replace('#\{C_'.$pname.'\}#si', str_replace('$', '\$', $ptext), $templ);
-    	    $templ=preg_replace('#\{\!C_'.$pname.'\}#si', str_replace('$', '\$', smartHTMLSchars($ptext)), $templ);
+            $templ=preg_replace('#\{C_'.$pname.'\}#si', str_replace('$', '\$', $ptext), $templ);
+            $templ=preg_replace('#\{\!C_'.$pname.'\}#si', str_replace('$', '\$', smartHTMLSchars($ptext)), $templ);
        }
 
     $templ=preg_replace('#\{\!?C_([\w_]+)\}#s', '', $templ);
@@ -256,18 +262,18 @@ function Visual($name, $content=Array()) {
 }
 
 function VisIfExp($exp, $param) {
-	$exp=str_replace("\'","'",$exp);
-	$pos=strpos($exp,'{ELSE}');
+    $exp=str_replace("\'","'",$exp);
+    $pos=strpos($exp,'{ELSE}');
 
-	if (strlen($param)>0) {
-		if ($pos === false)
-			$pos = strlen($exp);
-		return substr($exp,0,$pos);
-	}
-	elseif ($pos !== false)
-		return substr($exp,$pos+6);
-	else
-		return '';
+    if (strlen($param)>0) {
+        if ($pos === false)
+            $pos = strlen($exp);
+        return substr($exp,0,$pos);
+    }
+    elseif ($pos !== false)
+        return substr($exp,$pos+6);
+    else
+        return '';
 }
 
 //

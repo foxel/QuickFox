@@ -333,10 +333,10 @@ if (is_array($topic))
                         $post['labels']='';
                         $post['posted_pos']=$t_seek + $counter;
 
-		    	        if ($counter == 1)
-        		    	    $post['labels'].='<a name="first"></a>';
-		            	elseif ($counter == $t_lastpost)
-		    	            $post['labels'].='<a name="last"></a>';
+                        if ($counter == 1)
+                            $post['labels'].='<a name="first"></a>';
+                        elseif ($counter == $t_lastpost)
+                            $post['labels'].='<a name="last"></a>';
 
                         if ( $counter == $t_unr_post )
                             $post['labels'].='<a name="unread"></a>';
@@ -413,166 +413,166 @@ if (is_array($topic))
                     if ($post['deleted'] && !$showthisone && !$t_showdels) {
                         $tmpl=Array(
                             'showlink' => $Base_Link.'&amp;postshow='.$post['id'].'#'.$post['id'],
-	                        'labels'   => '<a name="'.$post['id'].'"></a>'.$post['labels'],
-	                        'flags'    => ($post['id']>$t_lastread && $QF_User->uid) ? $Vis['NEW_FLAG'].' ' :'' ,
-        	                'time'     => create_date("", $post['time']) ,
-	                        'user'     => ($puser) ? '<a href="index.php?st=info&amp;infouser='.$puser['id'].'">'.$puser['nick'].'</a>' : $post['author'] ,
+                            'labels'   => '<a name="'.$post['id'].'"></a>'.$post['labels'],
+                            'flags'    => ($post['id']>$t_lastread && $QF_User->uid) ? $Vis['NEW_FLAG'].' ' :'' ,
+                            'time'     => create_date("", $post['time']) ,
+                            'user'     => ($puser) ? '<a href="index.php?st=info&amp;infouser='.$puser['id'].'">'.$puser['nick'].'</a>' : $post['author'] ,
                             );
 
                         if ($post['ctime']>$post['time'] && !empty($post['changer'])) {
-	                        $tmpl['postedited']=sprintf($lang['FOR_POST_DELETED'],$post['changer']).' '.create_date('', $post['ctime']);
-        	            }
+                            $tmpl['postedited']=sprintf($lang['FOR_POST_DELETED'],$post['changer']).' '.create_date('', $post['ctime']);
+                        }
 
-	                    $curpost_data =  Visual('DEL_POST_MINIINFO', $tmpl);
+                        $curpost_data =  Visual('DEL_POST_MINIINFO', $tmpl);
                     }
                     else {
 
-        	            $Can_Edit_Post = ($t_curaccess>=3) || ($QF_User->uid == $post['author_id'] && $QF_User->uid);
+                        $Can_Edit_Post = ($t_curaccess>=3) || ($QF_User->uid == $post['author_id'] && $QF_User->uid);
 
-	                    if ($t_editpost == $post['id'])
-	                        $Open_Edit_Post = $Can_Edit_Post;
-        	            else
-	                        $Open_Edit_Post = False;
+                        if ($t_editpost == $post['id'])
+                            $Open_Edit_Post = $Can_Edit_Post;
+                        else
+                            $Open_Edit_Post = False;
 
-	                    if ($post['id']>$t_MAXID)
-        	                $t_MAXID = $post['id'];
+                        if ($post['id']>$t_MAXID)
+                            $t_MAXID = $post['id'];
 
-        	            $tmpl=Array(
-	                        'post_link' => ($post['posted_pos']) ? '<a href="'.$topic_inc_url.'&amp;branch='.$topic_id.'&amp;postshow='.$post['id'].'#'.$post['id'].'">#'.$post['posted_pos'].'</a>' : '',
-	                        'labels'    => '<a name="'.$post['id'].'"></a>'.$post['labels'],
-        		            'avatar'    => Vis_Gen_Avatar($puser),
-	                        'u_descr'   => ($puser) ?  $puser['descr'] : $lang['GUEST'],
-	                        'u_rights'  => Vis_Gen_Rights($puser['rights'],' '),
-        	                'u_status'  => ($puser['modlevel']>=$topic['postrights'] && $puser['modlevel']>0 && $puser['active']) ? $lang['MODERATOR'] : '' ,
-	                        'flags'     => ($post['id']>$t_lastread && $QF_User->uid) ? $Vis['NEW_FLAG'].' ' :'' ,
-	                        'time'      => create_date('', $post['time']) ,
-        	                'user'      => ($puser) ? '<a href="index.php?st=info&amp;infouser='.$puser['id'].'">'.$puser['nick'].'</a>' : $post['author']
-	                        );
+                        $tmpl=Array(
+                            'post_link' => ($post['posted_pos']) ? '<a href="'.$topic_inc_url.'&amp;branch='.$topic_id.'&amp;postshow='.$post['id'].'#'.$post['id'].'">#'.$post['posted_pos'].'</a>' : '',
+                            'labels'    => '<a name="'.$post['id'].'"></a>'.$post['labels'],
+                            'avatar'    => Vis_Gen_Avatar($puser),
+                            'u_descr'   => ($puser) ?  $puser['descr'] : $lang['GUEST'],
+                            'u_rights'  => Vis_Gen_Rights($puser['rights'],' '),
+                            'u_status'  => ($puser['modlevel']>=$topic['postrights'] && $puser['modlevel']>0 && $puser['active']) ? $lang['MODERATOR'] : '' ,
+                            'flags'     => ($post['id']>$t_lastread && $QF_User->uid) ? $Vis['NEW_FLAG'].' ' :'' ,
+                            'time'      => create_date('', $post['time']) ,
+                            'user'      => ($puser) ? '<a href="index.php?st=info&amp;infouser='.$puser['id'].'">'.$puser['nick'].'</a>' : $post['author']
+                            );
 
 
-        	            if ($post['deleted']) $tmpl['class']='deleted';
-	                    //If ($puser['admin']) $tmpl['u_status']=$lang['ADMINISTRATOR'];
+                        if ($post['deleted']) $tmpl['class']='deleted';
+                        //If ($puser['admin']) $tmpl['u_status']=$lang['ADMINISTRATOR'];
 
-        	            if ($Open_Edit_Post) {
-	                        $tmpl['formstart']='<form name="editmsg" action="index.php" method="post" enctype="multipart/form-data">';
-	                        $tmpl['formend']='</form>';
-        	                $form=Array(
-	                            'st'      => $QF_Inc,
-	                            'page'    => $t_page,
-	                            'id'      => $post['id'],
-        	                    'tid'     => $topic['id'],
-	                            'user'    => $QF_User->uname,
-	                            'text'    => $post['text'],
+                        if ($Open_Edit_Post) {
+                            $tmpl['formstart']='<form name="editmsg" action="index.php" method="post" enctype="multipart/form-data">';
+                            $tmpl['formend']='</form>';
+                            $form=Array(
+                                'st'      => $QF_Inc,
+                                'page'    => $t_page,
+                                'id'      => $post['id'],
+                                'tid'     => $topic['id'],
+                                'user'    => $QF_User->uname,
+                                'text'    => $post['text'],
                                 'formname' => 'editmsg',
-	                            );
+                                );
 
-        	                if ($post['deleted'])
-	                            $form['delmessage']='checked';
-	                        if ($t_curaccess>=3) {
+                            if ($post['deleted'])
+                                $form['delmessage']='checked';
+                            if ($t_curaccess>=3) {
                                 $form['canmerge']='true';
                                 if ($QF_User->admin || !$post['ctime'] || $post['changer'] == $QF_User->uname) {
                                     $form['canhide']='true';
                                 }
                             }
 
-        	                $form['unattach']='';
-	                        if (is_array($atts[$post['id']]))
-	                            foreach ($atts[$post['id']] as $att)
-	                                {
-                	                    $Can_Edit_Att = $QF_User->admin || ($QF_User->cuser['modlevel']>=$att['rights'] && $t_curaccess>=3) || ($QF_User->uid==$att['user_id'] && $QF_User->uid);
+                            $form['unattach']='';
+                            if (is_array($atts[$post['id']]))
+                                foreach ($atts[$post['id']] as $att)
+                                    {
+                                        $Can_Edit_Att = $QF_User->admin || ($QF_User->cuser['modlevel']>=$att['rights'] && $t_curaccess>=3) || ($QF_User->uid==$att['user_id'] && $QF_User->uid);
 
-        	                            $atmpl=Array(
-	                                        'fid'  => $att['id'],
-	                                        'url'  => 'index.php?st=getfile&amp;file='.$att['id'],
-	                                        'src'  => 'index.php?sr=thumb&amp;fid='.$att['id'],
-	                                        'capt' => $att['caption'],
-        	                                'size' => round($att['size']/1024,2).' Kb.',
-	                                        );
+                                        $atmpl=Array(
+                                            'fid'  => $att['id'],
+                                            'url'  => 'index.php?st=getfile&amp;file='.$att['id'],
+                                            'src'  => 'index.php?sr=thumb&amp;fid='.$att['id'],
+                                            'capt' => $att['caption'],
+                                            'size' => round($att['size']/1024,2).' Kb.',
+                                            );
 
 
-        	                            if ($Can_Edit_Att)
-	                                        $form['unattach'].=Visual('POST_EDIT_UNATTACH', $atmpl);
-	                                }
+                                        if ($Can_Edit_Att)
+                                            $form['unattach'].=Visual('POST_EDIT_UNATTACH', $atmpl);
+                                    }
 
-        	                $content='';
-	                        if ($QF_User->wlevel >= $QF_Config['post_files_rights'])
-	                        {
-	                            for( $fdx=1; $fdx<=$forconfig['post_upl_files']; $fdx++)
-        	                        $content.=Visual('FILE_ROW', Array( 'id' => $fdx ));
+                            $content='';
+                            if ($QF_User->wlevel >= $QF_Config['post_files_rights'])
+                            {
+                                for( $fdx=1; $fdx<=$forconfig['post_upl_files']; $fdx++)
+                                    $content.=Visual('FILE_ROW', Array( 'id' => $fdx ));
 
-	                            if ($forconfig['post_upl_files']>0)
-	                                $form['files']=Vis_Draw_panel('<table class="border fullwidth noborder">'.$content.'</table>', $lang['FOR_POST_FILES'],'99%',True);
-        	                }
+                                if ($forconfig['post_upl_files']>0)
+                                    $form['files']=Vis_Draw_panel('<table class="border fullwidth noborder">'.$content.'</table>', $lang['FOR_POST_FILES'],'99%',True);
+                            }
 
 
                             if (($t_history==$post['id']) && $Can_Edit_Post)
                                 $form['history']=Vis_Draw_Panel('<div class="genmed autoscroll">'.For_Parse_History($t_archive['content'],True).'</div>',$lang['FOR_POST_HISTORY'],'99%',true,true);
 
-        	                $tmpl['formbody']= Visual('POST_EDIT_FORM', $form);
+                            $tmpl['formbody']= Visual('POST_EDIT_FORM', $form);
 
-	                        $MB['editorbutts']=Visual('FOR_EDIT_BUTTS',
-	                            Array (
-        	                        'formname' => 'editmsg',
-	                                'cancel_url' => $Base_Link.'#'.$post['id']) );
+                            $MB['editorbutts']=Visual('FOR_EDIT_BUTTS',
+                                Array (
+                                    'formname' => 'editmsg',
+                                    'cancel_url' => $Base_Link.'#'.$post['id']) );
 
-        	            }
-	                    else
-	                    {
-        	                if ($dont_cache_posts)
-	                            $parsed_post = $QF_Parser->parse_mess($post['text']);
+                        }
+                        else
+                        {
+                            if ($dont_cache_posts)
+                                $parsed_post = $QF_Parser->parse_mess($post['text']);
                             else {
-	                            $parsed_post = $post['parsed_post'];
+                                $parsed_post = $post['parsed_post'];
 
-    	                        if (empty($parsed_post)) {
-	                                $parsed_post = $QF_Parser->parse_mess($post['text'], 1);
-        	                        $QF_DBase->sql_doinsert('{DBKEY}posts_cache', Array( 'ch_id' => $post['id'], 'ch_text' => $parsed_post, 'ch_stored' => $timer->time), true );
-	                            }
+                                if (empty($parsed_post)) {
+                                    $parsed_post = $QF_Parser->parse_mess($post['text'], 1);
+                                    $QF_DBase->sql_doinsert('{DBKEY}posts_cache', Array( 'ch_id' => $post['id'], 'ch_text' => $parsed_post, 'ch_stored' => $timer->time), true );
+                                }
 
-	                            $parsed_post = $QF_Parser->parse_mess($parsed_post, 2);
-        	                }
+                                $parsed_post = $QF_Parser->parse_mess($parsed_post, 2);
+                            }
 
-	                        $tmpl['postbody'] = $parsed_post.'<br />&nbsp;';
+                            $tmpl['postbody'] = $parsed_post.'<br />&nbsp;';
 
                             if (($t_history==$post['id']) && $Can_Edit_Post)
-        	                    $tmpl['postbody'].=Vis_Draw_Panel('<span class="genmed">'.For_Parse_History($t_archive['content']).'</span>',$lang['FOR_POST_HISTORY'],'99%',true,true);
+                                $tmpl['postbody'].=Vis_Draw_Panel('<span class="genmed">'.For_Parse_History($t_archive['content']).'</span>',$lang['FOR_POST_HISTORY'],'99%',true,true);
 
-	                        if ($post['ctime']>$post['time'] && !empty($post['changer'])) {
-	                            $tmpl['postedited']=(!$post['deleted']) ? sprintf($lang['FOR_POST_EDITED'],$post['changer']).' '.create_date('', $post['ctime']) :
-	                                '<span class="red">'.sprintf($lang['FOR_POST_DELETED'],$post['changer']).' '.create_date('', $post['ctime']).'</span>';
-        	                }
+                            if ($post['ctime']>$post['time'] && !empty($post['changer'])) {
+                                $tmpl['postedited']=(!$post['deleted']) ? sprintf($lang['FOR_POST_EDITED'],$post['changer']).' '.create_date('', $post['ctime']) :
+                                    '<span class="red">'.sprintf($lang['FOR_POST_DELETED'],$post['changer']).' '.create_date('', $post['ctime']).'</span>';
+                            }
 
-        	                $tmpl['attaches']='';
-	                        if (is_array($atts[$post['id']]))
-	                            foreach ($atts[$post['id']] as $att)
-        	                        {
-        	                            $capt = $att['caption'];
-        	                            if (strlen($capt)>30)
+                            $tmpl['attaches']='';
+                            if (is_array($atts[$post['id']]))
+                                foreach ($atts[$post['id']] as $att)
+                                    {
+                                        $capt = $att['caption'];
+                                        if (strlen($capt)>30)
                                             $capt = substr($capt, 0, 18).'...'.substr($capt, -7);
 
-	                                    $atmpl=Array(
-	                                        'url'  => 'index.php?st=getfile&amp;file='.$att['id'],
-	                                        'src'  => 'index.php?sr=thumb&amp;fid='.$att['id'],
-	                                        'capt' => $capt,
-        	                                'size' => round($att['size']/1024,2).' Kb.',
-	                                        'dloads' => intVal($att['dloads']) );
-	                                    $tmpl['attaches'].=Visual('POST_ATTACH', $atmpl);
-        	                        }
-	                    }
+                                        $atmpl=Array(
+                                            'url'  => 'index.php?st=getfile&amp;file='.$att['id'],
+                                            'src'  => 'index.php?sr=thumb&amp;fid='.$att['id'],
+                                            'capt' => $capt,
+                                            'size' => round($att['size']/1024,2).' Kb.',
+                                            'dloads' => intVal($att['dloads']) );
+                                        $tmpl['attaches'].=Visual('POST_ATTACH', $atmpl);
+                                    }
+                        }
 
-        	            if ($Can_Edit_Post) {
-	                        $MB['content']='<a href="'.$Base_Link.'&amp;editpost='.$post['id'].'#'.$post['id'].'"> '.$Vis['BTN_EDIT'].' </a>';
-	                        if ($t_curaccess>=3)
-    	                        $MB['content'].='  <a href="'.$Base_Link.'&amp;postdel='.$post['id'].'#'.$post['id'].'"> '.$Vis['BTN_DROP'].' </a>';
-	                        $tmpl['modblock']=Visual('POST_MOD_BLOCK', $MB);
-	                    }
+                        if ($Can_Edit_Post) {
+                            $MB['content']='<a href="'.$Base_Link.'&amp;editpost='.$post['id'].'#'.$post['id'].'"> '.$Vis['BTN_EDIT'].' </a>';
+                            if ($t_curaccess>=3)
+                                $MB['content'].='  <a href="'.$Base_Link.'&amp;postdel='.$post['id'].'#'.$post['id'].'"> '.$Vis['BTN_DROP'].' </a>';
+                            $tmpl['modblock']=Visual('POST_MOD_BLOCK', $MB);
+                        }
 
-        	            $curpost_data=  Visual('POST_BODY', $tmpl);
-	                }
+                        $curpost_data=  Visual('POST_BODY', $tmpl);
+                    }
 
-        	        if ($t_reverssorting)
-	                    $BranchPrint['content']=$curpost_data.$BranchPrint['content'];
+                    if ($t_reverssorting)
+                        $BranchPrint['content']=$curpost_data.$BranchPrint['content'];
                     else
-	                    $BranchPrint['content'].=$curpost_data;
+                        $BranchPrint['content'].=$curpost_data;
                 }
 
             }

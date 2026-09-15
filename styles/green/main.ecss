@@ -31,8 +31,8 @@
 {/VARS}
 
 body, html {
-	background-color: {page_bg};
-	color : {text};
+    background-color: {page_bg};
+    color : {text};
 }
 
 html, body, td, th, div, font { font-family: {def_font}; line-height: 1.2em; font-size-adjust: 0.55; color: {text}; }
@@ -40,17 +40,17 @@ html, body { font-size: {def_font_size}; }
 td, th, div, font { font-size: inherit; }
 
 A:link,A:active,A:visited  {
-	color: {link1};
-	text-decoration: none;
-	font-weight: bold;
+    color: {link1};
+    text-decoration: none;
+    font-weight: bold;
 }
 A:hover {
-	color: {link1h};
-	text-decoration: underline;
-	font-weight: bold;
+    color: {link1h};
+    text-decoration: underline;
+    font-weight: bold;
 }
 A.ml:hover {
-	color: {linkmh};
+    color: {linkmh};
 }
 
 A.pglink {
@@ -59,27 +59,27 @@ A.pglink {
 
 /* Global Styles */
 TABLE {
-	border-color: {base_brd};
-	font-size   : {def_font_size};
+    border-color: {base_brd};
+    font-size   : {def_font_size};
 }
 
 DIV {
-	border-color: {base_brd};
+    border-color: {base_brd};
 }
 
 TD, TH {
-	border-color: {base_brd};
-	border-style: solid;
-	border-width: 0;
-	padding: 3px 2px 3px 2px;
+    border-color: {base_brd};
+    border-style: solid;
+    border-width: 0;
+    padding: 3px 2px 3px 2px;
 }
 
 HR {
-	border-style: solid;
-	border-color: {base_brd};
-	border-width: 1px 0 0 0;
-	margin: 7px;
-	width: 90%;
+    border-style: solid;
+    border-color: {base_brd};
+    border-width: 1px 0 0 0;
+    margin: 7px;
+    width: 90%;
 }
 
 H1, H2, H3 {
@@ -87,44 +87,44 @@ H1, H2, H3 {
 }
 
 FORM{
-	display: inline;
-	margin: 0;
-	padding: 0;
+    display: inline;
+    margin: 0;
+    padding: 0;
 }
 
 IMG{
-	border: 0;
-	vertical-align: middle;
+    border: 0;
+    vertical-align: middle;
 }
 
 
 /* Global Page */
 
 TABLE.qf_mainframe {
-	border-style: solid;
-	border-width: 6px 2px 4px 2px;
-	width: 100%;
-	-moz-border-radius: 15px;
-	background-color: {base_color};
+    border-style: solid;
+    border-width: 6px 2px 4px 2px;
+    width: 100%;
+    -moz-border-radius: 15px;
+    background-color: {base_color};
 }
 
 TD.qf_pageframe {
-	vertical-align: top;
-	padding: 2px 0 30px 0;
+    vertical-align: top;
+    padding: 2px 0 30px 0;
 }
 
 TD.qf_panels {
-	border-left: {base_brd} solid 2px;
-	width: 200px !important;
-	vertical-align: top;
-	padding: 2px;
-	margin: 0px;
+    border-left: {base_brd} solid 2px;
+    width: 200px !important;
+    vertical-align: top;
+    padding: 2px;
+    margin: 0px;
 }
 
 TD.qf_bott_adv {
-	border-top: {base_brd} solid 1px;
+    border-top: {base_brd} solid 1px;
     text-align: center;
-	background-color: {base3};
+    background-color: {base3};
 }
 
 DIV.qf_advblock {
@@ -133,7 +133,7 @@ DIV.qf_advblock {
 
 TABLE.qf_footstat {
     border: none;
-	width: 100%;
+    width: 100%;
 }
 TD#qf_genstats {
     vertical-align: top;
@@ -153,35 +153,35 @@ DIV.qf_centermess {
 /* Upper menu */
 
 TABLE.qf_menutable {
-	border-collapse: collapse;
-	width: 100%;
-	margin: 1px 1px 20px 1px;
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1px 1px 20px 1px;
 }
 TD.qf_menubutt {
-	background: {base2} url({CSS_IMGS}/menubtnm.gif);
-	height: 30px;
-	text-align: center;
-	padding: 5px 10px 5px 10px;
+    background: {base2} url({CSS_IMGS}/menubtnm.gif);
+    height: 30px;
+    text-align: center;
+    padding: 5px 10px 5px 10px;
 }
 TD.qf_menubutt A:hover {
-	color: {linkmh};
+    color: {linkmh};
 }
 TD.qf_menubutt:hover {
-	background: {base_color} url({CSS_IMGS}/menubtnma.gif);
+    background: {base_color} url({CSS_IMGS}/menubtnma.gif);
 }
 
 TD.qf_menuleft, TD.qf_menuright {
-	width: 15px;
-	height: 30px;
-	margin: 0 !important;
-	padding: 0 !important;
+    width: 15px;
+    height: 30px;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 TD.qf_menuleft {
-	background: {base2} url({CSS_IMGS}/menubtnl.gif);
+    background: {base2} url({CSS_IMGS}/menubtnl.gif);
 }
 TD.qf_menuright {
-	background: {base2} url({CSS_IMGS}/menubtnr.gif);
+    background: {base2} url({CSS_IMGS}/menubtnr.gif);
 }
 
 /* qfeditor style */
@@ -196,7 +196,7 @@ TD.qf_mycabmenu {
     width: 200px;
 }
 DIV.qf_mycabmdata {
-	background: {base4} url({CSS_IMGS}/mycabmcapt.gif);
+    background: {base4} url({CSS_IMGS}/mycabmcapt.gif);
     background-repeat: repeat-x;
     vertical-align: top;
     padding: 10px 7px 20px 7px;
@@ -216,40 +216,40 @@ TD.qf_mycabpage {
 /*Flipers caption */
 DIV.qf_flpcapt {
     border-style: solid;
-	border-width: 2px 1px 2px 1px;
-	-moz-border-radius: 7px;
-	margin: 7px 25px 7px 25px;
-	white-space: nowrap;
-	background-color: {controls};
-	cursor: default;
-	padding: 3px 10px 3px 10px;
-	width: 170px;
-	text-align: center;
+    border-width: 2px 1px 2px 1px;
+    -moz-border-radius: 7px;
+    margin: 7px 25px 7px 25px;
+    white-space: nowrap;
+    background-color: {controls};
+    cursor: default;
+    padding: 3px 10px 3px 10px;
+    width: 170px;
+    text-align: center;
 }
 
 /* Panels Styling */
 DIV.qf_panel {
-	margin: 5px 0 10px 0;
-	padding: 0;
+    margin: 5px 0 10px 0;
+    padding: 0;
 }
 DIV.qf_pancapt {
-	background: {base2} url({CSS_IMGS}/mid.gif);
-	border-width: 0;
-	margin: 0;
-	padding: 0;
-	text-align: center;
+    background: {base2} url({CSS_IMGS}/mid.gif);
+    border-width: 0;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
 DIV.qf_pancont {
-	border-style: solid;
-	border-color: {base2};
-	border-width: 0 1px 2px 1px;
-	-moz-border-radius: 0 0 10px 10px;
+    border-style: solid;
+    border-color: {base2};
+    border-width: 0 1px 2px 1px;
+    -moz-border-radius: 0 0 10px 10px;
     padding: 0 !important;
     margin: 0 !important;
-	background-color: {base1};
+    background-color: {base1};
 }
 DIV.qf_pancont TABLE {
-	margin: 0 !important;
+    margin: 0 !important;
 }
 
 /* forum specials */
@@ -263,56 +263,56 @@ TABLE.qf_pages {
     border-collapse: collapse;
 }
 TD.qf_pages_tl, TD.qf_pages_tr, TD.qf_pages_bl, TD.qf_pages_br {
-	margin: 0 !important;
-	padding: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 TD.qf_pages_tl {
-	background: url({CSS_IMGS}/in.gif);
-	width: 50px;
+    background: url({CSS_IMGS}/in.gif);
+    width: 50px;
 }
 TD.qf_pages_tr {
-	background: url({CSS_IMGS}/out.gif);
-	width: 50px;
+    background: url({CSS_IMGS}/out.gif);
+    width: 50px;
 }
 TD.qf_pages_t {
-	background: {base2} url({CSS_IMGS}/mid.gif);
-	white-space: nowrap;
-	margin: 0 !important;
+    background: {base2} url({CSS_IMGS}/mid.gif);
+    white-space: nowrap;
+    margin: 0 !important;
 }
 TD.qf_pages_bl {
-	background: url({CSS_IMGS}/in1.gif);
-	width: 40px;
+    background: url({CSS_IMGS}/in1.gif);
+    width: 40px;
 }
 TD.qf_pages_br {
-	background: url({CSS_IMGS}/out1.gif);
-	width: 40px;
+    background: url({CSS_IMGS}/out1.gif);
+    width: 40px;
 }
 TD.qf_pages_b {
-	background: {base2};
-	white-space: nowrap;
-	margin: 0 !important;
+    background: {base2};
+    white-space: nowrap;
+    margin: 0 !important;
 }
 
 TABLE.quote {
     margin: 10px 25px 7px 25px;
 }
 TD.quote_body {
-	font-size: 14px;
-	color: {text};
-	line-height: 125%;
-	background-color: {controls};
-	border-color: {brdr1};
-	border-style: solid;
-	border-width: 1px;
-	padding: 3px 5px 10px 5px;
+    font-size: 14px;
+    color: {text};
+    line-height: 125%;
+    background-color: {controls};
+    border-color: {brdr1};
+    border-style: solid;
+    border-width: 1px;
+    padding: 3px 5px 10px 5px;
 }
 
 
 /* Table Caption line style */
 TR.tblline, TD.tblline {
-	background-color: {base2};
-	white-space: nowrap;
-	margin: 0 !important;
+    background-color: {base2};
+    white-space: nowrap;
+    margin: 0 !important;
 }
 
 TD.tblliner, TD.tbllinel {
@@ -320,20 +320,20 @@ TD.tblliner, TD.tbllinel {
     margin: 0 !important;
 }
 TD.tblliner {
-	background: url({CSS_IMGS}/out1.gif);
-	width: 40px;
+    background: url({CSS_IMGS}/out1.gif);
+    width: 40px;
 }
 
 TD.tbllinel {
-	background: url({CSS_IMGS}/in1.gif);
-	width: 40px;
+    background: url({CSS_IMGS}/in1.gif);
+    width: 40px;
 }
 
 /* Table caption style + Modbutts block style */
 TD.tblcapt, TD.modbutts {
-	background: {base2} url({CSS_IMGS}/mid.gif);
-	white-space: nowrap;
-	margin: 0 !important;
+    background: {base2} url({CSS_IMGS}/mid.gif);
+    white-space: nowrap;
+    margin: 0 !important;
 }
 
 TD.tblcaptr, TD.tblcaptl, TD.modbuttsr, TD.modbuttsl {
@@ -342,25 +342,25 @@ TD.tblcaptr, TD.tblcaptl, TD.modbuttsr, TD.modbuttsl {
 }
 
 TD.tblcapt {
-	padding: 1px;
+    padding: 1px;
 }
 TD.modbutts {
-	padding: 5px;
-	width: 70px;
+    padding: 5px;
+    width: 70px;
 }
 
 TD.tblline A:hover, TD.tblcapt A:hover, TD.modbutts A:hover {
-	color: {linkmh};
+    color: {linkmh};
 }
 
 TD.tblcaptr, TD.modbuttsr {
-	background: url({CSS_IMGS}/out.gif);
-	width: 50px;
+    background: url({CSS_IMGS}/out.gif);
+    width: 50px;
 }
 
 TD.tblcaptl, TD.modbuttsl {
-	background: url({CSS_IMGS}/in.gif);
-	width: 50px;
+    background: url({CSS_IMGS}/in.gif);
+    width: 50px;
 }
 
 
@@ -368,11 +368,11 @@ TD.tblcaptl, TD.modbuttsl {
 
 /* posts styling */
 TABLE.post  {
-	border-style: solid;
-	border-width: 2px 1px;
-	-moz-border-radius: 5px;
-	margin: 5px 0px 5px 0px;
-	background-color: {base1};
+    border-style: solid;
+    border-width: 2px 1px;
+    -moz-border-radius: 5px;
+    margin: 5px 0px 5px 0px;
+    background-color: {base1};
 }
 
 DIV.post_body, DIV.post_atts {
@@ -387,65 +387,65 @@ DIV.post_atts {
 }
 
 TABLE.qf_grid {
-	border-style: solid;
-	border-width: 1px 1px 2px 1px;
-	margin: 5px 0px 5px 0px;
-	-moz-border-radius: 5px;
-	background-color: {base1};
+    border-style: solid;
+    border-width: 1px 1px 2px 1px;
+    margin: 5px 0px 5px 0px;
+    -moz-border-radius: 5px;
+    background-color: {base1};
     border-collapse: collapse;
 }
 
 TABLE.qf_grid TD, TH{
-	border-style: solid;
-	border-width: 1px;
+    border-style: solid;
+    border-width: 1px;
 }
 
 TD.qf_lborder {
-	border-left: {base_brd} solid 1px;
-	background-color: {base3};
+    border-left: {base_brd} solid 1px;
+    background-color: {base3};
 }
 TD.qf_rborder {
-	border-right: {base_brd} solid 1px;
-	background-color: {base3};
+    border-right: {base_brd} solid 1px;
+    background-color: {base3};
 }
 
 TABLE.border, DIV.border {
-	border-style: solid;
-	border-width: 2px 1px;
-	margin: 5px 0px 5px 0px;
-	-moz-border-radius: 5px;
-	background-color: {base1};
+    border-style: solid;
+    border-width: 2px 1px;
+    margin: 5px 0px 5px 0px;
+    -moz-border-radius: 5px;
+    background-color: {base1};
 }
 TABLE.overlay {
-	border-style: solid;
-	border-width: 2px 1px;
-	-moz-border-radius: 5px;
-	z-index: 100;
-	background-color: {base3};
+    border-style: solid;
+    border-width: 2px 1px;
+    -moz-border-radius: 5px;
+    z-index: 100;
+    background-color: {base3};
     border-collapse: collapse;
 }
 
 TR.hlight:hover {
-	background-color: {base_color};
+    background-color: {base_color};
 }
 
 TR.deleted, TD.deleted, TABLE.deleted {
     opacity: 0.5;
-	background-color: {basedel};
-	border-color: {brdrdel};
+    background-color: {basedel};
+    border-color: {brdrdel};
 }
 
 TR.error, TD.error, TABLE.error {
-	background-color: {baseerr};
-	border-color: {brdrerr};
+    background-color: {baseerr};
+    border-color: {brdrerr};
 }
 
 TABLE.error * {
-	border-color: {brdrerr};
+    border-color: {brdrerr};
 }
 
 TR.selected {
-	background-color: {base4};
+    background-color: {base4};
 }
 
 
@@ -461,33 +461,33 @@ TR.selected {
 .red { color : darkred; font-weight: bold; }
 
 .code {
-	font-family: Courier, 'Courier New', sans-serif;
-	font-size: 12px;
-	color: #0000ff;
+    font-family: Courier, 'Courier New', sans-serif;
+    font-size: 12px;
+    color: #0000ff;
 }
 
 /* attaches table */
 TABLE.atttbl {
-	display: inline-block;
-	margin: 10px 20px 0 0;
+    display: inline-block;
+    margin: 10px 20px 0 0;
 }
 
 TABLE.atttbl TD {
-	text-align: center;
+    text-align: center;
 }
 
 IMG.attach {
-	background: {base3} ;
-	border-style: solid;
-	border-color: {base3};
-	border-width: 12px 3px 3px 3px;
-	margin: 5px 0 0 0;
+    background: {base3} ;
+    border-style: solid;
+    border-color: {base3};
+    border-width: 12px 3px 3px 3px;
+    margin: 5px 0 0 0;
 }
 
 DIV.autoscroll {
-	overflow: auto;
-	width: 100%;
-	max-height: 350px;
+    overflow: auto;
+    width: 100%;
+    max-height: 350px;
 }
 
 
@@ -495,20 +495,20 @@ DIV.autoscroll {
 
 /* Inputs Styling */
 INPUT, TEXTAREA, SELECT {
-	background-color : {controls};
-	border-style: solid;
-	border-color: {base_brd};
-	border-width: 2px 1px;
-	font-weight: normal;
-	margin: 2px 1px 2px 1px;
+    background-color : {controls};
+    border-style: solid;
+    border-color: {base_brd};
+    border-width: 2px 1px;
+    font-weight: normal;
+    margin: 2px 1px 2px 1px;
 }
 
 INPUT {
-	text-indent : 2px;
+    text-indent : 2px;
 }
 
 INPUT.plain {
-	background-color : inherit !important;
+    background-color : inherit !important;
 }
 
 

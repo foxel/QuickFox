@@ -71,4 +71,3 @@
 {L_SETUP_STEP_ADMIN_PASSD}: <input type="text" name="admin_passd"  /><br />
 {L_SETUP_STEP_ADMIN_EMAIL}: <input type="text" name="admin_email"  /><br />
 <<- 'SETUP_STEP_ADMIN_SET'>>
-

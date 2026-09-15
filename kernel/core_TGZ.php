@@ -328,7 +328,8 @@ class TGZWrite
         }
 
         function Close()
-        {                $this->block='';
+        {
+                $this->block='';
                 $this->WriteBlock();
 
                 if ($this->GZip) {
@@ -340,7 +341,8 @@ class TGZWrite
         }
 
         function GetDirTree($name)
-        {                $tree = Array();
+        {
+                $tree = Array();
                 $len=strlen($name);
                 for ($i=0;$i<$len;$i++) {
                     if (substr($name,$i,1)=='/')
@@ -350,9 +352,11 @@ class TGZWrite
         }
 
         function DirNameCorrect($name)
-        {                $len=strlen($name);
+        {
+                $len=strlen($name);
                 if ($len<=0) return '';
-                for ($i=$len-1;$i>=0;$i--) {                    if (substr($name,$i,1)!='/')
+                for ($i=$len-1;$i>=0;$i--) {
+                    if (substr($name,$i,1)!='/')
                         return substr($name,0,$i+1).'/';
                 }
                 return '';
@@ -448,46 +452,48 @@ class TGZWrite
                 switch ($datatype)
                 {
                 case 2:    // MKDir
-	                if (!preg_match('#^[0-7]{1,3}$#',$chmod))
-	                    $chmod = '755';
+                    if (!preg_match('#^[0-7]{1,3}$#',$chmod))
+                        $chmod = '755';
                     $filename = $this->DirNameCorrect($filename);
 
-	                $size=0;
+                    $size=0;
 
-	                $time=decoct($timer->time);
+                    $time=decoct($timer->time);
 
-	                $type='5';
-	            break;
+                    $type='5';
+                break;
                 case 1:     // String
-	                if ($length<=0) return False;
+                    if ($length<=0) return False;
 
-	                if (!preg_match('#^[0-7]{1,3}$#',$chmod))
-	                    $chmod = '644';
+                    if (!preg_match('#^[0-7]{1,3}$#',$chmod))
+                        $chmod = '644';
 
-	                $size=decoct($length);
+                    $size=decoct($length);
 
-	                $time=decoct($timer->time);
+                    $time=decoct($timer->time);
 
-	                $type='0';
-	            break;
-	            default:                    if (!file_exists($this->Working_Dir.$filename)) return false;
+                    $type='0';
+                break;
+                default:
+                    if (!file_exists($this->Working_Dir.$filename)) return false;
 
                     $isdir=is_dir($this->Working_Dir.$filename);
                     if ($isdir)
                         $filename = $this->DirNameCorrect($filename);
 
-	                if (!preg_match('#^[0-7]{1,3}$#',$chmod))	                    $chmod = decoct(fileperms($this->Working_Dir.$filename));
+                    if (!preg_match('#^[0-7]{1,3}$#',$chmod))
+                        $chmod = decoct(fileperms($this->Working_Dir.$filename));
 
-	                $size=($isdir) ? '0' : decoct(filesize($this->Working_Dir.$filename));
+                    $size=($isdir) ? '0' : decoct(filesize($this->Working_Dir.$filename));
 
-	                $time=decoct(filemtime($this->Working_Dir.$filename));
+                    $time=decoct(filemtime($this->Working_Dir.$filename));
 
-	                $type=($isdir) ? '5' : '0';
+                    $type=($isdir) ? '5' : '0';
                 }
 
-	            $chmod=str_repeat('0',8-2-strlen($chmod)).$chmod.' '.chr(0);
-	            $size=str_repeat('0',12-1-strlen($size)).$size.' ';
-	            $time=str_repeat('0',12-1-strlen($time)).$time.' ';
+                $chmod=str_repeat('0',8-2-strlen($chmod)).$chmod.' '.chr(0);
+                $size=str_repeat('0',12-1-strlen($size)).$size.' ';
+                $time=str_repeat('0',12-1-strlen($time)).$time.' ';
 
                 $header=Array();
                 $header['name']=$filename;
@@ -610,11 +616,15 @@ class TGZWrite
             $mask=strtolower($mask);
             $dir=$this->DirNameCorrect($dir);
             $odir=opendir($this->Working_Dir.$dir);
-            if ($odir) {                $this->AddFileData($dir, $dchmod, $dchmod);
-                while ($file=readdir($odir)) if ($file!='.' && $file!='..') {                    if (is_dir($this->Working_Dir.$dir.$file)) {                        if ($subdirs)
+            if ($odir) {
+                $this->AddFileData($dir, $dchmod, $dchmod);
+                while ($file=readdir($odir)) if ($file!='.' && $file!='..') {
+                    if (is_dir($this->Working_Dir.$dir.$file)) {
+                        if ($subdirs)
                             $this->ArchiveDir($dir.$file, $mask, $dchmod, $fchmod, $subdirs);
                     }
-                    else {                        $finf=pathinfo($file);
+                    else {
+                        $finf=pathinfo($file);
                         if (!isset($finf['extension']))
                             $this->AddFileData($dir.$file, $fchmod, $dchmod);
                         elseif ($this->CheckMask($mask, $finf['extension']))
@@ -627,7 +637,8 @@ class TGZWrite
         }
 
         function CheckMask($mask, $ext)
-        {            if ($mask=='')
+        {
+            if ($mask=='')
                 return True;
             elseif ($ext=='')
                 return False;

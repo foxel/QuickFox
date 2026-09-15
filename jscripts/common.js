@@ -75,8 +75,8 @@ function qf_show_div(itm)
 function qf_hide_div_id(id)
 {
         if ( itm = qf_getbyid(id) ) {
-		itm.style.display = "none";
-	}
+        itm.style.display = "none";
+    }
 }
 
 // Set DIV ID to show
@@ -121,23 +121,23 @@ function qf_show_div_mouse(id, evt)
     else
       stl = obj.style;
 
-	  c_width = obj.offsetWidth;
-	  oCanvas = document.getElementsByTagName(
-	      (document.compatMode && document.compatMode == 'CSS1Compat') ? 'HTML' : 'BODY'
+      c_width = obj.offsetWidth;
+      oCanvas = document.getElementsByTagName(
+          (document.compatMode && document.compatMode == 'CSS1Compat') ? 'HTML' : 'BODY'
       )[0];
-	  w_width = oCanvas.clientWidth ? oCanvas.clientWidth + oCanvas.scrollLeft : window.innerWidth + window.pageXOffset;
+      w_width = oCanvas.clientWidth ? oCanvas.clientWidth + oCanvas.scrollLeft : window.innerWidth + window.pageXOffset;
 
 
-  	if(stl){
+    if(stl){
         if (mousex + pagexoff + c_width > w_width)
             stl.left = w_width - c_width + 'px';
         else
-    	    stl.left = (mousex+pagexoff) + 'px';
+            stl.left = (mousex+pagexoff) + 'px';
 
-	    stl.top = (mousey+pageyoff) + 20 + 'px';
+        stl.top = (mousey+pageyoff) + 20 + 'px';
 
-    	stl.display = '';
-	}
+        stl.display = '';
+    }
   }
   return true;
 }
@@ -155,8 +155,8 @@ function createXMLHttp() {
     for (var i = 0; i < aVersions.length; i++) {
       try {
           var oXmlHttp = new ActiveXObject(aVersions[i]);
-	  xmlHttpVersionUsing = aVersions[i];
-	  _ms_xmlHttpVersion = aVersions[i];
+      xmlHttpVersionUsing = aVersions[i];
+      _ms_xmlHttpVersion = aVersions[i];
           return oXmlHttp;
       } catch (oError) {
         //Do nothing
@@ -170,39 +170,38 @@ function xmlhttp_reconnect()
 
 {
 
-	if( xmlhttp )
+    if( xmlhttp )
 
-	{
+    {
 
-		delete xmlhttp;
+        delete xmlhttp;
 
-	}
-
-
-
-	xmlhttp = false;
+    }
 
 
 
-	if( window.XMLHttpRequest )
+    xmlhttp = false;
 
-	{
 
-		xmlhttp = new XMLHttpRequest();
 
-		xmlHttpVersionUsing = "XMLHttpRequest (embedded)";
-	}
+    if( window.XMLHttpRequest )
 
-	else {
+    {
+
+        xmlhttp = new XMLHttpRequest();
+
+        xmlHttpVersionUsing = "XMLHttpRequest (embedded)";
+    }
+
+    else {
           if ( window.ActiveXObject ) {
-	    try {
+        try {
               xmlhttp = createXMLHttp();
-	    } catch (e) {
-	      alert(e.message);
-	    }
-	  } else {
-	    alert("AJAX assumed that ActiveX support should be turned on in your browser");
-	  }
-	}
+        } catch (e) {
+          alert(e.message);
+        }
+      } else {
+        alert("AJAX assumed that ActiveX support should be turned on in your browser");
+      }
+    }
 };
-

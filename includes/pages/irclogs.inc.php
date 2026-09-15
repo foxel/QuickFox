@@ -71,4 +71,3 @@ elseif ($dir = opendir('irclogs'))
         print '</td></tr></table>';
     }
 }
-

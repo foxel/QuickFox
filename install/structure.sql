@@ -462,4 +462,3 @@ CREATE TABLE `{DBKEY}userstats` (
     INDEX `posts` (`posts`) , 
     INDEX `themes` (`themes`)  
 ); 
-
