@@ -117,5 +117,3 @@ if (empty($error)) // если ошибок нет, обрабатываем сообщение
   }
   Set_Result($error, $rresult, $redir);
 }
-
-?>

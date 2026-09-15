@@ -886,5 +886,3 @@ function qf_func_call($func_link, $p1 = null, $p2 = null, $p3 = null)
     else
         return false;
 }
-
-?>

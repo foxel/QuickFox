@@ -77,4 +77,3 @@ header('Pragma: no-cache');
 imagetruecolortopalette($dest_img,true,128);
 ob_end_clean();
 imagepng($dest_img);
-?>

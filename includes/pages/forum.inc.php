@@ -16,5 +16,3 @@ if ($show_topic>0) {
 
 }
 print $QF_Forum->Draw_Section($show_section);
-
-?>

@@ -370,4 +370,3 @@ $Vis['COPYRIGHT']=
 QuickFox<br />
 &copy; Foxel aka LION<br />
 2006 - 2011';
-?>

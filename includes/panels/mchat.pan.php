@@ -48,4 +48,3 @@ $data.= '</select>
 
 print $script;
 print Vis_Draw_panel($data, 'QF Mini Chat :)');
-?>

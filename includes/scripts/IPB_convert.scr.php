@@ -649,6 +649,3 @@ else
     $error = $lang['ERR_NO_ACTION'];
 
 Set_Result($error, $rresult);
-
-
-?>

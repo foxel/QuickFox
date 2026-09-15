@@ -47,5 +47,3 @@ $def_config = Array (
         'post_upl_files' => 3 ),
 
 );
-
-?>

@@ -67,4 +67,3 @@ class qf_charconv
         return $string;
     }
 }
-?>

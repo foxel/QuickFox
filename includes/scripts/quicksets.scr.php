@@ -27,4 +27,3 @@ if (!empty($action))
 
   Set_Result($error, $rresult, $redir);
 }
-?>

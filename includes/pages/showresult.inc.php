@@ -29,4 +29,3 @@ if ($curres) {
 }
 $query='DELETE FROM {DBKEY}results WHERE time<'.($timer->time - 24*3600);
 $QF_DBase->sql_query($query);
-?>

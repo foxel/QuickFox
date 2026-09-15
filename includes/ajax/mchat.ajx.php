@@ -52,4 +52,3 @@ foreach ($mesages as $mess)
 //$datas.= '</table>';
 
 print $datas;
-?>

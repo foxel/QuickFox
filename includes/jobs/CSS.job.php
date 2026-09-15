@@ -23,5 +23,3 @@ $css_part =Get_Request('part', 1, 'v');
     $CSSFile = 'styles/'.$css_style.'/'.$CSSFile;
     $QF_Config['CSS_imgs_dir']='styles/'.$css_style.'/imgs';
 print Combine_ECSS($CSSFile);
-
-?>

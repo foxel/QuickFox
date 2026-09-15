@@ -45,5 +45,3 @@ if (file_exists($file))
     include $file;
 else
     print 'AJAX Error: There is no such action class!';
-
-?>

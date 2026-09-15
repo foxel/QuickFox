@@ -267,5 +267,3 @@ if (empty($Forum_Root_Name)) $Forum_Root_Name = $lang['FOR_ROOT_NAME'];
 $QF_InitBuffer=ob_get_clean();
 
 $timer->Time_Log('Full Init');
-
-?>

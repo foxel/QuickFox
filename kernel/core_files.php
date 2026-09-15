@@ -140,5 +140,3 @@ if (!empty($result)) {
         $mimes[$cmime['ext']] = $cmime;
     $QF_DBase->sql_freeresult($result);
 }
-
-?>

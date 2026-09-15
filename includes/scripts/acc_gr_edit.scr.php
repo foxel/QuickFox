@@ -143,5 +143,3 @@ if (!$error)
     $QF_Session->Cache_Drop_List('forumstat forumsects', true);
 
 Set_Result($error, $rresult, $redir_url);
-
-?>

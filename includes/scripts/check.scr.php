@@ -97,4 +97,3 @@ if (empty($error))
 
 unset($autokey);
 Set_Result($error, $rresult, $redir);
-?>

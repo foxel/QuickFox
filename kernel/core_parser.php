@@ -707,5 +707,3 @@ class qf_parser
 
         return ( strlen($a['sm_text']) > strlen($b['sm_text']) ) ? -1 : 1;
   }
-
-?>

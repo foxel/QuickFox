@@ -74,5 +74,3 @@ if ($QF_Config['files']['no_attc'] && $download)
     redirect('index.php?sr=download&file='.$gfile['id'].'&fcode='.$fcode);
 else
     print Visual('GETFILE_PAGE', Array('filetable' => $filetable));
-
-?>

@@ -369,5 +369,3 @@ Function qf_ulist_idsort_func($a, $b)
 
    return ( $a['id'] < $b['id'] ) ? -1 : 1;
 }
-
-?>

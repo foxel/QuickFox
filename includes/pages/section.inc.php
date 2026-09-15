@@ -202,4 +202,3 @@ else {
 }
 
 print $QF_Forum->Draw_Forum();
-?>

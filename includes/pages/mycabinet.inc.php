@@ -569,4 +569,3 @@ print Visual('MYCABINET_MAIN', $cabinet);
 
 }
 else print Vis_Err_String($lang['UCAB_CAPT_NOGUEST']);
-?>

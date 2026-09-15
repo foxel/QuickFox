@@ -645,5 +645,3 @@ $lang['datetime']['Sep'] = 'Сен';
 $lang['datetime']['Oct'] = 'Окт';
 $lang['datetime']['Nov'] = 'Ноя';
 $lang['datetime']['Dec'] = 'Дек';
-
-?>

@@ -184,4 +184,3 @@ else
 $QF_Forum->Window = Visual('FSEARCH_MAIN', $SectPrint);
 
 print $QF_Forum->Draw_Forum();
-?>

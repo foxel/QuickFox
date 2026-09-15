@@ -92,4 +92,3 @@ function qf_config_shutdown();
 
     return true;
 }
-?>

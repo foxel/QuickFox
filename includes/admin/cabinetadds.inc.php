@@ -809,5 +809,3 @@ else {
 }
 
 if (!$cabinet_adm_hide) $cabinet_menu_hide=true;
-
-?>

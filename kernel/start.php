@@ -131,5 +131,3 @@ $timer->Time_Log('Started1');
 LoadVisuals();
 
 $timer->Time_Log('Started');
-
-?>

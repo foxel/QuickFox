@@ -775,6 +775,3 @@ function PMA_splitSqlFile(&$ret, $sql)  //From php my admin
 
     return TRUE;
 } // end of the 'PMA_splitSqlFile()' function
-
-
-?>

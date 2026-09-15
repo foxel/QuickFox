@@ -30,4 +30,3 @@ if (isset($menu_config['add_buttons']) && $menu_config['add_buttons'])
 }
 
 print Visual('MAIN_MENU', Array('buttons' => $menu_buttons));
-?>

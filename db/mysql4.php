@@ -524,5 +524,3 @@ class qf_sql_base
     }
 
 } // class sql_db
-
-?>

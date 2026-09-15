@@ -27,7 +27,3 @@ if (!empty($action))
 }
 else
     Set_Result('', $lang['ERR_NO_ACTION'], '');
-
-
-
-?>

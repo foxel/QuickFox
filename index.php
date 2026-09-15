@@ -96,4 +96,3 @@ if($QF_Job!='')
   header('Cache-Control: no-cache');
   print Visual('GLOBAL_HTMLPAGE', $QF_Pagedata);
   QF_exit();
-?>

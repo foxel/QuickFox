@@ -45,6 +45,3 @@ Glob_Request('file fcode');
    $redir_url='index.php?st=getfile&amp;file='.$file;
    Set_Result($error, '', $redir_url);
   }
-
-
-?>

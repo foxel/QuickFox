@@ -74,4 +74,3 @@ if (!empty($ndata))
 else $error=sprintf($lang['ERR_USER_LOST'],$chuser);
 
   Set_Result($error, $rresult, $redir_url);
-?>

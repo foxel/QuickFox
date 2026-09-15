@@ -241,5 +241,3 @@ class mailer
 
 
 } // class emailer
-
-?>

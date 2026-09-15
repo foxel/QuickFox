@@ -273,5 +273,3 @@ else
     $toprint = Visual('USERINFO_USERS_TABLE', $tmpl);
     print Visual('USERINFO_USERS', Array( 'ulist' => $toprint) );
 }
-
-?>

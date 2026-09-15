@@ -406,5 +406,3 @@ if (!$error) {
 }
 
   Set_Result($error, $rresult, $redir_url);
-
-?>

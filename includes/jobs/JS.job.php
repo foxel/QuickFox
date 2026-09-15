@@ -26,5 +26,3 @@ if ($sfile=@fopen($file, 'r')) {
 }
 else
     print '// no file found';
-
-?>

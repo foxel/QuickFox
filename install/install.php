@@ -297,7 +297,3 @@ elseif ($SET_step=='data_acc')
 
 
 print Visual('GLOBAL_SETUPPAGE', $QF_Pagedata);
-
-
-
-?>

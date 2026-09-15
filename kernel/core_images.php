@@ -87,5 +87,3 @@ function img_resize_to($srcfile, $destfile, $nw, $nh, $autoext=False)
 
     return False;
 }
-
-?>

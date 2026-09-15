@@ -1013,5 +1013,3 @@ Class qf_forum_upd
 
     }
 }
-
-?>

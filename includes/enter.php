@@ -26,6 +26,3 @@ if ($QF_User->uid) {
 };
 
 print Vis_draw_Panel(Visual('ENTER_PANEL', $tmpl),$lang['GREET']);
-
-
-?>

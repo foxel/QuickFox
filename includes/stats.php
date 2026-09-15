@@ -81,5 +81,3 @@ else {
 
     print Vis_Draw_Panel(Visual('USERSTAT_SPIDER_MESS', $tmpl),$lang['USTATS_CAPT']);
 }
-
-?>

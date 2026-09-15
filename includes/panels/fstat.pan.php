@@ -47,4 +47,3 @@ foreach ( $forumstat_themes as $subtheme )
 $tbl=Array( 'rows' => $toprint );
 
 print Vis_Draw_panel(Visual('FORUMSTAT_TABLE',$tbl),$lang['FOR_LAST10_CAPT']);
-?>

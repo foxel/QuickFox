@@ -31,5 +31,3 @@ foreach($styles as $ttst) {
 
 
 print Vis_Draw_panel(Visual('QUICKSETS_PANEL', $tmpl) ,$lang['QSETS_CAPT'],'',true);
-
-?>

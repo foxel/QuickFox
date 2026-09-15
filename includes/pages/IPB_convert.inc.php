@@ -127,4 +127,3 @@ else
     print Visual('IPB_CONV_MAINPAGE', $ptmpl);
 
 }
-?>

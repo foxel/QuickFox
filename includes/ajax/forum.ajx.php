@@ -14,5 +14,3 @@ if ($AJAX_Job == 'preview')
     else
         print $lang['ERR_NO_MESS'];
 }
-
-?>

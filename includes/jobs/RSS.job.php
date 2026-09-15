@@ -255,5 +255,3 @@ $output = preg_replace_callback('#(<(a|form|img|link)\s+[^>]*)(href|action|src)\
 
 
 print $output;
-
-?>

@@ -135,4 +135,3 @@ $dumper->mysql_dumper();
 $dumper->dump_tables('QF_DBDump.sql', true, Array('all_tables' => true));
 
 print 'DONE!';
-
