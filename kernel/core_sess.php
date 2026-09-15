@@ -9,9 +9,9 @@ if ( defined('CORE_SESSION_LOADED') )
 
 define('CORE_SESSION_LOADED', True);
 
-// ----------------------------------------------------------- \\
-//            Quick Fox session management class  LION 2007    \\
-// ----------------------------------------------------------- \\
+// --------------------------------------------------------------------------------------------- \\
+//             Quick Fox session management class   LION 2007, 2008, 2009, 2011, 2014, 2026      \\
+// --------------------------------------------------------------------------------------------- \\
 
 class qf_session_cl
 {
@@ -304,7 +304,7 @@ function qf_session_handler($text)
         $err=$QF_DBase->sql_error();
         if ($err['message']) trigger_error('Session_management: Can\'t set session record '.$err['message'], 256);
 
-        $QF_DBase->sql_dodelete('{DBKEY}sessions', 'WHERE lastused < '.($timer->time-3600) );
+        $QF_DBase->sql_dodelete('{DBKEY}sessions', 'WHERE (clicks > 1 AND lastused < '.($timer->time-3600).') OR (clicks <= 1 AND lastused < '.($timer->time-60).')');
         if ($QF_DBase->sql_affectedrows()) { //let's clear old session caches
             $QF_DBase->sql_dodelete('{DBKEY}sess_cache', 'WHERE ch_stored < '.($timer->time-3600) );
         }

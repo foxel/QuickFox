@@ -9,6 +9,11 @@ if ( defined('CORE_USERS_LOADED') )
 
 define('CORE_USERS_LOADED', True);
 
+// ----------------------------------------------------------------------------- \\
+//             Quick Fox user and guest login   LION 2008, 2009, 2012, 2026      \\
+// ----------------------------------------------------------------------------- \\
+
+
 class qf_curuser
 {
     var $uid = 0;
@@ -200,7 +205,7 @@ class qf_curuser
 		            }
         		}
 
-		        if (!$curguest['gid']) {
+		        if (!$curguest['gid'] && $QF_Session->clicks > 1) {
 		            $curguest=Array (
 		                'gid' => md5(uniqid($timer->time.$QF_Client['ipaddr'])) );
 
@@ -217,7 +222,7 @@ class qf_curuser
 		            $QF_DBase->sql_doinsert('{DBKEY}guests', $ins_data);
         		    setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400, '/');
 		        }
-		        elseif(!$QF_Session->fix) {
+		        elseif(!$QF_Session->fix && !$QF_Session->fix) {
         		    $curguest['views'] = intval($curguest['views'])+1;
 
         		    $upd_data = Array(
@@ -235,15 +240,17 @@ class qf_curuser
 		            setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400*15, '/');
         		}
 
-		        $QF_Session->Set('QF_Guest', $curguest['gid']);
-        		if ($curguest['gtimezone']!='')
-        		    $QF_Config['tz']=floatval($curguest['gtimezone']);
-        		if ($curguest['gstyle']!=$QF_Config['style'] && $curguest['gstyle'])
-		            $QF_Config['style']=trim($curguest['gstyle']);
-        		$this->uname=$curguest['gnick'];
-        		$QF_DBase->sql_dodelete('{DBKEY}guests', 'WHERE lastseen < '.($timer->time - 86400*15).' OR (lastseen < '.($timer->time-86400).' AND views <= 1)');
+		        if ($curguest['gid']) {
+		            $QF_Session->Set('QF_Guest', $curguest['gid']);
+        		    if ($curguest['gtimezone']!='')
+        		        $QF_Config['tz']=floatval($curguest['gtimezone']);
+        		    if ($curguest['gstyle']!=$QF_Config['style'] && $curguest['gstyle'])
+		                $QF_Config['style']=trim($curguest['gstyle']);
+        		    $this->uname=$curguest['gnick'];
+        		    $QF_DBase->sql_dodelete('{DBKEY}guests', 'WHERE lastseen < '.($timer->time - 86400*15).' OR (lastseen < '.($timer->time-86400).' AND views <= 1)');
 
-        		$this->guest = $curguest;
+        		    $this->guest = $curguest;
+		        }
 	        }
         }
 
