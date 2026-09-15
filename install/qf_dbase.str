@@ -107,13 +107,13 @@ Array (
                 'extra' => 'auto_increment'
             )  ,
             'first_ip' => Array (
-                'type' => 'varchar(8)' ,
+                'type' => 'varchar(45)' ,
                 'null' => false ,
                 'def' => '' ,
                 'extra' => ''
             )  ,
             'last_ip' => Array (
-                'type' => 'varchar(8)' ,
+                'type' => 'varchar(45)' ,
                 'null' => false ,
                 'def' => '' ,
                 'extra' => ''
@@ -225,7 +225,7 @@ Array (
                 'extra' => ''
             )  ,
             'ip' => Array (
-                'type' => 'varchar(40)' ,
+                'type' => 'varchar(45)' ,
                 'null' => false ,
                 'def' => '' ,
                 'extra' => ''
@@ -462,7 +462,7 @@ Array (
                 'extra' => ''
             )  ,
             'lastip' => Array (
-                'type' => 'varchar(16)' ,
+                'type' => 'varchar(45)' ,
                 'null' => false ,
                 'def' => '' ,
                 'extra' => ''
@@ -474,7 +474,7 @@ Array (
                 'extra' => ''
             )  ,
             'gcode' => Array (
-                'type' => 'varchar(32)' ,
+                'type' => 'varchar(45)' ,
                 'null' => false ,
                 'def' => '' ,
                 'extra' => ''
@@ -1280,7 +1280,7 @@ Array (
                 'extra' => ''
             )  ,
             'ip' => Array (
-                'type' => 'varchar(40)' ,
+                'type' => 'varchar(45)' ,
                 'null' => false ,
                 'def' => '' ,
                 'extra' => ''
@@ -1475,7 +1475,7 @@ Array (
                 'extra' => ''
             )  ,
             'ip' => Array (
-                'type' => 'varchar(40)' ,
+                'type' => 'varchar(45)' ,
                 'null' => false ,
                 'def' => '' ,
                 'extra' => ''
@@ -1969,7 +1969,7 @@ Array (
                 'extra' => ''
             )  ,
             'lastip' => Array (
-                'type' => 'varchar(16)' ,
+                'type' => 'varchar(45)' ,
                 'null' => false ,
                 'def' => '' ,
                 'extra' => ''
