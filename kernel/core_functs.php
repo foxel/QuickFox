@@ -23,7 +23,10 @@ function err_parse($errno, $errstr, $errfile, $errline)
     global $debug, $QF_User, $lang;
     static $logfile;
 
-    if (!$logfile) {        $logfile = fopen('err_log.txt','ab');
+    if (!$logfile) {
+        if (!is_dir('logs'))
+            @mkdir('logs', 0700, true);
+        $logfile = fopen('logs/err_log.txt','ab');
     }
 
     if ($logfile && ($errno & ~(E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED)))

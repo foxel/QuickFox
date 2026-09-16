@@ -32,8 +32,11 @@ function init_err_parse($errno, $errstr, $errfile, $errline)
     global $debug;
     static $logfile;
 
-    if (!$logfile)
-        $logfile = fopen('init_err_log.txt','wb');
+    if (!$logfile) {
+        if (!is_dir('logs'))
+            @mkdir('logs', 0700, true);
+        $logfile = fopen('logs/init_err_log.txt','wb');
+    }
 
     if ($logfile && $errno & ~(E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED))
         fwrite($logfile,'Error '.$errno.'. '.$errstr.'<hr>File: '.$errfile.'. Line: '.$errline."\r\n");

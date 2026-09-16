@@ -1,6 +1,7 @@
 avatars/*
 files/*
 cache/*
+logs/*
 .idea
 *.log
 *_log.txt
