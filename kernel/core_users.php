@@ -70,7 +70,8 @@ class qf_curuser
 
         // if we have autologin entrance
         elseif ($autokey = Get_Request('QF_Login', 3, 'h', 32)) {
-            if ($result = $QF_DBase->sql_doselect('{DBKEY}users', '*', 'WHERE autologin = "'.$autokey.'" AND lastseen > '.($timer->time - 86400*30).' AND deleted = 0' ) )
+            // only the hash of the key is stored in the database
+            if ($result = $QF_DBase->sql_doselect('{DBKEY}users', '*', 'WHERE autologin = "'.md5($autokey).'" AND lastseen > '.($timer->time - 86400*30).' AND deleted = 0' ) )
             {
                 $curuser = $QF_DBase->sql_fetchrow($result);
                 $QF_DBase->sql_freeresult($result);
@@ -84,7 +85,7 @@ class qf_curuser
             }
             else {
                 $error=sprintf($lang['ERR_AUTOLOGIN_FAILED'],$login);
-                setcookie('QF_Login');
+                qf_dropcookie('QF_Login');
                 Set_Result($error,'');
             }
         }
@@ -95,7 +96,7 @@ class qf_curuser
                 $QF_Session->Drop('QF_user QF_uid');
                 $QF_Session->Cache_Clear();
                 unset ($curuser);
-                setcookie('QF_Login');
+                qf_dropcookie('QF_Login');
                 $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'sessid' => '', 'autologin' => '', 'lastip' => $QF_Client['ipaddr']), Array( 'id' => $uid) );
                 Set_Result($error,'');
             }
@@ -106,24 +107,27 @@ class qf_curuser
             // Logout
                 if (Get_Request('logout', 1, 'b')) {
                     unset($curuser);
-                    setcookie('QF_Login');
+                    qf_dropcookie('QF_Login');
                     $QF_Session->Cache_Clear();
                     $session_ids='';
                     $autokey='';
                 }
 
                 // Dinamic Changes
+                // The key is rerolled from the system entropy pool on every request.
+                $autostore='';
                 if ($curuser['autologin']) {
-                    $autokey=md5($timer->time.$uid);
-                    setcookie('QF_Login', $autokey, $timer->time + 86400*30, '/');
+                    $autokey=qf_random_token();
+                    $autostore=md5($autokey);
+                    qf_setcookie('QF_Login', $autokey, $timer->time + 86400*30);
                 }
                 else {
                     $autokey='';
-                    setcookie('QF_Login');
+                    qf_dropcookie('QF_Login');
                 }
 
                 $curuser['lastip']=$QF_Client['ipaddr'];
-                $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'lastseen' => $timer->time, 'lasturl' => $QF_Client['request'], 'sessid' => $session_ids, 'autologin' => $autokey, 'lastip' => $QF_Client['ipaddr']), Array( 'id' => $uid) );
+                $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'lastseen' => $timer->time, 'lasturl' => $QF_Client['request'], 'sessid' => $session_ids, 'autologin' => $autostore, 'lastip' => $QF_Client['ipaddr']), Array( 'id' => $uid) );
             }
             else
                 $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'lastseen' => $timer->time, 'lastip' => $QF_Client['ipaddr']), Array( 'id' => $uid) );
@@ -220,7 +224,7 @@ class qf_curuser
                         'views'       => 1,
                         );
                     $QF_DBase->sql_doinsert('{DBKEY}guests', $ins_data);
-                    setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400, '/');
+                    qf_setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400);
                 }
                 elseif(!$QF_Session->fix && !$QF_Session->fix) {
                     $curguest['views'] = intval($curguest['views'])+1;
@@ -237,7 +241,7 @@ class qf_curuser
                     $QF_DBase->sql_doupdate('{DBKEY}guests', $upd_data, Array( 'gid' => $curguest['gid']) );
 
                     $QF_DBase->sql_query($query);
-                    setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400*15, '/');
+                    qf_setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400*15);
                 }
 
                 if ($curguest['gid']) {

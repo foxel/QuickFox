@@ -23,6 +23,7 @@ $def_config = Array (
     'enable_spiders'   => True,
     'restrict_spiders' => False,
     'use_spcode'       => True,
+    'cookie_secure'    => False, // set True when the site is served over HTTPS
 
     'def_tz'           => 3,
     'date_corr_mins'   => 0,

@@ -708,6 +708,91 @@ function STrim($inp,$len=15)
 }
 
 //
+// Cookie helpers
+//
+// Every QuickFox cookie is a session credential, so all of them must be set
+// with path "/", HttpOnly and SameSite=Lax, plus Secure when the site is
+// served over TLS. Deletion has to repeat the same path, otherwise the browser
+// keeps the original "/" cookie and the logout does not take effect.
+//
+function qf_setcookie($name, $value, $expire = 0)
+{
+    global $QF_Config;
+
+    $secure = (!empty($QF_Config['cookie_secure'])
+            || (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off'))
+        ? true : false;
+
+    // the options array - and with it SameSite - exists only since PHP 7.3
+    if (version_compare(PHP_VERSION, '7.3.0', '>='))
+        return setcookie($name, $value, Array(
+            'expires'  => $expire,
+            'path'     => '/',
+            'secure'   => $secure,
+            'httponly' => true,
+            'samesite' => 'Lax' ));
+
+    // httponly became a setcookie() argument in PHP 5.2; SameSite never did,
+    // so on older builds both have to travel through the path argument
+    if (version_compare(PHP_VERSION, '5.2.0', '>='))
+        return setcookie($name, $value, $expire, '/; SameSite=Lax', '', $secure, true);
+
+    return setcookie($name, $value, $expire, '/; SameSite=Lax; HttpOnly', '', $secure);
+}
+
+//
+// Drops a cookie previously set by qf_setcookie()
+//
+function qf_dropcookie($name)
+{
+    return qf_setcookie($name, '', time() - 86400);
+}
+
+//
+// Secure random token generator
+//
+// Returns a 32 chars hex string built from the system entropy pool.
+// Must be used for every security token (autologin keys, one time codes,
+// download codes) - do not use uniqid(), rand() or time() for those.
+//
+// Always returns a token, or does not return at all. A host with no entropy
+// source can not issue safe credentials, so it must stop rather than hand a
+// "no token" value back for every caller to remember to check.
+//
+function qf_random_token()
+{
+    $raw = '';
+
+    if (function_exists('openssl_random_pseudo_bytes')) {
+        $strong = false;
+        $out = openssl_random_pseudo_bytes(16, $strong);
+        if ($strong && strlen($out) == 16)
+            $raw = $out;
+    }
+
+    if ($raw === '' && function_exists('mcrypt_create_iv') && defined('MCRYPT_DEV_URANDOM')) {
+        $out = @mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
+        if (strlen($out) == 16)
+            $raw = $out;
+    }
+
+    if ($raw === '' && ($fd = @fopen('/dev/urandom', 'rb'))) {
+        $out = @fread($fd, 16);
+        fclose($fd);
+        if (strlen($out) == 16)
+            $raw = $out;
+    }
+
+    if ($raw !== '')
+        return bin2hex($raw);
+
+    // Refusing loudly is the only safe option left: a weak or empty token
+    // would be handed out as a real credential.
+    trigger_error('Security: no cryptographic entropy source available, can not issue tokens', 256);
+    QF_exit();
+}
+
+//
 // IP codec functions
 //
 function encode_ip($ip)

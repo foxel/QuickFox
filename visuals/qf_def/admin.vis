@@ -18,7 +18,7 @@ Please Edit very carefully And think "Am i need this?"
 <<+ 'VSTAT_VSESS_TBLROW'>>
 <tr class="hlight">
 <td class="nowrap">{IF_sess_user}{C_sess_user}{ELSE}{L_GUEST}{ENDIF}</td>
-<td class="genmed nowrap">{C_sess_ip}</td>
+<td class="genmed nowrap">{!C_sess_ip}</td>
 <td class="genmed nowrap">{C_sess_starttime}</td>
 <td class="genmed nowrap">{C_sess_lastused}</td>
 <td class="genmed">{C_sess_clicks}</td>
@@ -42,22 +42,22 @@ Please Edit very carefully And think "Am i need this?"
 <tr class="hlight" onmousemove="qf_show_div_id('gst{COUNTER}')" onmouseout="qf_hide_div_id('gst{COUNTER}')">
 <td >
 <span class="genmed nowrap">
-{IF_g_nick}<b>{C_g_nick}</b><br />{ENDIF}
-{C_g_gid}
+{IF_g_nick}<b>{!C_g_nick}</b><br />{ENDIF}
+{!C_g_gid}
 </span>
 <div style="position: relative" >
 <div id="gst{COUNTER}" style="position: absolute; left: 25px; display: none;" align="center">
 <table class="overlay" cellspacing="0" cellpadding="1" width="250">
 <tr><td align="center">
 <span class="genmed" >
-{C_g_uagent}
+{!C_g_uagent}
 </span>
 </td></tr>
 </table></div>
 </div>
 </td>
-<td class="genmed nowrap">{C_g_lastip}</td>
-<td class="genmed nowrap"><a href="{C_g_lasturl}#" title="{C_g_lasturl}">{C_g_lastseen}</a></td>
+<td class="genmed nowrap">{!C_g_lastip}</td>
+<td class="genmed nowrap"><a href="{!C_g_lasturl}#" title="{!C_g_lasturl}">{C_g_lastseen}</a></td>
 <td class="genmed nowrap">{IF_g_isguest}{L_GUEST}{ELSE}IP{ENDIF}</td>
 <td class="genmed">{C_g_views}</td>
 </tr>
@@ -112,8 +112,8 @@ Please Edit very carefully And think "Am i need this?"
 </div>
 </td>
 <td class="genmed nowrap"><b>{C_u_nick}</b></td>
-<td class="genmed nowrap">{C_u_lastip}</td>
-<td class="genmed nowrap"><a href="{C_u_lasturl}#" title="{C_u_lasturl}">{C_u_lastseen}</a></td>
+<td class="genmed nowrap">{!C_u_lastip}</td>
+<td class="genmed nowrap"><a href="{!C_u_lasturl}#" title="{!C_u_lasturl}">{C_u_lastseen}</a></td>
 </tr>
 <<- 'VSTAT_VUSERS_TBLROW'>>
 

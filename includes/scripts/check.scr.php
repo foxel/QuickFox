@@ -79,15 +79,19 @@ if (empty($error))
    $QF_Session->Cache_Clear();
    $session_ids = $QF_Session->SID;
    $autokey='';
-   if ($useauto)
-       $autokey=md5(uniqid($timer->time.$curuser['id']));
-
-   setcookie('QF_Login', $autokey, $timer->time + 86400*30, '/');
+   $autostore='';
+   if ($useauto) {
+       $autokey=qf_random_token();
+       $autostore=md5($autokey);
+       qf_setcookie('QF_Login', $autokey, $timer->time + 86400*30);
+   }
+   else
+       qf_dropcookie('QF_Login');
 
    if ($curuser['timezone']!='')
        $QF_Config['tz']=floatval($curuser['timezone']);
 
-   $QF_DBase->sql_doupdate('{DBKEY}users', Array ('lastseen' => $timer->time, 'sessid' => $session_ids, 'autologin' => $autokey), Array('id' => $uid) );
+   $QF_DBase->sql_doupdate('{DBKEY}users', Array ('lastseen' => $timer->time, 'sessid' => $session_ids, 'autologin' => $autostore), Array('id' => $uid) );
    $QF_DBase->sql_dodelete('{DBKEY}acc_links', 'WHERE user_id = '.$uid.' AND NOT ISNULL(drop_after) AND drop_after < '.$timer->time );
 
    $rresult=sprintf($lang['AUTHORIZED'],$login,create_date('d M Y H:i', $user['lastseen']));

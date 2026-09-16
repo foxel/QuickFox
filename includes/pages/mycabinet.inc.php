@@ -21,7 +21,8 @@ $cabinet_caption='';
 if ($QF_User->uid) {
 $ucabuser=$QF_User->cuser;
 if ($QF_User->admin) {
-        Glob_Request('cabuser');
+        // echoed back into every menu link below, so it must be typed here
+        $cabuser = Get_Request('cabuser', 1, 'i');
         $result = $QF_DBase->sql_doselect('{DBKEY}users', '*', Array( 'id' => $cabuser, 'deleted' => 0) );
         if ($result) $tuser = $QF_DBase->sql_fetchrow($result);
         if ($tuser['id']) $ucabuser=$tuser;
@@ -324,7 +325,10 @@ elseif ($job=='pms') {
         $ulist->load($query);
     }
     $content='';
-    Glob_Request('pm delpm');
+    // Both ids go into raw queries below, so they must be typed here.
+    // Glob_Request() copies $_GET in unfiltered - never use it for query data.
+    $pm    = Get_Request('pm', 1, 'i');
+    $delpm = Get_Request('delpm', 1, 'i');
     if ($delpm) {
         $QF_DBase->sql_doupdate('{DBKEY}pms', Array('deleted' => 1), Array( 'id' => $delpm, 'recipient_id' => $ucabuser['id']) );
         $QF_DBase->sql_doupdate('{DBKEY}pms', Array('deleted_out' => 1), Array( 'id' => $delpm, 'author_id' => $ucabuser['id']) );

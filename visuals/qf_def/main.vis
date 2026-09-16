@@ -431,7 +431,7 @@ if (opener!=null) {
 <tr class="hlight"><td width="50%">
 {L_UCAB_PROFILE_CURIP}
 </td><td width="50%">
-{C_ulastip} [{C_ulastdns}]
+{!C_ulastip} [{!C_ulastdns}]
 </td></tr>
 </table>
 <<- 'MYCABINET_OVIEW_MAIN'>>
@@ -592,8 +592,8 @@ PM #{C_pmsno} (<b>{C_from}</b> {L_UCAB_PMS_WRITESTO} <b>{C_to}</b>)<br />
 {ENDIF}
 {L_INFO_LAST_VISIT} {C_ulastvisit}<br />
 {IF_adminshow}
-{L_INFO_LAST_URL} <a href="{C_ulasturl}">{C_ulasturl}</a><br />
-{L_INFO_LAST_IP} {C_ulastip} [{C_ulastdns}]
+{L_INFO_LAST_URL} <a href="{!C_ulasturl}">{!C_ulasturl}</a><br />
+{L_INFO_LAST_IP} {!C_ulastip} [{!C_ulastdns}]
 {ENDIF}
 <table class="invisible fullwidth">
 <tr><td width="50%"><hr /></td></tr></table>

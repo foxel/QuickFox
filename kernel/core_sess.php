@@ -78,7 +78,7 @@ class qf_session_cl
         else
             $this->SID = md5( uniqid($QF_Client['ipaddr'].$QF_Client['time'], true) );
 
-        setcookie('QF_SID',$this->SID,0,'/');
+        qf_setcookie('QF_SID', $this->SID, 0);
 
         ob_start('qf_session_handler');
 
