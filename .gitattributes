@@ -3,3 +3,4 @@ setup.php   export-ignore
 Archive.php export-ignore
 .gitignore  export-ignore
 .gitattributes  export-ignore
+.editorconfig   export-ignore
