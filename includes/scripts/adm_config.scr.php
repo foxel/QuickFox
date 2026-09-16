@@ -233,7 +233,7 @@ elseif ($action=='common_config') {
 elseif ($action=='visual_config') {
 
     $site_logo = Get_Request('site_logo', 2, 's');
-    if ($site_logo && (!qf_str_is_url($site_logo) || !file_exists($site_logo)))
+    if ($site_logo && !qf_str_is_url($site_logo))
         $error .= '<LI>'.$lang['CONFIG_VISUAL_SITELOGO_ERR'];
     else
         $apply_conf[]=Array(
