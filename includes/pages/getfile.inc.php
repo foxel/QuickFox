@@ -24,7 +24,7 @@ if ($QF_User->level>=$gfile['rights']) {
   if ($result) $mime=$QF_DBase->sql_fetchrow($result);
 
   if (!is_array($dload)) {
-    $fcode=md5(uniqid('dfile'));
+    $fcode=qf_random_token();
     $ins_data = Array(
         'fileid'   => $file,
         'filecode' => $fcode,

@@ -24,7 +24,7 @@ if (!empty($action))
   {
    $nemail="";
   }
-  $acode=md5(rand(1000,1000000));
+  $acode=qf_random_token();
 
   $result = $QF_DBase->sql_doselect('{DBKEY}users', '*', Array( 'nick' => $nuser) );
   if (!empty($result))

@@ -29,30 +29,39 @@ class mailer
                 $this->vars = $this->msg = $this->extra_headers = '';
         }
 
+        // Reject e-mail addresses containing line breaks
+        function _check_address($address)
+        {
+                $address = trim($address);
+                if (preg_match('#[\r\n]#', $address))
+                        trigger_error('mailer: address contains line breaks', 256);
+                return $address;
+        }
+
         // Sets an email address to send to
         function email_address($address)
         {
-                $this->addresses['to'] = trim($address);
+                $this->addresses['to'] = $this->_check_address($address);
         }
 
         function cc($address)
         {
-                $this->addresses['cc'][] = trim($address);
+                $this->addresses['cc'][] = $this->_check_address($address);
         }
 
         function bcc($address)
         {
-                $this->addresses['bcc'][] = trim($address);
+                $this->addresses['bcc'][] = $this->_check_address($address);
         }
 
         function replyto($address)
         {
-                $this->reply = trim($address);
+                $this->reply = $this->_check_address($address);
         }
 
         function from($address)
         {
-                $this->from = trim($address);
+                $this->from = $this->_check_address($address);
         }
 
         // set up subject for mail

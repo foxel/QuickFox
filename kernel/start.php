@@ -63,7 +63,7 @@ $timer->Time_Log('Session before');
 
 $QF_Session->Open_Session($QF_Fix_Session);
 if (!$QF_Session->Get('script_token')) {
-    $QF_Session->Set('script_token', md5(uniqid()));
+    $QF_Session->Set('script_token', qf_random_token());
 }
 
 $timer->Time_Log('Session started');
@@ -98,7 +98,7 @@ if(!empty($QF_Script)) {
         Set_Result($lang['ERR_SCRIPT_TOKEN'], '', '/');
     } else {
         // resetting script_token to new value
-        $QF_Session->Set('script_token', md5(uniqid()));
+        $QF_Session->Set('script_token', qf_random_token());
         if (file_exists($scr_file)) {
             Ignore_User_Abort (True);
             include($scr_file);

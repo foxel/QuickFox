@@ -578,6 +578,10 @@ class qf_parser
             $url = $capt = $buffer;
         }
 
+        $allowed_schemes = '#^(https?|ftp|mailto)://#i';
+        if (!preg_match($allowed_schemes, $url))
+            return $buffer;
+
         if (preg_match('#^'.QF_URL_MASK.'$#D', $url, $uarr))
             $url = $uarr[0];
         else

@@ -73,10 +73,10 @@ class qf_session_cl
                 $this->loaded = true;
             }
             else
-                $this->SID = md5( uniqid($QF_Client['ipaddr'].$QF_Client['time'], true) );
+                $this->SID = qf_random_token();
         }
         else
-            $this->SID = md5( uniqid($QF_Client['ipaddr'].$QF_Client['time'], true) );
+            $this->SID = qf_random_token();
 
         qf_setcookie('QF_SID', $this->SID, 0);
 

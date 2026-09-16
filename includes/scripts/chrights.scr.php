@@ -23,8 +23,10 @@ if (is_array($ndata) && $ndata['deleted'] && !$QF_User->admin)
 
 if (!empty($ndata))
 {
+  if (!$QF_User->admin)
+      $nrights = min($nrights, $QF_User->wlevel - 1);
 
-  if($QF_User->uname==$iuser && $QF_User->wlevel > $ndata['rights'])
+  if ($QF_User->uname==$iuser && $QF_User->wlevel > $ndata['rights'])
   {
 
     if (!$QF_User->admin)
@@ -48,7 +50,7 @@ if (!empty($ndata))
     if (!$ndeluser || !$ndata['deleted'])
     {
         $tmpl['nick']=$ndata['nick'];
-        $tmpl['anick']=$iuser;
+        $tmpl['anick']=$QF_User->uname;
         $tmpl['nrights']=($nrights>0) ? $nrights : $lang['OUTCAST'];
         $tmpl['nmodlevel']=($nmodlevel>0) ? $nmodlevel : $lang['NOT_MODERATOR'];
         $tmpl['motivation']=$motiv;

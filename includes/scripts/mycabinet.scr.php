@@ -86,9 +86,9 @@ elseif ($action=='newmail')
 {
 
   $nemail = Get_Request('newmail', 2, 'ht', 36); // обрабатываем e-mail
-  $acode=md5(uniqid($nemail));
+  $acode=qf_random_token();
 
-      if (!preg_match("/[0-9a-z_]+@[0-9a-z_^\.]+\.[a-z]{2,3}/i", $nemail))
+      if (!preg_match('/'.EMAIL_MASK.'/i', $nemail))
       {
         $action = "";
         $error = $error."<LI>".$lang['ERR_NO_EMAIL']."\n";
