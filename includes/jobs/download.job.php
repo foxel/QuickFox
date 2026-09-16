@@ -26,7 +26,7 @@ Glob_Request('file fcode');
 
   if (!$dload) $error.='<LI>'.$lang['GETFILE_NO_ACCESS']."\n";
 
-  if (($dload['ip']!=$QF_Client['ipaddr']) && ($dload['ip']!=$_SERVER["HTTP_X_FORWARDED_FOR"]) ) $error.='<LI>'.$lang['GETFILE_WRONG_IP']."\n";
+  if ($dload['ip'] != $QF_Client['ipaddr']) $error.='<LI>'.$lang['GETFILE_WRONG_IP']."\n";
 
   if(empty($error)) {
 

@@ -26,14 +26,18 @@ if ($action=='get_code')
   if (!$QF_User->uid)
       $QF_Session->CheckSpamCode($spcode);
 
-  $dcode=md5(uniqid($timer->time.$user['nick']));
+  if ($cuser['passdropcode'] && $cuser['passdropcode_expires'] && ($timer->time - $cuser['passdropcode_expires']) < 60)
+    $error .= "<LI>".$lang['DROP_PASS_THROTTLE']."\n";
+
+  $dcode = qf_random_token();
+  $dcode_time = $timer->time + 1800;
 
 
   if (empty($error)) // если ошибок нет, обрабатываем сообщение
     {
 
 
-     $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'passdropcode' => $dcode, 'new_acode' => '', 'new_email' => ''), Array ( 'id' => $cuser['id']) );
+     $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'passdropcode' => $dcode, 'passdropcode_expires' => $dcode_time, 'new_acode' => '', 'new_email' => ''), Array ( 'id' => $cuser['id']) );
 
      $tmpl['nick']=$login;
      $tmpl['dcode']=$dcode;
@@ -78,6 +82,12 @@ elseif ($action=='use_code')
         $action = "";
         $error = $error."<LI>".$lang['ERR_NO_DROPCODE']."\n";
       }
+      elseif ($cuser['passdropcode_expires'] && $timer->time > $cuser['passdropcode_expires'])
+      {
+        $action = "";
+        $error = $error."<LI>".$lang['DROP_PASS_EXPIRED']."\n";
+        $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'passdropcode' => '', 'passdropcode_expires' => 0), Array ( 'id' => $cuser['id']) );
+      }
       elseif ($dcode != $cuser['passdropcode'])
       {
         $action = "";
@@ -87,7 +97,7 @@ elseif ($action=='use_code')
 
 if (empty($error)) // если ошибок нет, обрабатываем сообщение
   {
-     $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'pass' => $npass1, 'new_acode' => '', 'new_email' => ''), Array ( 'id' => $cuser['id']) );
+     $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'pass' => $npass1, 'passdropcode' => '', 'passdropcode_expires' => 0, 'new_acode' => '', 'new_email' => ''), Array ( 'id' => $cuser['id']) );
 
      $tmpl['nick']=$login;
      $tmpl['pass']=$npasssrc1;
@@ -106,7 +116,7 @@ if (empty($error)) // если ошибок нет, обрабатываем сообщение
 
   }
   else {  // If there are any error we'll clear email request
-     $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'passdropcode' => '', 'new_acode' => '', 'new_email' => ''), Array ( 'id' => $cuser['id']) );
+     $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'passdropcode' => '', 'passdropcode_expires' => 0, 'new_acode' => '', 'new_email' => ''), Array ( 'id' => $cuser['id']) );
      $error.='<br />'.$lang['ERR_DCODE_CLEARED'];
   }
 

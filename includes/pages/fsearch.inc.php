@@ -67,7 +67,7 @@ switch ($find_mode)
     case 2: // string search
         $topics_list = Array();
         $prequery = 'SELECT MIN(id) AS pid, theme FROM {DBKEY}posts
-            WHERE text LIKE "%'.addslashes($find_what).'%"
+            WHERE text LIKE "%'.$QF_DBase->sql_quote($find_what).'%"
             GROUP BY theme';
         if ($result = $QF_DBase->sql_query($prequery)) {
             while ($post = $QF_DBase->sql_fetchrow($result)) {

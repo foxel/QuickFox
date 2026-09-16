@@ -400,6 +400,7 @@ CREATE TABLE `{DBKEY}users` (
     `nick` varchar(16) NOT NULL, 
     `pass` varchar(32) NOT NULL, 
     `passdropcode` varchar(32) NOT NULL, 
+    `passdropcode_expires` int(11) NOT NULL default '0', 
     `email` varchar(36) NOT NULL, 
     `new_email` varchar(36) NOT NULL, 
     `new_acode` varchar(32) NOT NULL, 

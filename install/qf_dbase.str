@@ -1818,6 +1818,12 @@ Array (
                 'def' => '' ,
                 'extra' => ''
             )  ,
+            'passdropcode_expires' => Array (
+                'type' => 'int(11)' ,
+                'null' => false ,
+                'def' => '0' ,
+                'extra' => ''
+            )  ,
             'email' => Array (
                 'type' => 'varchar(36)' ,
                 'null' => false ,

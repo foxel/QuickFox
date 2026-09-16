@@ -39,7 +39,7 @@ include 'kernel/core_charset.php';
 define('AJAX_UTF_RECHAR', true);
 $QF_CharConv = new qf_charconv();
 
-$QF_AJAX_Class = Get_Request('class', 2, 's');
+$QF_AJAX_Class = Get_Request('class', 2, 'v');
 $file = 'includes/ajax/'.$QF_AJAX_Class.'.ajx.php';
 if (file_exists($file))
     include $file;

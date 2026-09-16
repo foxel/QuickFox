@@ -169,7 +169,7 @@ class qf_curuser
             if ($QF_Config['enable_spiders']) {
                 $query='SELECT s.id, s.name, ss.visits FROM {DBKEY}spiders s
                         LEFT JOIN {DBKEY}spiders_stats ss ON (ss.id = s.id)
-                        WHERE INSTR("'.addslashes($QF_Client['uagent']).'", agent_mask)>0
+                        WHERE INSTR("'.$QF_DBase->sql_quote($QF_Client['uagent']).'", agent_mask)>0
                         ORDER BY LENGTH(agent_mask) DESC LIMIT 1';
 
                 if ( $result = $QF_DBase->sql_query($query) ) {
