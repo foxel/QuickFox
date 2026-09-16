@@ -27,7 +27,7 @@ if (!empty($action))
             'nocontent'  => Get_Request('nocontent', 2, 'b') ,
             );
 
-        $dumper->dump_tables('QF_DBDump.sql', true, $sets);
+        $dumper->dump_tables(sys_get_temp_dir().'/QF_DBDump.sql', true, $sets);
 
         $filename = $dumper->filename;
         if (file_exists($filename)) {

@@ -39,7 +39,7 @@ class mysql_dumper
             $this->stream = gzopen($file, 'wb9');
         }
         else {
-            $this->fgzip = true;
+            $this->fgzip = false;
             $this->stream = fopen($file, 'wb');
         }
         if ($this->stream)
