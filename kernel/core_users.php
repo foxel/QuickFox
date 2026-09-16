@@ -221,7 +221,7 @@ class qf_curuser
                         'lastip'      => $QF_Client['ipaddr'],
                         'guser_agent' => $QF_Client['uagent'],
                         'gcode'       => $QF_Client['ipaddr'],
-                        'views'       => 1,
+                        'views'       => $QF_Session->clicks,
                         );
                     $QF_DBase->sql_doinsert('{DBKEY}guests', $ins_data);
                     qf_setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400);
