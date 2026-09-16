@@ -171,7 +171,7 @@ $QF_Job=Get_Request('sr', 1, 'v');
 $QF_Script=Get_Request('script', 2, 'v');
 // Get QF root dir and relative
 $QF_SrvName = isset($_SERVER['HTTP_HOST']) ? preg_replace('#:\d+#', '', $_SERVER['HTTP_HOST']) : $_SERVER['SERVER_NAME'];
-$QF_RootUrl = 'http://'.$QF_SrvName.'/';
+$QF_RootUrl = GetFullUrl('//'.$QF_SrvName.'/');
 
 $QF_Root = preg_replace('#\/+|\\\+#', '/', $_SERVER['PHP_SELF']);
 $QF_Root = preg_replace('#^\/*([^\'\"]*)\/+([^\/]+)$#', '\\1', $QF_Root);

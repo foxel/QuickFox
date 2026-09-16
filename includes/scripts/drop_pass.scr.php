@@ -41,8 +41,8 @@ if ($action=='get_code')
 
      $tmpl['nick']=$login;
      $tmpl['dcode']=$dcode;
-     $tmpl['aurl']='http://'.$QF_Config["server_name"].$QF_Config['root'].'/index.php?st=register&job=drop_pass&dcode='.$dcode;
-     $tmpl['surl']='http://'.$QF_Config["server_name"];
+     $tmpl['aurl']=GetFullUrl('index.php?st=register&job=drop_pass&dcode='.$dcode);
+     $tmpl['surl']=GetFullUrl('');
      $tmpl['sname']=$QF_Config['site_name'];
 
      $email = New mailer;
@@ -101,7 +101,7 @@ if (empty($error)) // если ошибок нет, обрабатываем сообщение
 
      $tmpl['nick']=$login;
      $tmpl['pass']=$npasssrc1;
-     $tmpl['surl']='http://'.$QF_Config["server_name"];
+     $tmpl['surl']=GetFullUrl('');
      $tmpl['sname']=$QF_Config['site_name'];
 
      $email = New mailer;

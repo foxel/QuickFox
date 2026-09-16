@@ -54,7 +54,7 @@ if (!empty($ndata))
         $tmpl['nrights']=($nrights>0) ? $nrights : $lang['OUTCAST'];
         $tmpl['nmodlevel']=($nmodlevel>0) ? $nmodlevel : $lang['NOT_MODERATOR'];
         $tmpl['motivation']=$motiv;
-        $tmpl['surl']='http://'.$QF_Config["server_name"];
+        $tmpl['surl']=GetFullUrl('');
         $tmpl['sname']=$QF_Config['site_name'];
 
         $email = New mailer;

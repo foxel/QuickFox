@@ -41,8 +41,8 @@ if ($action=='profile')
   $icq = Get_Request('icq', 2, 'ht', 36);
 
   $homepage = Get_Request('homepage', 2, 'ht', 50);
-  $homepage = preg_replace('#^http:/+#i','',$homepage);
-  $homepage = ($homepage) ? 'http://'.$homepage : '';
+  $homepage = preg_replace('#^https?:/+#i','',$homepage);
+  $homepage = ($homepage) ? 'https://'.$homepage : '';
 
   $about = Get_Request('about', 2, 'ht'); // обрабатываем поле о себе
 
@@ -102,8 +102,8 @@ if (empty($error)) // если ошибок нет, обрабатываем сообщение
 
      $tmpl['nick']=$name;
      $tmpl['acode']=$acode;
-     $tmpl['aurl']='http://'.$QF_Config["server_name"].$QF_Config['root'].'/index.php?st=mycabinet&job=email&acode='.$acode;
-     $tmpl['surl']='http://'.$QF_Config["server_name"];
+     $tmpl['aurl']=GetFullUrl('index.php?st=mycabinet&job=email&acode='.$acode);
+     $tmpl['surl']=GetFullUrl('');
      $tmpl['sname']=$QF_Config['site_name'];
 
      $email = New mailer;
@@ -147,7 +147,7 @@ if (empty($error)) // если ошибок нет, обрабатываем сообщение
 
      $tmpl['nick']=$name;
      $tmpl['new_email']=$cuser['new_email'];
-     $tmpl['surl']='http://'.$QF_Config["server_name"];
+     $tmpl['surl']=GetFullUrl('');
      $tmpl['sname']=$QF_Config['site_name'];
 
      $email = New mailer;
@@ -206,7 +206,7 @@ if (empty($error)) // если ошибок нет, обрабатываем сообщение
 
      $tmpl['nick']=$name;
      $tmpl['pass']=$npasssrc1;
-     $tmpl['surl']='http://'.$QF_Config["server_name"];
+     $tmpl['surl']=GetFullUrl('');
      $tmpl['sname']=$QF_Config['site_name'];
 
      $email = New mailer;

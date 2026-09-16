@@ -261,9 +261,16 @@ function GetFullUrl($url, $no_amps = true)
 
     $url = '';
     if (isset($url_p['scheme']))
-        $url.= $url_p['scheme'].'://';
+    {
+        $url .= $url_p['scheme'] . '://';
+    }
     else
-        $url.= ($QF_Config['cookie_secure']) ? 'https://' : 'http://';
+    {
+        $secure = !empty($QF_Config['cookie_secure'])
+            || (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off');
+
+        $url.= $secure ? 'https://' : 'http://';
+    }
 
     if (isset($url_p['host']))
     {
@@ -722,9 +729,8 @@ function qf_setcookie($name, $value, $expire = 0)
 {
     global $QF_Config;
 
-    $secure = (!empty($QF_Config['cookie_secure'])
-            || (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off'))
-        ? true : false;
+    $secure = !empty($QF_Config['cookie_secure'])
+        || (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off');
 
     // the options array - and with it SameSite - exists only since PHP 7.3
     if (version_compare(PHP_VERSION, '7.3.0', '>='))

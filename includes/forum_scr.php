@@ -359,7 +359,7 @@ Class qf_forum_upd
         $tmpl['anick']=(($this->uid) ? '' : $lang['GUEST'].' ').$this->uname;
         $tmpl['branchname']=$this->curtheme['name'];
         $tmpl['aurl']=GetFullUrl($this->redir);
-        $tmpl['surl']='http://'.$QF_Config["server_name"];
+        $tmpl['surl']=GetFullUrl('');
         $tmpl['sname']=$QF_Config['site_name'];
 
         $query='SELECT u.* FROM {DBKEY}users u JOIN {DBKEY}reads r ON (r.user_id=u.id)

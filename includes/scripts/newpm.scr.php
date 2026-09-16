@@ -102,7 +102,7 @@ if (empty($error)) // если ошибок нет, обрабатываем сообщение
      $tmpl['anick']=(($uid) ? '' : $lang['GUEST'].' ').$name;
      $tmpl['nick']=$ruser['nick'];
      $tmpl['aurl']=GetFullUrl('index.php?st=mycabinet&job=pms');
-     $tmpl['surl']='http://'.$QF_Config['server_name'];
+     $tmpl['surl']=GetFullUrl('');
      $tmpl['sname']=$QF_Config['site_name'];
 
      $email = New mailer;

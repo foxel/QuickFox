@@ -111,7 +111,7 @@ if (!empty($action))
     $tmpl['pass']=$npasssrc1;
     $tmpl['acode']=$acode;
     $tmpl['aurl']=GetFullUrl('index.php?st=register&job=activate&acode='.$acode);
-    $tmpl['surl']='http://'.$QF_Config["server_name"];
+    $tmpl['surl']=GetFullUrl('');
     $tmpl['sname']=$QF_Config['site_name'];
 
     $email = New mailer;
