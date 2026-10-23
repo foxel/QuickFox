@@ -142,13 +142,13 @@ class qf_forum
 
             $sect = end($forum_sects);
             do {
-                if ($sect['curuser_access'] && !$sect['deleted'] && $sect['parent']) {
+                if (isset($sect['curuser_access']) && $sect['curuser_access'] && empty($sect['deleted']) && !empty($sect['parent'])) {
                     $psect = &$forum_sects[$sect['parent']];
                     $psect['sects']++;
                     $psect['themes']+= $sect['themes'];
                     $psect['posts']+= $sect['posts'];
                     $psect['unreads']+= $sect['unreads'];
-                    if ($psect['lasttime'] < $sect['lasttime'] && $sect['lasttheme'] || !$psect['lasttheme']) {
+                    if (((!isset($psect['lasttime']) || (isset($sect['lasttime']) && $psect['lasttime'] < $sect['lasttime'])) && !empty($sect['lasttheme'])) || empty($psect['lasttheme'])) {
                         $psect['lasttime'] = $sect['lasttime'];
                         $psect['lasttheme'] = $sect['lasttheme'];
                         $psect['lastposter'] = $sect['lastposter'];
@@ -179,10 +179,10 @@ class qf_forum
     function FastJumper() {
         Static $jumper;
         if (!$jumper) {
-                  $tmpl=Array();
+                  $tmpl=Array('jumper_options' => '');
                   foreach ($this->ForumTree as $ss)
-                      if ($ss['curuser_access'] && !$ss['deleted'])
-                          $tmpl['jumper_options'].='<option value="'.$ss['id'].'" '.(($this->CurSection['id']==$ss['id']) ? ' SELECTED':'').'>'.$ss['pref'].$ss['name']."</option>\n";
+                      if (isset($ss['curuser_access']) && $ss['curuser_access'] && empty($ss['deleted']))
+                          $tmpl['jumper_options'].='<option value="'.$ss['id'].'" '.((isset($this->CurSection['id']) && $this->CurSection['id']==$ss['id']) ? ' SELECTED':'').'>'.(isset($ss['pref']) ? $ss['pref'] : '').$ss['name']."</option>\n";
 
                   $jumper=Visual('FORUM_JUMPER', $tmpl);
         }
@@ -198,9 +198,9 @@ class qf_forum
 
         $sect = end($this->ForumTree);
         do {
-            if ($sect['id']==$id && !is_null($sect['id'])) {
+            if (isset($sect['id']) && $sect['id']==$id && !is_null($sect['id'])) {
                 $workspace = '<a href="'.$this->base_url.'&amp;section='.$sect['id'].'"><< '.$sect['name'].'</a> '.$workspace;
-                $id = $sect['parent'];
+                $id = isset($sect['parent']) ? $sect['parent'] : 0;
             }
         } while ($sect = prev($this->ForumTree));
 

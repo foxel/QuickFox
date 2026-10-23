@@ -21,7 +21,7 @@ else
         $tmpl['tz_options'].='>'.$ttz.'</option>';
     }
 
-$setted_style = ($QF_User->uid) ? $QF_User->cuser['style'] : $QF_User->guest['gstyle'];
+$setted_style = ($QF_User->uid) ? $QF_User->cuser['style'] : (isset($QF_User->guest['gstyle']) ? $QF_User->guest['gstyle'] : '');
 
 foreach($styles as $ttst) {
     $tmpl['st_options'].='<option value="'.$ttst['id'].'"';

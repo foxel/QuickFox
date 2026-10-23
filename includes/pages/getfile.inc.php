@@ -53,8 +53,8 @@ if ($QF_User->level>=$gfile['rights']) {
       'downcount'   => intval($gfile['dloads']),
       'time'        => create_date("", $gfile['time']) );
 
-  if ($mime['preview']) $tmpl['thumb']='index.php?sr=thumb&amp;fid='.$gfile['id'];
-  elseif ($mime['icon']) $tmpl['thumb']='imgs/mime/'.$mime['icon'];
+  if (is_array($mime) && !empty($mime['preview'])) $tmpl['thumb']='index.php?sr=thumb&amp;fid='.$gfile['id'];
+  elseif (is_array($mime) && !empty($mime['icon'])) $tmpl['thumb']='imgs/mime/'.$mime['icon'];
 
   $tmpl['user']=($puser) ? '<a href="index.php?st=info&amp;infouser='.$puser['id'].'">'.$puser['nick'].'</a>' :
   str_replace('[|]','',$gfile['user']);

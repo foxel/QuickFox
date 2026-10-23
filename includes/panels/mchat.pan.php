@@ -46,5 +46,4 @@ $data.= '</select>
 </form>
 <div id="minichater" class="minichater" style="overflow: auto; max-height: 350px; max-width: 195px; padding: 0; margin: 0;">'.$datas.'</div>';
 
-print $script;
 print Vis_Draw_panel($data, 'QF Mini Chat :)');

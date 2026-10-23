@@ -13,7 +13,9 @@ if (($mess = Get_Request('newmess', 2, 's')) && $QF_User->uid && $QF_User->wleve
 {
     if ($mess[0] == '!' && $QF_User->cuser['admin'])
     {
-        list($command, $mess) = explode(' ', $mess, 2);
+        $mparts = explode(' ', $mess, 2);
+        $command = $mparts[0];
+        $mess = isset($mparts[1]) ? $mparts[1] : '';
         if ($command == '!clear')
             $QF_DBase->sql_query('truncate table {DBKEY}minichats');
     }

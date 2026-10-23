@@ -34,7 +34,7 @@ if (is_null($forumstat_themes)) {
 $toprint='';
 foreach ( $forumstat_themes as $subtheme )
 {
-    $puser=$ulist->get($subtheme['lastposter_id'],$uli);
+    $puser=$ulist->get($subtheme['lastposter_id']);
     $tmpl=Array(
         'id'      => $subtheme['id'],
         'caption' => $subtheme['name'],

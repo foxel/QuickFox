@@ -25,7 +25,7 @@ if ($QF_User->admin) {
         $cabuser = Get_Request('cabuser', 1, 'i');
         $result = $QF_DBase->sql_doselect('{DBKEY}users', '*', Array( 'id' => $cabuser, 'deleted' => 0) );
         if ($result) $tuser = $QF_DBase->sql_fetchrow($result);
-        if ($tuser['id']) $ucabuser=$tuser;
+        if (is_array($tuser) && $tuser['id']) $ucabuser=$tuser;
         }
 if (empty($ucabuser['timezone'])) $ucabuser['timezone']=$QF_Config['def_tz'];
 
@@ -325,6 +325,9 @@ elseif ($job=='pms') {
         $ulist->load($query);
     }
     $content='';
+    $is_inpm = false;
+    $show_pm = '';
+    $write_pm = '';
     // Both ids go into raw queries below, so they must be typed here.
     // Glob_Request() copies $_GET in unfiltered - never use it for query data.
     $pm    = Get_Request('pm', 1, 'i');

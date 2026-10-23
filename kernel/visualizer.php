@@ -38,7 +38,7 @@ Function Vis_Gen_Avatar($user, $nolink=false)
 {
     Global $Vis;
 
-    if ($user['avatar']) {
+    if (is_array($user) && isset($user['avatar']) && $user['avatar']) {
         $av_data = '<img border="0" src="'.$user['avatar'].'" alt="avatar">';
         if (!$nolink)
             $av_data = '<a href="index.php?st=info&amp;infouser='.$user['id'].'">'.$av_data.'</a>';
@@ -125,6 +125,9 @@ function Vis_Draw_Hint($content, $object='') {
 function Connect_JS($name) {
     Global $QF_Pagedata, $QF_Config, $lang;
 
+    if (!isset($QF_Pagedata['JAVA']))
+        $QF_Pagedata['JAVA'] = '';
+
     $file = 'jscripts/'.$name.'.js';
     if ($QF_Config['force_css_separate'])
         $QF_Pagedata['JAVA'].='<script language="JavaScript" type="text/javascript" src="index.php?sr=JS&amp;scripts='.$name.'"></script>';
@@ -159,8 +162,11 @@ function LoadStyle($part='')
 
     if ($QF_Config['force_css_separate'])
         $QF_Pagedata['META'].='<link rel="stylesheet" type="text/css" href="index.php?sr=CSS&amp;style='.$QF_Config['CSS'].(($part) ? '&amp;part='.$part : '').'">';
-    else
+    else {
+        if (!isset($QF_Pagedata['CSS']))
+            $QF_Pagedata['CSS'] = '';
         $QF_Pagedata['CSS'].=Combine_ECSS($CSSFile);
+    }
 }
 
 //
@@ -191,7 +197,7 @@ function LoadVisuals($part='') {
             $indata=fread($sfile,filesize($odir.'/'.$file));
 
             $indata=str_replace('{VIS_IMGS}',$odir.'/imgs',$indata);
-            $indata=str_replace('{CSS_IMGS}',$QF_Config['CSS_imgs_dir'],$indata);
+            $indata=str_replace('{CSS_IMGS}',isset($QF_Config['CSS_imgs_dir']) ? $QF_Config['CSS_imgs_dir'] : '',$indata);
 
             $indata = preg_replace_callback('#\{L_(\w+)\}#', function($m) { global $lang; return $lang[$m[1]]; }, $indata);
 
@@ -231,15 +237,18 @@ function Visual($name, $content=Array()) {
     Global $Vis, $VIF, $QF_Session;
     Static $counter=1;
 
+    if (!isset($Vis[$name]) || !isset($VIF[$name]))
+        return '';
+
     $templ=$Vis[$name];
-    $UseVIS=$VIF[$name]['VIS'];
-    $UseIF=$VIF[$name]['IF'];
+    $UseVIS=isset($VIF[$name]['VIS']) ? $VIF[$name]['VIS'] : 0;
+    $UseIF=isset($VIF[$name]['IF']) ? $VIF[$name]['IF'] : 0;
 
     if ($UseVIS)
         $templ = preg_replace_callback('#\{V_(\w+)\}#s', function($m) use ($content) { return Visual($m[1], $content); }, $templ);
 
     if ($UseIF == 2)
-        $templ = preg_replace_callback('#\{IF_([\w_]+)\}(.*?)\{ENDIF\}#s', function($m) use ($content) { return VisIfExp($m[2], $content[$m[1]]); }, $templ);
+        $templ = preg_replace_callback('#\{IF_([\w_]+)\}(.*?)\{ENDIF\}#s', function($m) use ($content) { return VisIfExp($m[2], isset($content[$m[1]]) ? $content[$m[1]] : ''); }, $templ);
     elseif ($UseIF == 1) {
         foreach($content as $pname => $ptext)
             if (strlen($ptext)>0) {
@@ -281,7 +290,11 @@ function VisIfExp($exp, $param) {
 //
 function Add_META($tag){
     Global $QF_Pagedata;
-    if ($tag) $QF_Pagedata['META'].='<META '.$tag.'>';
+    if ($tag) {
+        if (!isset($QF_Pagedata['META']))
+            $QF_Pagedata['META'] = '';
+        $QF_Pagedata['META'].='<META '.$tag.'>';
+    }
 }
 
 function Vis_Draw_Form($caption, $frmname, $script, $text, $fields, $width='', $tblclass='', $frmadds=''){
@@ -311,7 +324,7 @@ function Vis_Draw_Form($caption, $frmname, $script, $text, $fields, $width='', $
         case 'select':
             $selfileds='';
             foreach ($field['subs'] as $subn=>$subf){
-                $selfileds.='<option value="'.$subf['value'].'" '.(($subf['selected'])?'SELECTED':'').' '.$subf['params'].'>'.$subf['name'].'</option>';
+                $selfileds.='<option value="'.$subf['value'].'" '.((!empty($subf['selected']))?'SELECTED':'').' '.(isset($subf['params']) ? $subf['params'] : '').'>'.$subf['name'].'</option>';
             }
             $field['subs']=$selfileds;
             $frmfields.=Visual('UNIFORM_SELECT', $field);
@@ -331,7 +344,7 @@ function Vis_Draw_Form($caption, $frmname, $script, $text, $fields, $width='', $
             $frmfields.=Visual('UNIFORM_MULTISELECT', $field);
         break;
         case 'checkbox':
-            $field['checked']=($field['checked'])?'CHECKED':'';
+            $field['checked']=(!empty($field['checked']))?'CHECKED':'';
             $frmfields.=Visual('UNIFORM_CHECKBOX', $field);
         break;
         case 'doubledpass':

@@ -31,10 +31,12 @@ $t_postdel   = Get_Request('postdel', 1, 'i');
 $t_postshow  = Get_Request('postshow', 1, 'i');
 
 $t_history   = Get_Request('history', 1, 'i');
+$t_showdels  = Get_Request('showdels', 1, 'b');
 
 if ($t_editpost) $t_history=$t_editpost;
 
-$BranchPrint=Array();
+$BranchPrint=Array('content' => '', 'newpost' => '');
+$topic = null;
 
 //
 // loading branch data
@@ -98,6 +100,7 @@ if (is_array($topic))
     }
 
     $t_posts_per_page = $forconfig['posts_per_page'];
+    $t_reverssorting = 0;
 
     if ($topic['id'] == $forconfig['guest_book'])
         $t_reverssorting=1;
@@ -130,7 +133,7 @@ if (is_array($topic))
         $BranchPrint['content']= Vis_Err_String($lang['FOR_THEME_UNAVAILABLE']);
     else
     {
-        if ($topic['minrights'] <= 2 && !$cur_sect['acc_group_name'])
+        if ($topic['minrights'] <= 2 && empty($cur_sect['acc_group_name']))
             $QF_Pagedata['META'].= "\n".'<link rel="alternate" type="application/rss+xml" title="'.HTMLStrVal(sprintf($lang['RSS_TITLE_TOPIC_MSGS'], $QF_Config['site_name'], $topic['name'])).'" href="index.php?sr=RSS&amp;topic='.$topic_id.'" >';
 
         $Page_SubTitle = $topic['name'];
@@ -154,7 +157,7 @@ if (is_array($topic))
         else
             $readp = null;
 
-        if ($readp['user_id'] != $QF_User->uid)
+        if (isset($readp['user_id']) && $readp['user_id'] != $QF_User->uid)
         {
             $query = 'SELECT MAX(p.id) as lastread, COUNT(p.id) AS readposts
                 FROM {DBKEY}posts p
@@ -166,12 +169,15 @@ if (is_array($topic))
             }
         }
 
+        if (!is_array($readp))
+            $readp = Array('lastread' => 0, 'readposts' => 0, 'active' => 0, 'subscribe' => 0);
+
         $t_lastread   = intval($readp['lastread']);
         $t_posts_read = intval($readp['readposts']);
         $t_readed     = ($readp['active']) ? true : false;
 
         if (is_null($t_subscribe))
-            $t_subscribe=$readp['subscribe'];
+            $t_subscribe = isset($readp['subscribe']) ? $readp['subscribe'] : 0;
         else
             $t_subscribe=intval($t_subscribe);
 
@@ -401,7 +407,7 @@ if (is_array($topic))
 
             if (count($theme_posts)) {
                 $t_MAXID = 0;
-                $dont_cache_posts = $QF_Config['cache']['visuals_nocache'];
+                $dont_cache_posts = isset($QF_Config['cache']['visuals_nocache']) ? $QF_Config['cache']['visuals_nocache'] : false;
                 Foreach ($theme_posts as $post)
                 {
 
@@ -442,8 +448,8 @@ if (is_array($topic))
                             'labels'    => '<a name="'.$post['id'].'"></a>'.$post['labels'],
                             'avatar'    => Vis_Gen_Avatar($puser),
                             'u_descr'   => ($puser) ?  $puser['descr'] : $lang['GUEST'],
-                            'u_rights'  => Vis_Gen_Rights($puser['rights'],' '),
-                            'u_status'  => ($puser['modlevel']>=$topic['postrights'] && $puser['modlevel']>0 && $puser['active']) ? $lang['MODERATOR'] : '' ,
+                            'u_rights'  => ($puser) ? Vis_Gen_Rights($puser['rights'],' ') : '',
+                            'u_status'  => ($puser && $puser['modlevel']>=$topic['postrights'] && $puser['modlevel']>0 && $puser['active']) ? $lang['MODERATOR'] : '' ,
                             'flags'     => ($post['id']>$t_lastread && $QF_User->uid) ? $Vis['NEW_FLAG'].' ' :'' ,
                             'time'      => create_date('', $post['time']) ,
                             'user'      => ($puser) ? '<a href="index.php?st=info&amp;infouser='.$puser['id'].'">'.$puser['nick'].'</a>' : $post['author']
@@ -476,7 +482,7 @@ if (is_array($topic))
                             }
 
                             $form['unattach']='';
-                            if (is_array($atts[$post['id']]))
+                            if (isset($atts[$post['id']]) && is_array($atts[$post['id']]))
                                 foreach ($atts[$post['id']] as $att)
                                     {
                                         $Can_Edit_Att = $QF_User->admin || ($QF_User->cuser['modlevel']>=$att['rights'] && $t_curaccess>=3) || ($QF_User->uid==$att['user_id'] && $QF_User->uid);
@@ -542,7 +548,7 @@ if (is_array($topic))
                             }
 
                             $tmpl['attaches']='';
-                            if (is_array($atts[$post['id']]))
+                            if (isset($atts[$post['id']]) && is_array($atts[$post['id']]))
                                 foreach ($atts[$post['id']] as $att)
                                     {
                                         $capt = $att['caption'];
@@ -607,9 +613,10 @@ if (is_array($topic))
                             $forum_sects = &$QF_Forum->ForumTree;
                             $sect = end($forum_sects);
                             do {
-                                if ($sect['id'] == $need_id) {
-                                    $need_id = $sect['parent'];
-                                    $forum_sects[$sect['id']]['unreads']--;
+                                if (isset($sect['id']) && $sect['id'] == $need_id) {
+                                    $need_id = isset($sect['parent']) ? $sect['parent'] : 0;
+                                    if (isset($forum_sects[$sect['id']]['unreads']))
+                                        $forum_sects[$sect['id']]['unreads']--;
                                 }
                             } while ($sect = prev($forum_sects));
 
@@ -635,7 +642,7 @@ if (is_array($topic))
                     'time'      => create_date('', $timer->time),
                     'user'      => $QF_User->uname,
                     'u_rights'  => Vis_Gen_Rights($QF_User->level,' '),
-                    'u_descr'   => $QF_User->cuser['descr'],
+                    'u_descr'   => isset($QF_User->cuser['descr']) ? $QF_User->cuser['descr'] : '',
                     'avatar'    => Vis_Gen_Avatar($QF_User->cuser, true),
                     'formstart' => '<form name="newmess" action="index.php" method="post" enctype="multipart/form-data">',
                     'formend'   => '</form>',
@@ -646,7 +653,7 @@ if (is_array($topic))
 
                 $form=Array(
                     'st'       => $QF_Inc,
-                    'page'     => $page,
+                    'page'     => $t_page,
                     'tid'      => $topic['id'],
                     'formname' => 'newmess',
                     'user'     => $QF_User->uname,
@@ -697,8 +704,8 @@ if (is_array($topic))
             'caption'  => $lang['FOR_THEME_DESC'],
             'image'    => Vis_Gen_TIcon($topic['locked']),
             'header'   => create_date("", $topic['time']),
-            'u_descr'  => $puser['descr'],
-            'u_rights' => Vis_Gen_Rights($puser['rights'],' '),
+            'u_descr'  => (is_array($puser) && isset($puser['descr'])) ? $puser['descr'] : '',
+            'u_rights' => (is_array($puser) && isset($puser['rights'])) ? Vis_Gen_Rights($puser['rights'],' ') : '',
             'avatar'   => Vis_Gen_Avatar($puser),
             );
 
@@ -732,9 +739,10 @@ if (is_array($topic))
             }
 
             $form['rights_hint']= Vis_Draw_Hint($lang['THEME_EDIT_HINT']);
+            $form['psect_options'] = '';
             foreach ($QF_Forum->ForumTree as $ss)
-                if ($ss['curuser_access'] && !$ss['deleted'])
-                    $form['psect_options'].='<option value="'.$ss['id'].'" '.(($topic['parent']==$ss['id']) ? ' SELECTED':'').'>'.$ss['pref'].$ss['name'].' ('.$ss['minrights'].')</option>';
+                if (!empty($ss['curuser_access']) && empty($ss['deleted']))
+                    $form['psect_options'].='<option value="'.$ss['id'].'" '.(($topic['parent']==$ss['id']) ? ' SELECTED':'').'>'.(isset($ss['pref']) ? $ss['pref'] : '').$ss['name'].' ('.$ss['minrights'].')</option>';
 
 
             $tmpl['body']=Visual('THEME_EDIT_FORM', $form);
@@ -757,7 +765,7 @@ if (is_array($topic))
                 'lasttime'   => create_date('', $topic['lasttime']) );
 
             $cont['subscribe']=($t_subscribe) ? $Vis['SUBSCR_FLAG'].' <a href="'.$Base_Link.'&amp;subscribe=0#theme">'.$lang['FOR_UNSUBSCRIBE'].'</a>' : '' ;
-            if ($topic['minrights'] <= 2 && !$cur_sect['acc_group_name'])
+            if ($topic['minrights'] <= 2 && empty($cur_sect['acc_group_name']))
                 $cont['subscribe'].= ' <a href="index.php?sr=RSS&amp;topic='.$topic_id.'">[RSS]</a>';
 
             $tmpl['body']=Visual('THEME_READ_BODY', $cont);
@@ -778,7 +786,7 @@ if (is_array($topic))
 }
 
 $QF_Forum->Window = Visual('BRANCH_MAIN', $BranchPrint);
-if ($topic['id'] == $forconfig['guest_book']) {
+if (is_array($topic) && $topic['id'] == $forconfig['guest_book']) {
     $tmpl=Array(
         'content'   => $QF_Forum->Draw_Forum(),
         'tree_capt' => $topic['name'] );

@@ -558,7 +558,7 @@ elseif ($job=='vis_stat') {
     if ($result) {
        while ( $sess = $QF_DBase->sql_fetchrow($result) ) {
        $ssdata=unserialize($sess['vars']);
-       $suser=$ulist->get($ssdata['QF_uid']);
+       $suser=$ulist->get(isset($ssdata['QF_uid']) ? $ssdata['QF_uid'] : 0);
        $tmpl=Array(
        'sess_ip'        => $sess['ip'],
        'sess_starttime' => create_date('',$sess['starttime']),

@@ -25,7 +25,7 @@ Class qf_forum_upd
         $this->time = time();
         $this->error = '';
         $this->loaded = False;
-        $this->do_cache = !$QF_Config['cache']['visuals_nocache'];
+        $this->do_cache = empty($QF_Config['cache']['visuals_nocache']);
 
         $QF_Session->Cache_Drop_List('forumstat forumsects', true);
     }
@@ -51,13 +51,13 @@ Class qf_forum_upd
         if ($result = $QF_DBase->sql_doselect('{DBKEY}users', 'id', Array('nick' => $this->uname, 'deleted' => 0) ))
             $userdata = $QF_DBase->sql_fetchrow($result);
 
-        if (strlen($this->uname)<3) // если не введено имя
+        if (strlen($this->uname)<3) // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
             $this->error .= '<LI>'.$lang['ERR_NO_LOGIN']."\n";
         elseif (!preg_match('/'.UNAME_MASK.'/i', $this->uname))
             $this->error .= '<LI>'.$lang['ERR_LOGIN_INCORRECT']."\n";
         elseif (preg_match("#Quick\W*?Fox#i", $this->uname))
             $this->error .= '<LI>'.$lang['ERR_SYSTEM_NICK']."\n";
-        elseif ($this->uname!=$QF_User->uname) // имя не то
+        elseif ($this->uname!=$QF_User->uname) // пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ
         {
             if ($QF_User->uid) {
                 $this->error .= '<LI>'.$lang['ERR_DIF_NICKS']."\n";
@@ -84,7 +84,7 @@ Class qf_forum_upd
         }
 
         // preloading branch
-        $t_id = ($this->curpost['id']) ? $this->curpost['theme'] : Get_Request('t_id', 2, 'i');
+        $t_id = (is_array($this->curpost) && $this->curpost['id']) ? $this->curpost['theme'] : Get_Request('t_id', 2, 'i');
         if ($t_id) {
             if ($result = $QF_DBase->sql_doselect('{DBKEY}topics', '*', Array('id' => $t_id) ) )
             {
@@ -165,9 +165,11 @@ Class qf_forum_upd
 
         if ($QF_User->wlevel >= $QF_Config['post_files_rights'])
         for( $fdx=1; $fdx<=$QF_Config['forum']['post_upl_files']; $fdx++) {
+            if (!isset($_FILES['file'.$fdx]))
+                continue;
             $tmpname = $_FILES['file'.$fdx]['tmp_name'];
             $filename = $_FILES['file'.$fdx]['name'];
-            $fsize=filesize($tmpname);
+            $fsize = filesize($tmpname);
             $err = $_FILES['file'.$fdx]['error'];
             if (is_uploaded_file($tmpname) && $fsize == $_FILES['file'.$fdx]['size'] && !$err) {
                 $file_info=pathinfo($filename);
@@ -353,7 +355,7 @@ Class qf_forum_upd
         $this->redir = 'index.php?st=branch&amp;branch='.$this->curtheme['id'].'&amp;shownew=1#unread';
         $this->result=sprintf($lang['FOR_POST_ADDED'],$this->curtheme['name'],'<a href="'.$this->redir.'">','</a>');
 
-        //Уведомления
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         $email = New mailer;
         $email->use_template('branchreply');
         $tmpl['anick']=(($this->uid) ? '' : $lang['GUEST'].' ').$this->uname;
@@ -443,7 +445,7 @@ Class qf_forum_upd
 
         if ($this->error) Return False;
 
-        if ($this->mergetheme['id'] == $this->curtheme['id'])
+        if (is_array($this->mergetheme) && is_array($this->curtheme) && $this->mergetheme['id'] == $this->curtheme['id'])
             $to_merge = null;
 
         $deleted = Get_Request('p_del', 2, 'b');
@@ -745,7 +747,7 @@ Class qf_forum_upd
             'deleted'    => intval($deleted),
             );
 
-        if ($this->mergetheme['id'] == $this->curtheme['id'])
+        if (is_array($this->mergetheme) && is_array($this->curtheme) && $this->mergetheme['id'] == $this->curtheme['id'])
             $to_merge = null;
     
         if ($to_merge)

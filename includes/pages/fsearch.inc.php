@@ -150,7 +150,8 @@ if (count($SubTopics)) {
             $unread = (!$SubTopic['is_read'] && !$SubTopic['deleted'] && $QF_User->uid);
 
             $url = $topic_inc_url.'&amp;branch='.$SubTopic['id'];
-            if ($pid = $PIDs[$SubTopic['id']])
+            $last_url = $url.'&amp;page=last#last';
+            if (isset($PIDs[$SubTopic['id']]) && ($pid = $PIDs[$SubTopic['id']]))
                 $url .= '&amp;postshow='.$pid.'#'.$pid;
             else
                 $url .= '&amp;shownew=1#unread';
@@ -167,7 +168,7 @@ if (count($SubTopics)) {
                 'author'  => ($auser) ? '<a href="index.php?st=info&amp;infouser='.$auser['id'].'">'.$auser['nick'].'</a>' : $SubTopic['author'],
                 'lastt'   => '<a href="'.$last_url.'">'.create_date('', $SubTopic['lasttime']).'</a>',
                 'lastu'   => ($lpuser) ? '<a href="index.php?st=info&amp;infouser='.$lpuser['id'].'">'.$lpuser['nick'].'</a>' : $SubTopic['lastposter'],
-                'deleted' => ($subtheme['deleted']) ? '1' : '',
+                'deleted' => ($SubTopic['deleted']) ? '1' : '',
                 'url'     => $url,
                 'flags'   => ($unread) ? $Vis['NEW_FLAG'] : '',
                 );

@@ -21,7 +21,7 @@ class qf_charconv
     {
         static $loads = Array();
         $name = strtolower($name);
-        if (is_array($loads[$name]))
+        if (isset($loads[$name]) && is_array($loads[$name]))
             return $loads[$name];
         else {
             $file = 'kernel/CharTables/'.$name.'.chr';
@@ -31,7 +31,7 @@ class qf_charconv
                     while(!feof($stream)) {
                         if ($line = trim(fgets($stream))) {
                             $rec = preg_split ("/[\s,]+/", $line, 3);
-                            if (substr($rec[1], 0, 1) != "#") {
+                            if (isset($rec[1]) && substr($rec[1], 0, 1) != "#") {
                                 $Key = $this->HexToUtf(str_replace('0x', '', strtolower($rec[1])));
                                 $Value = pack('C', hexdec(str_replace('0x', '', strtolower($rec[0]))));
                                 $table[$Key] = $Value;

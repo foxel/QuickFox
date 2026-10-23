@@ -24,8 +24,9 @@ Glob_Request('fid');
   if (empty($err_logo)) {
 
      $info=pathinfo($gfile['filename']);
-     $mime=$mimes[strtolower($info['extension'])];
-     if ($mime['preview']) {
+     $ext = isset($info['extension']) ? strtolower($info['extension']) : '';
+     $mime = (isset($mimes[$ext])) ? $mimes[$ext] : null;
+     if (is_array($mime) && !empty($mime['preview'])) {
          $gotfile = 'cache/thumbs/'.$gfile['file'].'.chc';
          if (!is_dir('cache/thumbs/')) {
              mkdir('cache/thumbs/', 0700, true);
@@ -44,7 +45,7 @@ Glob_Request('fid');
              copy($err_logo, 'cache/thumbs/'.$gfile['file'].'.chc');
          }
      } else {
-         $err_logo = ($mime['icon']) ? 'imgs/mime/'.$mime['icon'] : 'imgs/mime/file.gif';
+         $err_logo = (is_array($mime) && !empty($mime['icon'])) ? 'imgs/mime/'.$mime['icon'] : 'imgs/mime/file.gif';
      }
   }
 

@@ -42,7 +42,7 @@ else {
     if (count($QF_Forum->ForumTree))
         foreach($QF_Forum->ForumTree as $subsect)
         {
-            if ($subsect['parent'] == $sect_id && $subsect['id'] && ($showdels || !$subsect['deleted']) && $subsect['curuser_access']) {
+            if (isset($subsect['parent']) && $subsect['parent'] == $sect_id && !empty($subsect['id']) && ($showdels || empty($subsect['deleted'])) && !empty($subsect['curuser_access'])) {
 
                 $cur_sect_posts_num += $subsect['posts'];
                 $cur_sect_topics_num += $subsect['themes'];
@@ -130,7 +130,7 @@ else {
                 'author'  => ($auser) ? '<a href="index.php?st=info&amp;infouser='.$auser['id'].'">'.$auser['nick'].'</a>' : $SubTopic['author'],
                 'lastt'   => '<a href="'.$last_url.'">'.create_date('', $SubTopic['lasttime']).'</a>',
                 'lastu'   => ($lpuser) ? '<a href="index.php?st=info&amp;infouser='.$lpuser['id'].'">'.$lpuser['nick'].'</a>' : $SubTopic['lastposter'],
-                'deleted' => ($subtheme['deleted']) ? '1' : '',
+                'deleted' => ($SubTopic['deleted']) ? '1' : '',
 
                 );
 
@@ -168,7 +168,7 @@ else {
 
         $form=Array(
             'st'       => $QF_Inc,
-            'page'     => $page,
+            'page'     => 1,
             'sid'      => intval($cur_sect['id']),
             'formname' => 'addtheme',
             'user'     => $QF_User->uname,

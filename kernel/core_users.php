@@ -52,6 +52,9 @@ class qf_curuser
         $this->is_spider = false;
 
         $session_ids = $QF_Session->SID;
+        $curuser = null;
+        $curguest = null;
+        $curspider = null;
 
         $uid = $QF_Session->Get('QF_uid');
 
@@ -116,7 +119,7 @@ class qf_curuser
                 // Dinamic Changes
                 // The key is rerolled from the system entropy pool on every request.
                 $autostore='';
-                if ($curuser['autologin']) {
+                if (isset($curuser) && is_array($curuser) && $curuser['autologin']) {
                     $autokey=qf_random_token();
                     $autostore=md5($autokey);
                     qf_setcookie('QF_Login', $autokey, $timer->time + 86400*30);
@@ -133,7 +136,7 @@ class qf_curuser
                 $QF_DBase->sql_doupdate('{DBKEY}users', Array( 'lastseen' => $timer->time, 'lastip' => $QF_Client['ipaddr']), Array( 'id' => $uid) );
         }
 
-        if ($curuser['id']) {
+        if (isset($curuser) && is_array($curuser) && !empty($curuser['id'])) {
             // Loadings
             if ($curuser['timezone']!='')
                 $QF_Config['tz']=floatval($curuser['timezone']);
@@ -176,7 +179,7 @@ class qf_curuser
                     $curspider = $QF_DBase->sql_fetchrow($result);
                     $QF_DBase->sql_freeresult($result);
                 }
-                if ($curspider['name']) {
+                if (is_array($curspider) && $curspider['name']) {
                     $ins_data=Array(
                         'name'       => $curspider['name'],
                         'time'       => $timer->time,
@@ -209,7 +212,7 @@ class qf_curuser
                     }
                 }
 
-                if (!$curguest['gid'] && $QF_Session->clicks > 1) {
+                if (is_array($curguest) && !$curguest['gid'] && $QF_Session->clicks > 1) {
                     $curguest=Array (
                         'gid' => md5(uniqid($timer->time.$QF_Client['ipaddr'])) );
 
@@ -226,7 +229,7 @@ class qf_curuser
                     $QF_DBase->sql_doinsert('{DBKEY}guests', $ins_data);
                     qf_setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400);
                 }
-                elseif(!$QF_Session->fix && !$QF_Session->fix) {
+                elseif(is_array($curguest) && !$QF_Session->fix && !$QF_Session->fix) {
                     $curguest['views'] = intval($curguest['views'])+1;
 
                     $upd_data = Array(
@@ -244,7 +247,7 @@ class qf_curuser
                     qf_setcookie('QF_Guest', $curguest['gid'], $timer->time + 86400*15);
                 }
 
-                if ($curguest['gid']) {
+                if (is_array($curguest) && $curguest['gid']) {
                     $QF_Session->Set('QF_Guest', $curguest['gid']);
                     if ($curguest['gtimezone']!='')
                         $QF_Config['tz']=floatval($curguest['gtimezone']);
@@ -258,7 +261,7 @@ class qf_curuser
             }
         }
 
-        if ($curuser['admin'])
+        if (isset($curuser) && is_array($curuser) && $curuser['admin'])
             $this->admin = true;
         else
             $QF_Session->Drop('is_admin');
@@ -299,7 +302,7 @@ Class UsersList {
         elseif (empty($this->users[$id]) && !$this->queries[$qid]['used'])
             $this->doquery( $qid );
 
-        return $this->users[$id];
+        return isset($this->users[$id]) ? $this->users[$id] : null;
     }
 
     Function by_nick( $nick, $qid=0 )

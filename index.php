@@ -10,12 +10,13 @@ define ('QF_STARTED',True);
 require 'QF_config.php';
 require 'kernel/init.php';
 
-if($QF_Job!='')
+if($QF_Job!='') {
     $job_file='includes/jobs/'.$QF_Job.'.job.php';
     if (file_exists($job_file)) {
         include($job_file);
         QF_exit();
-        }
+    }
+}
 
   // If there is no job do
   require ('kernel/start.php');
@@ -90,7 +91,9 @@ if($QF_Job!='')
 
   $QF_Pagedata['page_title']=$Page_Title;
 
-  $QF_Pagedata['footstat'].=($GZipped) ? $Vis['GZIP_FLAG'] : '';
+  if (!isset($QF_Pagedata['footstat']))
+      $QF_Pagedata['footstat'] = '';
+  $QF_Pagedata['footstat'].=($GZipped && isset($Vis['GZIP_FLAG'])) ? $Vis['GZIP_FLAG'] : '';
 
   header('Content-Type: text/html; charset=windows-1251', true);
   header('Cache-Control: no-cache');

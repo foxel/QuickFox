@@ -105,11 +105,11 @@ class qf_session_cl
         if (count($names)>1) {
             $out = Array();
             foreach ($names as $name)
-                $out[$name] = $this->sess_data[$name];
+                $out[$name] = isset($this->sess_data[$name]) ? $this->sess_data[$name] : null;
             return $out;
         }
         else
-            return $this->sess_data[$query];
+            return isset($this->sess_data[$query]) ? $this->sess_data[$query] : null;
     }
 
     function Set($name, $val)
@@ -155,7 +155,7 @@ class qf_session_cl
             $this->got_cache[] = $name;
         }
 
-        return $this->sess_cache[$name];
+        return isset($this->sess_cache[$name]) ? $this->sess_cache[$name] : null;
     }
 
     function Cache_Add($name, $value)
@@ -352,7 +352,7 @@ function qf_session_handler($text)
 
         $pagestats = sprintf($lang['FOOT_STATS'], $PHP_time, $QF_DBase->num_queries, $SQL_time);
 
-        if ($QF_Session->sess_data['QF_Debug'] && $QF_User->admin) {
+        if (isset($QF_Session->sess_data['QF_Debug']) && $QF_Session->sess_data['QF_Debug'] && $QF_User->admin) {
             $debug = '<b>Time Points:</b>';
             foreach($timer->events AS $event) {
                 $debug.='<br />'.$event['name'].' => '.round($event['time'],5);

@@ -25,7 +25,7 @@ if (!defined('E_USER_DEPRECATED'))
 Error_Reporting(E_ALL & ~(E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED) );
 setlocale(LC_ALL, 'ru_RU');
 
-//Функция обработки ошибок на стадии инициализации. После инициализации юзается error_catcher
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ error_catcher
 function init_err_parse($errno, $errstr, $errfile, $errline)
 {
     global $debug;
@@ -183,10 +183,10 @@ $QF_RequestURI = substr(preg_replace('#^\/*'.$QF_Root.'\/+#', '', $QF_RequestURI
 // Get client parameters
 $QF_Client = Array(
     'time'    => $timer->start_time,
-    'uagent'  => substr($_SERVER['HTTP_USER_AGENT'],0,255),
-    'ipaddr'  => substr($_SERVER['REMOTE_ADDR'],0,45),
-    'ip_hex'  => encode_ip($_SERVER['REMOTE_ADDR']),
-    'referer' => substr($_SERVER['HTTP_REFERER'],0,255),
+    'uagent'  => isset($_SERVER['HTTP_USER_AGENT']) ? substr($_SERVER['HTTP_USER_AGENT'],0,255) : '',
+    'ipaddr'  => isset($_SERVER['REMOTE_ADDR']) ? substr($_SERVER['REMOTE_ADDR'],0,45) : '',
+    'ip_hex'  => isset($_SERVER['REMOTE_ADDR']) ? encode_ip($_SERVER['REMOTE_ADDR']) : '',
+    'referer' => isset($_SERVER['HTTP_REFERER']) ? substr($_SERVER['HTTP_REFERER'],0,255) : '',
     'request' => $QF_RequestURI,
 );
 
@@ -218,7 +218,7 @@ if ($result) {
     $current_ban = $QF_DBase->sql_fetchrow($result);
     $QF_DBase->sql_freeresult($result);
 
-    if ($current_ban['ban_id']) {
+    if (is_array($current_ban) && $current_ban['ban_id']) {
         $QF_Banned = true;
         $QF_DBase->sql_doupdate('{DBKEY}bans', Array(
             'used' => $current_ban['used'] + 1,
@@ -227,7 +227,7 @@ if ($result) {
 }
 
 // Are the site is locked?
-if ($QF_Config['site_locked_for'])
+if (!empty($QF_Config['site_locked_for']))
 {
     $QF_Sid = Get_Request('QF_SID', 3, 'h');
 

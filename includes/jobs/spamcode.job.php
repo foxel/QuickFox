@@ -68,7 +68,7 @@ if (is_array($sess)) {
 
 }
 else
-    imagetext($dest_img,2,48,9,'ERROR',$colors[0],True);
+    imagetext($dest_img,2,48,9,'ERROR',imagecolorallocate($dest_img, 0, 0, 0),True);
 
 
 header('Content-Type: image/png');

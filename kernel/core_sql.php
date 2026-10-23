@@ -113,7 +113,7 @@ class mysql_dumper
         {
             $kname = $row['Key_name'];
 
-            if(!is_array($keys[$kname]))
+            if(!isset($keys[$kname]) || !is_array($keys[$kname]))
             {
                 $ktype = $row['Index_type'];
                 if ($ktype=='BTREE') {
@@ -210,7 +210,7 @@ class mysql_dumper
         else
             $tblname = $table;
 
-        if(!is_array($this->struct[$tblname]))
+        if(!isset($this->struct[$tblname]) || !is_array($this->struct[$tblname]))
             $tblstruct = $this->get_table_structure($table);
 
         return $this->combine_create_table($tblstruct, $dropfirst);

@@ -88,8 +88,8 @@ class qf_parser
         // Replacers
         $this->Add_Preg(QF_URL_MASK, '[url]{data}[/url]');
         $this->Add_Preg(QF_EMAIL_MASK, '[email]{data}[/email]');
-        $this->Add_Preg('\([cñ]\)','&copy;');
-        $this->Add_Preg('-','—');
+        $this->Add_Preg('\([cï¿½]\)','&copy;');
+        $this->Add_Preg('-','ï¿½');
 
         // QuickFox unique base tags
         $this->Add_Tag('file', '<br /><a href="?st=getfile&amp;file={param}" title="{data}"><img src="index.php?sr=thumb&amp;fid={param}" alt="{data}" /></a> <b>{data}</b>', QF_BBTAG_FHTML, Array('param_mask' => '[0-9a-fA-F]+') );
@@ -355,7 +355,7 @@ class qf_parser
 
                         if (!$tused || ($tmode & QF_BBTAG_SUBDUP))
                         {
-                            $tparam = ($part[4]) ? (($part[5]) ? $part[5] : $part[4]) : '';
+                            $tparam = (isset($part[4]) && $part[4]) ? ((isset($part[5]) && $part[5]) ? $part[5] : $part[4]) : '';
                             $this->TStack_Add($tagname, $tparam);
 
                             if ($tmode & QF_BBTAG_NOSUB)

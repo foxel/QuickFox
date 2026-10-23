@@ -61,16 +61,16 @@ function Get_Request($var_name, $from=0, $type = '', $len = false)
 
     if (!isset($cache[$from][$var_name]))
     {        switch ($from) {            case 1:
-                $val = $_GET[$var_name];
+                $val = isset($_GET[$var_name]) ? $_GET[$var_name] : null;
                 break;
             case 2:
-                $val = $_POST[$var_name];
+                $val = isset($_POST[$var_name]) ? $_POST[$var_name] : null;
                 break;
             case 3:
-                $val = $_COOKIE[$var_name];
+                $val = isset($_COOKIE[$var_name]) ? $_COOKIE[$var_name] : null;
                 break;
             default:
-                $val = $_REQUEST[$var_name];
+                $val = isset($_REQUEST[$var_name]) ? $_REQUEST[$var_name] : null;
         }
         if (defined('AJAX_UTF_RECHAR'))
             $val = $QF_CharConv->UTFto_Conv($val);
@@ -185,7 +185,7 @@ function Glob_Request($vals_list,$allreq=false,$overwrite=false){
     foreach ($needed as $needval) {
         global $$needval;
         if (!isset($$needval) || $overwrite) {
-            $found=($allreq) ? $_REQUEST[$needval] : $_GET[$needval];
+            $found=($allreq) ? (isset($_REQUEST[$needval]) ? $_REQUEST[$needval] : null) : (isset($_GET[$needval]) ? $_GET[$needval] : null);
             if (isset($found)) {
                 $$needval = $found;
             }
@@ -243,7 +243,7 @@ function GetFullUrl($url, $no_amps = true)
 
     $url_p = parse_url($url);
 
-    if (preg_match('#mailto#i', $url_p['scheme']))
+    if (isset($url_p['scheme']) && preg_match('#mailto#i', $url_p['scheme']))
         return $url;
 
     $url = '';
@@ -609,7 +609,7 @@ Function StartGZIP() {
 
             if ($phpver > '4.0') $compressor='qf_gzhandler';
 
-            if ( strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') ) $compress=true;
+            if ( strpos($_SERVER['HTTP_ACCEPT_ENCODING'] ?? '', 'gzip') !== false ) $compress=true;
             elseif ( preg_match('#(mozilla/[4-9])|(opera/[7-9])#i',$QF_Client['uagent']) ) $compress=true;
 
             if ($compress && $compressor)
@@ -698,7 +698,7 @@ function STrim($inp,$len=15)
             $inp=substr($inp,0,min($pos,$len)).' ';
         else
             $inp=substr($inp,0,$len);
-        return $inp.'…';
+        return $inp.'ï¿½';
     }
     else
         return $inp;
@@ -839,13 +839,13 @@ function decode_ip($int_ip)
 function Translit($string)
 {
     static $Tran = array (
-        "À" => "A",  "Á" => "B",  "Â" => "V",  "Ã" => "G",  "Ä" => "D",  "Å" => "E",  "¨" => "JO",  "Æ" => "ZH",  "Ç" => "Z",  "È" => "I",
-        "É" => "JJ", "Ê" => "K",  "Ë" => "L",  "Ì" => "M",  "Í" => "N",  "Î" => "O",  "Ï" => "P",   "Ğ" => "R",   "Ñ" => "S",  "Ò" => "T",
-        "Ó" => "U",  "Ô" => "F",  "Õ" => "KH",  "Ö" => "C",  "×" => "CH", "Ø" => "SH", "Ù" => "SHH", "Ú" => "",   "Û" => "Y",  "Ü" => "",
-        "İ" => "EH", "Ş" => "JU", "ß" => "JA", "à" => "a",  "á" => "b",  "â" => "v",  "ã" => "g",   "ä" => "d",   "å" => "e",  "¸" => "jo",
-        "æ" => "zh", "ç" => "z",  "è" => "i",  "é" => "jj", "ê" => "k",  "ë" => "l",  "ì" => "m",   "í" => "n",   "î" => "o",  "ï" => "p",
-        "ğ" => "r",  "ñ" => "s",  "ò" => "t",  "ó" => "u",  "ô" => "f",  "õ" => "kh",  "ö" => "c",   "÷" => "ch",  "ø" => "sh", "ù" => "shh",
-        "ú" => "~",  "û" => "y",  "ü" => "'",  "ı" => "eh", "ş" => "ju", "ÿ" => "ja", " " => "_", "_" => "_",
+        "ï¿½" => "A",  "ï¿½" => "B",  "ï¿½" => "V",  "ï¿½" => "G",  "ï¿½" => "D",  "ï¿½" => "E",  "ï¿½" => "JO",  "ï¿½" => "ZH",  "ï¿½" => "Z",  "ï¿½" => "I",
+        "ï¿½" => "JJ", "ï¿½" => "K",  "ï¿½" => "L",  "ï¿½" => "M",  "ï¿½" => "N",  "ï¿½" => "O",  "ï¿½" => "P",   "ï¿½" => "R",   "ï¿½" => "S",  "ï¿½" => "T",
+        "ï¿½" => "U",  "ï¿½" => "F",  "ï¿½" => "KH",  "ï¿½" => "C",  "ï¿½" => "CH", "ï¿½" => "SH", "ï¿½" => "SHH", "ï¿½" => "",   "ï¿½" => "Y",  "ï¿½" => "",
+        "ï¿½" => "EH", "ï¿½" => "JU", "ï¿½" => "JA", "ï¿½" => "a",  "ï¿½" => "b",  "ï¿½" => "v",  "ï¿½" => "g",   "ï¿½" => "d",   "ï¿½" => "e",  "ï¿½" => "jo",
+        "ï¿½" => "zh", "ï¿½" => "z",  "ï¿½" => "i",  "ï¿½" => "jj", "ï¿½" => "k",  "ï¿½" => "l",  "ï¿½" => "m",   "ï¿½" => "n",   "ï¿½" => "o",  "ï¿½" => "p",
+        "ï¿½" => "r",  "ï¿½" => "s",  "ï¿½" => "t",  "ï¿½" => "u",  "ï¿½" => "f",  "ï¿½" => "kh",  "ï¿½" => "c",   "ï¿½" => "ch",  "ï¿½" => "sh", "ï¿½" => "shh",
+        "ï¿½" => "~",  "ï¿½" => "y",  "ï¿½" => "'",  "ï¿½" => "eh", "ï¿½" => "ju", "ï¿½" => "ja", " " => "_", "_" => "_",
         );
 
     $string = strtr($string, $Tran);
