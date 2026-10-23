@@ -15,8 +15,12 @@ class mailer
         var $addresses, $reply, $from;
 
         var $tpl_msg = array();
+        var $vars = '';
+        var $extra_headers = '';
+        var $encoding = '';
+        var $reply_to = '';
 
-        function mailer()
+        function __construct()
         {
                 $this->reset();
                 $this->reply = $this->from = '';
@@ -134,8 +138,7 @@ class mailer
                 $this->msg = preg_replace('#\{([a-z0-9\-_]*?)\}#is', "' . $\\1 . '", $this->msg);
 
                 // Set vars
-                reset ($this->vars);
-                while (list($key, $val) = each($this->vars))
+                foreach ($this->vars AS $key => $val)
                 {
                         $$key = $val;
                 }
@@ -143,8 +146,7 @@ class mailer
                 eval("\$this->msg = '$this->msg';");
 
                 // Clear vars
-                reset ($this->vars);
-                while (list($key, $val) = each($this->vars))
+                foreach ($this->vars AS $key => $val)
                 {
                         unset($$key);
                 }

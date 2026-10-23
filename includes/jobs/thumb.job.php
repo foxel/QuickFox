@@ -1,4 +1,4 @@
-<?
+<?php
 // Simple InUSE Check
 if ( !defined('QF_STARTED') )
         die('Hacking attempt');

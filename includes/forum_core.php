@@ -30,8 +30,8 @@ function Vis_Gen_TIcon($locked=false, $gotnew=false, $pinned=false, $url='')
 
 function For_Parse_History($text, $html=false)
 {
-        if ($html) return nl2br(preg_replace('#<\{\[time=([0-9\-]+)\] - ([\w\+\-\=\(\)\[\] ]+)\}>#e', '"[ <b>".create_date("","\\1")."</b> \\2 ] "', $text));
-        else return ParseMSG(preg_replace('#<\{\[time=([0-9\-]+)\] - ([\w\+\-\=\(\)\[\] ]+)\}>#e', '"[b]".create_date("","\\1")."[/b] \\2"', $text));
+        if ($html) return nl2br(preg_replace_callback('#<\{\[time=([0-9\-]+)\] - ([\w\+\-\=\(\)\[\] ]+)\}>#', function($m) { return '[ <b>'.create_date('',$m[1]).'</b> '.$m[2].' ] '; }, $text));
+        else return ParseMSG(preg_replace_callback('#<\{\[time=([0-9\-]+)\] - ([\w\+\-\=\(\)\[\] ]+)\}>#', function($m) { return '[b]'.create_date('',$m[1]).'[/b] '.$m[2]; }, $text));
 }
 
 
@@ -43,7 +43,7 @@ class qf_forum
     var $Window = '';
     var $base_url = '';
 
-    function qf_forum()
+    function __construct()
     {
         Global $QF_User, $QF_Session, $QF_DBase;
         Global $QF_Config, $forconfig, $Forum_Root_Name;

@@ -23,7 +23,6 @@ if (!defined('E_DEPRECATED'))
 if (!defined('E_USER_DEPRECATED'))
     define('E_USER_DEPRECATED', 16384);
 Error_Reporting(E_ALL & ~(E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED) );
-set_magic_quotes_runtime(0);
 setlocale(LC_ALL, 'ru_RU');
 
 //Функция обработки ошибок на стадии инициализации. После инициализации юзается error_catcher
@@ -62,7 +61,7 @@ class QF_Timer
     var $point_time;
     var $events = Array();
 
-    function QF_Timer()
+    function __construct()
     {
         $this->start_time = $this->Get_Time();
         $this->time = time();

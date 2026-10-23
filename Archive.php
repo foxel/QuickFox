@@ -15,7 +15,6 @@ if (!defined('E_DEPRECATED'))
 if (!defined('E_USER_DEPRECATED'))
     define('E_USER_DEPRECATED', 16384);
 Error_Reporting(E_ALL & ~(E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED) );
-set_magic_quotes_runtime(0);
 set_time_limit(0);
 
 function arch_err_parse($errno, $errstr, $errfile, $errline, $context)
@@ -59,7 +58,7 @@ $query='SHOW TABLES';
 $result=$QF_DBase->sql_query($query);
 if ($result) while($tbl=$QF_DBase->sql_fetchrow($result, false)) {
     list($tblname)=$tbl;
-    if ((strpos($tblname,$dbkey)==0 && substr_count($tblname,$dbkey))) {
+    if ((strpos($tblname,$dbkey)===0 && substr_count($tblname,$dbkey))) {
             $dumper->file_write($dumper->get_create_table($tblname, true));
     }
 }
@@ -131,7 +130,7 @@ Archive_QF();
 // $arch=new TGZWrite('upd_pack.tgz','','Arch_Date_Mask');
 // Archive_QF();
 
-$dumper->mysql_dumper();
+$dumper = new mysql_dumper(1);
 $dumper->dump_tables('QF_DBDump.sql', true, Array('all_tables' => true));
 
 print 'DONE!';

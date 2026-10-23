@@ -20,7 +20,7 @@ $file = 'jscripts/'.$scripts.'.js';
 
 if ($sfile=@fopen($file, 'r')) {
     $indata=fread($sfile,filesize($file));
-    $indata=preg_replace('#\{L_(\w+)\}#e', '\$lang["\\1"]', $indata);
+    $indata=preg_replace_callback('#\{L_(\w+)\}#', function($m) { global $lang; return $lang[$m[1]]; }, $indata);
     print $indata;
     fclose($sfile);
 }

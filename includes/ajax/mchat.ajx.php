@@ -11,7 +11,7 @@ $_JS_REPLACE = array(
 
 if (($mess = Get_Request('newmess', 2, 's')) && $QF_User->uid && $QF_User->wlevel)
 {
-    if ($mess{0} == '!' && $QF_User->cuser['admin'])
+    if ($mess[0] == '!' && $QF_User->cuser['admin'])
     {
         list($command, $mess) = explode(' ', $mess, 2);
         if ($command == '!clear')

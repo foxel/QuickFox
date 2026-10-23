@@ -72,11 +72,6 @@ function Get_Request($var_name, $from=0, $type = '', $len = false)
             default:
                 $val = $_REQUEST[$var_name];
         }
-        if (get_magic_quotes_gpc() && !is_numeric($val) && !is_null($val)) {            if (is_array($val))
-                $val = Array_Unslash($val);
-            else
-                $val = stripslashes($val);
-        }
         if (defined('AJAX_UTF_RECHAR'))
             $val = $QF_CharConv->UTFto_Conv($val);
 
@@ -191,23 +186,15 @@ function Glob_Request($vals_list,$allreq=false,$overwrite=false){
         global $$needval;
         if (!isset($$needval) || $overwrite) {
             $found=($allreq) ? $_REQUEST[$needval] : $_GET[$needval];
-            if (isset($found))                $$needval=(get_magic_quotes_gpc()) ? stripslashes($found) : $found;
+            if (isset($found)) {
+                $$needval = $found;
+            }
         }
     }
 }
 
 //
 // Stripslashes for $_POST data
-//
-Function PostStrip()
-{    Global $_POST, $HTTP_POST_VARS;
-    if (get_magic_quotes_gpc())
-        foreach ($_POST as $key=>$val)
-        if (!is_array($val)) {            $val = stripslashes($val);
-            $_POST[$key] = $val;
-            $HTTP_POST_VARS[$key] = $val;
-        }
-}
 
 
 // Closes all the OB buffers
@@ -251,7 +238,7 @@ function GetFullUrl($url, $no_amps = true)
 {
     global $QF_Config;
 
-    if ($url{0} == '#')
+    if ($url[0] == '#')
         return $url;
 
     $url_p = parse_url($url);
@@ -293,7 +280,7 @@ function GetFullUrl($url, $no_amps = true)
         $url.= trim($QF_Config['server_name']);
         if (isset($url_p['path']))
         {
-            if ($url_p['path']{0} != '/')
+            if ($url_p['path'][0] != '/')
                 $url_p['path'] = '/'.$QF_Config['root'].'/'.$url_p['path'];
         }
         else
@@ -536,7 +523,7 @@ function Combine_ECSS($file) {
         $CSSVars['CSS_IMGS']=$QF_Config['CSS_imgs_dir'];
 
         $cssdata=preg_replace($vars_block,'',$indata);
-        $cssdata=preg_replace('#\{(\w+)\}#e','$CSSVars["\1"]',$cssdata);
+        $cssdata=preg_replace_callback('#\{(\w+)\}#', function($m) use ($CSSVars) { return $CSSVars[$m[1]]; }, $cssdata);
 
         fclose($sfile);
         return $cssdata;
@@ -910,7 +897,7 @@ function smartHTMLSchars($string, $no_quotes = false)
 
     if (is_null($SCHARS))
     {
-        $SCHARS = get_html_translation_table(HTML_SPECIALCHARS);
+        $SCHARS = get_html_translation_table(HTML_SPECIALCHARS, ENT_COMPAT | ENT_HTML401, QF_ENCODING);
         unset($SCHARS['&']);
         $NQSCHARS = $SCHARS;
         unset($NQSCHARS['"'], $NQSCHARS['\'']);

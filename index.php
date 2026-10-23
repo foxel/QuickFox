@@ -1,4 +1,4 @@
-<?
+<?php
 // Sequrity system - deleting all user posted data from globals
 if (ini_get('register_globals'))
     foreach ($_REQUEST as $rvar=>$rval)

@@ -41,8 +41,11 @@ class qf_parser
     var $base_loaded=False;
     var $ext_loaded=False;
 
+    var $loaded = false;
+    var $smiles = Array();
+
     // constructor
-    Function qf_parser($nodefaults = False)
+    function __construct($nodefaults = False)
     {
         if ($nodefaults) $this->loaded=True;
     }

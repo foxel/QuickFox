@@ -9,9 +9,9 @@ if ( defined('CORE_SESSION_LOADED') )
 
 define('CORE_SESSION_LOADED', True);
 
-// --------------------------------------------------------------------------------------------- \\
-//             Quick Fox session management class   LION 2007, 2008, 2009, 2011, 2014, 2026      \\
-// --------------------------------------------------------------------------------------------- \\
+// -------------------------------------------------------------------------------------- \\
+//             Quick Fox session management class   LION 2007-2009, 2011, 2014, 2026      \\
+// -------------------------------------------------------------------------------------- \\
 
 class qf_session_cl
 {
@@ -29,7 +29,7 @@ class qf_session_cl
     var $use_url = false;
     var $fix = false;
 
-    function qf_session_cl()
+    function __construct()
     {
         Global $QF_Session;
         if (defined('QF_SESSION_CREATED'))
@@ -267,7 +267,7 @@ class qf_session_cl
 
         if ( $this->use_url && !strstr($url, 'QF_SID=') && !stristr($url, 'javasript') )
         {
-            $insert = ( !strstr($url, '?') ) ? '?' : ($ampersand) ? '&amp;' : '&';
+            $insert = ( !strstr($url, '?') ) ? '?' : (($ampersand) ? '&amp;' : '&');
             $insert.= 'QF_SID='.$this->SID;
 
             $url= preg_replace('#(\#|$)#', $insert.'\\1', $url, 1);
@@ -278,12 +278,27 @@ class qf_session_cl
     }
 }
 
+function SID_Compose($vars)
+{
+    global $QF_Session;
+    $url = $vars[3];
+    if ( !strstr($url, 'QF_SID=') && !strstr($url, 'javascript') )
+    {
+        $insert = ( !strstr($url, '?') ) ? '?' : '&amp;';
+        $insert.= 'QF_SID='.$QF_Session->SID;
+
+        $url= preg_replace('#(\#|$)#', $insert.'\\1', $url, 1);
+    }
+
+    return $vars[1].' = '.$vars[2].$url.$vars[2];
+}
+
+
 function qf_session_handler($text)
 {
     Global $timer, $QF_Config, $lang, $GZipped, $QF_User, $QF_Client;
     Global $QF_DBase;
     Global $QF_Session;
-    global $timer;
 
     if (!is_a($QF_Session, 'qf_session_cl'))
         return $text;
@@ -316,21 +331,6 @@ function qf_session_handler($text)
     if (!$QF_User->is_spider) {
         if ($QF_Session->use_url )
         {
-            function SID_Compose($vars)
-            {
-                global $QF_Session;
-                $url = $vars[3];
-                if ( !strstr($url, 'QF_SID=') && !strstr($url, 'javascript') )
-                {
-                    $insert = ( !strstr($url, '?') ) ? '?' : '&amp;';
-                    $insert.= 'QF_SID='.$QF_Session->SID;
-
-                    $url= preg_replace('#(\#|$)#', $insert.'\\1', $url, 1);
-                }
-
-                return $vars[1].' = '.$vars[2].$url.$vars[2];
-            }
-
             $text=preg_replace_callback('#(href)\s*=\s*(\"|\'|)([^\s<>\(\)]*)(\\2)#i', 'SID_Compose', $text);
             $text=preg_replace('#(<form .*?>)#i', "\\1\n".'<input type="hidden" name="QF_SID" value="'.$QF_Session->SID.'">', $text);
         }

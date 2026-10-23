@@ -11,11 +11,11 @@ define('CORE_SQL_LOADED', True);
 class mysql_dumper
 {
     var $struct = Array();
-    var $fstream, $filename, $fgzip;
+    var $fstream, $stream, $filename, $fgzip;
     var $repldbkey = false;
     var $tblslist = Array();
 
-    function mysql_dumper($repldbkey=false)
+    function __construct($repldbkey=false)
     {
         global $QF_DBase;
 
@@ -137,7 +137,7 @@ class mysql_dumper
             'fields' => $fields,
             'keys'   => $keys );
 
-        if (strpos($table,$dbkey)==0 && $this->repldbkey)
+        if (strpos($table,$dbkey)===0 && $this->repldbkey)
             $tblname = preg_replace('#^'.$dbkey.'#', '{DBKEY}', $table);
         else
             $tblname = $table;
@@ -195,14 +195,7 @@ class mysql_dumper
             $tblquery.=", \n    ".$klist;
         $tblquery.=" \n); \n\n";
 
-        if(get_magic_quotes_runtime())
-        {
-                return(stripslashes($tblquery));
-        }
-        else
-        {
-                return($tblquery);
-        }
+        return $tblquery;
 
 
     }
@@ -212,7 +205,7 @@ class mysql_dumper
         global $QF_DBase;
         $dbkey = $QF_DBase->tbl_prefix;
 
-        if (strpos($table,$dbkey)==0 && $this->repldbkey)
+        if (strpos($table,$dbkey)===0 && $this->repldbkey)
             $tblname = preg_replace('#^'.$dbkey.'#', '{DBKEY}', $table);
         else
             $tblname = $table;
@@ -232,7 +225,7 @@ class mysql_dumper
 
         if (!in_array($table, $this->tblslist)) return false;
 
-        if (strpos($table,$dbkey)==0 && $this->repldbkey)
+        if (strpos($table,$dbkey)===0 && $this->repldbkey)
             $tblname = preg_replace('#^'.$dbkey.'#', '{DBKEY}', $table);
         else
             $tblname = $table;
@@ -273,10 +266,7 @@ class mysql_dumper
 
                 $dump.= ");\n";
 
-                if(get_magic_quotes_runtime())
-                    $this->file_write(stripslashes($dump));
-                else
-                    $this->file_write($dump);
+                $this->file_write($dump);
 
             }
             while ($row = $QF_DBase->sql_fetchrow($result));
@@ -307,7 +297,7 @@ class mysql_dumper
         $result=$QF_DBase->sql_query($query);
         if ($result) while($tbl=$QF_DBase->sql_fetchrow($result, false)) {
             list($tblname)=$tbl;
-            if ((strpos($tblname,$dbkey)==0 && substr_count($tblname,$dbkey)) || $all_tables) {
+            if ((strpos($tblname,$dbkey)===0 && substr_count($tblname,$dbkey)) || $all_tables) {
                 if (!$nostruct)
                     $this->file_write($this->get_create_table($tblname,$dropfirst));
                 if (!$nocontent)
@@ -328,8 +318,10 @@ class mysql_importer
     var $buffer = '';
     var $EOF = false;
     var $errlog = Array();
+    var $stream = null;
+    var $tblslist = Array();
 
-    function mysql_importer($repldbkey=false)
+    function __construct($repldbkey=false)
     {
         global $QF_DBase;
 

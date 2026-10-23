@@ -10,7 +10,7 @@ if ( defined('CORE_USERS_LOADED') )
 define('CORE_USERS_LOADED', True);
 
 // ----------------------------------------------------------------------------- \\
-//             Quick Fox user and guest login   LION 2008, 2009, 2012, 2026      \\
+//             Quick Fox user and guest login   LION 2008-2009, 2012, 2026       \\
 // ----------------------------------------------------------------------------- \\
 
 
@@ -26,7 +26,7 @@ class qf_curuser
     var $spider = Array();
     var $is_spider = false;
 
-    function qf_curuser()
+    function __construct()
     {
         Global $QF_User;
         if (defined('QF_CURUSER_CREATED'))

@@ -756,13 +756,6 @@ elseif ($job=='db_reserv') {
         'capt'  => $lang['ADMCAB_DBDUMP_ALLTABLES'],
         'descr' => $lang['ADMCAB_DBDUMP_ALLTABLES_MORE'] );
 
-//    $fields['SCTuse']=Array(
-//        'value' => 'ON',
-//        'type'  => 'checkbox',
-//        'capt'  => $lang['ADMCAB_DBDUMP_SCTUSE'],
-//        'descr' => $lang['ADMCAB_DBDUMP_SCTUSE_MORE'] );
-//    if (mysql_get_server_info()>='4.1') $fields['SCTuse']['checked']='true';
-
     $fields['submit']=Array(
         'value' => $lang['BTN_GO'],
         'type'  =>'submit',

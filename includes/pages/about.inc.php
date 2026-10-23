@@ -1,5 +1,5 @@
 <center>
-<? $Page_SubTitle = 'QuickFox'; ?>
+<?php $Page_SubTitle = 'QuickFox'; ?>
 <h1>QuickFox</h1>
 <table width='90%' border='0'>
 <tr><td>
@@ -17,7 +17,7 @@
 ¬ данный момент €дро находитс€ в стадии разработки,
 и данна€ копи€ €вл€етс€ авторcкой тестовой версией.<br />
 <br />
-&copy; LION 2006.
+&copy; LION 2006, 2026.
 </td></tr>
 </table>
 </center>

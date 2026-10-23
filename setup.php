@@ -1,7 +1,7 @@
 <?php
 
 // ----------------------------------------------------------- \\
-//            QuickFox setup script           (c) LION 2006    \\
+//          QuickFox setup script      (c) LION 2006, 2026     \\
 // ----------------------------------------------------------- \\
 
 
@@ -62,7 +62,6 @@ if (!defined('E_USER_DEPRECATED'))
     define('E_USER_DEPRECATED', 16384);
 Error_Reporting(E_ALL & ~(E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED) );
 
-set_magic_quotes_runtime(0);
 if (ini_get('safe_mode') == 0)
     set_time_limit(0);
 

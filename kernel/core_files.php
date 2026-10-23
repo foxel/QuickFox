@@ -17,7 +17,7 @@ class DownLoadFile{
   var $start;
   var $NeedRange;
 
-  function DownLoadFile($FileName, $RealName='', $mime=''){ // конструктор
+  function __construct($FileName, $RealName='', $mime=''){ // конструктор
     global $mimes;
 
     $this->FileName= $FileName;

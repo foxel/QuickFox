@@ -51,7 +51,7 @@ if (is_array($sess)) {
 
     for ($i = 0; $i < $count; $i++)
     {
-        $id = (int) hexdec($newcode{$i}) + rand(0,3)*16;
+        $id = (int) hexdec($newcode[$i]) + rand(0,3)*16;
 
         $sx = ($id%8) * 24;
         $sy = floor($id/8) * 32;

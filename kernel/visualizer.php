@@ -130,7 +130,7 @@ function Connect_JS($name) {
         $QF_Pagedata['JAVA'].='<script language="JavaScript" type="text/javascript" src="index.php?sr=JS&amp;scripts='.$name.'"></script>';
     elseif ($sfile =@ fopen($file, 'r')) {
         $indata=fread($sfile,filesize($file));
-        $indata=preg_replace('#\{L_(\w+)\}#e', '\$lang["\\1"]', $indata);
+        $indata = preg_replace_callback('#\{L_(\w+)\}#', function($m) { global $lang; return $lang[$m[1]]; }, $indata);
         $QF_Pagedata['JAVA'].='<script language="JavaScript" type="text/javascript">
         <!---
         '.$indata.'
@@ -193,7 +193,7 @@ function LoadVisuals($part='') {
             $indata=str_replace('{VIS_IMGS}',$odir.'/imgs',$indata);
             $indata=str_replace('{CSS_IMGS}',$QF_Config['CSS_imgs_dir'],$indata);
 
-            $indata=preg_replace('#\{L_(\w+)\}#e','\$lang["$1"]',$indata);
+            $indata = preg_replace_callback('#\{L_(\w+)\}#', function($m) { global $lang; return $lang[$m[1]]; }, $indata);
 
             preg_match_all("#<<\+ '(\w+)'>>(.*?)<<- '\\1'>>#s", $indata, $blocks);
             if (is_array($blocks[1]))
@@ -236,10 +236,10 @@ function Visual($name, $content=Array()) {
     $UseIF=$VIF[$name]['IF'];
 
     if ($UseVIS)
-        $templ=preg_replace('#\{V_(\w+)\}#se', 'Visual(\'$1\', \$content)', $templ);
+        $templ = preg_replace_callback('#\{V_(\w+)\}#s', function($m) use ($content) { return Visual($m[1], $content); }, $templ);
 
     if ($UseIF == 2)
-        $templ=preg_replace('#\{IF_([\w_]+)\}(.*?)\{ENDIF\}#se', 'VisIfExp("$2",\$content["$1"])', $templ);
+        $templ = preg_replace_callback('#\{IF_([\w_]+)\}(.*?)\{ENDIF\}#s', function($m) use ($content) { return VisIfExp($m[2], $content[$m[1]]); }, $templ);
     elseif ($UseIF == 1) {
         foreach($content as $pname => $ptext)
             if (strlen($ptext)>0) {

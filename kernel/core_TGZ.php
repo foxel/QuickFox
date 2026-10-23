@@ -10,7 +10,7 @@ if ( defined('CORE_TGZ_LOADED') )
 define('CORE_TGZ_LOADED', True);
 
 // ----------------------------------------------------------- \\
-//            TGZ/TAR Archive Reader/Writer   (c) LION 2006    \\
+//      TGZ/TAR Archive Reader/Writer   (c) LION 2006, 2026    \\
 // ----------------------------------------------------------- \\
 
 class TGZRead
@@ -25,7 +25,7 @@ class TGZRead
 
         // Constructor. Creates up the stream
         // Analyzes archive type
-        function TGZRead($filename)
+        function __construct($filename)
         {
                 $this->TARFile = $filename;
                 if (!file_exists($filename)) return False;
@@ -298,7 +298,7 @@ class TGZWrite
         // Sets archive type
         // Extension must set the format
         // Use 'tgz' or 'tar' only
-        function TGZWrite($filename, $workdir='', $masker='')
+        function __construct($filename, $workdir='', $masker='')
         {
                 if (function_exists($masker))
                     $this->masker = $masker;

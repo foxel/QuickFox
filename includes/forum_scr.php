@@ -19,7 +19,7 @@ Class qf_forum_upd
     var $time;
     var $do_cache = true;
 
-    Function qf_forum_upd()
+    function __construct()
     {
         global $QF_Session, $QF_Config;
         $this->time = time();

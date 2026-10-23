@@ -72,13 +72,13 @@ if ($action == 'convert')
             // SQL
             //-----------------------------------------
 
-            $txt = preg_replace( "#<!--sql-->(.+?)<!--sql1-->(.+?)<!--sql2-->(.+?)<!--sql3-->#eis", "IPBC_unconvert_sql(\"\\2\")", $txt);
+            $txt = preg_replace_callback( "#<!--sql-->(.+?)<!--sql1-->(.+?)<!--sql2-->(.+?)<!--sql3-->#is", function($m) { return IPBC_unconvert_sql($m[2]); }, $txt);
 
             //-----------------------------------------
             // HTML
             //-----------------------------------------
 
-            $txt = preg_replace( "#<!--html-->(.+?)<!--html1-->(.+?)<!--html2-->(.+?)<!--html3-->#ise", "IPBC_unconvert_htm(\"\\2\")", $txt);
+            $txt = preg_replace_callback( "#<!--html-->(.+?)<!--html1-->(.+?)<!--html2-->(.+?)<!--html3-->#is", function($m) { return IPBC_unconvert_htm($m[2]); }, $txt);
 
             //-----------------------------------------
             // Images / Flash
